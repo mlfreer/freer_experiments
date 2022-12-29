@@ -1,0 +1,33 @@
+{{ block title }}
+<div style="float: center; text-align: center;">
+Please Take a Decision
+</div>
+{{ endblock }}
+
+
+{{ block content }}
+
+<div class="left-d">
+<button class="btn btn-outline-secondary  btn-xl" name="within_budget_choice" value="0">
+	50% chance of winning £{{option1_x}}
+	<br>
+	50% chance of winning £{{option1_y}}
+</button>
+</div>
+
+<div class="right-d">
+<button class="btn btn-outline-secondary  btn-xl" name="within_budget_choice" value="1">
+	50% chance of winning £{{option2_x}}
+	<br>
+	50% chance of winning £{{option2_y}}
+</button>
+</div>
+
+
+{{player.doubletone_index}}
+
+
+<link href="{{ static 'global/attention_welfare_decision_screen.css' }}" rel="stylesheet"/>
+
+
+{{ endblock }}

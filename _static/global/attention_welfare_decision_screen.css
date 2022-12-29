@@ -1,0 +1,54 @@
+.btn-xl {
+    width:100%; 
+    height:100%;
+    font-size: 26px;   
+    border-radius: 10px;
+}
+
+.right-t {
+  top:20%;
+  width:30%; 
+  height:70%;
+  right: 3%;
+  position:fixed;
+  z-index: 1;
+}
+
+
+.left-t {
+  top:20%;
+  width:30%;
+  height:70%; 
+  left: 3%;
+  position:fixed;
+  z-index: 1;
+}
+
+.center-t {
+  top:20%;
+  width:30%; 
+  left: 35%;
+  height:70%;
+  position:fixed;
+  z-index: 1;
+}
+
+.right-d {
+  top:20%;
+  width:40%; 
+  height:70%;
+  right: 5%;
+  position:fixed;
+  z-index: 1;
+}
+
+
+.left-d {
+  top:20%;
+  width:40%;
+  height:70%; 
+  left: 5%;
+  position:fixed;
+  z-index: 1;
+}
+
