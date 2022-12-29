@@ -92,7 +92,7 @@ class Within_Budget_Decision(Page):
     @staticmethod
     def vars_for_template(player):
         temp = C.DOUBLETONES[player.doubletone_index]
-        print(temp[0])
+#       print(temp[0])
         return dict(
             option1_x = C.UNIVERSAL_X[temp[0]],
             option1_y = C.UNIVERSAL_Y[temp[0]],
