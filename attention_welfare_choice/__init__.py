@@ -11,11 +11,12 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'attention_welfare_choice'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 10
+    NUM_ROUNDS = 30
 
     # within and between budget choices:
-    WITHIN_BUDGET_CHOICE = 0
-    BETWEEN_BUDGET_CHOICE = 1
+    NUMBER_OF_DOUBLETONES = 10
+    NUMBER_OF_TRIPLETONES = 20
+    NUMBER_OF_BETWEEN_MENU_CHOICES = 20
 
     # DEFINING THE UNIVERSAL SET
     UNIVERSAL_X = [0, 1, 2, 3, 4] # OUTCOMES IN THE STATE OF THE WORLD X
@@ -49,15 +50,19 @@ class Group(BaseGroup):
 #----------------------------------------------------------
 class Player(BasePlayer):
     # decision variables:
-    within_budget_choice = models.IntegerField()
+    doubletone_choice = models.IntegerField()
+    tripletone_choice = models.IntegerField()
     between_budget_choice = models.IntegerField()
 
-    # budget type (0 -- within, 1 -- between):
-    budget_type = models.IntegerField()
-    is_doubletone = models.BooleanField(initial = True)
+    # budget types:
+    is_doubletone = models.BooleanField(initial = False)
+    is_tripletone = models.BooleanField(initial = False)
+    is_between_menu_choice = models.BooleanField(initial = False)
 
     # doubletone order
     doubletone_index = models.IntegerField()
+    # tripletone order
+    tripletone_index = models.IntegerField()
 
 
 #----------------------------------------------------------
@@ -66,6 +71,7 @@ class Player(BasePlayer):
 def creating_session(subsession):
     for p in subsession.get_players():
         set_doubletones_order(p)
+        set_tripletones_order(p)
 
 def set_doubletones_order(player: Player):
     indices = [0,1,2,3,4,5,6,7,8,9]
@@ -74,20 +80,32 @@ def set_doubletones_order(player: Player):
 
     i=0
     for p in players:
-        p.doubletone_index = indices[i]
+        if (i<=9):
+            p.doubletone_index = indices[i]
+            p.is_doubletone = True
         i+=1
 
+def set_tripletones_order(player: Player):
+    indices = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+    random.shuffle(indices)
+    players = player.in_all_rounds()
 
+    i=0
+    for p in players:
+        if (i>=10) and (i<=29):
+            p.tripletone_index = indices[i-10]
+            p.is_tripletone = True
+        i+=1
 
 
 #----------------------------------------------------------
 # PAGES
 #----------------------------------------------------------
-class Within_Budget_Decision(Page):
-#    def is_displayed(player):
-#        return player.budget_type == C.WITHIN_BUDGET_CHOICE
+class Doubletone_Decision(Page):
+    def is_displayed(player):
+        return player.subsession.round_number <= C.NUMBER_OF_DOUBLETONES
     form_model = 'player'
-    form_fields = ['within_budget_choice']
+    form_fields = ['doubletone_choice']
 
     @staticmethod
     def vars_for_template(player):
@@ -101,8 +119,27 @@ class Within_Budget_Decision(Page):
             )
     #------------------------------------------------------------
 
+class Tripletone_Decision(Page):
+    def is_displayed(player):
+        return (player.subsession.round_number > C.NUMBER_OF_DOUBLETONES) and (player.subsession.round_number <= C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES)
+    form_model = 'player'
+    form_fields = ['tripletone_choice']
+
+    @staticmethod
+    def vars_for_template(player):
+        decoy_index = C.TRIPLETONES[player.tripletone_index]
+        option_index = C.DOUBLETONES[(player.tripletone_index+1) % C.NUMBER_OF_DOUBLETONES - 1]
+        return dict(
+            option1_x = C.UNIVERSAL_X[option_index[0]],
+            option1_y = C.UNIVERSAL_Y[option_index[0]],
+            option2_x = C.UNIVERSAL_X[option_index[1]],
+            option2_y = C.UNIVERSAL_Y[option_index[1]],
+            decoy_x = C.DECOY_X[decoy_index],
+            decoy_y = C.DECOY_Y[decoy_index]
+            )
 
 
 page_sequence = [
-            Within_Budget_Decision
+            Doubletone_Decision,
+            Tripletone_Decision
             ]
