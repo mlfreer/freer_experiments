@@ -114,7 +114,7 @@ def set_between_menus_order(player: Player):
 
 
 #----------------------------------------------------------
-# PAGES
+# DECISION PAGES
 #----------------------------------------------------------
 class Doubletone_Decision(Page):
     def is_displayed(player):
@@ -130,7 +130,8 @@ class Doubletone_Decision(Page):
             option1_x = C.UNIVERSAL_X[temp[0]],
             option1_y = C.UNIVERSAL_Y[temp[0]],
             option2_x = C.UNIVERSAL_X[temp[1]],
-            option2_y = C.UNIVERSAL_Y[temp[1]]
+            option2_y = C.UNIVERSAL_Y[temp[1]],
+            total_problems = C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES
             )
     #------------------------------------------------------------
 
@@ -153,7 +154,8 @@ class Tripletone_Decision(Page):
             option2_x = C.UNIVERSAL_X[option_index[1]],
             option2_y = C.UNIVERSAL_Y[option_index[1]],
             decoy_x = C.DECOY_X[decoy_index],
-            decoy_y = C.DECOY_Y[decoy_index]
+            decoy_y = C.DECOY_Y[decoy_index],
+            total_problems = C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES
             )
     #------------------------------------------------------------
 
@@ -199,14 +201,30 @@ class Between_Menu_Decision(Page):
             doubletone_choice_x = C.UNIVERSAL_X[option_index[doubletone_choice]],
             doubletone_choice_y = C.UNIVERSAL_Y[option_index[doubletone_choice]],
             tripletone_choice_x = tripletone_choice_x,
-            tripletone_choice_y = tripletone_choice_y
+            tripletone_choice_y = tripletone_choice_y,
+            total_problems = C.NUMBER_OF_BETWEEN_MENU_CHOICES,
+            problem_number = player.subsession.round_number - C.NUMBER_OF_DOUBLETONES - C.NUMBER_OF_TRIPLETONES
             )
+        #------------------------------------------------------------
 
+
+#----------------------------------------------------------
+# INSTRUCTIONS
+#----------------------------------------------------------
+class Instructions_Overview(Page):
+    def is_displayed(player):
+        return (player.subsession.round_number == 1)
+
+class Instructions_Within_Menu(Page):
+    def is_displayed(player):
+        return (player.subsession.round_number == 1)
 
 #------------------------------------------------------------
 # PAGE SEQUENCE
 #------------------------------------------------------------
 page_sequence = [
+            Instructions_Overview,
+            Instructions_Within_Menu,
             Doubletone_Decision,
             Tripletone_Decision,
             Between_Menu_Decision

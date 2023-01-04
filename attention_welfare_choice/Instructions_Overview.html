@@ -1,0 +1,47 @@
+{{ block title }}
+<div style="float: center; text-align: center;">
+Welcome to the Experiment!
+</div>
+{{ endblock }}
+
+
+{{ block content }}
+
+<font size="4">
+
+<div class="card bg-light">
+    <div class="card-body">
+
+This is an experiment in decision-making. Your payoffs will depend partly only on your decisions and
+partly on chance. It will not depend on the decisions of the other participants in the
+experiments. Please pay careful attention to the instructions as a considerable amount of
+money is at stake.
+
+<br><br>
+
+You have earned the £4 of participation payment just for coming on time for the experiment.
+You also have a chance to earn up to £25 by participating in the experiment.
+The experiment consists of two blocks, that contain two types of decision problems.
+The first block consists of 30 decision problems.
+The second block consists of 20 decision problems.
+
+<br><br>
+
+Your earnings in the experiment are determined as follows. 
+At the end of the experiment, the computer will randomly select one decision round from each block to carry out for payment.
+The rounds selected depend solely upon chance. 
+For each block, it is equally likely that any round will be chosen.
+
+	</div>
+</div>
+<link href="{{ static 'global/attention_welfare_decision_screen.css' }}" rel="stylesheet"/>
+
+<br>
+
+<div style="float: center; text-align: center;">
+{{ next_button }}
+</div>
+
+</font>
+
+{{ endblock }}

@@ -1,0 +1,56 @@
+{{ block title }}
+<div style="float: center; text-align: center;">
+Block I: Instructions.
+</div>
+{{ endblock }}
+
+
+{{ block content }}
+
+<font size="4">
+
+<div class="card bg-light">
+    <div class="card-body">
+    	Here we present the instructions for the first block of the experiment.
+    	Please read the instructions carefully as the considerable amount of money is at stake.
+    	In addition, you would be asked couple of questions as a comprehension check.
+    	You would only be able to start the experiment upon completing the comprehension check.
+
+    	<br><br>
+
+    	In this block you will be presented with a choice between risky prospects.
+    	Each risky prospect has two potential outcomes depending: Heads and Tails.
+    	Both outcomes are equally likely and which of them is realized depends on the throw of the virtual coin in the end of the experiment.
+    	You will be presented with the <b>menus</b> consisting of either <b>two</b> or <b>three alternatives</b>.
+    	
+    	<br><br>
+
+    	<img style="float: left; max-width: 100%;max-height: 100%;" src="{{ static 'pictures/tripletone.png' }}" class="center"/>
+
+
+    	<br><br>
+
+    	You can see the example of both interfaces below.
+    	You pick the alternative simply by clicking on it.
+    	Upon making the decision you would be automatically transfered to the next decision problem.
+
+    	<br><br>
+
+    	In the example with two alternatives, if you decide to pick one on the left.
+    	If the alternative on the left is realized for payment and the state of the outcome is Heads, then your payment would be £X.
+    	If the state of the outcome is Tails, the your payment would be £Y.
+
+	</div>
+</div>
+
+<br>
+
+<div style="float: center; text-align: center;">
+{{ next_button }}
+</div>
+
+<link href="{{ static 'global/attention_welfare_decision_screen.css' }}" rel="stylesheet"/>
+
+</font>
+
+{{ endblock }}

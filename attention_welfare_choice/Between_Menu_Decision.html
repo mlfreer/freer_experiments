@@ -1,6 +1,6 @@
 {{ block title }}
-<div style="float: center; text-align: center;">
-BETWEEN MENU CHOICE
+<div style="float: center; text-align: center; font-family: Georgia, Times, serif;">
+Block II: Decision Problem <b> {{problem_number}} </b> out of {{total_problems}}
 </div>
 {{ endblock }}
 
@@ -9,15 +9,23 @@ BETWEEN MENU CHOICE
 
 <div class="left-d">
 <button class="btn btn-outline-secondary  btn-xl" name="between_menu_choice" value="0">
-	You have chosen:
+	<font style="color:#003366;">
+	<u> You have chosen:</u>
 	<br>
-	<b> 50% chance of winning £{{doubletone_choice_x}} </b>
+	<b>
+	50% chance of winning £{{doubletone_choice_x}}
+	</b>
 	<br>
-	<b> 50% chance of winning £{{doubletone_choice_y}} </b>
-	<br><br>
-
-	The menu you have been chosing from is:
+	50% chance of winning £{{doubletone_choice_y}} 
+	</font>
 	
+	<hr>
+	<br>
+
+	<font style="color:black;">
+	<u>
+	The menu you have been chosing from is:
+	</u>
 	<br><br>
 
 	50% chance of winning £{{option1_x}}
@@ -29,21 +37,25 @@ BETWEEN MENU CHOICE
 	50% chance of winning £{{option2_x}}
 	<br>
 	50% chance of winning £{{option2_y}}
-
+	</font>
 	<br><br><br><br>
 </button>
 </div>
 
 <div class="right-d">
 <button class="btn btn-outline-secondary  btn-xl" name="between_menu_choice" value="1">
-	You have chosen:
+	<font style="color:#003366;">
+	<u>	You have chosen: </u>
 	<br>
 	<b> 50% chance of winning £{{tripletone_choice_x}} </b>
 	<br>
 	<b> 50% chance of winning £{{tripletone_choice_y}} </b>
-	<br><br>
+	</font>
 
-	The menu you have been chosing from is:
+	<hr>
+	<br>
+
+	<u>	The menu you have been chosing from is: </u>
 	
 	<br><br>
 
@@ -65,10 +77,29 @@ BETWEEN MENU CHOICE
 </button>
 </div>
 
-
+</font>
 
 
 <link href="{{ static 'global/attention_welfare_decision_screen.css' }}" rel="stylesheet"/>
 
+<style type="text/css">
+.btn-xl {
+  font-family: "Georgia", Times, serif;
+    width:100%; 
+    height:100%;
+    font-size: 28px;   
+    border-width: .5em;
+    font-weight: 1000;
+    color: black  ;
+    border-color: #E5E4E2;
+    background: #E5E4E2;
+}
 
+.btn-xl:hover{
+  background: #C0C0C0;
+  border-color: #C0C0C0;
+  color: black;
+  font-weight: 1000;
+}
+</style>
 {{ endblock }}
