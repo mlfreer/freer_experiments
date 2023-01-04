@@ -1,5 +1,5 @@
 {{ block title }}
-<div style="float: center; text-align: center;">
+<div style="float: center; text-align: center; font-family: Georgia, Times, serif;">
 Block I: Instructions.
 </div>
 {{ endblock }}
@@ -7,7 +7,7 @@ Block I: Instructions.
 
 {{ block content }}
 
-<font size="4">
+<font size="4" style="font-family: Georgia, Times, serif;">
 
 <div class="card bg-light">
     <div class="card-body">
@@ -25,8 +25,13 @@ Block I: Instructions.
     	
     	<br><br>
 
-    	<img style="float: left; max-width: 100%;max-height: 100%;" src="{{ static 'pictures/tripletone.png' }}" class="center"/>
+    	<img style="float: center; max-width: 100%;max-height: 100%;" src="{{ static 'pictures/doubletone.png' }}"/>
+    	<div class="caption" style="float: center; text-align: center;"><b> Fig.1: Example interface of choice from menu with two options </b></div>
 
+    	<br>
+
+		<img style="float: center; max-width: 100%;max-height: 100%;" src="{{ static 'pictures/tripletone.png' }}"/>
+		<div class="caption" style="float: center; text-align: center;"><b> Fig.2: Example interface of choice from menu with three options </b></div>
 
     	<br><br>
 

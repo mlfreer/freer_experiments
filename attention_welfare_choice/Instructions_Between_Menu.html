@@ -1,0 +1,68 @@
+{{ block title }}
+<div style="float: center; text-align: center; font-family: Georgia, Times, serif;">
+Block II: Instructions.
+</div>
+{{ endblock }}
+
+
+{{ block content }}
+
+<font size="4" style="font-family: Georgia, Times, serif;">
+
+<div class="card bg-light">
+    <div class="card-body">
+    	Here we present the instructions for the second block of the experiment.
+    	Please read the instructions carefully as the considerable amount of money is at stake.
+    	In addition, you would be asked couple of questions as a comprehension check.
+    	You would only be able to start the experiment upon completing the comprehension check.
+
+    	<br><br>
+
+    	In this block you will be presented with a choice between menus containing risky prospects.
+    	Each risky prospect has two potential outcomes depending: Heads and Tails.
+    	Both outcomes are equally likely and which of them is realized depends on the throw of the virtual coin in the end of the experiment.
+    	In each decision problem you will be presented with two options (menus).
+    	
+    	<br><br>
+
+    	<img style="float: center; max-width: 100%;max-height: 100%;" src="{{ static 'pictures/between_menu.png' }}"/>
+    	<div class="caption" style="float: center; text-align: center;"><b> Fig.1: Example interface of choice between menus </b></div>
+
+		<br><br>
+
+		Each menu is split into two parts, as shown on the screenshot above.
+		The bottom part list the options available in the manu.
+		The top part presents the choice you have made from this menu in Block I.
+		That is, in the example above if we consider the menu on the right, there were three alternatives present:
+		
+		<ul style="list-style-type: none">
+			<li> 50% chance of winning £X and 50% chance of winning £Y,
+			<li> 50% chance of winning £X and 50% chance of winning £Y,
+			<li> 50% chance of winning £X and 50% chance of winning £Y.
+		</ul>
+
+		The alternative chosen was:
+		<ul style="list-style-type: none">
+			<li> 50% chance of winning £X and 50% chance of winning £Y.
+		</ul>
+
+		However, upon choosing the menu you do not have an option to revise the choice from the Block I.
+		That is, if you choose the menu on the left, then the corresponding chosen alternative would be 
+		<ul style="list-style-type: none">
+			<li> 50% chance of winning £X and 50% chance of winning £Y.
+		</ul>
+
+	</div>
+</div>
+
+<br>
+
+<div style="float: center; text-align: center;">
+{{ next_button }}
+</div>
+
+<link href="{{ static 'global/attention_welfare_decision_screen.css' }}" rel="stylesheet"/>
+
+</font>
+
+{{ endblock }}

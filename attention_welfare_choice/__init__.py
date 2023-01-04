@@ -219,12 +219,18 @@ class Instructions_Within_Menu(Page):
     def is_displayed(player):
         return (player.subsession.round_number == 1)
 
+class Instructions_Between_Menu(Page):
+    def is_displayed(player):
+        return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
+
+
 #------------------------------------------------------------
 # PAGE SEQUENCE
 #------------------------------------------------------------
 page_sequence = [
             Instructions_Overview,
             Instructions_Within_Menu,
+            Instructions_Between_Menu,
             Doubletone_Decision,
             Tripletone_Decision,
             Between_Menu_Decision
