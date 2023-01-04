@@ -11,7 +11,7 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'attention_welfare_choice'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 30
+    NUM_ROUNDS = 50
 
     # within and between budget choices:
     NUMBER_OF_DOUBLETONES = 10
@@ -52,7 +52,7 @@ class Player(BasePlayer):
     # decision variables:
     doubletone_choice = models.IntegerField()
     tripletone_choice = models.IntegerField()
-    between_budget_choice = models.IntegerField()
+    between_menu_choice = models.IntegerField()
 
     # budget types:
     is_doubletone = models.BooleanField(initial = False)
@@ -63,6 +63,8 @@ class Player(BasePlayer):
     doubletone_index = models.IntegerField()
     # tripletone order
     tripletone_index = models.IntegerField()
+    # between menu order
+    between_menu_index = models.IntegerField()
 
 
 #----------------------------------------------------------
@@ -72,6 +74,7 @@ def creating_session(subsession):
     for p in subsession.get_players():
         set_doubletones_order(p)
         set_tripletones_order(p)
+        set_between_menus_order(p)
 
 def set_doubletones_order(player: Player):
     indices = [0,1,2,3,4,5,6,7,8,9]
@@ -95,6 +98,18 @@ def set_tripletones_order(player: Player):
         if (i>=10) and (i<=29):
             p.tripletone_index = indices[i-10]
             p.is_tripletone = True
+        i+=1
+
+def set_between_menus_order(player: Player):
+    indices = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+    random.shuffle(indices)
+    players = player.in_all_rounds()
+
+    i=0
+    for p in players:
+        if (i>=30):
+            p.between_menu_index = indices[i-30]
+            p.is_between_menu_choice = True
         i+=1
 
 
@@ -128,7 +143,10 @@ class Tripletone_Decision(Page):
     @staticmethod
     def vars_for_template(player):
         decoy_index = C.TRIPLETONES[player.tripletone_index]
-        option_index = C.DOUBLETONES[(player.tripletone_index+1) % C.NUMBER_OF_DOUBLETONES - 1]
+        if (player.tripletone_index+1) % C.NUMBER_OF_DOUBLETONES >0:
+            option_index = C.DOUBLETONES[(player.tripletone_index+1) % C.NUMBER_OF_DOUBLETONES - 1]
+        else:
+            option_index = C.DOUBLETONES[0]
         return dict(
             option1_x = C.UNIVERSAL_X[option_index[0]],
             option1_y = C.UNIVERSAL_Y[option_index[0]],
@@ -137,9 +155,59 @@ class Tripletone_Decision(Page):
             decoy_x = C.DECOY_X[decoy_index],
             decoy_y = C.DECOY_Y[decoy_index]
             )
+    #------------------------------------------------------------
+
+class Between_Menu_Decision(Page):
+    def is_displayed(player):
+        return (player.subsession.round_number> C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES)
+    form_model = 'player'
+    form_fields = ['between_menu_choice']
+
+    @staticmethod
+    def vars_for_template(player):
+        decoy_index = C.TRIPLETONES[player.between_menu_index]
+        option_index = C.DOUBLETONES[(player.between_menu_index+1) % C.NUMBER_OF_DOUBLETONES - 1]
+
+        if (player.between_menu_index+1) % C.NUMBER_OF_DOUBLETONES > 0:
+            doubletone_index = (player.between_menu_index+1) % C.NUMBER_OF_DOUBLETONES-1
+        else:
+            doubletone_index = 0
+
+        # recovering choice:
+        players = player.in_all_rounds()
+        for p in players:
+            if (p.is_doubletone==True) and (p.doubletone_index == doubletone_index):
+                doubletone_choice = p.doubletone_choice
+            if (p.is_tripletone==True) and (p.tripletone_index == decoy_index):
+                tripletone_choice = p.tripletone_choice
+
+        if tripletone_choice < 2:
+            tripletone_choice_x = C.UNIVERSAL_X[option_index[tripletone_choice]]
+            tripletone_choice_y = C.UNIVERSAL_Y[option_index[tripletone_choice]]
+        else:
+            tripletone_choice_x = C.DECOY_X[decoy_index]
+            tripletone_choice_y = C.DECOY_Y[decoy_index]
 
 
+        return dict(
+            option1_x = C.UNIVERSAL_X[option_index[0]],
+            option1_y = C.UNIVERSAL_Y[option_index[0]],
+            option2_x = C.UNIVERSAL_X[option_index[1]],
+            option2_y = C.UNIVERSAL_Y[option_index[1]],
+            decoy_x = C.DECOY_X[decoy_index],
+            decoy_y = C.DECOY_Y[decoy_index],
+            doubletone_choice_x = C.UNIVERSAL_X[option_index[doubletone_choice]],
+            doubletone_choice_y = C.UNIVERSAL_Y[option_index[doubletone_choice]],
+            tripletone_choice_x = tripletone_choice_x,
+            tripletone_choice_y = tripletone_choice_y
+            )
+
+
+#------------------------------------------------------------
+# PAGE SEQUENCE
+#------------------------------------------------------------
 page_sequence = [
             Doubletone_Decision,
-            Tripletone_Decision
+            Tripletone_Decision,
+            Between_Menu_Decision
             ]
