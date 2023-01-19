@@ -60,11 +60,11 @@ class Player(BasePlayer):
     is_between_menu_choice = models.BooleanField(initial = False)
 
     # doubletone order
-    doubletone_index = models.IntegerField()
+    doubletone_index = models.IntegerField(initial=-1)
     # tripletone order
-    tripletone_index = models.IntegerField()
+    tripletone_index = models.IntegerField(initial=-1)
     # between menu order
-    between_menu_index = models.IntegerField()
+    between_menu_index = models.IntegerField(initial=-1)
 
 
 #----------------------------------------------------------
@@ -72,9 +72,27 @@ class Player(BasePlayer):
 #----------------------------------------------------------
 def creating_session(subsession):
     for p in subsession.get_players():
-        set_doubletones_order(p)
-        set_tripletones_order(p)
+        set_doubletones_and_tripletones(p)
         set_between_menus_order(p)
+
+def set_doubletones_and_tripletones(player: Player):
+    players = player.in_all_rounds()
+    doubletones = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1]
+    random.shuffle(doubletones)
+    
+    i=0
+    for p in players:
+        p.is_doubletone = False
+        p.is_tripletone = False
+        if (i<=29):
+            if (doubletones[i] == 1):
+                p.is_doubletone = True
+            else:
+                p.is_tripletone = True
+        i+=1
+
+    set_doubletones_order(player)
+    set_tripletones_order(player)
 
 def set_doubletones_order(player: Player):
     indices = [0,1,2,3,4,5,6,7,8,9]
@@ -83,10 +101,11 @@ def set_doubletones_order(player: Player):
 
     i=0
     for p in players:
-        if (i<=9):
+        print(p.is_doubletone)
+        if (p.is_doubletone==True):
             p.doubletone_index = indices[i]
-            p.is_doubletone = True
-        i+=1
+            i+=1
+        
 
 def set_tripletones_order(player: Player):
     indices = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
@@ -95,10 +114,10 @@ def set_tripletones_order(player: Player):
 
     i=0
     for p in players:
-        if (i>=10) and (i<=29):
-            p.tripletone_index = indices[i-10]
-            p.is_tripletone = True
-        i+=1
+        if (p.is_tripletone==True):
+            p.tripletone_index = indices[i]
+            i+=1
+        
 
 def set_between_menus_order(player: Player):
     indices = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
@@ -118,7 +137,7 @@ def set_between_menus_order(player: Player):
 #----------------------------------------------------------
 class Doubletone_Decision(Page):
     def is_displayed(player):
-        return player.subsession.round_number <= C.NUMBER_OF_DOUBLETONES
+        return player.is_doubletone == True
     form_model = 'player'
     form_fields = ['doubletone_choice']
 
@@ -137,7 +156,7 @@ class Doubletone_Decision(Page):
 
 class Tripletone_Decision(Page):
     def is_displayed(player):
-        return (player.subsession.round_number > C.NUMBER_OF_DOUBLETONES) and (player.subsession.round_number <= C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES)
+        return player.is_tripletone == True
     form_model = 'player'
     form_fields = ['tripletone_choice']
 
@@ -230,8 +249,8 @@ class Instructions_Between_Menu(Page):
 page_sequence = [
             Instructions_Overview,
             Instructions_Within_Menu,
-            Instructions_Between_Menu,
             Doubletone_Decision,
             Tripletone_Decision,
+            Instructions_Between_Menu,
             Between_Menu_Decision
             ]
