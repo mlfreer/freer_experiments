@@ -70,10 +70,15 @@ class Player(BasePlayer):
 #----------------------------------------------------------
 # FUNCTIONS
 #----------------------------------------------------------
+
+#----------------------------------------------------------
+# CREATING SESSION:
+#----------------------------------------------------------
 def creating_session(subsession):
     for p in subsession.get_players():
         set_doubletones_and_tripletones(p)
         set_between_menus_order(p)
+    #----------------------------------------------------------
 
 def set_doubletones_and_tripletones(player: Player):
     players = player.in_all_rounds()
@@ -90,9 +95,10 @@ def set_doubletones_and_tripletones(player: Player):
             else:
                 p.is_tripletone = True
         i+=1
-
     set_doubletones_order(player)
     set_tripletones_order(player)
+    #----------------------------------------------------------
+
 
 def set_doubletones_order(player: Player):
     indices = [0,1,2,3,4,5,6,7,8,9]
@@ -105,6 +111,8 @@ def set_doubletones_order(player: Player):
         if (p.is_doubletone==True):
             p.doubletone_index = indices[i]
             i+=1
+    #----------------------------------------------------------
+
         
 
 def set_tripletones_order(player: Player):
@@ -117,7 +125,8 @@ def set_tripletones_order(player: Player):
         if (p.is_tripletone==True):
             p.tripletone_index = indices[i]
             i+=1
-        
+    #----------------------------------------------------------
+
 
 def set_between_menus_order(player: Player):
     indices = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
@@ -130,6 +139,13 @@ def set_between_menus_order(player: Player):
             p.between_menu_index = indices[i-30]
             p.is_between_menu_choice = True
         i+=1
+    #----------------------------------------------------------
+
+#----------------------------------------------------------
+# COMPUTING PAYOFF
+#----------------------------------------------------------
+def get_payoff(player:Player):
+    pass
 
 
 #----------------------------------------------------------
@@ -226,6 +242,12 @@ class Between_Menu_Decision(Page):
             )
         #------------------------------------------------------------
 
+#----------------------------------------------------------
+# RESULTS:
+#----------------------------------------------------------
+class Results(Page):
+    def is_displayed(player):
+        return player.round_number == C.NUM_ROUNDS
 
 #----------------------------------------------------------
 # INSTRUCTIONS
@@ -241,6 +263,7 @@ class Instructions_Within_Menu(Page):
 class Instructions_Between_Menu(Page):
     def is_displayed(player):
         return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
+    #----------------------------------------------------------
 
 
 #------------------------------------------------------------
