@@ -66,6 +66,9 @@ class Player(BasePlayer):
     # between menu order
     between_menu_index = models.IntegerField(initial=-1)
 
+    payment_round_within = models.IntegerField(initial=-1,min=1,max=30)
+    payment_round_between = models.IntegerField(initial=-1,min=31,max=50)
+
 
 #----------------------------------------------------------
 # FUNCTIONS
@@ -107,7 +110,7 @@ def set_doubletones_order(player: Player):
 
     i=0
     for p in players:
-        print(p.is_doubletone)
+#        print(p.is_doubletone)
         if (p.is_doubletone==True):
             p.doubletone_index = indices[i]
             i+=1
@@ -145,7 +148,20 @@ def set_between_menus_order(player: Player):
 # COMPUTING PAYOFF
 #----------------------------------------------------------
 def get_payoff(player:Player):
-    pass
+    # remove magic numbers later:
+    player.payment_round_within = random.randint(1,31)
+    player.payment_round_between = random.randint(31,51)
+
+    # flipping the coins:
+    coin_within = random.randint(0,2)
+    coin_between = random.randint(0,2)
+
+    p_within = player.in_round(player.payment_round_within)
+    p_between = player.in_round(player.payment_round_between)
+
+    # recover the choices
+    # determine the payment
+    # push them to the payoff variable so collides nicely with payment table
 
 
 #----------------------------------------------------------
@@ -199,6 +215,13 @@ class Between_Menu_Decision(Page):
         return (player.subsession.round_number> C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES)
     form_model = 'player'
     form_fields = ['between_menu_choice']
+
+    @staticmethod
+    def before_next_page(player):
+        if player.round_number == C.NUM_ROUNDS:
+            get_payoff(player)
+
+
 
     @staticmethod
     def vars_for_template(player):
