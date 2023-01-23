@@ -13,6 +13,7 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 50
 
+    SHOW_UP_FEE = cu(5)
     # within and between budget choices:
     NUMBER_OF_DOUBLETONES = 10
     NUMBER_OF_TRIPLETONES = 20
@@ -68,6 +69,16 @@ class Player(BasePlayer):
 
     payment_round_within = models.IntegerField(initial=-1,min=1,max=30)
     payment_round_between = models.IntegerField(initial=-1,min=31,max=50)
+
+    payment_within = models.IntegerField()
+    payment_between = models.IntegerField()
+
+    # additinal variables to keep track of:
+    doubletone_choice_x = models.IntegerField()
+    doubletone_choice_y = models.IntegerField()
+    tripletone_choice_x = models.IntegerField()
+    tripletone_choice_y = models.IntegerField()
+
 
 
 #----------------------------------------------------------
@@ -147,19 +158,82 @@ def set_between_menus_order(player: Player):
 #----------------------------------------------------------
 # COMPUTING PAYOFF
 #----------------------------------------------------------
-def get_payoff(player:Player):
+def set_payoff(player: Player):
     # remove magic numbers later:
     player.payment_round_within = random.randint(1,31)
     player.payment_round_between = random.randint(31,51)
 
-    # flipping the coins:
-    coin_within = random.randint(0,2)
-    coin_between = random.randint(0,2)
-
     p_within = player.in_round(player.payment_round_within)
     p_between = player.in_round(player.payment_round_between)
 
+    within_payment = get_within_payment(p_within)
+    between_payment = get_between_payment(p_between)
+
+    player.payment_within = within_payment
+    player.payment_between = between_payment
+    player.payoff = cu(player.payment_within) + cu(player.payment_between) + C.SHOW_UP_FEE
+
+def get_between_payment(player: Player):
+#    p_between = player.in_round(player.payment_round_between)
+    p_between = player
+
+    coin_within = random.randint(0,2)
+    coin_between = random.randint(0,2)
+
+    if p_between.between_menu_choice == 0:
+        if coin_within == 0:
+            between_payment = p_between.doubletone_choice_x
+        else:
+            between_payment = p_between.doubletone_choice_y
+    elif p_between.between_menu_choice == 1:
+        if coin_within == 0:
+            between_payment = p_between.tripletone_choice_x
+        else:
+            between_payment = p_between.tripletone_choice_y
+    return between_payment
+
+
+def get_within_payment(player: Player):
+    # flipping the coins:
+    # 0 = heads
+    # 1 = tails
+    coin_within = random.randint(0,2)
+    coin_between = random.randint(0,2)
+
+    p_within = player
     # recover the choices
+    if p_within.is_doubletone == True:
+        temp = C.DOUBLETONES[p_within.doubletone_index]
+        choice_within = temp[p_within.doubletone_choice]
+        if coin_within == 0:
+            within_payment = C.UNIVERSAL_X[choice_within]
+        else:
+            within_payment = C.UNIVERSAL_Y[choice_within]
+    elif p_within.is_tripletone == True:
+        if p_within.is_tripletone == 2:
+            choice_within = C.TRIPLETONES[p_within.tripletone_index]
+            if coin_within == 0:
+                within_payment = C.DECOY_X[choice_within]
+            else:
+                within_payment = C.DECOY_Y[choice_within]
+        else:
+            if (player.tripletone_index+1) % C.NUMBER_OF_DOUBLETONES >0:
+                option = C.DOUBLETONES[(player.tripletone_index+1) % C.NUMBER_OF_DOUBLETONES - 1]
+            else:
+                option = C.DOUBLETONES[0]
+
+            within_choice = p_within.tripletone_choice
+
+            if coin_within == 0:
+                within_payment = C.UNIVERSAL_X[option[within_choice]]
+            else:
+                within_payment = C.UNIVERSAL_Y[option[within_choice]]
+
+    return within_payment
+
+
+
+    
     # determine the payment
     # push them to the payoff variable so collides nicely with payment table
 
@@ -217,9 +291,9 @@ class Between_Menu_Decision(Page):
     form_fields = ['between_menu_choice']
 
     @staticmethod
-    def before_next_page(player):
+    def before_next_page(player, timeout_happened):
         if player.round_number == C.NUM_ROUNDS:
-            get_payoff(player)
+            set_payoff(player)
 
 
 
@@ -248,6 +322,10 @@ class Between_Menu_Decision(Page):
             tripletone_choice_x = C.DECOY_X[decoy_index]
             tripletone_choice_y = C.DECOY_Y[decoy_index]
 
+        player.doubletone_choice_x = C.UNIVERSAL_X[option_index[doubletone_choice]]
+        player.doubletone_choice_y = C.UNIVERSAL_Y[option_index[doubletone_choice]]
+        player.tripletone_choice_x = tripletone_choice_x
+        player.tripletone_choice_y = tripletone_choice_y
 
         return dict(
             option1_x = C.UNIVERSAL_X[option_index[0]],
@@ -271,6 +349,16 @@ class Between_Menu_Decision(Page):
 class Results(Page):
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            within_round = player.payment_round_within,
+            between_round = player.payment_round_between - C.NUMBER_OF_DOUBLETONES - C.NUMBER_OF_TRIPLETONES,
+            within_payment = cu(player.payment_within),
+            between_payment = cu(player.payment_between),
+            showup = C.SHOW_UP_FEE
+            )
 
 #----------------------------------------------------------
 # INSTRUCTIONS
@@ -298,5 +386,6 @@ page_sequence = [
             Doubletone_Decision,
             Tripletone_Decision,
             Instructions_Between_Menu,
-            Between_Menu_Decision
+            Between_Menu_Decision,
+            Results
             ]

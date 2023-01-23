@@ -1,0 +1,40 @@
+{{ block title }}
+<div style="float: center; text-align: center; font-family: Georgia, Times, serif;">
+Thank You!
+</div>
+{{ endblock }}
+
+
+{{ block content }}
+
+<font size="4" style="font-family: Georgia, Times, serif;">
+<table class = "table">
+<tr>
+	<td> Round chosen for payment in Block I  </td>
+	<td> {{within_round}} </td>
+</tr>
+<tr style="border-bottom:2px solid black">
+	<td> Payment for Block I </td>
+	<td> {{ within_payment }} </td>
+</tr>
+<tr>
+	<td> Round chosen for payment in Block II </td>
+	<td> {{between_round}} </td>
+</tr>
+<tr style="border-bottom:2px solid black">
+	<td> Payment for Block II </td>
+	<td> {{between_payment}} </td>
+</tr>
+<tr style="border-bottom:2px solid black">
+	<td> Show up fee </td>
+	<td> {{showup}} </td>
+</tr>
+<tr>
+	<td> Total earnings in the experiment </td>
+	<td><b> {{player.payoff}} </b> </td>
+</tr>
+</table>
+
+</font>
+
+{{ endblock }}
