@@ -7,7 +7,12 @@ Block II: Decision Problem <b> {{problem_number}} </b> out of {{total_problems}}
 
 {{ block content }}
 
+
+{% if order == 0%}
 <div class="left-d">
+{% else %}
+<div class="right-d">
+{% endif %}
 <button class="btn btn-outline-secondary  btn-xl" name="between_menu_choice" value="0">
 	<font style="color:#003366;">
 	<u> Your choice:</u>
@@ -42,7 +47,11 @@ Block II: Decision Problem <b> {{problem_number}} </b> out of {{total_problems}}
 </button>
 </div>
 
+{% if order == 0%}
 <div class="right-d">
+{% else %}
+<div class="left-d">
+{% endif %}
 <button class="btn btn-outline-secondary  btn-xl" name="between_menu_choice" value="1">
 	<font style="color:#003366;">
 	<u>	Your choice: </u>

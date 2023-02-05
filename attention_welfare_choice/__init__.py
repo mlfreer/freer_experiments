@@ -13,19 +13,25 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 50
 
-    SHOW_UP_FEE = cu(5)
+    SHOW_UP_FEE = cu(4)
     # within and between budget choices:
     NUMBER_OF_DOUBLETONES = 10
     NUMBER_OF_TRIPLETONES = 20
     NUMBER_OF_BETWEEN_MENU_CHOICES = 20
 
+    # QUIZ ANSWERS:
+    QUIZ1_WITHIN = 2
+    QUIZ2_WITHIN = 1
+    QUIZ1_BETWEEN = 1
+    QUIZ2_BETWEEN = 1
+
     # DEFINING THE UNIVERSAL SET
-    UNIVERSAL_X = [0, 1, 2, 3, 4] # OUTCOMES IN THE STATE OF THE WORLD X
-    UNIVERSAL_Y = [4, 3, 2, 1, 0] # OUTCOMES IN THE STATE OF THE WORLD Y
+    UNIVERSAL_X = [15, 11, 9, 6, 3] # OUTCOMES IN THE STATE OF THE WORLD X
+    UNIVERSAL_Y = [1, 5, 7, 10, 13] # OUTCOMES IN THE STATE OF THE WORLD Y
 
     # DEFINING THE DECOYS:
-    DECOY_X = [-1, -2, -3, -4, -5]
-    DECOY_Y = [-1, -2, -3, -4, -5]
+    DECOY_X = [14, 10, 8, 5, 2]
+    DECOY_Y = [0, 4, 6, 9, 12]
     # decoys correspond to the corresponding index of the alternative
 
     # DOUBLETONES
@@ -50,6 +56,9 @@ class Group(BaseGroup):
 # PLAYER CLASS
 #----------------------------------------------------------
 class Player(BasePlayer):
+    # order of representation
+    alt_order = models.IntegerField()
+
     # decision variables:
     doubletone_choice = models.IntegerField()
     tripletone_choice = models.IntegerField()
@@ -79,6 +88,11 @@ class Player(BasePlayer):
     tripletone_choice_x = models.IntegerField()
     tripletone_choice_y = models.IntegerField()
 
+    # quiz questions
+    within_q1 = models.IntegerField()
+    within_q2 = models.IntegerField()
+    between_q1 = models.IntegerField()
+    between_q2 = models.IntegerField()
 
 
 #----------------------------------------------------------
@@ -160,8 +174,8 @@ def set_between_menus_order(player: Player):
 #----------------------------------------------------------
 def set_payoff(player: Player):
     # remove magic numbers later:
-    player.payment_round_within = random.randint(1,31)
-    player.payment_round_between = random.randint(31,51)
+    player.payment_round_within = random.randint(1,30)
+    player.payment_round_between = random.randint(31,50)
 
     p_within = player.in_round(player.payment_round_within)
     p_between = player.in_round(player.payment_round_between)
@@ -177,8 +191,8 @@ def get_between_payment(player: Player):
 #    p_between = player.in_round(player.payment_round_between)
     p_between = player
 
-    coin_within = random.randint(0,2)
-    coin_between = random.randint(0,2)
+    coin_within = random.randint(0,1)
+    coin_between = random.randint(0,1)
 
     if p_between.between_menu_choice == 0:
         if coin_within == 0:
@@ -197,8 +211,8 @@ def get_within_payment(player: Player):
     # flipping the coins:
     # 0 = heads
     # 1 = tails
-    coin_within = random.randint(0,2)
-    coin_between = random.randint(0,2)
+    coin_within = random.randint(0,1)
+    coin_between = random.randint(0,1)
 
     p_within = player
     # recover the choices
@@ -210,7 +224,7 @@ def get_within_payment(player: Player):
         else:
             within_payment = C.UNIVERSAL_Y[choice_within]
     elif p_within.is_tripletone == True:
-        if p_within.is_tripletone == 2:
+        if p_within.tripletone_choice == 2:
             choice_within = C.TRIPLETONES[p_within.tripletone_index]
             if coin_within == 0:
                 within_payment = C.DECOY_X[choice_within]
@@ -250,13 +264,15 @@ class Doubletone_Decision(Page):
     @staticmethod
     def vars_for_template(player):
         temp = C.DOUBLETONES[player.doubletone_index]
+        player.alt_order = random.randint(0,1)
 #       print(temp[0])
         return dict(
             option1_x = C.UNIVERSAL_X[temp[0]],
             option1_y = C.UNIVERSAL_Y[temp[0]],
             option2_x = C.UNIVERSAL_X[temp[1]],
             option2_y = C.UNIVERSAL_Y[temp[1]],
-            total_problems = C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES
+            total_problems = C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES,
+            order = player.alt_order
             )
     #------------------------------------------------------------
 
@@ -273,6 +289,8 @@ class Tripletone_Decision(Page):
             option_index = C.DOUBLETONES[(player.tripletone_index+1) % C.NUMBER_OF_DOUBLETONES - 1]
         else:
             option_index = C.DOUBLETONES[0]
+
+        player.alt_order = random.randint(0,5)
         return dict(
             option1_x = C.UNIVERSAL_X[option_index[0]],
             option1_y = C.UNIVERSAL_Y[option_index[0]],
@@ -280,7 +298,8 @@ class Tripletone_Decision(Page):
             option2_y = C.UNIVERSAL_Y[option_index[1]],
             decoy_x = C.DECOY_X[decoy_index],
             decoy_y = C.DECOY_Y[decoy_index],
-            total_problems = C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES
+            total_problems = C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES,
+            order = player.alt_order
             )
     #------------------------------------------------------------
 
@@ -327,6 +346,8 @@ class Between_Menu_Decision(Page):
         player.tripletone_choice_x = tripletone_choice_x
         player.tripletone_choice_y = tripletone_choice_y
 
+        player.alt_order = random.randint(0,1)
+
         return dict(
             option1_x = C.UNIVERSAL_X[option_index[0]],
             option1_y = C.UNIVERSAL_Y[option_index[0]],
@@ -339,7 +360,8 @@ class Between_Menu_Decision(Page):
             tripletone_choice_x = tripletone_choice_x,
             tripletone_choice_y = tripletone_choice_y,
             total_problems = C.NUMBER_OF_BETWEEN_MENU_CHOICES,
-            problem_number = player.subsession.round_number - C.NUMBER_OF_DOUBLETONES - C.NUMBER_OF_TRIPLETONES
+            problem_number = player.subsession.round_number - C.NUMBER_OF_DOUBLETONES - C.NUMBER_OF_TRIPLETONES,
+            order = player.alt_order
             )
         #------------------------------------------------------------
 
@@ -376,6 +398,69 @@ class Instructions_Between_Menu(Page):
         return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
     #----------------------------------------------------------
 
+#----------------------------------------------------------
+# QUIZ PAGES
+#----------------------------------------------------------
+class Quiz1_within(Page):
+    # outcomes are equally likely
+    def is_displayed(player):
+        return (player.subsession.round_number == 1)
+
+    form_model = 'player'
+    form_fields = ['within_q1']
+
+    def error_message(player, value):
+        if value['within_q1'] != C.QUIZ1_WITHIN:
+            result = 'Wrong Answer. Please Try Again.'
+            return result
+    #----------------------------------------------------------
+
+
+
+class Quiz2_within(Page):
+    # realization and payment
+    def is_displayed(player):
+        return (player.subsession.round_number == 1)
+
+    form_model = 'player'
+    form_fields = ['within_q2']
+
+    def error_message(player, value):
+        if value['within_q2'] != C.QUIZ2_WITHIN:
+            result = 'Wrong Answer. Please Try Again.'
+            return result
+    #----------------------------------------------------------
+
+class Quiz1_between(Page):
+    # realization and payment
+    def is_displayed(player):
+        return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
+
+    form_model = 'player'
+    form_fields = ['between_q1']
+
+    def error_message(player, value):
+        if value['between_q1'] != C.QUIZ1_BETWEEN:
+            result = 'Wrong Answer. Please Try Again.'
+            return result
+    #----------------------------------------------------------
+
+
+class Quiz2_between(Page):
+    # realization and payment
+    def is_displayed(player):
+        return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
+
+    form_model = 'player'
+    form_fields = ['between_q2']
+
+    def error_message(player, value):
+        if value['between_q2'] != C.QUIZ2_BETWEEN:
+            result = 'Wrong Answer. Please Try Again.'
+            return result
+    #----------------------------------------------------------
+
+
 
 #------------------------------------------------------------
 # PAGE SEQUENCE
@@ -383,9 +468,13 @@ class Instructions_Between_Menu(Page):
 page_sequence = [
             Instructions_Overview,
             Instructions_Within_Menu,
+            Quiz1_within,
+            Quiz2_within,
             Doubletone_Decision,
             Tripletone_Decision,
             Instructions_Between_Menu,
+            Quiz1_between,
+            Quiz2_between,
             Between_Menu_Decision,
             Results
             ]

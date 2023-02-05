@@ -7,7 +7,11 @@ Block I: Decision Problem <b>{{player.subsession.round_number}}</b> out of {{tot
 
 {{ block content }}
 
+{% if order == 0%}
 <div class="left-d">
+{% else %}
+<div class="right-d">
+{% endif %}
 <button class="btn btn-outline-secondary  btn-xl" name="doubletone_choice" value="0">
 	£{{option1_x}} payment if Heads
 	<br>
@@ -15,15 +19,18 @@ Block I: Decision Problem <b>{{player.subsession.round_number}}</b> out of {{tot
 </button>
 </div>
 
+
+{% if order == 0%}
 <div class="right-d">
+{% else %}
+<div class="left-d">
+{% endif %}
 <button class="btn btn-outline-secondary  btn-xl" name="doubletone_choice" value="1">
 	£{{option2_x}} payment if Heads
 	<br>
 	£{{option2_y}} payment if Tails
 </button>
 </div>
-
-
 
 
 <link href="{{ static 'global/attention_welfare_decision_screen.css' }}" rel="stylesheet"/>
@@ -49,6 +56,4 @@ Block I: Decision Problem <b>{{player.subsession.round_number}}</b> out of {{tot
 }
 </style>
 
-
 {{ endblock }}
-

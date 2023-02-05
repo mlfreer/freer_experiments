@@ -1,0 +1,121 @@
+{{ block title }}
+<div style="float: center; text-align: center; font-family: Georgia, Times, serif;">
+Block I: Comprehension Check.
+</div>
+{{ endblock }}
+
+
+{{ block content }}
+
+<font size="4" style="font-family: Georgia, Times, serif;">
+
+<div class="card bg-light">
+    <div class="card-body">
+        <b>The following option is chosen:</b> 
+        
+        <br>
+        <img style="text-align: center; margin-left: 35%; float: center; max-width: 30%;max-height: 30%;" src="{{ static 'pictures/within_quiz.png' }}"/>
+
+        <br>
+
+        <b> What is the chance of getting each payment? </b>
+            <table class="table"> 
+            <tr> 
+                <td> <input id="Option5" type="radio" name="within_q1" value="0" required> 
+                    20% of receiving £2 and 80% of receiving £12
+                </td>
+            </tr>
+            <tr> 
+                <td> <input id="Option5" type="radio" name="within_q1" value="1" required> 
+                    60% of receiving £2 and 40% of receiving £12
+                </td>
+            </tr>
+            <tr> 
+                <td> <input id="Option5" type="radio" name="within_q1" value="2" required> 
+                    50% of receiving £2 and 50% of receiving £12
+                </td>
+            </tr>
+            <tr> 
+                <td> <input id="Option5" type="radio" name="within_q1" value="3" required> 
+                    0% of receiving £2 and 100% of receiving £12
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<br>
+
+<div style="float: center; text-align: center;">
+{{ next_button }}
+</div>
+
+<link href="{{ static 'global/attention_welfare_decision_screen.css' }}" rel="stylesheet"/>
+
+</font>
+
+<div class="card bg-light">
+<input type="button" onclick="InstructionsVisibility()"  class="btn btn-outline-secondary" value="Instructions">
+</div>
+
+<div id="FormInstructions" style="visibility: hidden;">
+<font size="4" style="font-family: Georgia, Times, serif;">
+
+<div class="card bg-light">
+    <div class="card-body">
+        <b> Structure of the Block </b>
+        <br>
+        This block consists of 30 rounds.
+        One of the 30 rounds will be randomly selected to determine your payment.
+        All rounds are equally likely to be selected.
+        Thus, it is important for you to take each round seriously.
+
+        <br><br>
+
+        <b> Structure of the Round </b>
+        <br>
+        In this block you choose between options.
+        There are two equally likely states of the world: Heads and Tails. 
+        The actual state will be determined by a virtual coin flip (using the computer’s random number generator).
+        For example if you choose the left option, then you will receive £9 if the coin comes up Heads, and will receive £7 if the coin comes up Tails. 
+
+        <br><br>
+        <img style="float: center; max-width: 100%;max-height: 100%;" src="{{ static 'pictures/doubletone.png' }}"/>
+        <div class="caption" style="float: center; text-align: center;"><b> Fig.: Interface </b></div>
+
+        <br>
+
+        You can see the example interface above.
+        You will be presented with menus consisting of two or three options.
+        You choose the option by clicking on it.
+        Upon making the decision you would be automatically transfered to the next round.
+
+    </div>
+</div>
+</div>
+
+<style type="text/css">
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+</style>
+
+<script>
+    var flag =0;
+    function InstructionsVisibility(){
+ //       alert(flag)
+        var form_instructions =  document.getElementById("FormInstructions");
+        if (flag == 0) {
+            form_instructions.style.visibility="visible";
+            flag=1
+        }
+        else {
+            form_instructions.style.visibility="hidden";
+            flag=0
+        }
+    }
+</script>
+{{ endblock }}
