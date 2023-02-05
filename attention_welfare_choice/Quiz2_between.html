@@ -63,32 +63,38 @@ Block I: Comprehension Check.
 
 <div class="card bg-light">
     <div class="card-body">
-        <b> Structure of the Block </b>
-        <br>
-        This block consists of 30 rounds.
-        One of the 30 rounds will be randomly selected to determine your payment.
-        All rounds are equally likely to be selected.
-        Thus, it is important for you to take each round seriously.
 
-        <br><br>
-
-        <b> Structure of the Round </b>
-        <br>
-        In this block you choose between options.
-        There are two equally likely states of the world: Heads and Tails. 
+        In this block you will be presented with a choice between menus of options.
+        There are two equally likely states of the world: Heads and Tails.
         The actual state will be determined by a virtual coin flip (using the computer’s random number generator).
-        For example if you choose the left option, then you will receive £9 if the coin comes up Heads, and will receive £7 if the coin comes up Tails. 
+        In each decision problem you will be presented with two menus to choose from.
+        
+        <br><br>
+
+        <img style="float: center; max-width: 100%;max-height: 100%;" src="{{ static 'pictures/between_menu.png' }}"/>
+        <div class="caption" style="float: center; text-align: center;"><b> Fig: Interface </b></div>
 
         <br><br>
-        <img style="float: center; max-width: 100%;max-height: 100%;" src="{{ static 'pictures/doubletone.png' }}"/>
-        <div class="caption" style="float: center; text-align: center;"><b> Fig.: Interface </b></div>
 
-        <br>
+        For each menu you see: the choice you made from this menu in the first block (top part), and the actual composition of the menu (bottom part).
+        That is, in the example above if we consider the menu on the left, there are three options present:
+        
+        <ul style="list-style-type: none">
+            <li> £9 payment if Heads and £7 payment if Tails,
+            <li> £2 payment if Heads and £12 payment if Tails,
+            <li> £3 payment if Heads and £13 payment if Tails.
+        </ul>
 
-        You can see the example interface above.
-        You will be presented with menus consisting of two or three options.
-        You choose the option by clicking on it.
-        Upon making the decision you would be automatically transfered to the next round.
+        The alternative chosen was:
+        <ul style="list-style-type: none">
+            <li> £2 payment if Heads and £12 payment if Tails,
+        </ul>
+
+        When you choose the menu, you do not have an option to revise the choice from the Block I.
+        That is, if you choose the menu on the right, then the corresponding chosen option would be 
+        <ul style="list-style-type: none">
+            <li> £3 payment if Heads and £13 payment if Tails,
+        </ul>
 
     </div>
 </div>
