@@ -1,0 +1,72 @@
+
+<font size="4">
+<table class="table">
+    <tr> 
+        <td style="width: 70%;"> You are Player </td>
+        {% if my_number == 1 or my_number == 3 %}
+        <td style="width: 30%;" > <b> {{ my_number }} </b> </td>
+        {% else %}
+        {% if my_profile == 1 %}
+        <td style="width: 30%;"> <b> {{ my_number }}a </b> </td>
+        {% elif my_profile == 2 %}
+        <td style="width: 30%;"> <b> {{ my_number }}b </b> </td>
+        {% endif %}
+        {% endif %}
+    </tr>
+</table>
+
+
+The payments for all players are shown below.
+<br>
+Your own payments are highlighted in bold.
+
+<br>
+<br>
+
+
+<table class="table">
+    </tr>
+    <tr>
+        <td> Player </td>
+        <td style="color:blue"> <b> blue </b> </td>
+        <td style="color:green"> <b> green </b> </td>
+        <td style="color:#c24e00"> <b> orange</b> </td>
+    </tr>
+
+
+    <tr>   
+        <td> {% if my_number == 1 %} <b> {% endif %} 
+            1 </td>
+        {% for temp in preference_profiles.0 %}
+            <td> 
+                {% if my_number == 1 %} <b> {% endif %}
+                {{ temp }} 
+            </td>
+        {% endfor %}
+    </tr>
+
+    <tr>   
+        <td> {% if my_number == 2 and my_profile == 1 %} <b> {% endif %} 2a </td>
+        {% for temp in preference_profiles.1 %}
+            <td> {% if my_number == 2 and my_profile == 1 %} <b> {% endif %}  {{ temp }}  </td>
+        {% endfor %}
+    </tr>
+
+    <tr>   
+        <td> {% if my_number == 2 and my_profile == 2 %} <b> {% endif %} 2b </td>
+        {% for temp in preference_profiles.2 %}
+            <td> {% if my_number == 2 and my_profile == 2 %} <b> {% endif %} {{ temp }}  </td>
+        {% endfor %}
+    </tr>
+
+    <tr>   
+        <td> {% if my_number == 3 %} <b> {% endif %} 3 </td>
+        {% for temp in preference_profiles.3 %}
+            <td> {% if my_number == 3 %} <b> {% endif %} {{ temp }} </td>
+        {% endfor %}
+    </tr>
+
+
+</table>
+</font>
+

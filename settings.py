@@ -6,6 +6,11 @@ SESSION_CONFIGS = [
          app_sequence=['attention_welfare_choice'],
          num_demo_participants=1,
      ),
+     dict(
+         name='Simple_Voting_3P_Dominat_Strategy_Dynamic_Good_Compromise',
+         app_sequence=['simple_voting_3P_DS_GC_indirect'],
+         num_demo_participants=3,
+     ),
 ]
 
 #------------------------------------------------------------------------------------
