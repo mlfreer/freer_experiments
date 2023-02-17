@@ -1,0 +1,130 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Voting (Round {{round_number}} of {{num_rounds}})
+{% endblock %}
+
+{% block content %}
+
+{% include "global/Preferences.html" %}
+
+<font size="4">
+
+
+Please rank the alternatives in the order you would like to <b>eliminate</b> them.
+
+<br><br>
+
+<table class="table">
+    <tr>
+        <td> 
+            Alternative ranked <b>first</b>
+        </td>
+        <td>
+            <select id="rank_1" name="rank_1" onchange="this.className=this.options[this.selectedIndex].className" class="blackText">
+                <option value="-1" class="blackText"> None </option>
+                <option value="{{numeric_options.0}}" class="blueText"> blue </option>
+                <option value="{{numeric_options.1}}" class="greenText"> green </option>
+                <option value="{{numeric_options.2}}" class="orangeText"> orange </option>
+                <option value="{{numeric_options.3}}" class="purpleText"> purple </option>
+
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td> 
+            Alternative ranked <b>second</b>
+        </td>
+        <td>
+            <select id="rank_2" name="rank_2" onchange="this.className=this.options[this.selectedIndex].className" class="blackText">
+                <option value="-1" class="blackText"> None </option>
+                <option value="{{numeric_options.0}}" class="blueText"> blue </option>
+                <option value="{{numeric_options.1}}" class="greenText"> green </option>
+                <option value="{{numeric_options.2}}" class="orangeText"> orange </option>
+                <option value="{{numeric_options.3}}" class="purpleText"> purple </option>
+
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td> 
+            Alternative ranked <b>third</b>
+        </td>
+        <td>
+            <select id="rank_3" name="rank_3" onchange="this.className=this.options[this.selectedIndex].className" class="blackText">
+                <option value="-1" class="blackText"> None </option>
+                <option value="{{numeric_options.0}}" class="blueText"> blue </option>
+                <option value="{{numeric_options.1}}" class="greenText"> green </option>
+                <option value="{{numeric_options.2}}" class="orangeText"> orange </option>
+                <option value="{{numeric_options.3}}" class="purpleText"> purple </option>
+
+            </select>
+        </td>
+    </tr>
+</table>
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+</font>
+
+
+
+
+<style>
+.blackText{
+    text-align: center;
+    border-radius: 10px;
+    max-width: 125px;
+    min-width: 125px;
+    min-height:  30px;
+    color:black; 
+    font-weight: bold;
+}
+
+
+.greenText{
+    text-align: center;
+    border-radius: 10px;
+    max-width: 125px;
+    min-width: 125px;
+    min-height:  30px;
+    color:green; 
+    font-weight: bold;
+}
+
+.blueText{
+    text-align: center;
+    border-radius: 10px;
+    max-width: 125px;
+    min-width: 125px;
+    min-height:  30px;
+    color:blue; 
+    font-weight: bold;
+}
+
+.orangeText{
+    text-align: center;
+    border-radius: 10px;
+    max-width: 125px;
+    min-width: 125px;
+    min-height:  30px;
+    color:#c24e00; 
+    font-weight: bold;
+}
+
+.purpleText{
+    text-align: center;
+    border-radius: 10px;
+    max-width: 125px;
+    min-width: 125px;
+    min-height:  30px;
+    color:purple; 
+    font-weight: bold;
+}
+
+</style>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Outcome (Round {{round_number}} of {{num_rounds}})
+{% endblock %}
+
+{% block content %}
+
+
+{% include "global/Preferences.html" %}
+
+
+
+<font size="4">
+
+
+
+<table class="table">
+<tr>
+    <td> The <b>implemented</b> alternative is </td>
+        {% if numeric_collective_choice == 0 %}
+        <td  style="color:blue"> <b> {{collective_choice}} </b> </td>
+        {% elif numeric_collective_choice == 1 %}
+        <td  style="color:green"> <b> {{collective_choice}} </b> </td>
+        {% elif numeric_collective_choice == 2 %}
+        <td style="color:#c24e00"> <b> {{collective_choice}} </b> </td>
+        {% elif numeric_collective_choice == 3 %}
+        <td  style="color:purple;"  > <b> {{collective_choice}} </b> </td>
+        {% endif %}
+</tr>
+
+<tr>
+    <td> Your <b>payment</b> is </td>
+    <td> {{ earnings }}</td>
+</tr>
+<tr>
+    <td>  </td>
+    <td> <b> {% next_button %} </b> </td>
+</tr>
+</table>
+</font>
+{% endblock %}
+
+
