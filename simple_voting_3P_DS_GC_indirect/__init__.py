@@ -28,11 +28,6 @@ class Constants(BaseConstants):
 # Models
 #-----------------------------------------------------------------------------------
 class Subsession(BaseSubsession):
-    # variable to determine the group level preference ordering
-    blue = models.IntegerField(min=0,max=2)
-    green = models.IntegerField(min=0,max=2)
-    orange = models.IntegerField(min=0,max=2)
-
     # variables for paying round:
     paying_round = models.IntegerField(min=1,max=Constants.num_rounds,initial=0)
     
@@ -67,13 +62,6 @@ class Player(BasePlayer):
 
 #-----------------------------------------------------------------------------------
 # session level
-def set_order(session: Subsession):
-    numeric = [0, 1, 2]
-    random.shuffle(numeric)
-    session.blue = numeric[0]
-    session.green = numeric[1]
-    session.orange = numeric[2]
-
 def creating_session(session: Subsession):
     session.group_randomly(fixed_id_in_group=False)
 
@@ -85,12 +73,14 @@ def set_paying_round(session: Subsession):
 #-----------------------------------------------------------------------------------
 # group level
 def set_ordering(group: Group):
-    group.blue = group.subsession.blue
-    group.green = group.subsession.green
-    group.orange = group.subsession.orange
+    numeric = [0, 1, 2]
+    random.shuffle(numeric)
+    group.blue = numeric[0]
+    group.green = numeric[1]
+    group.orange = numeric[2]
 
 def t1_elimination(group: Group):
-    numeric_alternatives = [1, 2, 3]
+    numeric_alternatives = [0, 1, 2]
     random.shuffle(numeric_alternatives)
     remaining = [numeric_alternatives[0], numeric_alternatives[1]]
     remaining.sort()
@@ -108,21 +98,21 @@ def set_results(group: Group):
     votes = [0 for x in range(0,3)]
     # computing the votes
     for p in players:
-        votes[p.vote-1] = votes[p.vote-1]+1
+        votes[p.vote] = votes[p.vote]+1
 
     # finding eliminated alternative
     max_element = max(votes)    
     group.t2_Eliminated = votes.index(max(votes))
 
     # computing the collective choice
-    if group.t2_Eliminated == group.Option1-1:
-        group.Collective_Choice = group.Option2-1
+    if group.t2_Eliminated == group.Option1:
+        group.Collective_Choice = group.Option2
     else:
-        group.Collective_Choice = group.Option1-1
+        group.Collective_Choice = group.Option1
 
     players = group.get_players()
     for p in players:
-        p.set_payoff()
+        set_payoff(p)
 
 #-----------------------------------------------------------------------------------
 # player level
@@ -142,8 +132,16 @@ def set_MyPrefernces(player: Player):
 
 def set_payoff(player: Player):
     choice = player.group.Collective_Choice
-    player.earnings = Constants.preferences[player.group.Ordering][player.MyPreferences][choice]
-    if player.subsession.round_number == Constants.nusm_rounds:
+    blue = player.group.blue
+    green = player.group.green
+    orange = player.group.orange
+    if choice == 0:
+        player.earnings = Constants.preferences[player.MyPreferences][blue]
+    elif choice == 1:
+        player.earnings = Constants.preferences[player.MyPreferences][green]
+    elif choice == 2:
+        player.earnings = Constants.preferences[player.MyPreferences][orange]
+    if player.round_number == Constants.num_rounds:
         p = player.in_round(player.subsession.paying_round)
         player.payoff = p.earnings
 
@@ -161,7 +159,6 @@ class SetupWaitPage(WaitPage):
         if subsession.round_number == 1:
             set_paying_round(subsession)
         players = subsession.get_players()
-        set_order(subsession)
         for p in players: 
             set_MyPrefernces(p)
         groups = subsession.get_groups()
@@ -190,40 +187,46 @@ class Voting(Page):
 #            my_preferences = temp,
             my_profile = profile,
             numeric_options = [player.group.Option1, player.group.Option2],
-            options = [Constants.alternatives[player.group.Option1-1],Constants.alternatives[player.group.Option2-1]],
-            eliminated = Constants.alternatives[player.group.t1_Eliminated-1],
+            options = [Constants.alternatives[player.group.Option1],Constants.alternatives[player.group.Option2]],
+            eliminated = Constants.alternatives[player.group.t1_Eliminated],
             round_number = player.round_number,
             num_rounds = Constants.num_rounds
             )
 
 class ResultsWaitPage(WaitPage):
     wait_for_all_groups = False
-    def after_all_players_arrive(player):
-        player.group.set_results()
+    @staticmethod
+    def after_all_players_arrive(group: Group):
+        set_results(group)
 
 class Results(Page):
     def vars_for_template(player):
-        if player.player.subsession.round_number == Constants.num_rounds:
-            p = player.in_round(player.player.subsession.paying_round)
+        if player.subsession.round_number == Constants.num_rounds:
+            p = player.in_round(player.subsession.paying_round)
             player.participant.vars['treatment_earnings'] = p.earnings
 
-        temp1 = [0 for x in range(0,4)]
-        profile = self.player.MyPreferences
-        temp1[0] = Constants.preferences[player.group.Ordering][profile][0]
-        temp1[1] = Constants.preferences[player.group.Ordering][profile][1]
-        temp1[2] = Constants.preferences[player.group.Ordering][profile][2]
-        temp1[3] = Constants.preferences[player.group.Ordering][profile][3]
+        profile = player.MyPreferences
+        temp = [0 for x in range(0,4)]
+        temp[0] = [ Constants.preferences[0][player.group.blue], Constants.preferences[0][player.group.green], Constants.preferences[0][player.group.orange]]
+        temp[1] = [ Constants.preferences[1][player.group.blue], Constants.preferences[1][player.group.green], Constants.preferences[1][player.group.orange]]
+        temp[2] = [ Constants.preferences[2][player.group.blue], Constants.preferences[2][player.group.green], Constants.preferences[2][player.group.orange]]
+        temp[3] = [ Constants.preferences[3][player.group.blue], Constants.preferences[3][player.group.green], Constants.preferences[3][player.group.orange]]
 
+#        temp[1] = Constants.preferences[player.group.Ordering][profile][1]
+#        temp[2] = Constants.preferences[player.group.Ordering][profile][2]
+#        temp[3] = Constants.preferences[player.group.Ordering][profile][3]
 
         return dict(
-            my_preferences = temp1,
-            preference_profiles = Constants.preferences[self.player.group.Ordering],
+            preference_profiles = temp,
             my_number = player.id_in_group,
+            choice = player.group.Collective_Choice,
+            earnings = player.earnings,
+#            my_preferences = temp,
             my_profile = profile,
-            collective_choice = Constants.alternatives[self.player.group.Collective_Choice],
-            numeric_collective_choice = self.player.group.Collective_Choice,
-            earnings = temp1[self.player.group.Collective_Choice],
-            round_number = self.player.subsession.round_number,
+            numeric_options = [player.group.Option1, player.group.Option2],
+            options = [Constants.alternatives[player.group.Option1],Constants.alternatives[player.group.Option2]],
+            eliminated = Constants.alternatives[player.group.t1_Eliminated],
+            round_number = player.round_number,
             num_rounds = Constants.num_rounds
             )
 
