@@ -1,0 +1,36 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Post-Experimental Task 1
+{% endblock %}
+
+{% block content %}
+
+<font size="4">
+
+We will ask you to choose a number between 0 and 100.
+
+<br><br>
+
+All the other participants in today's experiment will also choose a number between 0 and 100.
+
+<br><br>
+
+
+The winner is the person whose number is closest to <b>2/3 times the average of all chosen numbers.</b>
+
+<br><br>
+
+The winner receives a prize of £5.  If there is a tie, the prize is split equally among all the winners.
+
+
+<br><br>
+
+</font>
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+{% endblock %}

@@ -3,13 +3,27 @@ from os import environ
 SESSION_CONFIGS = [
      dict(
          name='Attention_Welfare_Experiment',
+         display_name='Attention Welfare Experiment',
          app_sequence=['attention_welfare_choice'],
          num_demo_participants=1,
      ),
      dict(
-         name='Simple_Voting_3P_Dominat_Strategy_Dynamic_Good_Compromise',
+         name = 'simple_voting_3P_DS_GC_indirect',
+         display_name='Simple Voting: 3P x Dominat Strategy x Dynamic x Good Compromise',
          app_sequence=['simple_voting_3P_DS_GC_indirect'],
          num_demo_participants=3,
+     ),
+     dict(
+         name ='Beauty_Contest',
+         display_name ='Beauty Contest',
+         num_demo_participants = 2,
+         app_sequence = ['beauty_contest'],
+     ),
+     dict(
+         name ='RiskElicitation',
+         display_name ='Risk Elicitation',
+         num_demo_participants = 1,
+         app_sequence = ['risk_elicitation'],
      ),
 ]
 

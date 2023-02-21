@@ -1,0 +1,27 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Final Results
+{% endblock %}
+
+{% block content %}
+<font size="4">
+Thank you for completing the experiment.
+Please find the data on your final result below.
+
+<br><br>
+
+<table class="table">
+    <tr> 
+        <td> Your guess </td>
+        <td> {{guess}} </td>
+    </tr>
+    <tr> 
+        <td> Your earning in the post-experiment task 1</td>
+        <td> {{ earning }} </td>
+    </tr>
+</table>
+</font>
+
+{% endblock %}
