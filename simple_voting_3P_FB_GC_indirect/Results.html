@@ -1,0 +1,44 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Outcome (Round {{round_number}} of {{num_rounds}})
+{% endblock %}
+
+{% block content %}
+
+
+{% include "_static/global/Preferences_3P.html" %}
+
+
+
+<font size="4">
+
+
+
+<table class="table">
+<tr>
+    <td> The <b>implemented</b> alternative is </td>
+        {% if choice == 0 %}
+        <td  style="color:blue"> <b> blue </b> </td>
+        {% elif choice == 1 %}
+        <td  style="color:green"> <b> green </b> </td>
+        {% elif choice == 2 %}
+        <td style="color:#c24e00"> <b> orange </b> </td>
+        {% endif %}
+</tr>
+
+<tr>
+    <td> Your <b>payment</b> is </td>
+    <td> {{ earnings }}</td>
+</tr>
+<tr>
+    <td>  </td>
+    <td> <b> {% next_button %} </b> </td>
+</tr>
+</table>
+
+</font>
+{% endblock %}
+
+

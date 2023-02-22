@@ -8,7 +8,7 @@ Your app description
 """
 
 class Constants(BaseConstants):
-    name_in_url = 'DSVotingU'
+    name_in_url = '3P_FB_GC_indirect'
     players_per_group = 3
 
     num_rounds = 10 # number of periods to be set to 10
@@ -38,15 +38,15 @@ class Group(BaseGroup):
     green = models.IntegerField(min=0,max=2)
     orange = models.IntegerField(min=0,max=2)
 
-    t1_Option1 = models.IntegerField(min=1,max=4,initial=0)
-    t1_Option2 = models.IntegerField(min=1,max=4,initial=0)
-    t1_Option3 = models.IntegerField(min=1,max=4,initial=0)
+    t1_Option1 = models.IntegerField(min=0,max=3,initial=0)
+    t1_Option2 = models.IntegerField(min=0,max=3,initial=0)
+    t1_Option3 = models.IntegerField(min=0,max=3,initial=0)
 
-    t2_Option1 = models.IntegerField(min=1,max=4,initial=0)
-    t2_Option2 = models.IntegerField(min=1,max=4,initial=0)
+    t2_Option1 = models.IntegerField(min=0,max=3,initial=0)
+    t2_Option2 = models.IntegerField(min=0,max=3,initial=0)
 
-    t1_Eliminated = models.IntegerField(min=1,max=4,initial=0)
-    t2_Eliminated = models.IntegerField(min=1,max=4,initial=0)
+    t1_Eliminated = models.IntegerField(min=0,max=3,initial=0)
+    t2_Eliminated = models.IntegerField(min=0,max=3,initial=0)
 
     Collective_Choice = models.IntegerField(min=0,max=3,initial=-1)
     
@@ -78,24 +78,45 @@ def set_paying_round(session: Subsession):
 #-----------------------------------------------------------------------------------
 # group level
 def set_ordering(group: Group):
+    # initializing preferences:
     numeric = [0, 1, 2]
     random.shuffle(numeric)
     group.blue = numeric[0]
     group.green = numeric[1]
     group.orange = numeric[2]
 
+    # initializing options:
+    group.t1_Option1 = 0
+    group.t1_Option2 = 1
+    group.t1_Option3 = 2
+
+
 def t1_elimination(group: Group):
-    numeric_alternatives = [0, 1, 2]
-    random.shuffle(numeric_alternatives)
-    remaining = [numeric_alternatives[0], numeric_alternatives[1]]
-    remaining.sort()
+    players = group.get_players()
+    votes = [0 for x in range(0,3)]
+    # computing the votes
+    for p in players:
+        votes[p.vote] = votes[p.vote]+1
 
-    eliminated = numeric_alternatives[2]
-#    eliminated.sort()
+    # finding eliminated alternative
+    max_element = max(votes)    
+    
 
-    group.Option1 = remaining[0]
-    group.Option2 = remaining[1]
-    group.t1_Eliminated = eliminated
+    if max_element == 1:
+        r=random.randint(0,2)
+        group.t1_Eliminated=r
+    else:
+        group.t1_Eliminated = votes.index(max(votes))
+
+    if group.t1_Eliminated == 0:
+        group.t2_Option1 = 1
+        group.t2_Option2 = 2
+    elif group.t1_Eliminated == 1:
+        group.t2_Option1 = 0
+        group.t2_Option2 = 2
+    elif group.t1_Eliminated == 2:
+        group.t2_Option1 = 0
+        group.t2_Option2 = 1
 
 
 def set_results(group: Group):
@@ -110,10 +131,10 @@ def set_results(group: Group):
     group.t2_Eliminated = votes.index(max(votes))
 
     # computing the collective choice
-    if group.t2_Eliminated == group.Option1:
-        group.Collective_Choice = group.Option2
+    if group.t2_Eliminated == group.t2_Option1:
+        group.Collective_Choice = group.t2_Option2
     else:
-        group.Collective_Choice = group.Option1
+        group.Collective_Choice = group.t2_Option1
 
     players = group.get_players()
     for p in players:
@@ -190,8 +211,8 @@ class t1_Voting(Page):
             my_number = player.id_in_group,
 #            my_preferences = temp,
             my_profile = profile,
-            numeric_options = [player.group.Option1, player.group.Option2],
-            options = [Constants.alternatives[player.group.Option1],Constants.alternatives[player.group.Option2]],
+            numeric_options = [player.group.t1_Option1, player.group.t1_Option2, player.group.t1_Option3],
+            options = [Constants.alternatives[player.group.t1_Option1], Constants.alternatives[player.group.t1_Option2], Constants.alternatives[player.group.t1_Option3] ],
             eliminated = Constants.alternatives[player.group.t1_Eliminated],
             round_number = player.round_number,
             num_rounds = Constants.num_rounds
@@ -223,8 +244,8 @@ class t2_Voting(Page):
             my_number = player.id_in_group,
 #            my_preferences = temp,
             my_profile = profile,
-            numeric_options = [player.group.Option1, player.group.Option2],
-            options = [Constants.alternatives[player.group.Option1],Constants.alternatives[player.group.Option2]],
+            numeric_options = [player.group.t2_Option1, player.group.t2_Option2],
+            options = [Constants.alternatives[player.group.t2_Option1],Constants.alternatives[player.group.t2_Option2]],
             eliminated = Constants.alternatives[player.group.t1_Eliminated],
             round_number = player.round_number,
             num_rounds = Constants.num_rounds
@@ -260,9 +281,6 @@ class Results(Page):
             earnings = player.earnings,
 #            my_preferences = temp,
             my_profile = profile,
-            numeric_options = [player.group.Option1, player.group.Option2],
-            options = [Constants.alternatives[player.group.Option1],Constants.alternatives[player.group.Option2]],
-            eliminated = Constants.alternatives[player.group.t1_Eliminated],
             round_number = player.round_number,
             num_rounds = Constants.num_rounds
             )

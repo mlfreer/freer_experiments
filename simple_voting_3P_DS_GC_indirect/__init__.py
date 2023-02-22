@@ -8,7 +8,7 @@ Your app description
 """
 
 class Constants(BaseConstants):
-    name_in_url = 'DSVotingU'
+    name_in_url = '3P_DS_GC_indirect'
     players_per_group = 3
 
     num_rounds = 10 # number of periods to be set to 10

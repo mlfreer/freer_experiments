@@ -1,0 +1,125 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+<div id="NextButton" style="float: center; text-align: center;">
+    Voting (Round {{round_number}} of {{num_rounds}})
+</div>
+{% endblock %}
+
+{% block content %}
+
+{% include "_static/global/Preferences_3P.html" %}
+
+
+<font size="4">
+One of the three alternatives have been <b> randomly eliminated</b>.
+<br>
+Please vote to <b>eliminate</b> one of the <b>remaining</b> alternatives below.
+<br>
+The alternative that receives the greatest number of votes will be <b>eliminated</b>.
+
+<table class="table">
+    <tr>
+        <td> The <b>randomly eliminated</b> alternative in the previous stage is </td>
+        {% if eliminated == 'blue' %}
+        <td  style="color:blue"> <b> {{eliminated}} </b> </td>
+        {% elif eliminated == 'green' %}
+        <td  style="color:green"> <b> {{eliminated}} </b> </td>
+        {% elif eliminated == 'purple' %}
+        <td  style="color:purple"> <b> {{eliminated}} </b> </td>
+        {% elif eliminated == 'orange' %}
+        <td  style="color:#c24e00"> <b> {{eliminated}} </b> </td>
+        {% endif %}
+        <td></td>
+    </tr>
+    <tr>
+        <td> Select the alternative you would like to vote to <b>eliminate</b> </td>
+        <td> <input id="Option1" type="radio" name="vote" value="{{numeric_options.0}}" required> 
+        {% if numeric_options.0 == 0 %}
+        <b  style="color:blue"> {{options.0}} </b> </td>
+        {% elif numeric_options.0 == 1 %}
+        <b  style="color:green"> {{options.0}} </b> </td>
+        {% elif numeric_options.0 == 2 %}
+        <b style="color:#c24e00" > {{options.0}} </b> </td>
+        {% elif numeric_options.0 == 3 %}
+        <b  style="color:purple"> {{options.0}} </b> </td>
+        {% endif %}
+        <td> <input id="Option2" type="radio" name="vote" value="{{numeric_options.1}}" required> 
+        {% if numeric_options.1 == 0 %}
+        <b style="color:blue"> {{options.1}} </b> </td>
+        {% elif numeric_options.1 == 1 %}
+        <b  style="color:green"> {{options.1}} </b> </td>
+        {% elif numeric_options.1 == 2 %}
+        <b  style="color:#c24e00"> {{options.1}} </b> </td>
+        {% elif numeric_options.1 == 3 %}
+        <b  style="color:purple"> {{options.1}} </b> </td>
+        {% endif %}
+     </tr>
+</table>
+
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+</font>
+
+
+
+
+<style>
+.blackText{
+    text-align: center;
+    border-radius: 10px;
+    max-width: 125px;
+    min-width: 125px;
+    min-height:  30px;
+    color:black; 
+    font-weight: bold;
+}
+
+
+.greenText{
+    text-align: center;
+    border-radius: 10px;
+    max-width: 125px;
+    min-width: 125px;
+    min-height:  30px;
+    color:green; 
+    font-weight: bold;
+}
+
+.blueText{
+    text-align: center;
+    border-radius: 10px;
+    max-width: 125px;
+    min-width: 125px;
+    min-height:  30px;
+    color:blue; 
+    font-weight: bold;
+}
+
+.orangeText{
+    text-align: center;
+    border-radius: 10px;
+    max-width: 125px;
+    min-width: 125px;
+    min-height:  30px;
+    color:#c24e00; 
+    font-weight: bold;
+}
+
+.purpleText{
+    text-align: center;
+    border-radius: 10px;
+    max-width: 125px;
+    min-width: 125px;
+    min-height:  30px;
+    color:purple; 
+    font-weight: bold;
+}
+
+</style>
+{% endblock %}
