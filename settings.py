@@ -20,6 +20,12 @@ SESSION_CONFIGS = [
          num_demo_participants=3,
      ),
      dict(
+         name = 'simple_voting_3P_MAJ_GC_indirect',
+         display_name='Simple Voting: 3P x Majority x Dynamic x Good Compromise',
+         app_sequence=['simple_voting_3P_MAJ_GC_indirect'],
+         num_demo_participants=3,
+     ),
+     dict(
          name ='Beauty_Contest',
          display_name ='Beauty Contest',
          num_demo_participants = 2,
