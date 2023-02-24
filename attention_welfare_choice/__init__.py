@@ -372,7 +372,7 @@ class Between_Menu_Decision(ScenePage):
 #----------------------------------------------------------
 # RESULTS:
 #----------------------------------------------------------
-class Results(ScenePage):
+class Results(Page):
     scene_name='Results'
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
@@ -390,7 +390,7 @@ class Results(ScenePage):
 #----------------------------------------------------------
 # INSTRUCTIONS
 #----------------------------------------------------------
-class Instructions_Overview(ScenePage):
+class Instructions_Overview(Page):
     scene_name='Instructions_Overview'
     def is_displayed(player):
         return (player.subsession.round_number == 1)
@@ -409,7 +409,7 @@ class Instructions_Between_Menu(ScenePage):
 #----------------------------------------------------------
 # QUIZ PAGES
 #----------------------------------------------------------
-class Quiz1_within(ScenePage):
+class Quiz1_within(Page):
     scene_name='Quiz1_within'
 
     # outcomes are equally likely
@@ -427,7 +427,7 @@ class Quiz1_within(ScenePage):
 
 
 
-class Quiz2_within(ScenePage):
+class Quiz2_within(Page):
     scene_name='Quiz2_within'
 
     # realization and payment
@@ -443,7 +443,7 @@ class Quiz2_within(ScenePage):
             return result
     #----------------------------------------------------------
 
-class Quiz1_between(ScenePage):
+class Quiz1_between(Page):
     scene_name='Quiz1_between'
 
     # realization and payment
@@ -460,7 +460,7 @@ class Quiz1_between(ScenePage):
     #----------------------------------------------------------
 
 
-class Quiz2_between(ScenePage):
+class Quiz2_between(Page):
     # realization and payment
     def is_displayed(player):
         return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
