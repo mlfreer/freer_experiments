@@ -1,4 +1,5 @@
 from otree.api import *
+from iomotions.otree.pages import ScenePage
 import random
 import math
 
@@ -255,7 +256,8 @@ def get_within_payment(player: Player):
 #----------------------------------------------------------
 # DECISION PAGES
 #----------------------------------------------------------
-class Doubletone_Decision(Page):
+class Doubletone_Decision(ScenePage):
+    scene_name='Doubletone_Decision'
     def is_displayed(player):
         return player.is_doubletone == True
     form_model = 'player'
@@ -276,7 +278,8 @@ class Doubletone_Decision(Page):
             )
     #------------------------------------------------------------
 
-class Tripletone_Decision(Page):
+class Tripletone_Decision(ScenePage):
+    scene_name='Tripletone_Decision'
     def is_displayed(player):
         return player.is_tripletone == True
     form_model = 'player'
@@ -303,7 +306,8 @@ class Tripletone_Decision(Page):
             )
     #------------------------------------------------------------
 
-class Between_Menu_Decision(Page):
+class Between_Menu_Decision(ScenePage):
+    scene_name='Between_Menu_Decision'
     def is_displayed(player):
         return (player.subsession.round_number> C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES)
     form_model = 'player'
@@ -368,7 +372,8 @@ class Between_Menu_Decision(Page):
 #----------------------------------------------------------
 # RESULTS:
 #----------------------------------------------------------
-class Results(Page):
+class Results(ScenePage):
+    scene_name='Results'
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
 
@@ -385,15 +390,18 @@ class Results(Page):
 #----------------------------------------------------------
 # INSTRUCTIONS
 #----------------------------------------------------------
-class Instructions_Overview(Page):
+class Instructions_Overview(ScenePage):
+    scene_name='Instructions_Overview'
     def is_displayed(player):
         return (player.subsession.round_number == 1)
 
-class Instructions_Within_Menu(Page):
+class Instructions_Within_Menu(ScenePage):
+    scene_name='Instructions_Within_Menu'
     def is_displayed(player):
         return (player.subsession.round_number == 1)
 
-class Instructions_Between_Menu(Page):
+class Instructions_Between_Menu(ScenePage):
+    scene_name='Instructions_Between_Menu'
     def is_displayed(player):
         return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
     #----------------------------------------------------------
@@ -401,7 +409,9 @@ class Instructions_Between_Menu(Page):
 #----------------------------------------------------------
 # QUIZ PAGES
 #----------------------------------------------------------
-class Quiz1_within(Page):
+class Quiz1_within(ScenePage):
+    scene_name='Quiz1_within'
+
     # outcomes are equally likely
     def is_displayed(player):
         return (player.subsession.round_number == 1)
@@ -417,7 +427,9 @@ class Quiz1_within(Page):
 
 
 
-class Quiz2_within(Page):
+class Quiz2_within(ScenePage):
+    scene_name='Quiz2_within'
+
     # realization and payment
     def is_displayed(player):
         return (player.subsession.round_number == 1)
@@ -431,7 +443,9 @@ class Quiz2_within(Page):
             return result
     #----------------------------------------------------------
 
-class Quiz1_between(Page):
+class Quiz1_between(ScenePage):
+    scene_name='Quiz1_between'
+
     # realization and payment
     def is_displayed(player):
         return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
@@ -446,10 +460,12 @@ class Quiz1_between(Page):
     #----------------------------------------------------------
 
 
-class Quiz2_between(Page):
+class Quiz2_between(ScenePage):
     # realization and payment
     def is_displayed(player):
         return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
+
+    scene_name='Quiz2_between'
 
     form_model = 'player'
     form_fields = ['between_q2']
