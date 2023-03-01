@@ -1,5 +1,5 @@
 from otree.api import *
-from otree.iomotions.otree.pages import ScenePage
+from iomotions.otree.pages import ScenePage
 import random
 import math
 
