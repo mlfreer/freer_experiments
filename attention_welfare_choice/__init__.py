@@ -1,5 +1,5 @@
 from otree.api import *
-from iomotions.otree.pages import ScenePage
+from otree.iomotions.otree.pages import ScenePage
 import random
 import math
 
@@ -373,7 +373,6 @@ class Between_Menu_Decision(ScenePage):
 # RESULTS:
 #----------------------------------------------------------
 class Results(Page):
-    scene_name='Results'
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
 
@@ -391,7 +390,6 @@ class Results(Page):
 # INSTRUCTIONS
 #----------------------------------------------------------
 class Instructions_Overview(Page):
-    scene_name='Instructions_Overview'
     def is_displayed(player):
         return (player.subsession.round_number == 1)
 
@@ -410,7 +408,6 @@ class Instructions_Between_Menu(ScenePage):
 # QUIZ PAGES
 #----------------------------------------------------------
 class Quiz1_within(Page):
-    scene_name='Quiz1_within'
 
     # outcomes are equally likely
     def is_displayed(player):
@@ -428,7 +425,6 @@ class Quiz1_within(Page):
 
 
 class Quiz2_within(Page):
-    scene_name='Quiz2_within'
 
     # realization and payment
     def is_displayed(player):
@@ -444,8 +440,6 @@ class Quiz2_within(Page):
     #----------------------------------------------------------
 
 class Quiz1_between(Page):
-    scene_name='Quiz1_between'
-
     # realization and payment
     def is_displayed(player):
         return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
@@ -464,8 +458,6 @@ class Quiz2_between(Page):
     # realization and payment
     def is_displayed(player):
         return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
-
-    scene_name='Quiz2_between'
 
     form_model = 'player'
     form_fields = ['between_q2']
