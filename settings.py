@@ -57,6 +57,15 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
+ROOMS = [
+    dict(
+        name='econ_lab',
+        display_name='Economics Lab',
+        participant_label_file='_rooms/econ_lab.txt',
+        use_secure_urls=False
+    ),
+]
+
 PARTICIPANT_FIELDS = []
 SESSION_FIELDS = []
 
