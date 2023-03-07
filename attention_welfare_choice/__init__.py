@@ -1,5 +1,5 @@
 from otree.api import *
-from iomotions.otree.pages import ScenePage
+#from iomotions.otree.pages import ScenePage
 import random
 import math
 
@@ -256,8 +256,8 @@ def get_within_payment(player: Player):
 #----------------------------------------------------------
 # DECISION PAGES
 #----------------------------------------------------------
-class Doubletone_Decision(ScenePage):
-    scene_name='Doubletone_Decision'
+class Doubletone_Decision(Page):
+#    scene_name='Doubletone_Decision'
     def is_displayed(player):
         return player.is_doubletone == True
     form_model = 'player'
@@ -278,8 +278,8 @@ class Doubletone_Decision(ScenePage):
             )
     #------------------------------------------------------------
 
-class Tripletone_Decision(ScenePage):
-    scene_name='Tripletone_Decision'
+class Tripletone_Decision(Page):
+#    scene_name='Tripletone_Decision'
     def is_displayed(player):
         return player.is_tripletone == True
     form_model = 'player'
@@ -306,8 +306,8 @@ class Tripletone_Decision(ScenePage):
             )
     #------------------------------------------------------------
 
-class Between_Menu_Decision(ScenePage):
-    scene_name='Between_Menu_Decision'
+class Between_Menu_Decision(Page):
+#    scene_name='Between_Menu_Decision'
     def is_displayed(player):
         return (player.subsession.round_number> C.NUMBER_OF_DOUBLETONES + C.NUMBER_OF_TRIPLETONES)
     form_model = 'player'
@@ -393,13 +393,13 @@ class Instructions_Overview(Page):
     def is_displayed(player):
         return (player.subsession.round_number == 1)
 
-class Instructions_Within_Menu(ScenePage):
-    scene_name='Instructions_Within_Menu'
+class Instructions_Within_Menu(Page):
+#    scene_name='Instructions_Within_Menu'
     def is_displayed(player):
         return (player.subsession.round_number == 1)
 
-class Instructions_Between_Menu(ScenePage):
-    scene_name='Instructions_Between_Menu'
+class Instructions_Between_Menu(Page):
+#    scene_name='Instructions_Between_Menu'
     def is_displayed(player):
         return (player.subsession.round_number == C.NUMBER_OF_DOUBLETONES+C.NUMBER_OF_TRIPLETONES)
     #----------------------------------------------------------

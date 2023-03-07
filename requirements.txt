@@ -1,4 +1,4 @@
 otree>=5.0.0a21
-iomotions>=0.1.0
+#iomotions>=0.1.0
 psycopg2>=2.8.4
 # comment out psycopg for local host.
