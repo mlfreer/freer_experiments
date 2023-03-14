@@ -62,7 +62,7 @@ ROOMS = [
         name='econ_lab',
         display_name='Economics Lab',
         participant_label_file='_rooms/econ_lab.txt',
-#        use_secure_urls=True
+        use_secure_urls=False
     ),
 ]
 
