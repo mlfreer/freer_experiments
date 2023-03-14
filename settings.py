@@ -41,7 +41,7 @@ SESSION_CONFIGS = [
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = False
+DEBUG = True
 #------------------------------------------------------------------------------------
 
 
@@ -61,7 +61,7 @@ ROOMS = [
     dict(
         name='econ_lab',
         display_name='Economics Lab',
-        participant_label_file='_rooms/econ_lab.txt',
+        participant_label_file='econ_lab.txt',
 #        use_secure_urls=False
     ),
 ]

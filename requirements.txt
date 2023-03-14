@@ -1,4 +1,6 @@
-otree>=5.0.0a21
-#iomotions>=0.1.0
+# oTree-may-overwrite-this-file
+# IF YOU MODIFY THIS FILE, remove these comments. 
+# otherwise, oTree will automatically overwrite it.
+otree>=5.4.0
 psycopg2>=2.8.4
-# comment out psycopg for local host.
+sentry-sdk==0.7.9
