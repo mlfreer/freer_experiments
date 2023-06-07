@@ -20,7 +20,7 @@ class Constants(BaseConstants):
 
     # risk constants:
     risk_max = 20
-    risk_min = 5
+    risk_min = 2
     risk_safe = 15
     risk_prob_winning = .5
     risk_prob_paying = .1
@@ -113,5 +113,5 @@ page_sequence = [
                 RiskElicitationInstructions,
                 RiskElicitationDecision,
                 RiskElicitationWaitPage,
-                RiskElicitationResults
+#                RiskElicitationResults
 ]

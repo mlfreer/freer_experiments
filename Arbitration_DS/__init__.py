@@ -14,7 +14,7 @@ Case of dominant strategy mechanism.
 class C(BaseConstants):
 	NAME_IN_URL = 'Arbitration_DS'
 	PLAYERS_PER_GROUP = 2
-	NUM_ROUNDS = 10
+	NUM_ROUNDS = 2
 
 	preferences = [0 for i in range(0,6)]
 	# defining the vector of preferences:
@@ -156,13 +156,17 @@ class Voting(Page):
 			)
 
 class VotingResultsWaitPage(WaitPage):
-    wait_for_all_groups = False
-    @staticmethod
-    def after_all_players_arrive(group: Group):
-        set_results(group)
+	wait_for_all_groups = False
+	@staticmethod
+	def after_all_players_arrive(group: Group):
+		set_results(group)
 
 class Results(Page):
 	def vars_for_template(player):
+		if player.subsession.round_number == C.NUM_ROUNDS:
+			p = player.in_round(player.subsession.paying_round)
+			player.participant.vars['treatment_earnings'] = p.earnings
+
 		profile = player.MyPreferences+1
 		temp = [0 for x in range(0,6)]
 		for i in range(0,6):
