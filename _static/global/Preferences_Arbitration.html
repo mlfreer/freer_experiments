@@ -1,0 +1,44 @@
+<font size="4">
+<table class="table">
+    <tr> 
+        <td style="width: 70%;"> Your type is </td>
+        <td> <b> {{ my_profile }} </b> </td>
+    </tr>
+</table>
+
+
+The payments for all types are shown below.
+<br>
+Your own payments are highlighted in bold.
+
+<br>
+<br>
+
+
+<table class="table">
+    </tr>
+    <tr>
+        <td> <b> Type </b> </td>
+        <td style="color:blue"> <b> blue </b> </td>
+        <td style="color:green"> <b> green </b> </td>
+        <td style="color:#c24e00"> <b> orange</b> </td>
+    </tr>
+
+{% for p in preference_profiles %}
+    <tr>
+        {% if my_profile == p.0 %}
+        <td> <b> {{p.0}} </b> </td>
+        <td> <b> {{p.1}} </b> </td>
+        <td> <b> {{p.2}} </b> </td>
+        <td> <b> {{p.3}} </b> </td>
+        {% else %}
+        <td>  {{p.0}}  </td>
+        <td>  {{p.1}}  </td>
+        <td>  {{p.2}}  </td>
+        <td>  {{p.3}}  </td>
+        {% endif %}
+    </tr>
+{% endfor %}
+
+</table>
+</font>

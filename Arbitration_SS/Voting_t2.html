@@ -1,0 +1,58 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+<div id="NextButton" style="float: center; text-align: center;">
+    Voting (Round {{round_number}} of {{num_rounds}})
+</div>
+{% endblock %}
+
+
+{{ block content }}
+
+{% include "_static/global/Preferences_Arbitration.html" %}
+
+<br><br>
+
+<table class="table">
+    <tr>
+        <td> The current default alterantive is </td>
+        {% if default == blue %}
+        <td  style="color:blue"> <b> blue </b> </td>
+        {% elif default == green %}
+        <td  style="color:green"> <b> green </b> </td>
+        {% elif default == orange %}
+        <td  style="color:#c24e00"> <b> orange </b> </td>
+        {% endif %}
+        <td>        </td>
+    </tr>
+
+
+        <tr>
+        <td> Would you like to replace it with alternative of
+        {% if alternative == blue %}
+        <b style="color:blue"> blue </b> 
+        {% elif alternative == green %}
+        <b style="color:green"> green </b> 
+        {% elif alternative == orange %}
+        <b style="color:#c24e00"> orange </b>
+        {% endif %}
+        </td>
+        <td>
+            <input id="Option2" type="radio" name="vote_t2" value="1" required> <b> Yes </b>
+        </td>
+        <td>
+            <input id="Option2" type="radio" name="vote_t2" value="0" required> <b> No </b>
+        </td>
+    </tr>
+</table>
+
+<br>
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+
+{{ endblock }}
