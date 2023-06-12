@@ -14,16 +14,16 @@ Case of strategically simple mechanism.
 class C(BaseConstants):
 	NAME_IN_URL = 'Arbitration_SS'
 	PLAYERS_PER_GROUP = 2
-	NUM_ROUNDS = 1
+	NUM_ROUNDS = 15
 
 	preferences = [0 for i in range(0,6)]
 	# defining the vector of preferences:
-	preferences[0] = [20, 15, 2] # abc
-	preferences[1] = [20, 2, 15] # acb
-	preferences[2] = [15, 20, 2] # bac
-	preferences[3] = [2, 20, 15] # bca
-	preferences[4] = [15, 2, 20] # cab
-	preferences[5] = [2, 15, 20] # cba
+	preferences[0] = [15, 10, 1] # abc
+	preferences[1] = [15, 1, 10] # acb
+	preferences[2] = [10, 15, 1] # bac
+	preferences[3] = [1, 15, 10] # bca
+	preferences[4] = [10, 1, 15] # cab
+	preferences[5] = [1, 10, 15] # cba
 
 	alternatives = ['blue', 'green', 'orange'] #, 'purple']
 
@@ -83,12 +83,14 @@ def set_ordering(group: Group):
 	group.blue = numeric[0]
 	group.green = numeric[1]
 	group.orange = numeric[2]
+
+	options = [0, 1, 2]
 	# Default:
-	group.Default_t1 = 0
-	group.Default_t2 = 0
+	group.Default_t1 = options[0]
+	group.Default_t2 = options[0]
 	# Alternative:
-	group.Alternative_t1 = 1
-	group.Alternative_t2 = 2
+	group.Alternative_t1 = options[1]
+	group.Alternative_t2 = options[2]
 
 def set_t2(group: Group):
 	players = group.get_players()

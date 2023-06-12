@@ -2,9 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-<div id="NextButton" style="float: center; text-align: center;">
-    Voting (Round {{round_number}} of {{num_rounds}})
-</div>
+    Voting. Stage 1 (Round {{round_number}} of {{num_rounds}})
 {% endblock %}
 
 
@@ -29,7 +27,7 @@
 
 
         <tr>
-        <td> Would you like to replace it with alternative of
+        <td> Would you like to replace it with the alternative of
         {% if alternative == blue %}
         <b style="color:blue"> blue </b> 
         {% elif alternative == green %}

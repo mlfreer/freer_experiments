@@ -14,16 +14,16 @@ Case of dominant strategy mechanism.
 class C(BaseConstants):
 	NAME_IN_URL = 'Arbitration_DS'
 	PLAYERS_PER_GROUP = 2
-	NUM_ROUNDS = 2
+	NUM_ROUNDS = 15
 
 	preferences = [0 for i in range(0,6)]
 	# defining the vector of preferences:
-	preferences[0] = [20, 15, 2] # abc
-	preferences[1] = [20, 2, 15] # acb
-	preferences[2] = [15, 20, 2] # bac
-	preferences[3] = [2, 20, 15] # bca
-	preferences[4] = [15, 2, 20] # cab
-	preferences[5] = [2, 15, 20] # cba
+	preferences[0] = [15, 10, 1] # abc
+	preferences[1] = [15, 1, 10] # acb
+	preferences[2] = [10, 15, 1] # bac
+	preferences[3] = [1, 15, 10] # bca
+	preferences[4] = [10, 1, 15] # cab
+	preferences[5] = [1, 10, 15] # cba
 
 	alternatives = ['blue', 'green', 'orange'] #, 'purple']
 
@@ -80,10 +80,15 @@ def set_ordering(group: Group):
 	group.blue = numeric[0]
 	group.green = numeric[1]
 	group.orange = numeric[2]
+
+	print(numeric[0])
+
+	options = [0,1,2]
+	random.shuffle(options)
 	# Default:
-	group.Default = 0
+	group.Default = options[0]
 	# Alternative:
-	group.Alternative = 1
+	group.Alternative = options[1]
 
 
 def set_results(group: Group):

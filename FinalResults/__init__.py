@@ -12,6 +12,8 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
+    SHOW_UP_FEE = 5
+
 
 class Subsession(BaseSubsession):
     pass
@@ -34,8 +36,8 @@ class FinalResults(Page):
             treatment_earnings = cu(player.participant.vars['treatment_earnings']),
             bc_earnings = cu(player.participant.vars['bc_earnings']),
             risk_earnings = cu(player.participant.vars['risk_earnings']),
-            total_earnings = cu(player.participant.vars['treatment_earnings'])+cu(player.participant.vars['bc_earnings'])+cu(player.participant.vars['risk_earnings']) + player.session.config['participation_fee'],
-            show_up_fee = player.session.config['participation_fee'],
+            total_earnings = cu(player.participant.vars['treatment_earnings'])+cu(player.participant.vars['bc_earnings'])+cu(player.participant.vars['risk_earnings']) + cu(C.SHOW_UP_FEE),
+            show_up_fee = cu(C.SHOW_UP_FEE),
             code = player.participant.code
             )
 #-----------------------------------------------------------------------------------

@@ -19,9 +19,9 @@ class Constants(BaseConstants):
     num_rounds = 1
 
     # risk constants:
-    risk_max = 20
-    risk_min = 2
-    risk_safe = 15
+    risk_max = 15
+    risk_min = 1
+    risk_safe = 10
     risk_prob_winning = .5
     risk_prob_paying = .1
 

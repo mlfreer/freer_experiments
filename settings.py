@@ -62,6 +62,7 @@ ROOMS = [
 
 PARTICIPANT_FIELDS = []
 SESSION_FIELDS = []
+#participation_fee = 5
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
