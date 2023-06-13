@@ -14,7 +14,7 @@ Case of dominant strategy mechanism.
 class C(BaseConstants):
 	NAME_IN_URL = 'Arbitration_DS'
 	PLAYERS_PER_GROUP = 2
-	NUM_ROUNDS = 15
+	NUM_ROUNDS = 20
 
 	preferences = [0 for i in range(0,6)]
 	# defining the vector of preferences:
