@@ -11,13 +11,13 @@ SESSION_CONFIGS = [
          name ='ArbitrationDS',
          display_name ='Arbitration Dominant Strategies',
          num_demo_participants = 2,
-         app_sequence = ['Arbitration_DS','beauty_contest','risk_elicitation','FinalResults'],
+         app_sequence = ['WelcomeScreen', 'Arbitration_DS','beauty_contest','risk_elicitation','FinalResults'],
      ),
      dict(
          name ='ArbitrationSS',
          display_name ='Arbitration Strategically Simple',
          num_demo_participants = 2,
-         app_sequence = ['Arbitration_SS','beauty_contest','risk_elicitation','FinalResults'],
+         app_sequence = ['WelcomeScreen','Arbitration_SS','beauty_contest','risk_elicitation','FinalResults'],
      ),
      dict(
          name ='Beauty_Contest',
@@ -30,6 +30,12 @@ SESSION_CONFIGS = [
          display_name ='Risk Elicitation',
          num_demo_participants = 1,
          app_sequence = ['risk_elicitation'],
+     ),
+     dict(
+         name ='WelcomeScreen',
+         display_name ='Welcome Screen',
+         num_demo_participants = 1,
+         app_sequence = ['WelcomeScreen'],
      ),
 ]
 
