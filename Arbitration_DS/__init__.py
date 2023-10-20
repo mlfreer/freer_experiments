@@ -87,19 +87,21 @@ def set_ordering(group: Group):
 	group.green = numeric[1]
 	group.orange = numeric[2]
 
-	# Recording the ranking
-	group.rank1 = numeric[0]
-	group.rank2 = numeric[1]
-	group.rank3 = numeric[2]
+	
 
 #	print(numeric[0])
 
 	options = [0,1,2]
 	random.shuffle(options)
 	# Default:
-	group.Default = numeric[0]
+	group.Default = options[0]
 	# Alternative:
-	group.Alternative = numeric[1]
+	group.Alternative = options[1]
+
+	# Recording the ranking
+	group.rank1 = options[0]
+	group.rank2 = options[1]
+	group.rank3 = options[2]
 
 
 def set_results(group: Group):
