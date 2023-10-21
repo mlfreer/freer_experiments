@@ -48,7 +48,7 @@ class Group(BaseGroup):
     Default = models.IntegerField(min=0,max=3,initial=-1) 
     # current alternatives:
     Alternative_1 = models.IntegerField(min=0,max=3,initial=-1) 
-    Alternative_1 = models.IntegerField(min=0,max=3,initial=-1) 
+    Alternative_2 = models.IntegerField(min=0,max=3,initial=-1) 
 
     # final choice
     Collective_Choice = models.IntegerField(min=0,max=3,initial=-1)
@@ -95,7 +95,8 @@ def set_ordering(group: Group):
     # Default:
     group.Default = options[0]
     # Alternative:
-    group.Alternative = options[1]
+    group.Alternative_1 = options[1]
+    group.Alternative_2 = options[2]
 
     # Recording the ranking
     group.rank1 = options[0]
@@ -105,12 +106,16 @@ def set_ordering(group: Group):
 
 def set_results(group: Group):
     players = group.get_players()
-    votes = 0
+    votes_1 = 0
+    votes_2 = 0
     for p in players:
-        votes = votes + p.vote
+        votes_1 = votes_1 + p.vote_1
+        votes_2 = votes_2 + p.vote_2
 
-    if votes == 2:
-        group.Collective_Choice = group.Alternative
+    if votes_1 == 2:
+        group.Collective_Choice = group.Alternative_1
+    elif votes_2 == 2:
+        group.Collective_Choice = group.Alternative_2
     else:
         group.Collective_Choice = group.Default
 
@@ -156,9 +161,9 @@ class SetupWaitPage(WaitPage):
 
 class Voting(Page):
     form_model = 'player'
-    form_fields = ['vote']
+    form_fields = ['vote_1','vote_2']
     def vars_for_template(player):
-        profile = player.MyPreferences
+        profile = player.MyPreferences+1
         preferences_list = [player.group.rank2*2, player.group.rank2*2+1, player.group.rank3*2, player.group.rank3*2+1]
         temp = [0 for x in range(0,4)]
         for i in range(0,4):
@@ -169,7 +174,8 @@ class Voting(Page):
             preference_profiles = temp,
             my_profile = profile,
             default = player.group.Default,
-            alternative = player.group.Alternative,
+            alternative_1 = player.group.Alternative_1,
+            alternative_2 = player.group.Alternative_2,
             round_number = player.round_number,
             num_rounds = C.NUM_ROUNDS,
             blue = player.group.blue,
@@ -179,6 +185,11 @@ class Voting(Page):
             rank2 = player.group.rank2,
             rank3 = player.group.rank3,
             )
+
+    @staticmethod
+    def error_message(player, values):
+        if values['vote_1']+values['vote_2'] > 1:
+            return 'You can choose no more than one alternative to replace the default with'
 
 class VotingResultsWaitPage(WaitPage):
     wait_for_all_groups = False
@@ -203,7 +214,8 @@ class Results(Page):
             preference_profiles = temp,
             my_profile = profile,
             default = player.group.Default,
-            alternative = player.group.Alternative,
+            alternative_1 = player.group.Alternative_1,
+            alternative_2 = player.group.Alternative_2,
             round_number = player.round_number,
             num_rounds = C.NUM_ROUNDS,
             blue = player.group.blue,

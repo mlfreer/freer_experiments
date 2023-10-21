@@ -13,21 +13,26 @@
 <br><br>
 
 <table class="table">
+
     <tr>
-        <td> The current default alternative is </td>
+        <td> Would you like to veto
         {% if default == blue %}
-        <td  style="color:blue"> <b> blue </b> </td>
+        <b style="color:blue"> blue </b> 
         {% elif default == green %}
-        <td  style="color:green"> <b> green </b> </td>
+        <b style="color:green"> green </b> 
         {% elif default == orange %}
-        <td  style="color:#c24e00"> <b> orange </b> </td>
+        <b style="color:#c24e00"> orange </b>
         {% endif %}
-        <td>        </td>
+        </td>
+        <td>
+            <input id="Option2" type="radio" name="veto_1" value="1" required> <b> Yes </b>
+        </td>
+        <td>
+            <input id="Option2" type="radio" name="veto_1" value="0" checked ="checked" required> <b> No </b>
+        </td>
     </tr>
-
-
     <tr>
-        <td> Would you like to replace it with the alternative of
+        <td> Would you like to veto
         {% if alternative_1 == blue %}
         <b style="color:blue"> blue </b> 
         {% elif alternative_1 == green %}
@@ -37,14 +42,14 @@
         {% endif %}
         </td>
         <td>
-            <input id="Option2" type="radio" name="vote_1" value="1"  required> <b> Yes </b>
+            <input id="Option2" type="radio" name="veto_2" value="1" required> <b> Yes </b>
         </td>
         <td>
-            <input id="Option2" type="radio" name="vote_1" value="0"  required> <b> No </b>
+            <input id="Option2" type="radio" name="veto_2" value="0" checked ="checked" required> <b> No </b>
         </td>
     </tr>
         <tr>
-        <td> Would you like to replace it with the alternative of
+        <td> Would you like to veto
         {% if alternative_2 == blue %}
         <b style="color:blue"> blue </b> 
         {% elif alternative_2 == green %}
@@ -54,10 +59,10 @@
         {% endif %}
         </td>
         <td>
-            <input id="Option2" type="radio" name="vote_2" value="1" required> <b> Yes </b>
+            <input id="Option2" type="radio" name="veto_3" value="1" required> <b> Yes </b>
         </td>
         <td>
-            <input id="Option2" type="radio" name="vote_2" value="0" required> <b> No </b>
+            <input id="Option2" type="radio" name="veto_3" value="0" checked ="checked" required> <b> No </b>
         </td>
     </tr>
 

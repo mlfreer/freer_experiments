@@ -26,6 +26,12 @@ SESSION_CONFIGS = [
          app_sequence = ['WelcomeScreen','Arbitration_SRD1','beauty_contest','risk_elicitation','FinalResults'],
      ),
      dict(
+         name ='ArbitrationSRD2',
+         display_name ='Arbitration Srictly Range Dominant: Veto (SRD2)',
+         num_demo_participants = 2,
+         app_sequence = ['WelcomeScreen','Arbitration_SRD2','beauty_contest','risk_elicitation','FinalResults'],
+     ),
+     dict(
          name ='Beauty_Contest',
          display_name ='Beauty Contest',
          num_demo_participants = 2,
