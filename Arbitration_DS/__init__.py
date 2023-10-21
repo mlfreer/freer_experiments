@@ -159,7 +159,7 @@ class Voting(Page):
 	form_model = 'player'
 	form_fields = ['vote']
 	def vars_for_template(player):
-		profile = player.MyPreferences+1
+		profile = player.MyPreferences
 		preferences_list = [player.group.rank2*2, player.group.rank2*2+1, player.group.rank3*2, player.group.rank3*2+1]
 		temp = [0 for x in range(0,4)]
 		for i in range(0,4):
@@ -176,6 +176,9 @@ class Voting(Page):
 			blue = player.group.blue,
 			green = player.group.green,
 			orange = player.group.orange,
+			rank1 = player.group.rank1,
+			rank2 = player.group.rank2,
+			rank3 = player.group.rank3,
 			)
 
 class VotingResultsWaitPage(WaitPage):
@@ -207,7 +210,10 @@ class Results(Page):
 			blue = player.group.blue,
 			green = player.group.green,
 			orange = player.group.orange,
-			choice = player.group.Collective_Choice
+			choice = player.group.Collective_Choice,
+			rank1 = player.group.rank1,
+			rank2 = player.group.rank2,
+			rank3 = player.group.rank3,
 			)
 #-----------------------------------------------------------------------------------
 

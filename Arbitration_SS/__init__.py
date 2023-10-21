@@ -39,6 +39,12 @@ class Group(BaseGroup):
 	green = models.IntegerField(min=0,max=2)
 	orange = models.IntegerField(min=0,max=2)
 
+
+	# defining the ranking list:
+	rank1 = models.IntegerField(min=0,max=2)
+	rank2 = models.IntegerField(min=0,max=2)
+	rank3 = models.IntegerField(min=0,max=2)
+
 	# default option:
 	Default_t1 = models.IntegerField(min=0,max=3,initial=-1) 
 	Default_t2 = models.IntegerField(min=0,max=3,initial=-1) 
@@ -93,6 +99,12 @@ def set_ordering(group: Group):
 	group.Alternative_t1 = options[1]
 	group.Alternative_t2 = options[2]
 
+	# Recording the ranking
+	group.rank1 = options[0]
+	group.rank2 = options[1]
+	group.rank3 = options[2]
+
+
 def set_t2(group: Group):
 	players = group.get_players()
 	votes = 0
@@ -121,11 +133,13 @@ def set_results(group: Group):
 # player level
 def set_MyPrefernces(player: Player):
 	# determining the deterministic types:
-	player.MyPreferences = random.randint(0,5)
+	player.MyPreferences = random.randint(0,3)
 
 def set_payoff(player: Player):
 	choice = player.group.Collective_Choice
-	player.earnings = C.preferences[player.MyPreferences][choice]
+	preferences_list = [player.group.rank2*2, player.group.rank2*2+1, player.group.rank3*2, player.group.rank3*2+1]
+	j = preferences_list[player.MyPreferences]
+	player.earnings = C.preferences[j][choice]
 	if player.round_number == C.NUM_ROUNDS:
 		p = player.in_round(player.subsession.paying_round)
 		player.payoff = p.earnings
@@ -155,9 +169,12 @@ class Voting_t1(Page):
 	form_fields = ['vote_t1']
 	def vars_for_template(player):
 		profile = player.MyPreferences+1
-		temp = [0 for x in range(0,6)]
-		for i in range(0,6):
-			temp[i] = [i+1, C.preferences[i][player.group.blue], C.preferences[i][player.group.green], C.preferences[i][player.group.orange]]
+		print(profile)
+		preferences_list = [player.group.rank2*2, player.group.rank2*2+1, player.group.rank3*2, player.group.rank3*2+1]
+		temp = [0 for x in range(0,4)]
+		for i in range(0,4):
+			j = preferences_list[i]
+			temp[i] = [i+1, C.preferences[j][player.group.blue], C.preferences[j][player.group.green], C.preferences[j][player.group.orange]]
 
 		return dict(
 			preference_profiles = temp,
@@ -169,6 +186,9 @@ class Voting_t1(Page):
 			blue = player.group.blue,
 			green = player.group.green,
 			orange = player.group.orange,
+			rank1 = player.group.rank1,
+			rank2 = player.group.rank2,
+			rank3 = player.group.rank3,
 			)
 
 class Voting_t1_ResultsWaitPage(WaitPage):
@@ -182,9 +202,12 @@ class Voting_t2(Page):
 	form_fields = ['vote_t2']
 	def vars_for_template(player):
 		profile = player.MyPreferences+1
-		temp = [0 for x in range(0,6)]
-		for i in range(0,6):
-			temp[i] = [i+1, C.preferences[i][player.group.blue], C.preferences[i][player.group.green], C.preferences[i][player.group.orange]]
+		preferences_list = [player.group.rank2*2, player.group.rank2*2+1, player.group.rank3*2, player.group.rank3*2+1]
+		temp = [0 for x in range(0,4)]
+
+		for i in range(0,4):
+			j = preferences_list[i]
+			temp[i] = [i+1, C.preferences[j][player.group.blue], C.preferences[j][player.group.green], C.preferences[j][player.group.orange]]
 
 		return dict(
 			preference_profiles = temp,
@@ -196,6 +219,9 @@ class Voting_t2(Page):
 			blue = player.group.blue,
 			green = player.group.green,
 			orange = player.group.orange,
+			rank1 = player.group.rank1,
+			rank2 = player.group.rank2,
+			rank3 = player.group.rank3,
 			)
 
 class Voting_t2_ResultsWaitPage(WaitPage):
@@ -212,10 +238,15 @@ class Results(Page):
 			p = player.in_round(player.subsession.paying_round)
 			player.participant.vars['treatment_earnings'] = p.earnings
 
+		
+
 		profile = player.MyPreferences+1
-		temp = [0 for x in range(0,6)]
-		for i in range(0,6):
-			temp[i] = [i+1, C.preferences[i][player.group.blue], C.preferences[i][player.group.green], C.preferences[i][player.group.orange]]
+		preferences_list = [player.group.rank2*2, player.group.rank2*2+1, player.group.rank3*2, player.group.rank3*2+1]
+		temp = [0 for x in range(0,4)]
+		print(preferences_list[3])
+		for i in range(0,4):
+			j = preferences_list[i]
+			temp[i] = [i+1, C.preferences[j][player.group.blue], C.preferences[j][player.group.green], C.preferences[j][player.group.orange]]
 
 		return dict(
 			preference_profiles = temp,
@@ -225,7 +256,10 @@ class Results(Page):
 			blue = player.group.blue,
 			green = player.group.green,
 			orange = player.group.orange,
-			choice = player.group.Collective_Choice
+			choice = player.group.Collective_Choice,
+			rank1 = player.group.rank1,
+			rank2 = player.group.rank2,
+			rank3 = player.group.rank3,
 			)
 #-----------------------------------------------------------------------------------
 

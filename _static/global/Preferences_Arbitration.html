@@ -4,6 +4,34 @@
         <td style="width: 70%;"> Your type is </td>
         <td> <b> {{ my_profile }} </b> </td>
     </tr>
+    <tr>
+        <td style="width: 70%;"> Current priority ranking is </td>
+        <td>
+        {% if rank1 == blue %}
+        <b style="color:blue"> blue </b> 
+        {% elif rank1 == green %}
+        <b style="color:green"> green </b> 
+        {% elif rank1 == orange %}
+        <b style="color:#c24e00"> orange </b>
+        {% endif %}
+        -
+        {% if rank2 == blue %}
+        <b style="color:blue"> blue </b> 
+        {% elif rank2 == green %}
+        <b style="color:green"> green </b> 
+        {% elif rank2 == orange %}
+        <b style="color:#c24e00"> orange </b>
+        {% endif %}
+        -
+        {% if rank3 == blue %}
+        <b style="color:blue"> blue </b> 
+        {% elif rank3 == green %}
+        <b style="color:green"> green </b> 
+        {% elif rank3 == orange %}
+        <b style="color:#c24e00"> orange </b>
+        {% endif %}
+        </td>
+    </tr>
 </table>
 
 
