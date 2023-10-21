@@ -1,10 +1,46 @@
-{{ block title }}
-    Page title
-{{ endblock }}
+{% extends "global/Page.html" %}
+{% load otree static %}
 
-{{ block content }}
+{% block title %}
+    Outcome (Round {{round_number}} of {{num_rounds}})
+{% endblock %}
 
-    {{ next_button }}
+{% block content %}
+
+<font size="4">
+
+{% include "_static/global/Preferences_Arbitration.html" %}
+
+<br><br>
+
+
+<table class="table">
+<tr>
+    <td> The <b>implemented</b> alternative is </td>
+        {% if choice == blue %}
+        <td  style="color:blue"> <b> blue </b> </td>
+        {% elif choice == green %}
+        <td  style="color:green"> <b> green </b> </td>
+        {% elif choice == orange %}
+        <td style="color:#c24e00"> <b> orange </b> </td>
+        {% endif %}
+</tr>
+
+<tr>
+    <td> Your <b>payment</b> is </td>
+    <td> {{ player.earnings }}</td>
+</tr>
+
+</table>
+
+</font>
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+
 {{ endblock }}
 
 

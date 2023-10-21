@@ -5,7 +5,7 @@ import math
 
 doc = """
 Application for simple arbitration experiment.
-Case of dominant strategy mechanism.
+Dominant strategy mechanism.
 """
 
 #-----------------------------------------------------------------------------------
