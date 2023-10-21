@@ -9,13 +9,13 @@ SESSION_CONFIGS = [
      ),
      dict(
          name ='ArbitrationDS',
-         display_name ='Arbitration Dominant Strategies',
+         display_name ='Arbitration Dominant Strategies (DS)',
          num_demo_participants = 2,
          app_sequence = ['WelcomeScreen', 'Arbitration_DS','beauty_contest','risk_elicitation','FinalResults'],
      ),
      dict(
          name ='ArbitrationSS',
-         display_name ='Arbitration Strategically Simple',
+         display_name ='Arbitration Strategically Simple (SS)',
          num_demo_participants = 2,
          app_sequence = ['WelcomeScreen','Arbitration_SS','beauty_contest','risk_elicitation','FinalResults'],
      ),
