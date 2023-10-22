@@ -49,6 +49,12 @@ SESSION_CONFIGS = [
          num_demo_participants = 1,
          app_sequence = ['WelcomeScreen'],
      ),
+     dict(
+        name="sliders",
+        display_name="RET Slider task",
+        num_demo_participants=1,
+        app_sequence=["sliders"],
+    ),
 ]
 
 #------------------------------------------------------------------------------------
@@ -79,7 +85,7 @@ ROOMS = [
 ]
 
 PARTICIPANT_FIELDS = []
-SESSION_FIELDS = []
+SESSION_FIELDS = ['params']
 #participation_fee = 5
 
 # ISO-639 code
