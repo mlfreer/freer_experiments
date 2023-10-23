@@ -14,7 +14,7 @@ doc = """
 
 class Constants(BaseConstants):
     name_in_url = "sliders"
-    players_per_group = None
+    players_per_group = 4
     num_rounds = 1
 
     task_time = 60
@@ -40,15 +40,29 @@ def creating_session(subsession: Subsession):
 
 
 class Group(BaseGroup):
-    pass
+    invest1 = models.IntegerField(initial=0)
+    invest2 = models.IntegerField(initial=0)
+    invest3 = models.IntegerField(initial=0)
+    invest4 = models.IntegerField(initial=0)
 
 
 class Player(BasePlayer):
     # only suported 1 iteration for now
     iteration = models.IntegerField(initial=0)
 
+    # number of correctly solved real effort tasks:
     num_correct = models.IntegerField(initial=0)
     elapsed_time = models.FloatField(initial=0)
+
+    # amount of money invested in the tournament
+    invest = models.IntegerField(initial=0)
+    
+    # ranking in group
+    rank = models.IntegerField(initial=0,min=0,max=4)
+
+    # WTA to sell the certificate:
+    WTA = models.FloatField(default=0)
+
 
 
 # puzzle-specific stuff
@@ -238,6 +252,60 @@ def play_game(player: Player, message: dict):
 #-----------------------------------------------------------------------
 
 
+
+
+
+
+
+#-----------------------------------------------------------------------
+# CC FUNCTIONS:
+
+
+# setting the ranking:
+def set_ranking(group: Group):
+    players  = group.get_players()
+
+    investments = [0 for x in range(0,4)]
+    i=0
+    for p in players:
+        investments[i] = p.invest
+        i=i+1
+
+    investments = sorted(investments,reverse = True)
+
+    k=0
+    group.invest1 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0:
+            p.rank = k+1
+
+    k=1
+    group.invest2 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0:
+            p.rank = k+1
+
+    k=2
+    group.invest3 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0 :
+            p.rank = k+1
+
+    k=3
+    group.invest4 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0:
+            p.rank = k+1
+
+
+
+
+
+
+#-----------------------------------------------------------------------
+
+
+
 class RealEffortTask(Page):
     template_name = '_static/global/Sliders.html'
 
@@ -266,13 +334,51 @@ class RealEffortTask(Page):
         if puzzle and puzzle.response_timestamp:
             player.elapsed_time = puzzle.response_timestamp - puzzle.timestamp
             player.num_correct = puzzle.num_correct
-            player.payoff = player.num_correct
+#            player.payoff = player.num_correct
 
+class Invest(Page):
+    form_model='player'
+    form_fields = ['invest']
+
+    def vars_for_template(player: Player):
+        return dict(
+            earnings = player.num_correct
+            )
+
+class InvestWaitPage(WaitPage):
+    wait_for_all_groups = False
+
+    @staticmethod
+    def after_all_players_arrive(group: Group):
+        set_ranking(group)
+
+class WTA(Page):
+    form_model='player'
+    form_fields = ['WTA']
+
+    def vars_for_template(player: Player):
+        temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        tournament = [0 for x in range(0,4)]
+        for i in range(0,4):
+            tournament[i] = [i+1, temp[i]]
+
+
+        return dict(
+            earnings = player.num_correct,
+            invest = player.invest,
+            rank = player.rank,
+            tournament = tournament
+            )
 
 class Results(Page):
     pass
 
 
-page_sequence = [RealEffortTask]
+page_sequence = [
+            RealEffortTask,
+            Invest,
+            InvestWaitPage,
+            WTA
+            ]
 
 

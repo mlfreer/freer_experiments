@@ -52,14 +52,8 @@ SESSION_CONFIGS = [
      dict(
         name="CC_T0",
         display_name="Consp Consumption: Baseline",
-        num_demo_participants=1,
+        num_demo_participants=4,
         app_sequence=["CC_T0"],
-    ),
-     dict(
-        name="sliders",
-        display_name="Real Effort Task: Sliders",
-        num_demo_participants=1,
-        app_sequence=["sliders"],
     ),
 ]
 
