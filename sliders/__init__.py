@@ -13,7 +13,7 @@ doc = """
 
 
 class Constants(BaseConstants):
-    name_in_url = "sliders"
+    name_in_url = "CC_T0"
     players_per_group = None
     num_rounds = 1
 

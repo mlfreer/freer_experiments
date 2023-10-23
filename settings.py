@@ -50,8 +50,14 @@ SESSION_CONFIGS = [
          app_sequence = ['WelcomeScreen'],
      ),
      dict(
+        name="CC_T0",
+        display_name="Consp Consumption: Baseline",
+        num_demo_participants=1,
+        app_sequence=["CC_T0"],
+    ),
+     dict(
         name="sliders",
-        display_name="RET Slider task",
+        display_name="Real Effort Task: Sliders",
         num_demo_participants=1,
         app_sequence=["sliders"],
     ),
