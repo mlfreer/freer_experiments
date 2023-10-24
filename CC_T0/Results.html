@@ -1,0 +1,37 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    WTA
+{% endblock %}
+
+
+{{ block content }}
+<font size="4">
+
+
+<br><br>
+
+<table class="table">
+    <tr>
+        <td> Your earnings from the task are</td>
+        <td> <b> {{earnings}} tokens </b></td>
+    </tr>
+    <tr>
+        <td> You have chosen to invest</td>
+        <td> <b> {{invest}} tokens </b></td>
+    </tr>
+
+    <tr>
+        <td> Your rank in the tournament is</td>
+        <td> <b> {{rank}} </b></td>
+    </tr>
+
+    <tr>
+        <td> Certificate Price </td>
+        <td> <b> {{price_certificate}} </b> </td>
+    </tr>
+</table>
+
+
+{{ endblock }}

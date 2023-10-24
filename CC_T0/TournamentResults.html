@@ -1,0 +1,77 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Tournament: Results 
+{% endblock %}
+
+
+{{ block content }}
+<font size="4">
+
+
+<br><br>
+
+<table class="table">
+    <tr>
+        <td> Your earnings from the task are</td>
+        <td> <b> {{earnings}} tokens </b></td>
+    </tr>
+    <tr>
+        <td> You have chosen to invest</td>
+        <td> <b> {{invest}} tokens </b></td>
+    </tr>
+
+    <tr>
+        <td> Your rank in the tournament is</td>
+        <td> <b> {{rank}} </b></td>
+    </tr>
+</table>
+
+
+<br><br>
+
+<p class="center">
+<b> Tournament Results </b>
+</p>
+
+<table class="table">
+    <tr class="center">
+        <td> <b> Rank </b> </td>
+        <td> <b> Investment </b> </td>
+    </tr>
+
+{% for p in tournament %}
+    <tr class="center">
+        {% if rank == p.0 %}
+        <td> <b> {{p.0}} </b> </td>
+        <td> <b> {{p.1}} </b> </td>
+        {% else %}
+        <td>  {{p.0}}  </td>
+        <td>  {{p.1}}  </td>
+        {% endif %}
+    </tr>
+{% endfor %}
+</table>
+
+<br>
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+</font>
+
+<style>
+input[type='number']{
+    width: 80px;
+} 
+ .center {
+            text-align-last: center;
+            border: 1px solid black;
+        }
+
+</style>
+
+{{ endblock }}

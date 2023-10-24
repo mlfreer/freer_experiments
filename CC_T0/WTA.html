@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Tournament: Results 
+    WTA
 {% endblock %}
 
 
@@ -31,27 +31,35 @@
 
 <br><br>
 
-<p class="center">
-<b> Tournament Results </b>
-</p>
-
 <table class="table">
-    <tr class="center">
-        <td> <b> Rank </b> </td>
-        <td> <b> Investment </b> </td>
+    <tr>
+        <td width="70%"> What is the minimal amount of money you would accept to sell the certificate? </td>
+        <td></td>
     </tr>
-
-{% for p in tournament %}
-    <tr class="center">
-        {% if rank == p.0 %}
-        <td> <b> {{p.0}} </b> </td>
-        <td> <b> {{p.1}} </b> </td>
-        {% else %}
-        <td>  {{p.0}}  </td>
-        <td>  {{p.1}}  </td>
-        {% endif %}
+    <tr>
+        <td width="60%">
+            <div class="slidercontainer"><input type="range" class="slider" name="WTA" min="0" max="10"  step=".1" list="ticks" oninput="rangeValue.innerText = this.value">
+                <div class="sliderticks">
+    <p>0</p>
+    <p>1</p>
+    <p>2</p>
+    <p>3</p>
+    <p>4</p>
+    <p>5</p>
+    <p>6</p>
+    <p>7</p>
+    <p>8</p>
+    <p>9</p>
+    <p>10</p>
+  </div>
+            </div> 
+<div class="ticks">
+   </div>
+         </td>
+         <td class="center">
+            <div id="rangeValue"></div>
+         </td>
     </tr>
-{% endfor %}
 </table>
 
 <br>
@@ -60,18 +68,86 @@
 <div id="NextButton" style="float: right;">
 {% next_button %}
 </div>
-
 </font>
 
+
+
 <style>
+
+* {
+  box-sizing: border-box;
+}
+
+.sliderticks {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.sliderticks p {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 1px;
+  background: #D3D3D3;
+  height: 10px;
+  line-height: 40px;
+  margin: 0 0 20px 0;
+}
+
+.options {
+  width: 30em;
+  border: 1px solid silver;
+  border-radius: 1em;
+  background-color: ghostwhite;
+  padding: 0 0 1em 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
 input[type='number']{
     width: 80px;
 } 
- .center {
+
+.center {
             text-align-last: center;
-            border: 1px solid black;
+            font-size:40px
         }
 
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+  margin: auto;
+  cursor: grab;
+
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 40%; 
+  background: #04AA6D;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 40%;
+  background: #04AA6D;
+  cursor: pointer;
+}
 </style>
 
 {{ endblock }}

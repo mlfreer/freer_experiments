@@ -3,6 +3,7 @@ import json
 
 from otree import settings
 from otree.api import *
+import random
 
 from _static import task_sliders
 #from _static import encode_image
@@ -61,8 +62,8 @@ class Player(BasePlayer):
     rank = models.IntegerField(initial=0,min=0,max=4)
 
     # WTA to sell the certificate:
-    WTA = models.FloatField(default=0)
-
+    WTA = models.FloatField(default=0,max_digits=5, decimal_places=2)
+    price_certificate = models.FloatField(default=0,max_digits=5, decimal_places=2)
 
 
 # puzzle-specific stuff
@@ -352,6 +353,21 @@ class InvestWaitPage(WaitPage):
     def after_all_players_arrive(group: Group):
         set_ranking(group)
 
+class TournamentResults(Page):
+    def vars_for_template(player: Player):
+        temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        tournament = [0 for x in range(0,4)]
+        for i in range(0,4):
+            tournament[i] = [i+1, temp[i]]
+
+
+        return dict(
+            earnings = player.num_correct,
+            invest = player.invest,
+            rank = player.rank,
+            tournament = tournament
+            )
+
 class WTA(Page):
     form_model='player'
     form_fields = ['WTA']
@@ -370,15 +386,36 @@ class WTA(Page):
             tournament = tournament
             )
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        number = 10*random.random()
+        if number >= player.WTA:
+            player.price_certificate = number
+
 class Results(Page):
-    pass
+    def vars_for_template(player: Player):
+        temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        tournament = [0 for x in range(0,4)]
+        for i in range(0,4):
+            tournament[i] = [i+1, temp[i]]
+
+
+        return dict(
+            earnings = player.num_correct,
+            invest = player.invest,
+            rank = player.rank,
+            tournament = tournament,
+            price_certificate = player.price_certificate
+            )
 
 
 page_sequence = [
             RealEffortTask,
             Invest,
             InvestWaitPage,
-            WTA
+            TournamentResults,
+            WTA,
+            Results
             ]
 
 
