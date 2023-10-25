@@ -23,9 +23,10 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    pass
+    paying_round = models.IntegerField(min=1,max=Constants.num_rounds,initial=0)
 
 
+#------------------------------------------------------------------
 def creating_session(subsession: Subsession):
     session = subsession.session
     defaults = dict(
@@ -38,6 +39,12 @@ def creating_session(subsession: Subsession):
     session.params = {}
     for param in defaults:
         session.params[param] = session.config.get(param, defaults[param])
+
+def set_paying_round(session: Subsession):
+    p_round = random.randint(1,Constants.num_rounds)
+    s = session.in_round(Constants.num_rounds)
+    s.paying_round = p_round
+#------------------------------------------------------------------
 
 
 class Group(BaseGroup):
@@ -330,6 +337,9 @@ class RealEffortTask(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
+        if player.subsession.round_number==1:
+            set_paying_round(player.subsession)
+
         puzzle = get_current_puzzle(player)
 
         if puzzle and puzzle.response_timestamp:
@@ -408,6 +418,10 @@ class Results(Page):
         for i in range(0,4):
             tournament[i] = [i+1, temp[i]]
 
+        if player.subsession.round_number == Constants.num_rounds:
+            p = player.in_round(player.subsession.paying_round)
+            player.participant.vars['T1_earnings'] = p.num_correct
+            player.participant.vars['T1_certificate'] = p.price_certificate
 
         return dict(
             earnings = player.num_correct,

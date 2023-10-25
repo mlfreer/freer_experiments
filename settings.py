@@ -53,12 +53,12 @@ SESSION_CONFIGS = [
         name="CC_T0",
         display_name="Consp Consumption: Baseline",
         num_demo_participants=4,
-        app_sequence=["CC_T0"],
+        app_sequence=["CC_T0","CC_BestResponse","CC_FinalResults"],
     ),
     dict(
         name="CC_BestResponse",
         display_name="Consp Consumption: Best Response",
-        num_demo_participants=4,
+        num_demo_participants=1,
         app_sequence=["CC_BestResponse"],
     ),
 ]

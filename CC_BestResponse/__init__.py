@@ -25,9 +25,10 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    pass
+    paying_round = models.IntegerField(min=1,max=Constants.num_rounds,initial=0)
 
 
+#------------------------------------------------------------------
 def creating_session(subsession: Subsession):
     session = subsession.session
     defaults = dict(
@@ -41,13 +42,16 @@ def creating_session(subsession: Subsession):
     for param in defaults:
         session.params[param] = session.config.get(param, defaults[param])
 
+def set_paying_round(session: Subsession):
+    p_round = random.randint(1,Constants.num_rounds)
+    s = session.in_round(Constants.num_rounds)
+    s.paying_round = p_round
+#------------------------------------------------------------------
+
+
 
 class Group(BaseGroup):
-    invest1 = models.IntegerField(initial=0)
-    invest2 = models.IntegerField(initial=0)
-    invest3 = models.IntegerField(initial=0)
-    invest4 = models.IntegerField(initial=0)
-
+    pass
 
 class Player(BasePlayer):
     # only suported 1 iteration for now
@@ -66,6 +70,12 @@ class Player(BasePlayer):
     # WTA to sell the certificate:
     WTA = models.FloatField(default=0,max_digits=5, decimal_places=2)
     price_certificate = models.FloatField(default=0,max_digits=5, decimal_places=2)
+
+    # investments:
+    invest1 = models.IntegerField(initial=0)
+    invest2 = models.IntegerField(initial=0)
+    invest3 = models.IntegerField(initial=0)
+    invest4 = models.IntegerField(initial=0)
 
 
 # puzzle-specific stuff
@@ -265,41 +275,31 @@ def play_game(player: Player, message: dict):
 
 
 # setting the ranking:
-def set_ranking(group: Group):
-    players  = group.get_players()
-
-    investments = [0 for x in range(0,4)]
-    i=0
-    for p in players:
-        investments[i] = p.invest
-        i=i+1
-
-    investments = sorted(investments,reverse = True)
+def set_ranking(player: Player):
+    investments = Constants.tournament
 
     k=0
-    group.invest1 = investments[k]
-    for p in players:
-        if p.invest == investments[k] and p.rank==0:
-            p.rank = k+1
+    if player.invest >= investments[k] and player.rank==0:
+        player.rank = k+1
 
     k=1
-    group.invest2 = investments[k]
-    for p in players:
-        if p.invest == investments[k] and p.rank==0:
-            p.rank = k+1
+    if player.invest >= investments[k] and player.rank==0:
+        player.rank = k+1
 
     k=2
-    group.invest3 = investments[k]
-    for p in players:
-        if p.invest == investments[k] and p.rank==0 :
-            p.rank = k+1
+    if player.invest >= investments[k] and player.rank==0:
+        player.rank = k+1
 
     k=3
-    group.invest4 = investments[k]
-    for p in players:
-        if p.invest == investments[k] and p.rank==0:
-            p.rank = k+1
+    if player.invest < investments[k-1] and player.rank==0:
+        player.rank = k+1
 
+    invest = [Constants.tournament[0], Constants.tournament[1], Constants.tournament[2], player.invest]
+    invest = sorted(invest,reverse = True)
+    player.invest1 = invest[0]
+    player.invest2 = invest[1]
+    player.invest3 = invest[2]
+    player.invest4 = invest[3]
 
 
 
@@ -332,6 +332,9 @@ class RealEffortTask(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
+        if player.subsession.round_number==1:
+            set_paying_round(player.subsession)
+
         puzzle = get_current_puzzle(player)
 
         if puzzle and puzzle.response_timestamp:
@@ -352,19 +355,22 @@ class Invest(Page):
             earnings = player.num_correct,
             tournament = tournament
             )
+    def before_next_page(player:Player,timeout_happened):
+        set_ranking(player)
 
-class InvestWaitPage(WaitPage):
-    wait_for_all_groups = False
 
-    @staticmethod
-    def after_all_players_arrive(group: Group):
-        set_ranking(group)
+#class InvestWaitPage(WaitPage):
+#    wait_for_all_groups = False
+#
+#    @staticmethod
+#    def after_all_players_arrive(group: Group):
+#        set_ranking(group)
 
 class TournamentResults(Page):
     template_name = '_static/global/TournamentResults.html'
 
     def vars_for_template(player: Player):
-        temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        temp = [player.invest1, player.invest2, player.invest3, player.invest4]
         tournament = [0 for x in range(0,4)]
         for i in range(0,4):
             tournament[i] = [i+1, temp[i]]
@@ -384,7 +390,7 @@ class WTA(Page):
     form_fields = ['WTA']
 
     def vars_for_template(player: Player):
-        temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        temp = [player.invest1, player.invest2, player.invest3, player.invest4]
         tournament = [0 for x in range(0,4)]
         for i in range(0,4):
             tournament[i] = [i+1, temp[i]]
@@ -410,11 +416,15 @@ class Results(Page):
     template_name = '_static/global/Results.html'
 
     def vars_for_template(player: Player):
-        temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        temp = [player.invest1, player.invest2, player.invest3, player.invest4]
         tournament = [0 for x in range(0,4)]
         for i in range(0,4):
             tournament[i] = [i+1, temp[i]]
 
+        if player.subsession.round_number == Constants.num_rounds:
+            p = player.in_round(player.subsession.paying_round)
+            player.participant.vars['T2_earnings'] = p.num_correct
+            player.participant.vars['T2_certificate'] = p.price_certificate
 
         return dict(
             earnings = player.num_correct,
@@ -428,7 +438,6 @@ class Results(Page):
 page_sequence = [
             RealEffortTask,
             Invest,
-            InvestWaitPage,
             TournamentResults,
             WTA,
             Results

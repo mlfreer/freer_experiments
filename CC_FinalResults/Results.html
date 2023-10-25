@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Results
+    Final Payment
 {% endblock %}
 
 
@@ -15,19 +15,10 @@
 <table class="table">
     <tr>
         <td> Your earnings from the task are</td>
-        <td> <b> {{earnings}} tokens </b></td>
-    </tr>
-    <tr>
-        <td> You have chosen to invest</td>
-        <td> <b> {{invest}} tokens </b></td>
+        <td> <b> {{final_earnings}} </b></td>
     </tr>
 
-    <tr>
-        <td> Your rank in the tournament is</td>
-        <td> <b> {{rank}} </b></td>
-    </tr>
-
-{% if price_certificate <= 0 %}
+{% if final_certificate <= 0 %}
     <tr> 
         <td> You will get the certificate. </td>
         <td> </td>
@@ -38,11 +29,18 @@
         <td> </td>
     </tr>
 {% endif %}
+    <tr style="border-bottom:2px solid black">
+        <td> Show up fee is </td>
+        <td> <b> {{show_up_fee}} </b></td>
+    </tr>
+    <tr>
+        <td> Your final payoff is </td>
+        <td> <b> {{payoff}} </b></td>
+    </tr>
+
 </table>
 
 
-<div id="NextButton" style="float: right;">
-{% next_button %}
-</div>
+
 </font>
 {{ endblock }}
