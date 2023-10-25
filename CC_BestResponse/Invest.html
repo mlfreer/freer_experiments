@@ -1,0 +1,67 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Tournament: Investment 
+{% endblock %}
+
+
+{{ block content }}
+<font size="4">
+
+
+<br><br>
+
+<table class="table">
+    <tr>
+        <td> Your earnings from the task are</td>
+        <td> {{earnings}} tokens</td>
+    </tr>
+    <tr>
+        <td> How much would you like to invest in the training </td>
+        <td> <input type="number" id="invest" name="invest" min="0" max="{{earnings}}"> </td>
+    </tr>
+</table>
+
+
+<p class="center">
+<b> Tournament Table </b>
+</p>
+
+<table class="table">
+    <tr class="center">
+        <td class="center"> <b> Rank </b> </td>
+        <td> <b> Investment </b> </td>
+    </tr>
+{% for p in tournament %}
+    <tr class="center">
+        <td width="50%" class="center">  {{p.0}}  </td>
+        <td>  {{p.1}}  </td>
+    </tr>
+{% endfor %}
+</table>
+
+
+<br>
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+</font>
+
+<style>
+    input[type='number']{
+    width: 80px;
+} 
+
+.center {
+            text-align-last: center;
+            border: 1px solid black;
+        }
+
+
+</style>
+
+{{ endblock }}

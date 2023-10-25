@@ -14,11 +14,13 @@ doc = """
 
 
 class Constants(BaseConstants):
-    name_in_url = "CC_T0"
-    players_per_group = 4
+    name_in_url = "CC_BestResponse"
+    players_per_group = None
     num_rounds = 1
 
     task_time = 60
+
+    tournament = [25, 20, 10]
 
 
 
@@ -342,8 +344,13 @@ class Invest(Page):
     form_fields = ['invest']
 
     def vars_for_template(player: Player):
+        tournament = [0 for x in range(0,3)]
+        for i in range(0,3):
+            tournament[i] = [i+1, Constants.tournament[i]]
+
         return dict(
-            earnings = player.num_correct
+            earnings = player.num_correct,
+            tournament = tournament
             )
 
 class InvestWaitPage(WaitPage):

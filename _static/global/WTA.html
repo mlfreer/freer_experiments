@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    WTA
+    Certificate
 {% endblock %}
 
 
@@ -29,11 +29,15 @@
 </table>
 
 
+<br>
+
+<img class="pic-center" src="{{ static 'pictures/rank1_certificate.png' }}"/>
+
 <br><br>
 
 <table class="table">
     <tr>
-        <td width="70%"> What is the minimal amount of money you would accept to sell the certificate? </td>
+        <td width="70%"> What is the minimal amount of money you would accept to sell the certificate (example presented above)?  </td>
         <td></td>
     </tr>
     <tr>
@@ -115,7 +119,12 @@ input[type='number']{
             text-align-last: center;
             font-size:40px
         }
-
+.pic-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+}
 
 .slider {
   -webkit-appearance: none;

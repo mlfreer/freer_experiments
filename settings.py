@@ -55,6 +55,12 @@ SESSION_CONFIGS = [
         num_demo_participants=4,
         app_sequence=["CC_T0"],
     ),
+    dict(
+        name="CC_BestResponse",
+        display_name="Consp Consumption: Best Response",
+        num_demo_participants=4,
+        app_sequence=["CC_BestResponse"],
+    ),
 ]
 
 #------------------------------------------------------------------------------------
