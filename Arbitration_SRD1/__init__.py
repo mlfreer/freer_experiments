@@ -109,8 +109,10 @@ def set_results(group: Group):
     votes_1 = 0
     votes_2 = 0
     for p in players:
-        votes_1 = votes_1 + p.vote_1
-        votes_2 = votes_2 + p.vote_2
+        if p.vote_1 == 1:
+            votes_1 = votes_1 + 1
+        if p.vote_1 == 2:
+            votes_2 = votes_2 + 1
 
     if votes_1 == 2:
         group.Collective_Choice = group.Alternative_1
@@ -161,7 +163,7 @@ class SetupWaitPage(WaitPage):
 
 class Voting(Page):
     form_model = 'player'
-    form_fields = ['vote_1','vote_2']
+    form_fields = ['vote_1']
     def vars_for_template(player):
         profile = player.MyPreferences+1
         preferences_list = [player.group.rank2*2, player.group.rank2*2+1, player.group.rank3*2, player.group.rank3*2+1]
@@ -188,7 +190,7 @@ class Voting(Page):
 
     @staticmethod
     def error_message(player, values):
-        if values['vote_1']+values['vote_2'] > 1:
+        if values['vote_1'] > 2:
             return 'You can choose no more than one alternative to replace the default with'
 
 class VotingResultsWaitPage(WaitPage):

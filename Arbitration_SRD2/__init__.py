@@ -111,9 +111,12 @@ def set_results(group: Group):
     votes_2 = 0
     votes_3 = 0
     for p in players:
-        votes_1 = votes_1 + p.veto_1
-        votes_2 = votes_2 + p.veto_2
-        votes_3 = votes_3 + p.veto_3
+        if p.veto_1 == 1:
+            votes_1 = votes_1 + 1
+        if p.veto_1 == 2:
+            votes_2 = votes_2 + 1
+        if p.veto_1 == 3:
+            votes_3 = votes_3 + 1
 
     if votes_1 == 0:
         group.Collective_Choice = group.Default
@@ -164,7 +167,7 @@ class SetupWaitPage(WaitPage):
 
 class Voting(Page):
     form_model = 'player'
-    form_fields = ['veto_1','veto_2','veto_3']
+    form_fields = ['veto_1']
     def vars_for_template(player):
         profile = player.MyPreferences+1
         preferences_list = [player.group.rank2*2, player.group.rank2*2+1, player.group.rank3*2, player.group.rank3*2+1]
@@ -189,12 +192,12 @@ class Voting(Page):
             rank3 = player.group.rank3,
             )
 
-    @staticmethod
-    def error_message(player, values):
-        if values['veto_1']+values['veto_2'] + values['veto_3'] > 1:
-            return 'You can not veto more than one alternative'
-        if values['veto_1']+values['veto_2'] + values['veto_3'] == 0:
-            return 'You have to veto one alternative'
+#    @staticmethod
+#    def error_message(player, values):
+#        if values['veto_1']+values['veto_2'] + values['veto_3'] > 1:
+#            return 'You can not veto more than one alternative'
+#        if values['veto_1']+values['veto_2'] + values['veto_3'] == 0:
+#            return 'You have to veto one alternative'
 
 class VotingResultsWaitPage(WaitPage):
     wait_for_all_groups = False
