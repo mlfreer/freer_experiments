@@ -31,7 +31,23 @@
 
 <br>
 
-<img class="pic-center" src="{{ static 'pictures/rank1_certificate.png' }}"/>
+{% if rank == 1 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank1.png' }}"/>
+{% endif %}
+
+{% if rank == 2 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank2.png' }}"/>
+{% endif %}
+
+
+{% if rank == 3 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank3.png' }}"/>
+{% endif %}
+
+
+{% if rank == 4 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank4.png' }}"/>
+{% endif %}
 
 <br><br>
 

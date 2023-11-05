@@ -38,11 +38,63 @@
         <td> </td>
     </tr>
 {% endif %}
+
 </table>
 
+{% if price_certificate <= 0 %}
+{% if rank == 1 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank1.png' }}"/>
+{% endif %}
+
+{% if rank == 2 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank2.png' }}"/>
+{% endif %}
+
+
+{% if rank == 3 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank3.png' }}"/>
+{% endif %}
+
+
+{% if rank == 4 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank4.png' }}"/>
+{% endif %}
+
+{% else %}
+{% if rank == 1 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank1_crossed.png' }}"/>
+{% endif %}
+
+{% if rank == 2 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank2_crossed.png' }}"/>
+{% endif %}
+
+
+{% if rank == 3 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank3_crossed.png' }}"/>
+{% endif %}
+
+
+{% if rank == 4 %}
+<img class="pic-center" src="{{ static 'pictures/certificate_rank4_crossed.png' }}"/>
+{% endif %}
+{% endif %}
+
+
+<br><br>
 
 <div id="NextButton" style="float: right;">
 {% next_button %}
 </div>
 </font>
+
+<style>
+    .pic-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+}
+
+</style>
 {{ endblock }}
