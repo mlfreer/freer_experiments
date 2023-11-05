@@ -19,7 +19,7 @@
     </tr>
     <tr>
         <td> How much would you like to invest in the training </td>
-        <td> <input type="number" id="invest" name="invest" min="0" max="{{earnings}}"> </td>
+        <td> <input type="number" id="invest" name="invest" min="0" max="{{earnings}}" oninput="sortTable()"> </td>
     </tr>
 </table>
 
@@ -28,7 +28,7 @@
 <b> Tournament Table </b>
 </p>
 
-<table class="table">
+<table class="table" id="myTable">
     <tr class="center">
         <td class="center"> <b> Rank </b> </td>
         <td> <b> Investment </b> </td>
@@ -39,6 +39,10 @@
         <td>  {{p.1}}  </td>
     </tr>
 {% endfor %}
+    <tr class="center" style="background-color:#D9DDDC">
+        <td width="50%" class="center">  4 </td>
+        <td id="invest_value">  </td>
+    </tr>
 </table>
 
 
@@ -51,6 +55,63 @@
 
 </font>
 
+<script>
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch, input, z;
+  table = document.getElementById("myTable");
+  switching = true;
+
+  // update the value
+  input = document.querySelector('#invest');
+  document.querySelector('#invest_value').innerHTML = input.value;
+
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[1];
+      y = rows[i + 1].getElementsByTagName("TD")[1];
+      if (i<(rows.length-1))
+      {
+        z = parseFloat(y.innerHTML);
+      } else {
+        z = parseFloat(document.querySelector('#invest_value').innerHTML);
+      }
+
+      //check if the two rows should switch place:
+      if (parseFloat(x.innerHTML) < z) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      rows[i].getElementsByTagName("TD")[0].innerHTML = i
+      rows[i+1].getElementsByTagName("TD")[0].innerHTML = i+1
+      switching = true;
+    }
+  }
+}
+
+//let 
+//input.addEventListener('input', () => {
+//}
+//)
+
+</script>
+
 <style>
     input[type='number']{
     width: 80px;
@@ -60,7 +121,6 @@
             text-align-last: center;
             border: 1px solid black;
         }
-
 
 </style>
 
