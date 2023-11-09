@@ -1,0 +1,25 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Ergebnis
+{% endblock %}
+
+{% block content %}
+<font size="4"> 
+
+<br><br>
+
+<table class="table">
+    <tr> 
+        <td> Ihre Zahl </td>
+        <td> {{guess}} </td>
+    </tr>
+    <tr> 
+        <td> Ihre Auszahlung für Aufgabe 1 </td>
+        <td> {{ earning }} </td>
+    </tr>
+</table>
+</font>
+
+{% endblock %}

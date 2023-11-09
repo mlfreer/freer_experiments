@@ -1,0 +1,66 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Post-Experimental Task 2
+{% endblock %}
+
+{% block content %}
+
+<font size="4">
+
+etrachten Sie die beiden folgenden Auszahlungsoptionen.
+
+<br><br>
+
+<b> Option A </b>: €{{safe_payoff}} mit 100% Wahrscheinlichkeit
+
+<br><br>
+
+<b> Option B </b>: €{{low_payoff}} oder €{{high_payoff}} mit je 50% Wahrscheinlichkeit
+
+<br><br>
+
+Wir werden Sie darum bitten uns Ihre präferierte Option zu nennen.
+
+<br><br>
+
+Mit 10% Wahrscheinlichkeit erhalten Sie eine Auszahlung.
+
+<br><br>
+
+Falls Sie eine Auszahlung erhalten und von Option A genannt haben, beträgt diese €{{safe_payoff}}.
+
+<br><br>
+
+Falls Sie eine Auszahlung erhalten und von Option B genannt haben, dann entscheidet eine computergenierte Zufallszahl über die Höhe.  Mit gleicher Wahrscheinlichkeit erhalten Sie in diesem Fall €{{low_payoff}} oder €{{high_payoff}}.
+
+Bitte nennen Sie und Ihre präferierte Option:
+
+<table class="table">
+    <tr>
+        <td>
+            <input id="OptionA" type="radio" name="risk_choice" value="0" required>  <b>Option A </b>: 
+        </td>
+        <td> 
+            €{{safe_payoff}} mit 100% Wahrscheinlichkeit
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <input id="OptionB" type="radio" name="risk_choice" value="1" required> <b>Option B</b>: 
+        </td>
+        <td>
+            €{{low_payoff}} oder €{{high_payoff}} mit je 50% Wahrscheinlichkeit
+        </td>
+    </tr>
+</table>
+</font>
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+
+{% endblock %}

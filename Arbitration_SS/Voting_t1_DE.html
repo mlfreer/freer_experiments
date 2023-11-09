@@ -1,0 +1,56 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Wahl. Schritt 1 (Runde {{round_number}} von {{num_rounds}})
+{% endblock %}
+
+
+{{ block content }}
+
+{% include "_static/global/Preferences_Arbitration_GER.html" %}
+
+<br><br>
+
+<table class="table">
+    <tr>
+        <td> Die aktuelle gewählte Alternative ist </td>
+        {% if default == blue %}
+        <td  style="color:blue"> <b> Blau </b> </td>
+        {% elif default == green %}
+        <td  style="color:green"> <b> Grün </b> </td>
+        {% elif default == orange %}
+        <td  style="color:#c24e00"> <b> Orange </b> </td>
+        {% endif %}
+        <td>        </td>
+    </tr>
+
+
+        <tr>
+        <td> Möchten Sie diese ersetzen durch
+        {% if alternative == blue %}
+        <b style="color:blue"> Blau </b> 
+        {% elif alternative == green %}
+        <b style="color:green"> Grün </b> 
+        {% elif alternative == orange %}
+        <b style="color:#c24e00"> Orange </b>
+        {% endif %}
+        </td>
+        <td>
+            <input id="Option2" type="radio" name="vote_t1" value="1" required> <b> Ja </b>
+        </td>
+        <td>
+            <input id="Option2" type="radio" name="vote_t1" value="0" required> <b> Nein </b>
+        </td>
+    </tr>
+</table>
+
+<br>
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+
+{{ endblock }}

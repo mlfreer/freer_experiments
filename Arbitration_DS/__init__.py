@@ -156,6 +156,7 @@ class SetupWaitPage(WaitPage):
 			set_ordering(g)
 
 class Voting(Page):
+	template_name = './Arbitration_DS/Voting_GER.html'
 	form_model = 'player'
 	form_fields = ['vote']
 	def vars_for_template(player):
@@ -191,6 +192,7 @@ class VotingResultsWaitPage(WaitPage):
 		set_results(group)
 
 class Results(Page):
+	template_name = './Arbitration_DS/Results_GER.html'
 	def vars_for_template(player):
 		if player.subsession.round_number == C.NUM_ROUNDS:
 			p = player.in_round(player.subsession.paying_round)

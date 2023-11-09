@@ -1,0 +1,72 @@
+<font size="4">
+<table class="table">
+    <tr> 
+        <td style="width: 70%;"> Sie sind von Typ </td>
+        <td> <b> {{ my_profile }} </b> </td>
+    </tr>
+    <tr>
+        <td style="width: 70%;"> Rangfolge der Alternativen </td>
+        <td>
+        {% if rank1 == blue %}
+        <b style="color:blue"> Blau </b> 
+        {% elif rank1 == green %}
+        <b style="color:green"> Grün </b> 
+        {% elif rank1 == orange %}
+        <b style="color:#c24e00"> Orange </b>
+        {% endif %}
+        -
+        {% if rank2 == blue %}
+        <b style="color:blue"> Blau </b> 
+        {% elif rank2 == green %}
+        <b style="color:green"> Grün </b> 
+        {% elif rank2 == orange %}
+        <b style="color:#c24e00"> Orange </b>
+        {% endif %}
+        -
+        {% if rank3 == blue %}
+        <b style="color:blue"> Blau </b> 
+        {% elif rank3 == green %}
+        <b style="color:green"> Grün </b> 
+        {% elif rank3 == orange %}
+        <b style="color:#c24e00"> Orange </b>
+        {% endif %}
+        </td>
+    </tr>
+</table>
+
+
+Die möglichen Auszahlung für jeden Typ sind wie folgt. <!-- literally: the possible payments for each type are as follows -->
+<br>
+Die mögliche Auszahlung für Sie ist fett angegeben.    <!-- literally: the possible payments for you is shown in bold -->
+
+<br>
+<br>
+
+
+<table class="table">
+    </tr>
+    <tr>
+        <td> <b> Type </b> </td>
+        <td style="color:blue"> <b> Blau </b> </td>
+        <td style="color:green"> <b> Grün </b> </td>
+        <td style="color:#c24e00"> <b> Orange</b> </td>
+    </tr>
+
+{% for p in preference_profiles %}
+    <tr>
+        {% if my_profile == p.0 %}
+        <td> <b> {{p.0}} </b> </td>
+        <td> <b> {{p.1}} </b> </td>
+        <td> <b> {{p.2}} </b> </td>
+        <td> <b> {{p.3}} </b> </td>
+        {% else %}
+        <td>  {{p.0}}  </td>
+        <td>  {{p.1}}  </td>
+        <td>  {{p.2}}  </td>
+        <td>  {{p.3}}  </td>
+        {% endif %}
+    </tr>
+{% endfor %}
+
+</table>
+</font>

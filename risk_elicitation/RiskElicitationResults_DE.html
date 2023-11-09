@@ -1,0 +1,25 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Ergebnis Aufgabe 2
+{% endblock %}
+
+{% block content %}
+<font size="4">
+
+<br><br>
+
+<table class="table">
+    <tr> 
+        <td> Ihre Wahl </td>
+        <td> {% if choice == 0%} Option A {% else %} Option B {% endif %} </td>
+    </tr>
+    <tr> 
+        <td> Ihre Auszahlung aus Aufgabe 2</td>
+        <td> {{ risk_earning }} </td>
+    </tr>
+</table>
+</font>
+
+{% endblock %}

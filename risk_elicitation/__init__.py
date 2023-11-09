@@ -64,6 +64,8 @@ def set_risk_results(player: Player):
 #-----------------------------------------------------------------------------------
 # risk elicitation instructions:
 class RiskElicitationInstructions(Page):
+    template_name = './risk_elicitation/RiskElicitationInstructions_DE.html'
+
     def vars_for_template(player: Player):
         return dict(
             high_payoff = Constants.risk_max,
@@ -74,6 +76,7 @@ class RiskElicitationInstructions(Page):
 
 
 class RiskElicitationDecision(Page):
+    template_name = './risk_elicitation/RiskElicitationDecision_DE.html'
     form_model = 'player'
     form_fields = ['risk_choice']
 
@@ -97,6 +100,7 @@ class RiskElicitationWaitPage(WaitPage):
 
 # temporary results page
 class RiskElicitationResults(Page):
+    template_name = './risk_elicitation/RiskElicitationResults_DE.html'
     def vars_for_template(player: Player):
         print(player.participant.vars)
         return dict(

@@ -1,0 +1,45 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Final Results
+{% endblock %}
+
+{% block content %}
+<font size="4">
+Vielen Dank für die Teilnahme am Experiment.
+
+Ihre Endauszahlung ergibt sich wie folgt: <!-- literally: Your final payment is calculated as follows -->
+
+
+<br><br>
+
+<table class="table">
+    <tr> 
+        <td> <b> Ihre Teilnehmernummer ist </b> </td>
+        <td> <b> {{ code }} </b> </td>
+    </tr>
+    <tr> 
+        <td> Auszahlung aus dem Experiment </td>
+        <td> {{ treatment_earnings }} </td>
+    </tr>
+    <tr> 
+        <td> Auszahlung aus Aufgabe 1</td>
+        <td> {{ bc_earnings }} </td>
+    </tr>
+    <tr> 
+        <td> Auszahlung aus Aufgabe 2</td>
+        <td> {{ risk_earnings }} </td>
+    </tr>
+    <tr>
+        <td> Teilnahme </td>
+        <td> {{show_up_fee}}
+    </tr>
+    <tr>
+        <td> <b> Ihre Endauszahlung beträgt </b> </td>
+        <td> <b> {{ total_earnings }} </b> </td>
+    </tr>
+</table>
+</font>
+
+{% endblock %}

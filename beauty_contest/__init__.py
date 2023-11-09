@@ -95,9 +95,11 @@ def set_bc_results(subsession: Subsession):
 #-----------------------------------------------------------------------------------
 # beauty contest task
 class BeautyContestInstructions(Page):
-    pass
+    template_name = './beauty_contest/BeautyContestInstructions_DE.html'
     
 class BeautyContestDecision(Page):
+    template_name = './beauty_contest/BeautyContestDecision_DE.html'
+
     form_model = 'player'
     form_fields = ['bc_guess']
 
@@ -115,6 +117,8 @@ class BeautyContestWaitPage(WaitPage):
 
 # for testing purposes
 class BeautyContestResults(Page):
+    template_name = './beauty_contest/BeautyContestResults_DE.html'
+    
     def vars_for_template(player: Player):
         return dict(
             earning = player.bc_earnings,

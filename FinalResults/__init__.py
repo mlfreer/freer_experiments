@@ -31,6 +31,7 @@ class Player(BasePlayer):
 #-----------------------------------------------------------------------------------
 # PAGES:
 class FinalResults(Page):
+    template_name = './FinalResults/FinalResults_DE.html'
     def vars_for_template(player):
         return dict(
             treatment_earnings = cu(player.participant.vars['treatment_earnings']),
