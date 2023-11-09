@@ -12,7 +12,7 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
-    SHOW_UP_FEE = 5
+    SHOW_UP_FEE = 6
 
 
 class Subsession(BaseSubsession):
@@ -34,12 +34,12 @@ class FinalResults(Page):
     template_name = './FinalResults/FinalResults_DE.html'
     def vars_for_template(player):
         return dict(
-            treatment_earnings = cu(player.participant.vars['treatment_earnings']),
-            bc_earnings = cu(player.participant.vars['bc_earnings']),
-            risk_earnings = cu(player.participant.vars['risk_earnings']),
-            total_earnings = cu(player.participant.vars['treatment_earnings'])+cu(player.participant.vars['bc_earnings'])+cu(player.participant.vars['risk_earnings']) + cu(C.SHOW_UP_FEE),
-            show_up_fee = cu(C.SHOW_UP_FEE),
-            code = player.participant.code
+            treatment_earnings = player.participant.vars['treatment_earnings'],
+            bc_earnings = player.participant.vars['bc_earnings'],
+            risk_earnings = player.participant.vars['risk_earnings'],
+            total_earnings = player.participant.vars['treatment_earnings']+player.participant.vars['bc_earnings']+player.participant.vars['risk_earnings'] + int(player.session.config['participation_fee']),
+            show_up_fee = int(player.session.config['participation_fee']), #C.SHOW_UP_FEE,
+            code = (player.participant.label)
             )
 #-----------------------------------------------------------------------------------
 
