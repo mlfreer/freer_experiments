@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Wahl. Schritt 1 (Runde {{round_number}} von {{num_rounds}})
+    Wahl. Runde 1 (Durchgang {{round_number}} von {{num_rounds}})
 {% endblock %}
 
 
@@ -14,7 +14,7 @@
 
 <table class="table">
     <tr>
-        <td> Die aktuelle gewählte Alternative ist </td>
+        <td> Die aktuell vorausgewählte Option ist </td>
         {% if default == blue %}
         <td  style="color:blue"> <b> Blau </b> </td>
         {% elif default == green %}

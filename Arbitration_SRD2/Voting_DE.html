@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Wahl (Runde <b>{{round_number}}</b> von {{num_rounds}})
+    Wahl (Durchgang <b>{{round_number}}</b> von {{num_rounds}})
 {% endblock %}
 
 
@@ -15,8 +15,8 @@
 <table class="table">
 
     <tr>
-        <td width="40%"> 
-            Welche Alternative wollen Sie ausschließen? <!-- literally: Which alternative do you want to rule out? -->
+        <td width="60%"> 
+            Welche Option wollen Sie ausschließen? <!-- literally: Which option do you want to rule out? -->
         </td>
     <td>
         <input id="default" type="radio" name="veto_1" value="1" required>

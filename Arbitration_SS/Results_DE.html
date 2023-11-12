@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Ergebnis (Runde {{round_number}} von {{num_rounds}})
+    Ergebnis (Durchgang {{round_number}} von {{num_rounds}})
 {% endblock %}
 
 {% block content %}
@@ -16,7 +16,7 @@
 
 <table class="table">
 <tr>
-    <td>  Das <b>Ergebnis</b> ist Alternative </td>   <!-- literally: the result is alternative -->
+    <td>  Das <b>Ergebnis</b> ist Option </td>   <!-- literally: the result is option -->
         {% if choice == blue %}
         <td  style="color:blue"> <b> Blau </b> </td>
         {% elif choice == green %}
