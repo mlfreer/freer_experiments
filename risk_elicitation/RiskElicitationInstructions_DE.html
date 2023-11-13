@@ -38,8 +38,21 @@ Falls Sie eine Auszahlung erhalten und von Option B genannt haben, dann entschei
 
 <br><br>
 
-<div id="NextButton" style="float: right;">
+
+<div id="NextButton" style="float: right;" hidden>
 {% next_button %}
 </div>
+
+<script>
+const myTimeout = setTimeout(showButton, 5000);
+
+function showButton() {
+  document.getElementById("NextButton").removeAttribute("hidden")
+}
+
+function myStopFunction() {
+  clearTimeout(myTimeout);
+}
+</script>
 
 {% endblock %}
