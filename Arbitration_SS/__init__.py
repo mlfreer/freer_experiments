@@ -92,6 +92,7 @@ def set_ordering(group: Group):
 	group.orange = numeric[2]
 
 	options = [0, 1, 2]
+	random.shuffle(options)
 	# Default:
 	group.Default_t1 = options[0]
 	group.Default_t2 = options[0]
