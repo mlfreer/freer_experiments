@@ -19,12 +19,12 @@ class C(BaseConstants):
 
     preferences = [0 for i in range(0,6)]
     # defining the vector of preferences:
-    preferences[0] = [15, 10, 1] # abc
-    preferences[1] = [15, 1, 10] # acb
-    preferences[2] = [10, 15, 1] # bac
-    preferences[3] = [1, 15, 10] # bca
-    preferences[4] = [10, 1, 15] # cab
-    preferences[5] = [1, 10, 15] # cba
+    preferences[0] = [12, 8, 1] # abc
+    preferences[1] = [12, 1, 8] # acb
+    preferences[2] = [8, 12, 1] # bac
+    preferences[3] = [1, 12, 8] # bca
+    preferences[4] = [8, 1, 12] # cab
+    preferences[5] = [1, 8, 12] # cba
 
     alternatives = ['blue', 'green', 'orange'] #, 'purple']
 
