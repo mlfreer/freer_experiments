@@ -1,0 +1,104 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Wahl (Durchgang <b>{{round_number}}</b> von {{num_rounds}})
+{% endblock %}
+
+
+{{ block content }}
+
+{% include "_static/global/Preferences_Arbitration_GER.html" %}
+
+<br><br>
+
+<table class="table">
+
+    <tr>
+        <td width="60%"> 
+            Allocate the first vote <!-- literally: Which option do you want to rule out? -->
+        </td>
+    <td>
+        <input id="default" type="radio" name="vote_1" value="1" required>
+        {% if default == blue %}
+        <b style="color:blue"> Blau </b> 
+        {% elif default == green %}
+        <b style="color:green"> Grün </b> 
+        {% elif default == orange %}
+        <b style="color:#c24e00"> Orange </b>
+        {% endif %}
+    </td>
+
+    <td>
+        <input id="option1" type="radio" name="vote_1" value="2" required>
+        {% if alternative_1 == blue %}
+        <b style="color:blue"> Blau </b> 
+        {% elif alternative_1 == green %}
+        <b style="color:green"> Grün </b> 
+        {% elif alternative_1 == orange %}
+        <b style="color:#c24e00"> Orange </b>
+        {% endif %}
+    </td>
+    
+    <td>
+        <input id="option2" type="radio" name="vote_1" value="3" required>
+        {% if alternative_2 == blue %}
+        <b style="color:blue"> Blau </b> 
+        {% elif alternative_2 == green %}
+        <b style="color:green"> Grün </b> 
+        {% elif alternative_2 == orange %}
+        <b style="color:#c24e00"> Orange </b>
+        {% endif %}
+    </td>
+    </tr>
+
+
+    <tr>
+        <td width="60%"> 
+            Allocate the second vote <!-- literally: Which option do you want to rule out? -->
+        </td>
+    <td>
+        <input id="default" type="radio" name="vote_2" value="1" required>
+        {% if default == blue %}
+        <b style="color:blue"> Blau </b> 
+        {% elif default == green %}
+        <b style="color:green"> Grün </b> 
+        {% elif default == orange %}
+        <b style="color:#c24e00"> Orange </b>
+        {% endif %}
+    </td>
+
+    <td>
+        <input id="option1" type="radio" name="vote_2" value="2" required>
+        {% if alternative_1 == blue %}
+        <b style="color:blue"> Blau </b> 
+        {% elif alternative_1 == green %}
+        <b style="color:green"> Grün </b> 
+        {% elif alternative_1 == orange %}
+        <b style="color:#c24e00"> Orange </b>
+        {% endif %}
+    </td>
+    
+    <td>
+        <input id="option2" type="radio" name="vote_2" value="3" required>
+        {% if alternative_2 == blue %}
+        <b style="color:blue"> Blau </b> 
+        {% elif alternative_2 == green %}
+        <b style="color:green"> Grün </b> 
+        {% elif alternative_2 == orange %}
+        <b style="color:#c24e00"> Orange </b>
+        {% endif %}
+    </td>
+    </tr>
+
+</table>
+
+<br>
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+
+{{ endblock }}
