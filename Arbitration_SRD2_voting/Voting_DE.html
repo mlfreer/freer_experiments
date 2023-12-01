@@ -19,7 +19,7 @@
             Allocate the first vote <!-- literally: Which option do you want to rule out? -->
         </td>
     <td>
-        <input id="default" type="radio" name="vote_1" value="1" required>
+        <input id="default" type="radio" class="form-check-input" name="vote_1" value="1" required>
         {% if default == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif default == green %}
@@ -30,7 +30,7 @@
     </td>
 
     <td>
-        <input id="option1" type="radio" name="vote_1" value="2" required>
+        <input id="option1" type="radio" class="form-check-input" name="vote_1" value="2" required>
         {% if alternative_1 == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif alternative_1 == green %}
@@ -41,7 +41,7 @@
     </td>
     
     <td>
-        <input id="option2" type="radio" name="vote_1" value="3" required>
+        <input id="option2" type="radio" class="form-check-input" name="vote_1" value="3" required>
         {% if alternative_2 == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif alternative_2 == green %}
@@ -58,7 +58,7 @@
             Allocate the second vote <!-- literally: Which option do you want to rule out? -->
         </td>
     <td>
-        <input id="default" type="radio" name="vote_2" value="1" required>
+        <input id="default" type="radio" class="form-check-input" name="vote_2" value="1" required>
         {% if default == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif default == green %}
@@ -69,7 +69,7 @@
     </td>
 
     <td>
-        <input id="option1" type="radio" name="vote_2" value="2" required>
+        <input id="option1" type="radio" class="form-check-input" name="vote_2" value="2" required>
         {% if alternative_1 == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif alternative_1 == green %}
@@ -80,7 +80,7 @@
     </td>
     
     <td>
-        <input id="option2" type="radio" name="vote_2" value="3" required>
+        <input id="option2" type="radio" class="form-check-input" name="vote_2" value="3" required>
         {% if alternative_2 == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif alternative_2 == green %}

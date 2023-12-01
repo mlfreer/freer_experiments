@@ -16,10 +16,10 @@
 
     <tr>
         <td width="60%"> 
-            Welche Option wollen Sie ausschließen? <!-- literally: Which option do you want to rule out? -->
+            Allocate two votes <!-- literally: Which option do you want to rule out? -->
         </td>
     <td>
-        <input id="default" type="radio" class="form-check-input" name="veto_1" value="1" required>
+        <input  type="checkbox" class="checkbox-round " id="vote_1" name="vote_1" value="1">
         {% if default == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif default == green %}
@@ -30,7 +30,7 @@
     </td>
 
     <td>
-        <input id="option1" type="radio" class="form-check-input" name="veto_1" value="2" required>
+        <input type="checkbox" class="checkbox-round " id="vote_2" name="vote_2" value="1">
         {% if alternative_1 == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif alternative_1 == green %}
@@ -41,7 +41,7 @@
     </td>
     
     <td>
-        <input id="option2" type="radio"  class="form-check-input" name="veto_1" value="3" required>
+        <input  type="checkbox" class="checkbox-round" id="vote_3" name="vote_3" value="1">
         {% if alternative_2 == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif alternative_2 == green %}
@@ -50,8 +50,9 @@
         <b style="color:#c24e00"> Orange </b>
         {% endif %}
     </td>
-
     </tr>
+
+
 
 </table>
 
@@ -63,4 +64,27 @@
 </div>
 
 
+
+<input type="checkbox" id="vote_1" name="vote_1" value="0" hidden checked>
+<input type="checkbox" id="vote_1" name="vote_2" value="0" hidden checked>
+<input type="checkbox" id="vote_1" name="vote_3" value="0" hidden checked>
+
+<style>
+
+/* Basic styling */
+.checkbox-round {
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    border: 1px solid #64676E;
+    -webkit-appearance: none;
+    outline: 1px;
+    cursor: pointer;
+}
+
+.checkbox-round:checked {
+    background-color: white;
+    border: .32em solid #0d6efd;
+
+</style>
 {{ endblock }}

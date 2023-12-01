@@ -60,12 +60,13 @@ class Player(BasePlayer):
 	MyPreferences = models.IntegerField(min=-1, max=3, initial=-1)
 
 	# variable to store the voting:
-	veto_1  = models.IntegerField(min=0,max=4)
-	veto_2  = models.IntegerField(min=0,max=4)
-	veto_3  = models.IntegerField(min=0,max=4)
+	veto_1  = models.IntegerField(min=0,max=4, initial=0)
+	veto_2  = models.IntegerField(min=0,max=4, initial=0)
+	veto_3  = models.IntegerField(min=0,max=4, initial=0)
 
-	vote_1 = models.IntegerField(min=0,max=4)
-	vote_2 = models.IntegerField(min=0,max=4)
+	vote_1 = models.IntegerField(min=0,max=4,initial=0)
+	vote_2 = models.IntegerField(min=0,max=4,initial=0)
+	vote_3 = models.IntegerField(min=0,max=4,initial=0)
 
 	earnings = models.IntegerField(min=0,max=20)
 
@@ -115,18 +116,24 @@ def set_results(group: Group):
 	votes_2 = 0
 	votes_3 = 0
 	for p in players:
-		if (p.vote_1==1) and (p.vote_2==2):
-			p.veto_1 = 3
-		elif (p.vote_1==1) and (p.vote_2==3):
+#		if (p.vote_1==1) and (p.vote_2==2):
+#			p.veto_1 = 3
+#		elif (p.vote_1==1) and (p.vote_2==3):
+#			p.veto_1 = 2
+#		elif (p.vote_1==2) and (p.vote_2==1):
+#			p.veto_1 = 3
+#		elif (p.vote_1==2) and (p.vote_2==3):
+#			p.veto_1 = 1
+#		elif (p.vote_1==3) and (p.vote_2==1):
+#			p.veto_1 = 2
+#		elif (p.vote_1==3) and (p.vote_2==2):
+#			p.veto_1 = 1
+		if p.vote_1 == 0:
+			p.veto_1=1
+		elif p.vote_2==0:
 			p.veto_1 = 2
-		elif (p.vote_1==2) and (p.vote_2==1):
+		elif p.vote_3 == 0:
 			p.veto_1 = 3
-		elif (p.vote_1==2) and (p.vote_2==3):
-			p.veto_1 = 1
-		elif (p.vote_1==3) and (p.vote_2==1):
-			p.veto_1 = 2
-		elif (p.vote_1==3) and (p.vote_2==2):
-			p.veto_1 = 1
 	
 		if p.veto_1 == 1:
 			votes_1 = votes_1 + 1
@@ -183,9 +190,9 @@ class SetupWaitPage(WaitPage):
 			set_ordering(g)
 
 class Voting(Page):
-	template_name = './Arbitration_SRD2_voting/Voting_DE.html'
+	template_name = './Arbitration_SRD2_voting/Voting_DE_checkbox.html'
 	form_model = 'player'
-	form_fields = ['vote_1','vote_2']
+	form_fields = ['vote_1','vote_2','vote_3']
 	def vars_for_template(player):
 		profile = player.MyPreferences+1
 		preferences_list = [player.group.rank2*2, player.group.rank2*2+1, player.group.rank3*2, player.group.rank3*2+1]
@@ -212,8 +219,18 @@ class Voting(Page):
 
 	@staticmethod
 	def error_message(player, values):
-		if values['vote_1']== values['vote_2']:
-			return 'You cannot vote for one alternative twice'
+#		if values['vote_1']== values['vote_2']:
+#			return 'You cannot vote for one alternative twice'
+		print(values['vote_1'])
+		print(values['vote_2'])
+		print(values['vote_3'])
+		if values['vote_1'] + values['vote_2'] + values['vote_3'] != 2:
+			return 'You have to vote for two alternatives'
+		else:
+			player.vote_1 = values['vote_1']
+			player.vote_2 = values['vote_2']
+			player.vote_3 = values['vote_3']
+
 #        if values['veto_1']+values['veto_2'] + values['veto_3'] == 0:
 #            return 'You have to veto one alternative'
 

@@ -19,7 +19,7 @@
     </td>
 
     <td>
-        <input id="default" type="radio" name="vote_1" value="0" required>
+        <input id="default" type="radio" class="form-check-input" name="vote_1" value="0" required>
         Vorauswahl beibehalten  <!-- literally: keep the default -->
         {% if default == blue %}
         <b  style="color:blue">  Blau </b> 
@@ -31,7 +31,7 @@
     </td>
 
     <td>
-            <input id="option1" type="radio" name="vote_1" value="1" required>
+            <input id="option1" type="radio" class="form-check-input" name="vote_1" value="1" required>
         ersetzen durch {% if alternative_1 == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif alternative_1 == green %}
@@ -42,7 +42,7 @@
     </td>
 
     <td>
-        <input id="option2" type="radio" name="vote_1" value="2" required>
+        <input id="option2" type="radio" class="form-check-input" name="vote_1" value="2" required>
         ersetzen durch 
         {% if alternative_2 == blue %}
         <b style="color:blue"> Blau </b> 
