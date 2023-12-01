@@ -221,9 +221,9 @@ class Voting(Page):
 	def error_message(player, values):
 #		if values['vote_1']== values['vote_2']:
 #			return 'You cannot vote for one alternative twice'
-		print(values['vote_1'])
-		print(values['vote_2'])
-		print(values['vote_3'])
+#		print(values['vote_1'])
+#		print(values['vote_2'])
+#		print(values['vote_3'])
 		if values['vote_1'] + values['vote_2'] + values['vote_3'] != 2:
 			return 'You have to vote for two alternatives'
 		else:
