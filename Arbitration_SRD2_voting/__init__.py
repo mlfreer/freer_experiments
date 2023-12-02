@@ -225,7 +225,7 @@ class Voting(Page):
 #		print(values['vote_2'])
 #		print(values['vote_3'])
 		if values['vote_1'] + values['vote_2'] + values['vote_3'] != 2:
-			return 'You have to vote for two alternatives'
+			return 'Bitte stimmen Sie für genau zwei Optionen.'
 		else:
 			player.vote_1 = values['vote_1']
 			player.vote_2 = values['vote_2']
