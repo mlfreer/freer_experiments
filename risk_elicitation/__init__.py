@@ -20,7 +20,7 @@ class Constants(BaseConstants):
 
     # risk constants:
     risk_max = 12
-    risk_min = 1
+    risk_min = 2
     risk_safe = 8
     risk_prob_winning = .5
     risk_prob_paying = .1
