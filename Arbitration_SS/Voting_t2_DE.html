@@ -13,34 +13,31 @@
 <br><br>
 
 <table class="table">
-    <tr>
-        <td> Die aktuell vorausgewählte Option ist </td>
-        {% if default == blue %}
-        <td  style="color:blue"> <b> Blau </b> </td>
-        {% elif default == green %}
-        <td  style="color:green"> <b> Grün </b> </td>
-        {% elif default == orange %}
-        <td  style="color:#c24e00"> <b> Orange </b> </td>
-        {% endif %}
-        <td>        </td>
-    </tr>
 
 
         <tr>
-        <td> Möchten Sie diese ersetzen durch
-        {% if alternative == blue %}
+        <td width="50%"> 
+            Möchten Sie
+        </td>
+        <td>
+            <input id="Option2" type="radio" class="form-check-input" name="vote_t2" value="0" required> 
+        Vorauswahl beibehalten {% if default == blue %}
+        <b  style="color:blue">  Blau </b>
+        {% elif default == green %}
+        <b  style="color:green"> Grün </b> 
+        {% elif default == orange %}
+        <b style="color:#c24e00">  Orange </b> 
+        {% endif %}
+        </td>
+        <td>
+            <input id="Option2" type="radio" class="form-check-input" name="vote_t2" value="1" required>
+        ersetzen durch    {% if alternative == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif alternative == green %}
         <b style="color:green"> Grün </b> 
         {% elif alternative == orange %}
         <b style="color:#c24e00"> Orange </b>
         {% endif %}
-        </td>
-        <td>
-            <input id="Option2" type="radio" class="form-check-input" name="vote_t2" value="1" required> <b> Ja </b>
-        </td>
-        <td>
-            <input id="Option2" type="radio" class="form-check-input" name="vote_t2" value="0" required> <b> Nein </b>
         </td>
     </tr>
 </table>
