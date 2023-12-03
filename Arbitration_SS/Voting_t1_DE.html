@@ -14,12 +14,12 @@
 
 <table class="table">
         <tr>
-        <td width="50%"> 
-            Möchten Sie
+        <td width="80%"> 
+            Bitte stimmen Sie für eine Option
         </td>
         <td>
             <input id="Option2" type="radio" class="form-check-input" name="vote_t1" value="0" required> 
-        Vorauswahl beibehalten {% if default == blue %}
+        {% if default == blue %}
         <b  style="color:blue">  Blau </b>
         {% elif default == green %}
         <b  style="color:green"> Grün </b> 
@@ -29,7 +29,7 @@
         </td>
         <td>
             <input id="Option2" type="radio" class="form-check-input" name="vote_t1" value="1" required>
-        ersetzen durch    {% if alternative == blue %}
+        {% if alternative == blue %}
         <b style="color:blue"> Blau </b> 
         {% elif alternative == green %}
         <b style="color:green"> Grün </b> 

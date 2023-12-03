@@ -50,6 +50,12 @@ SESSION_CONFIGS = [
          app_sequence = ['risk_elicitation'],
      ),
      dict(
+         name ='FinalResults',
+         display_name ='Survey',
+         num_demo_participants = 1,
+         app_sequence = ['FinalResults'],
+     ),
+     dict(
          name ='WelcomeScreen',
          display_name ='Welcome Screen',
          num_demo_participants = 1,

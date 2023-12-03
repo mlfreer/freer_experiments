@@ -1,0 +1,31 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Endergebnis
+{% endblock %}
+
+{% block content %}
+<font size="4">
+ 
+Vielen Dank für Ihre Teilnahme an unserem Experiment. 
+
+<br><br>
+
+Wir bereiten nun die Auszahlung vor. In der Zwischenzeit möchten wir Sie bitten, uns Ihre Herangehensweise an die Entscheidungen in den 20 Durchgängen zu erläutern.
+
+<br><br>
+
+
+<textarea id="reasoning"  name="reasoning" cols="95" rows="5">Geben Sie hier ein...</textarea>
+
+<br><br>
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+</font>
+
+
+{% endblock %}

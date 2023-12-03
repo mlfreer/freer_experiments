@@ -24,12 +24,21 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    reasoning = models.StringField(required = False)
 #-----------------------------------------------------------------------------------
 
 
 #-----------------------------------------------------------------------------------
 # PAGES:
+class Survey(Page):
+    template_name = './FinalResults/Survey_DE.html'
+    form_model = 'player'
+    form_fields = ['reasoning']
+#    def __init__(self, *args, **kwargs):
+#        var = self.form_fields[0]
+#        print(var)
+#        var.required=False
+
 class FinalResults(Page):
     template_name = './FinalResults/FinalResults_DE.html'
     def vars_for_template(player):
@@ -48,6 +57,7 @@ class FinalResults(Page):
 # PAGE SEQUENCE:
 page_sequence = [
                 # final results
+                Survey,
                 FinalResults
 ]
 #-----------------------------------------------------------------------------------
