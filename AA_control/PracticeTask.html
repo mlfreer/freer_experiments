@@ -1,0 +1,44 @@
+{{ block title }}
+    Practice Task
+{{ endblock }}
+{{ block content }}
+
+
+<table class="table">
+{% for i in y %}
+<tr>
+    {% for j in x%}  
+    <td id="{{i}}{{j}}"> <td> 
+    {% endfor %}
+<tr>
+{% endfor %}
+
+</table>
+
+<input type="button" id="gen" value="Generate" onclick="generate()" />
+
+<p id="demo"></p>
+
+
+<script>
+
+document.getElementById("gen").onclick = function() {
+    generate()
+    
+}
+
+function generate(){
+    var text = "";
+    var num_correct = 0;
+    for (var i=0; i<10; i++) {
+        for (var j=0; j<10; j++) {
+            temp = i.toString()+j.toString()
+            document.getElementById(temp).innerHTML = temp;
+        }
+
+    }
+    document.getElementById(i).innerHTML = i;
+}
+</script>
+
+{{ endblock }}

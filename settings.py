@@ -8,6 +8,12 @@ SESSION_CONFIGS = [
          num_demo_participants=1,
      ),
      dict(
+        name="AA_control",
+        display_name="Competition Control Treatment",
+        num_demo_participants=1,
+        app_sequence=["AA_control"],
+    ),
+     dict(
          name ='ArbitrationDS',
          display_name ='Arbitration Dominant Strategies (DS)',
          num_demo_participants = 2,
@@ -77,7 +83,7 @@ SESSION_CONFIGS = [
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = False
+DEBUG = True
 #------------------------------------------------------------------------------------
 
 
