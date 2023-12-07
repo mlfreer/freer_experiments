@@ -55,12 +55,12 @@ SESSION_CONFIGS = [
          num_demo_participants = 1,
          app_sequence = ['risk_elicitation'],
      ),
-     dict(
-         name ='FinalResults',
-         display_name ='Survey',
-         num_demo_participants = 1,
-         app_sequence = ['FinalResults'],
-     ),
+#     dict(
+#         name ='FinalResults',
+#         display_name ='Survey',
+#         num_demo_participants = 1,
+#         app_sequence = ['FinalResults'],
+#     ),
      dict(
          name ='WelcomeScreen',
          display_name ='Welcome Screen',
@@ -114,7 +114,7 @@ participation_fee = 6
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
-LANGUAGE_CODE = 'de'
+LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'EUR'
