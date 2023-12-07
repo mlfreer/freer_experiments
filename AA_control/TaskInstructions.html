@@ -1,0 +1,44 @@
+{{ block title }}
+<div style="float: center; text-align: center;">
+    Task Instructions
+</div>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="card bg-light">
+    <div class="card-body">
+        <font size="4">
+
+In this part of the experiment your task is to count zeros in a series of tables. The figure
+shows the work screen you will use later:
+
+<br><br>
+
+[SCREENSHOT HERE]
+
+<br><br>
+
+Enter the number of zeros into the box on the right side of the screen. After you have
+entered the number, click the <b>Validate</b> button. Once you press the button the new matrix will be generated. The new matrix will be generated regardless whether you input correct or wrong number of zeros.
+
+<br><br>
+
+<b> Counting tips:</b> Of course you can count the zeros any way you want. Speaking from
+experience, however, it is helpful to always count two zeros at once and multiply the
+resulting number by two at the end. In addition you miscount less frequently if you track
+the number you are currently counting with the mouse cursor.
+
+        </font>
+    </div>
+</div>
+
+<br>
+
+<div style="float: center; text-align: center;">
+{% next_button %}
+</div>
+
+{{ endblock }}
+
+

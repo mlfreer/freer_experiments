@@ -1,0 +1,44 @@
+{{ block title }}
+<div style="float: center; text-align: center;">
+    Instructions
+</div>
+{{ endblock }}
+
+{{ block content }}
+
+<div class="card bg-light">
+    <div class="card-body">
+        <font size="4">
+        In this task you will be able to earn money by completing the task you have seen before.
+        You will have <b>{{ time }} minutes to complete as many tasks as possible</b>.
+
+        <br><br> 
+
+        {% if treatment == 0 %}
+        
+        Here come the instructions for the piece rate:
+        <br>
+        Piece rate is <b> £{{b_wage}} per one matrix</b>
+
+        {% else %}
+        
+        Here come the instructions for the competition:
+        <br>
+        Winner receives <b> £{{w_wage}} per one matrix</b>
+        <br>
+        Loser receives <b> £{{l_wage}} per one matrix</b>
+        
+        {% endif %}
+        </font>
+    </div>
+</div>
+
+<br>
+
+<div style="float: center; text-align: center;">
+{% next_button %}
+</div>
+
+{{ endblock }}
+
+
