@@ -4,7 +4,69 @@
 </div>
 {{ endblock }}
 
-{{ block content }}
 
+
+{{ block content }}
+<font size="4"> 
+<table class="table">
+    <tr> 
+        <td style="text-align: center;" width="50%"> 
+        <input id="alt1" type="radio" class="form-check-input" name="chosen_compensation" value="{{alt1}}" required/>
+        Type A:
+        
+        
+        </td>
+        <td style="text-align: center;" width="50%"> 
+        <input id="alt2" type="radio" class="form-check-input" name="chosen_compensation" value="{{alt2}}" required />
+        Type B:
+        
+
+        
+        </td>
+    </tr>
+    <tr>
+        <td width="50%">
+        {% if alt1 == 0 %}
+        
+        Here come the instructions for the piece rate:
+        <br>
+        Piece rate is <b> £{{b_wage}} per one matrix</b>
+
+        {% else %}
+        
+        Here come the instructions for the competition:
+        <br>
+        Winner receives <b> £{{w_wage}} per one matrix</b>
+        <br>
+        Loser receives <b> £{{l_wage}} per one matrix</b>
+        
+        {% endif %}
+
+        </td>
+
+        <td>
+        {% if alt2 == 0 %}
+        
+        Here come the instructions for the piece rate:
+        <br>
+        Piece rate is <b> £{{b_wage}} per one matrix</b>
+
+        {% else %}
+        
+        Here come the instructions for the competition:
+        <br>
+        Winner receives <b> £{{w_wage}} per one matrix</b>
+        <br>
+        Loser receives <b> £{{l_wage}} per one matrix</b>
+        
+        {% endif %}
+        </td>
+    </tr>
+</table>
+</font>
+
+<div style="float: center; text-align: center;">
+{% next_button %}
+</div>
 
 {{ endblock }}

@@ -52,7 +52,7 @@ class Player(BasePlayer):
 
 
     # compensation:
-    compensation_type = models.IntegerField(min=0, max=2)
+    compensation_type = models.IntegerField(min=0, max=2,initial=-1)
     # chosen task:
     chosen_compensation = models.IntegerField(min=0,max=2)
     alt1 = models.IntegerField(min=0,max=2)
@@ -137,7 +137,7 @@ class PracticeTask(Page):
 
 class RealTask(Page):
     def is_displayed(player):
-        return player.round_number <= 3
+        return player.round_number <= 4
 
     timeout_seconds = C.real_time
     template_name = './_templates/RET.html'
@@ -149,7 +149,8 @@ class RealTask(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-
+        if player.compensation_type == -1:
+            player.compensation_type=player.chosen_compensation
         return dict(
             x = range(0,player.my_x),
             y = range(0,player.my_y),
@@ -185,16 +186,21 @@ class CompensationChoice(Page):
     form_fields = ['chosen_compensation']
 
     def is_displayed(player):
-        return player.round_number <= 4
+        return player.round_number == 4
 
     @staticmethod
     def vars_for_template(player: Player):
+        numeric = [0, 1]
+        random.shuffle(numeric)
+        player.alt1 = numeric[0]
+        player.alt2 = numeric[1]
         return dict(
             time = int(C.real_time/60),
-            treatment = player.compensation_type,
             b_wage = C.basic_wage,
             w_wage = C.winner_wage,
-            l_wage = C.loser_wage
+            l_wage = C.loser_wage,
+            alt1 = player.alt1,
+            alt2 = player.alt2
             )
 
 
@@ -202,7 +208,8 @@ page_sequence = [
     TaskInstructions,
     PracticeTask,
     CompensationInstructions,
+    CompensationChoice,
     RealTask,
-    CompensationChoice
+    
 #    Results
 ]
