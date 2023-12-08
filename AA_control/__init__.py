@@ -11,7 +11,7 @@ Your app description
 # CLASSES
 class C(BaseConstants):
     NAME_IN_URL = 'AA_control'
-    PLAYERS_PER_GROUP = None
+    PLAYERS_PER_GROUP = 2
     NUM_ROUNDS = 4
     practice_time = 60
     real_time = 120
@@ -82,6 +82,33 @@ def set_order(player: Player):
     p2.compensation_type = numeric[1]
     p3.compensation_type = numeric[2]
 
+
+def set_payoff(player: Player):
+    # retrieving the relevant round:
+    for p in player.in_rounds(1,3):
+        if p.compensation_type == player.compensation_type:
+            me = p
+
+    # retrieving efforts
+    efforts = [0 for i in range(0,3)]
+    i=0
+    for p in me.group.get_players():
+        if p.id_in_group != me.id_in_group:
+            efforts[i] = p.num_correct
+            i=i+1
+
+    efforts.sort(reverse = True)
+    print(efforts)
+    # determining the compensation:
+    if player.compensation_type>0:
+        if player.num_correct > efforts[1]:
+            player.my_wage = C.winner_wage
+        else:
+            player.my_wage = C.loser_wage
+    else:
+        player.my_wage = C.basic_wage
+    # computing the earnings
+    player.earnings = player.my_wage*player.num_correct
 
 
 
@@ -181,6 +208,19 @@ class Results(Page):
             earnings = player.earnings
             )
 
+class TournamentWaitPage(WaitPage):
+    def is_displayed(player):
+        return player.round_number == 4
+
+    @staticmethod
+    def after_all_players_arrive(group: Group):
+        players = group.get_players()
+        for p in players:
+            numeric = [0, 1]
+            random.shuffle(numeric)
+            p.alt1 = numeric[0]
+            p.alt2 = numeric[1]
+
 class CompensationChoice(Page):
     form_model = 'player'
     form_fields = ['chosen_compensation']
@@ -190,10 +230,6 @@ class CompensationChoice(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-        numeric = [0, 1]
-        random.shuffle(numeric)
-        player.alt1 = numeric[0]
-        player.alt2 = numeric[1]
         return dict(
             time = int(C.real_time/60),
             b_wage = C.basic_wage,
@@ -203,13 +239,37 @@ class CompensationChoice(Page):
             alt2 = player.alt2
             )
 
+class ResultsWaitPage(WaitPage):
+    def is_displayed(player):
+        return player.round_number == 4
+
+    def after_all_players_arrive(group: Group):
+        for p in group.get_players():
+            set_payoff(p)
+
+class Results(Page):
+    def is_displayed(player):
+        return player.round_number == 4
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            b_wage = C.basic_wage,
+            w_wage = C.winner_wage,
+            l_wage = C.loser_wage,
+            num_correct = player.num_correct,
+            my_wage = player.my_wage,
+            earnings = player.earnings
+            )
+
 
 page_sequence = [
     TaskInstructions,
     PracticeTask,
     CompensationInstructions,
+    TournamentWaitPage,
     CompensationChoice,
     RealTask,
-    
-#    Results
+    ResultsWaitPage,
+    Results
 ]

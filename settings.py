@@ -10,7 +10,7 @@ SESSION_CONFIGS = [
      dict(
         name="AA_control",
         display_name="Competition Control Treatment",
-        num_demo_participants=1,
+        num_demo_participants=2,
         app_sequence=["AA_control"],
     ),
      dict(
