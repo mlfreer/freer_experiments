@@ -8,6 +8,17 @@
 
 {{ block content }}
 <font size="4"> 
+
+In this task you will have have {{time}} minutes to find number of zeroes in the series of tables.
+However you will now get to choose which of the two previous payment schemes you prefer to apply to your performance on the task. 
+
+<br><br>
+
+If you choose a tournament task, your performance will be evaluated relative to the performance of the other three participants of your group in the previous round you completed the corresponding tournament task
+
+<br><br>
+
+
 <table class="table">
     <tr> 
         <td style="text-align: center;" width="50%"> 
@@ -28,17 +39,11 @@
         <td width="50%">
         {% if alt1 == 0 %}
         
-        Here come the instructions for the piece rate:
-        <br>
-        Piece rate is <b> £{{b_wage}} per one matrix</b>
+        {% include "_static/global/piece_rate.html" %}
 
         {% else %}
         
-        Here come the instructions for the competition:
-        <br>
-        Winner receives <b> £{{w_wage}} per one matrix</b>
-        <br>
-        Loser receives <b> £{{l_wage}} per one matrix</b>
+        {% include "_static/global/competition.html" %}
         
         {% endif %}
 
@@ -47,17 +52,11 @@
         <td>
         {% if alt2 == 0 %}
         
-        Here come the instructions for the piece rate:
-        <br>
-        Piece rate is <b> £{{b_wage}} per one matrix</b>
+        {% include "_static/global/piece_rate.html" %}
 
         {% else %}
         
-        Here come the instructions for the competition:
-        <br>
-        Winner receives <b> £{{w_wage}} per one matrix</b>
-        <br>
-        Loser receives <b> £{{l_wage}} per one matrix</b>
+        {% include "_static/global/competition.html" %}
         
         {% endif %}
         </td>

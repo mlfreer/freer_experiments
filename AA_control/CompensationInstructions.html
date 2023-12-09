@@ -9,19 +9,18 @@
 <div class="card bg-light">
     <div class="card-body">
         <font size="4">
-        In this task you will be able to earn money by completing the task you have seen before.
-        You will be given <b>{{ time }} minutes to complete as many tasks as possible</b>.
-        Enter the number of zeros into the box on the right side of the screen. After you have entered the number, click the <b>Validate</b> button. Once you press the button the new matrix will be generated. The new matrix will be generated regardless whether you input correct or wrong number of zeros.
+        In this task you will have have {{time}} minutes to find number of zeroes in the series of tables.
+        Enter the number of zeros into the box on the right side of the screen. 
 
         <br><br>
 
         {% if treatment == 0 %}
 
-        If this task is the one randomly selected for payment, then you get £{{b_wage}} per problem you solve correctly. Your payment does not decrease if you provide an incorrect answer to a problem. We refer to this payment as the piece rate payment. 
-
+        {% include "_static/global/piece_rate.html" %}
+       
         {% else %}
 
-        If this task is the one randomly selected for payment, then your earnings depend on the number of problems you solve compared to the three other people in your group. The two individuals who correctly solve the largest number of problems will receive £{{w_wage}} per correct problem, while the other participants receive £{{l_wage}} per correrct problem. We refer to this as the tournament payment. You will not be informed of how you did in the tournament until all four tasks have been completed. If there are ties the winners will be randomly determined. 
+        {% include "_static/global/competition.html" %}
         
         {% endif %}
         </font>
