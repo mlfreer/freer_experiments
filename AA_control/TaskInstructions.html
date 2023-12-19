@@ -1,6 +1,6 @@
 {{ block title }}
 <div style="float: center; text-align: center;">
-    Task Instructions
+    Instructions: Counting Zeros
 </div>
 {{ endblock }}
 
@@ -10,23 +10,32 @@
     <div class="card-body">
         <font size="4">
 
-In this task you will be asked to count zeros in a series of tables.
-The figure shows the work screen you will use later:
+In all four tasks you will be asked to count zeros in a series of tables.
 
 <br><br>
+
+You will have to find the correct number of zeros in either a <b>small</b> {{small_x}}x{{all_y}} table or in a <b>large</b> {{large_x}}x{{all_y}} table. Which kind of table you will work with will be determined randomly and will stay the same throughout the study.
+
+<br><br>
+
+You will have to find the correct number of zeros in a {% if discriminated == 1 %} <b> large </b> {% else %} <b> small </b> {% endif %} table. 
+
+<br><br>
+ 
+The figure below shows how the work screen will look like:
+
+<br><br> 
 
 [SCREENSHOT HERE]
 
 <br><br>
 
-Enter the number of zeros into the box on the right side of the screen. After you have entered the number, click the <b>Validate</b> button. Once you press the button the new matrix will be generated. The new matrix will be generated regardless whether you input correct or wrong number of zeros.
+After counting the number of zeros in the table, you have to enter the number into the box on the right side of the screen. After you have entered your answer, you will need to click the <b>Validate</b> button. Once you have clicked the button, a new table will be generated. A new table will be generated regardless of whether the number of zeros you have entered was correct or not. 
 
 <br><br>
 
-<b> Counting tips:</b> Of course you can count the zeros any way you want. Speaking from
-experience, however, it is helpful to always count two zeros at once and multiply the
-resulting number by two at the end. In addition you miscount less frequently if you track
-the number you are currently counting with the mouse cursor.
+To gain familiarity with the design, you will now be given 2 minutes to practice the task. This practice round will not count for your payment. 
+
 
         </font>
     </div>

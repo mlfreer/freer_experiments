@@ -9,56 +9,79 @@
 {{ block content }}
 <font size="4"> 
 
-In this task you will have have {{time}} minutes to find number of zeroes in the series of tables.
-However you will now get to choose which of the two previous payment schemes you prefer to apply to your performance on the task. 
+For Task {{ task_number }}, again you will be given <b>5 minutes</b> to find the correct number of zeros displayed in a series of {% if discriminated == 1 %} <b> large </b> {% else %} <b> small </b> {% endif %}tables. However, for this task, you will be able to choose your payments scheme. You can choose either a Piece Rate Payment scheme or a Tournament Payment scheme. 
+
+<br>
+
+{% if alt1 == 0 or alt2 == 0 %}
+
+<hr>
+
+If Task {{ task_number }} is randomly selected for payment and you chose the <b>Piece Rate Payment</b> scheme, then you will get <b>£{{ b_wage }} per correct answer</b> per correct answer. Your payment does not decrease if you provide an incorrect answer to a problem.  
+
+<br>
+
+{% endif %}
+
+{% if alt1 == 1 or alt2 == 1 %}
+
+<hr>
+
+If Task {{ task_number }} is randomly selected for payment and you chose the <b>Tournament Payment</b> scheme, then your performance will be evaluated relative to the previous performance of the other three participants of your group. Your earnings will depend on the number of your correct answers in this task (task {{ task_number }}) compared to the number of previously provided correct answers of the three other participants in your group in task {{tournament_round}}.
 
 <br><br>
 
-If you choose a tournament task, your performance will be evaluated relative to the performance of the other three participants of your group in the previous round you completed the corresponding tournament task
+<ul>
+    <li> There are two participants who have to find zeros in a series of small ({{small_x}}x{{all_y}}) tables </li>
+    <li> There are two participants who have to find zeros in a series of large ({{large_x}}x{{all_y}}) tables  </li>
+</ul>
+
+Reminder: You will have to find the correct number of zeros in a {% if discriminated == 1 %} <b> large </b> {% else %} <b> small </b> {% endif %} table.
 
 <br><br>
 
+If Task {{ task_number }} is randomly selected for payment, then your performance will be evaluated relative to the performance of the other three participants of your group. The payment will depend on the number of your correct answers compared to the number of correct answers of the three other participants. 
+
+<br><br>
+
+<ul>
+    <li> The two participants who correctly solve the largest number of problems will receive £{{w_wage}},- per correct answer </li>
+    <li> The other two participants will not receive any payment. </li>
+</ul>
+
+{% endif %}
+
+{% if alt1 == 2 or alt2 == 2 %}
+<hr>
+
+If Task {{ task_number }} is randomly selected for payment and you chose the <b>AA Tournament Payment</b> scheme, then your performance will be evaluated relative to the previous performance of the other three participants of your group. Your earnings will depend on the number of your correct answers in this task (task {{ task_number }}) compared to the number of previously provided correct answers of the three other participants in your group in task {{aa_round}}.
+
+<br><br>
+
+Reminder: You will have to find the correct number of zeros in a {% if discriminated == 1 %} <b> large </b> {% else %} <b> small </b> {% endif %} table.
+
+<br> 
+
+{% endif %}
+
+<hr>
+
+Please choose between the two payment schemes now: 
 
 <table class="table">
     <tr> 
         <td style="text-align: center;" width="50%"> 
         <input id="alt1" type="radio" class="form-check-input" name="chosen_compensation" value="{{alt1}}" required/>
-        Type A:
+        {% if alt1 == 0%} <b> Piece Rate Payment </b> {% elif alt1 == 1 %} <b> Tournament Payment </b> {% elif alt1 == 2 %} <b> AA Tournamnet Payment </b> {% endif %}
         
         
         </td>
         <td style="text-align: center;" width="50%"> 
         <input id="alt2" type="radio" class="form-check-input" name="chosen_compensation" value="{{alt2}}" required />
-        Type B:
+        {% if alt2 == 0%} <b> Piece Rate Payment </b> {% elif alt2 == 1 %} <b> Tournament Payment </b> {% elif alt2 == 2 %} <b> AA Tournamnet Payment </b> {% endif %}
         
 
         
-        </td>
-    </tr>
-    <tr>
-        <td width="50%">
-        {% if alt1 == 0 %}
-        
-        {% include "_static/global/piece_rate.html" %}
-
-        {% else %}
-        
-        {% include "_static/global/competition.html" %}
-        
-        {% endif %}
-
-        </td>
-
-        <td>
-        {% if alt2 == 0 %}
-        
-        {% include "_static/global/piece_rate.html" %}
-
-        {% else %}
-        
-        {% include "_static/global/competition.html" %}
-        
-        {% endif %}
         </td>
     </tr>
 </table>

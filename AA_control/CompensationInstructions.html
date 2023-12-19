@@ -1,6 +1,6 @@
 {{ block title }}
 <div style="float: center; text-align: center;">
-    Instructions
+    Instructions: Compensation
 </div>
 {{ endblock }}
 
@@ -9,18 +9,21 @@
 <div class="card bg-light">
     <div class="card-body">
         <font size="4">
-        In this task you will have have {{time}} minutes to find number of zeroes in the series of tables.
-        Enter the number of zeros into the box on the right side of the screen. 
-
-        <br><br>
-
         {% if treatment == 0 %}
 
         {% include "_static/global/piece_rate.html" %}
        
-        {% else %}
+        {% endif %}
+
+        {% if treatment == 1 %}
 
         {% include "_static/global/competition.html" %}
+        
+        {% endif %}
+
+        {% if treatment == 2 %}
+
+        {% include "_static/global/aa_exante.html" %}
         
         {% endif %}
         </font>

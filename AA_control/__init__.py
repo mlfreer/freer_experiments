@@ -11,20 +11,23 @@ Your app description
 # CLASSES
 class C(BaseConstants):
     NAME_IN_URL = 'AA_control'
-    PLAYERS_PER_GROUP = 2
+    PLAYERS_PER_GROUP = 4
     NUM_ROUNDS = 4
-    practice_time = 60
-    real_time = 120
+    practice_time = 60#120
+    real_time = 120#300
 
     # task parameters (matrix size):
     # y is universal
     all_y = 10 
     # x is type-specific
-    blue_x = 10 
-    red_x = 15
+    small_x = 10 
+    large_x = 15
 
     # Probability of zero appearing:
     prob_zero = .1
+
+    # AA multiplier:
+    multiplier = 1.5
 
     basic_wage = 1 # standard wage
     winner_wage = 2
@@ -39,7 +42,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    discriminated = models.IntegerField(min=0, max=1) # min = blue, max = red
+    discriminated = models.BooleanField() # False = 10x10, True = 15x10
     
     # my size of the matrix
     my_x = models.IntegerField(initial=10)
@@ -48,6 +51,7 @@ class Player(BasePlayer):
     # earnings:
     my_wage = models.FloatField()
     num_correct = models.IntegerField(initial=0)
+    aa_efforts = models.FloatField(default=0)
     earnings = models.FloatField()
 
 
@@ -66,21 +70,50 @@ class Player(BasePlayer):
 
 #-----------------------------------------------------------------------------------
 def creating_session(session: Subsession):
-    players = session.get_players()
-    for p in players:
-        set_order(p)
+    groups = session.get_groups()
+    for g in groups:
+        set_types(g)
+        set_order(g)
 
-def set_order(player: Player):
+    
+
+
+def set_types(group: Group):
+    numeric = [0, 1, 2,  3]
+    random.shuffle(numeric)
+
+    i=0
+    for p in group.get_players():
+        if numeric[i]<=1:
+            p.discriminated = False
+            p.my_x = C.small_x
+            p.my_y = C.all_y 
+        else:
+            p.discriminated = True
+            p.my_x = C.large_x
+            p.my_y = C.all_y
+        i=i+1
+
+
+def set_order(group: Group):
     numeric = [0, 1, 2]
     random.shuffle(numeric)
 
-    p1 = player.in_round(1)
-    p2 = player.in_round(2)
-    p3 = player.in_round(3)
+    g1 = group.in_round(1)
+    g2 = group.in_round(2)
+    g3 = group.in_round(3)
 
-    p1.compensation_type = numeric[0]
-    p2.compensation_type = numeric[1]
-    p3.compensation_type = numeric[2]
+    for p in g1.get_players():
+        p.compensation_type = numeric[0]
+    for p in g2.get_players():
+        p.compensation_type = numeric[1]
+    for p in g3.get_players():
+        p.compensation_type = numeric[2]
+
+#    g1.compensation_type = numeric[0]
+#    p2.compensation_type = numeric[1]
+#    p3.compensation_type = numeric[2]
+
 
 
 def set_payoff(player: Player):
@@ -88,25 +121,47 @@ def set_payoff(player: Player):
     for p in player.in_rounds(1,3):
         if p.compensation_type == player.compensation_type:
             me = p
+    if me.discriminated == 1:
+        player.aa_efforts = C.multiplier*player.num_correct
+    else:
+        player.aa_efforts = player.num_correct
 
     # retrieving efforts
     efforts = [0 for i in range(0,3)]
+    aa_efforts = [0 for i in range(0,3)]
     i=0
+    j=0
     for p in me.group.get_players():
         if p.id_in_group != me.id_in_group:
             efforts[i] = p.num_correct
             i=i+1
+        if p.id_in_group != me.id_in_group:
+            if p.discriminated==1:            
+                aa_efforts[j] = p.num_correct*C.multiplier
+            else:
+                aa_efforts[j] = p.num_correct
+            j=j+1
+
 
     efforts.sort(reverse = True)
     print(efforts)
     # determining the compensation:
-    if player.compensation_type>0:
+    # basic tournament
+    if player.compensation_type==1:
         if player.num_correct > efforts[1]:
             player.my_wage = C.winner_wage
         else:
             player.my_wage = C.loser_wage
-    else:
+    # piece rate
+    elif player.compensation_type==0:
         player.my_wage = C.basic_wage
+    # AA tournament
+    elif player.compensation_type==2:
+        if player.aa_efforts > aa_efforts[1]:
+            player.my_wage = C.winner_wage
+        else:
+            player.my_wage = C.loser_wage
+
     # computing the earnings
     player.earnings = player.my_wage*player.num_correct
 
@@ -114,9 +169,22 @@ def set_payoff(player: Player):
 
 #-----------------------------------------------------------------------------------
 # PAGES
+class InitialInstructions(Page):
+    def is_displayed(player):
+        return player.round_number == 1
+
 class TaskInstructions(Page):
     def is_displayed(player):
         return player.round_number == 1
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            discriminated = player.discriminated,
+            all_y = C.all_y,
+            small_x = C.small_x,
+            large_x = C.large_x,
+            )
 
 class CompensationInstructions(Page):
     def is_displayed(player):
@@ -125,11 +193,16 @@ class CompensationInstructions(Page):
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
+            discriminated = player.discriminated,
             time = int(C.real_time/60),
             treatment = player.compensation_type,
             b_wage = C.basic_wage,
             w_wage = C.winner_wage,
-            l_wage = C.loser_wage
+            l_wage = C.loser_wage,
+            task_number = player.round_number,
+            all_y = C.all_y,
+            small_x = C.small_x,
+            large_x = C.large_x,
             )
 
 
@@ -216,7 +289,7 @@ class TournamentWaitPage(WaitPage):
     def after_all_players_arrive(group: Group):
         players = group.get_players()
         for p in players:
-            numeric = [0, 1]
+            numeric = [0, 1, 2]
             random.shuffle(numeric)
             p.alt1 = numeric[0]
             p.alt2 = numeric[1]
@@ -230,13 +303,31 @@ class CompensationChoice(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        # retriving round number for tournament:
+        aa_round = 0
+        tournament_round = 0
+        for p in player.in_previous_rounds():
+            print(p.compensation_type==2)
+            
+            if p.compensation_type == 1:
+                tournament_round = p.round_number
+            if p.compensation_type == 2:
+                aa_round = p.round_number
+                
         return dict(
+            task_number = player.round_number,
+            discriminated = player.discriminated,
+            all_y = C.all_y,
+            small_x = C.small_x,
+            large_x = C.large_x,
             time = int(C.real_time/60),
             b_wage = C.basic_wage,
             w_wage = C.winner_wage,
             l_wage = C.loser_wage,
             alt1 = player.alt1,
-            alt2 = player.alt2
+            alt2 = player.alt2,
+            tournament_round = tournament_round,
+            aa_round = aa_round
             )
 
 class ResultsWaitPage(WaitPage):
@@ -264,6 +355,7 @@ class Results(Page):
 
 
 page_sequence = [
+    InitialInstructions,
     TaskInstructions,
     PracticeTask,
     CompensationInstructions,

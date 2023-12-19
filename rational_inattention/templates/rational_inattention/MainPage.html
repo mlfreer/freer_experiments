@@ -1,0 +1,154 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    RI-IC
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static 'rational_inattention/highcharts.js' %}"></script>
+    <script type="module" src="{% static 'rational_inattention/rational_inattention.js' %}"></script>
+    <script>
+        document.querySelector("#rationalInattentionId").addEventListener('getPolymerData', function (customEvent) {
+            if (this.step >=5)
+                next_btn.style.display = 'block';
+            width.value = this.precision;
+            cost.value = this.cost;
+            bid_price.value = this.bidPrice;
+            ask_price.value = this.askPrice;
+            m_low.value = this.mLow;
+            m_high.value = this.mHigh;
+            low_val.value = this.lowValue;
+            high_val.value = this.highValue;
+            bought.value = this.bought ? 'True' : 'False';
+            sold.value = this.sold ? 'True' : 'False';
+            round_payoff.value = this.payoff;
+        });
+    </script>
+    <style>
+      .otree-timer {
+      display: none;
+      opacity: .7;
+      color: black;
+      font-weight: bold;
+      position: sticky;
+      top: 100px;
+      left: 0;
+  }
+    </style>
+    <script>
+        $(function () {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds === 60) {
+                    $('.otree-timer').show();
+                }
+            });
+        });
+    </script>
+
+{% endblock %}
+
+{% block content %}
+
+    {% with config=subsession.config %}
+
+        <h4>Round #{{ round_num }}</h4>
+        <!-- p><strong>This Round's Participation Fee :</strong> {{ config.participation_fee }} credits. </p -->
+        <p><strong>This Round's Endowment:</strong> {{config.initial_bonds}} bonds.</p>
+        <rational-inattention
+                id='rationalInattentionId'
+                g="{{ g }}"
+                k="{{ k }}"
+                height="{{height}}"
+                participation_fee="{{ config.participation_fee }}"
+                bonds="{{ config.initial_bonds }}"
+                m="{{ m }}"
+                y="{{ y }}"
+                q="{{ q }}"
+                e="{{ e }}"
+                {% if config.buy_option %}
+                buy-option
+                {% endif %}
+                {% if config.sell_option %}
+                sell-option
+                {% endif %}
+        ></rational-inattention>
+        <button id="next_btn" class="otree-btn-next btn btn-primary">Go To Next Round</button>
+
+    {% endwith %}
+
+    <input type="hidden" name="width" id="width"/>
+    <input type="hidden" name="cost" id="cost"/>
+    <input type="hidden" name="bid_price" id="bid_price"/>
+    <input type="hidden" name="ask_price" id="ask_price"/>
+    <input type="hidden" name="m_low" id="m_low"/>
+    <input type="hidden" name="m_high" id="m_high"/>
+    <input type="hidden" name="low_val" id="low_val"/>
+    <input type="hidden" name="high_val" id="high_val"/>
+    <input type="hidden" name="bought" value=False id="bought"/>
+    <input type="hidden" name="sold" value=True id="sold"/>
+    <input type="hidden" name="round_payoff" id="round_payoff"/>
+
+    {% if form.width.errors %}
+        <h5>Select width of your private information</h5>
+        {{ form.width.errors }}
+    {% endif %}
+    {% if form.bid_price.errors %}
+        <h5>Select the bid price for the bond</h5>
+        {{ form.bid_price.errors }}
+    {% endif %}
+    {% if form.ask_price.errors %}
+        <h5>Select the ask price for the bond</h5>
+        {{ form.ask_price.errors }}
+    {% endif %}
+
+    {% if form.cost.errors %}
+        <h5>Error in getting cost of private info</h5>
+        {{ form.cost.errors }}
+    {% endif %}
+    {% if form.m_low.errors %}
+        <h5>Error in getting m low</h5>
+        {{ form.m_low.errors }}
+    {% endif %}
+    {% if form.m_high.errors %}
+        <h5>Error in getting m high</h5>
+        {{ form.m_high.errors }}
+    {% endif %}
+    {% if form.low_val.errors %}
+        <h5>Error in getting lowest expected value</h5>
+        {{ form.low_val.errors }}
+    {% endif %}
+    {% if form.high_val.errors %}
+        <h5>Error in getting highest expected value</h5>
+        {{ form.high_val.errors }}
+    {% endif %}
+
+    {% if form.bought.errors %}
+        <h5>Error in getting buy result</h5>
+        {{ form.bought.errors }}
+    {% endif %}
+    {% if form.sold.errors %}
+        <h5>Error in getting sell result</h5>
+        {{ form.sold.errors }}
+    {% endif %}
+    {% if form.round_payoff.errors %}
+        <h5>Error in getting payoff for this round</h5>
+        {{ form.round_payoff.errors }}
+    {% endif %}
+
+{% endblock %}
+
+{% block styles %}
+<style>
+    .container {
+            margin: 20px;
+            padding: 0 !important;
+        }
+    .otree-body {
+        max-width: none;
+    }
+    #next_btn {
+        display: none;
+    }
+</style>
+{% endblock %}
