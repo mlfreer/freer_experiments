@@ -235,6 +235,8 @@ class CompensationInstructions(Page):
             all_y = C.all_y,
             small_x = C.small_x,
             large_x = C.large_x,
+            multiplier = C.multiplier,
+            tax = 100*C.tax
             )
 
 
