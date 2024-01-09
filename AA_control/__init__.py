@@ -12,7 +12,7 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'AA_control'
     PLAYERS_PER_GROUP = 4
-    NUM_ROUNDS = 4
+    NUM_ROUNDS = 5
     practice_time = 60#120
     real_time = 120#300
 
@@ -28,6 +28,8 @@ class C(BaseConstants):
 
     # AA multiplier:
     multiplier = 1.5
+    # tax rate
+    tax = .5
 
     basic_wage = 1 # standard wage
     winner_wage = 2
@@ -54,9 +56,15 @@ class Player(BasePlayer):
     aa_efforts = models.FloatField(default=0)
     earnings = models.FloatField()
 
+    # is winner
+    winner  = models.BooleanField(default = False)
 
     # compensation:
-    compensation_type = models.IntegerField(min=0, max=2,initial=-1)
+    compensation_type = models.IntegerField(min=0, max=3,initial=-1)
+    # 0 = piece rate
+    # 1 = competition
+    # 2 = affirmative action
+    # 3 = taxes
     # chosen task:
     chosen_compensation = models.IntegerField(min=0,max=2)
     alt1 = models.IntegerField(min=0,max=2)
@@ -79,7 +87,7 @@ def creating_session(session: Subsession):
 
 
 def set_types(group: Group):
-    numeric = [0, 1, 2,  3]
+    numeric = [0, 1, 2, 3]
     random.shuffle(numeric)
 
     i=0
@@ -96,12 +104,13 @@ def set_types(group: Group):
 
 
 def set_order(group: Group):
-    numeric = [0, 1, 2]
+    numeric = [0, 1, 2, 3]
     random.shuffle(numeric)
 
     g1 = group.in_round(1)
     g2 = group.in_round(2)
     g3 = group.in_round(3)
+    g4 = group.in_round(4)
 
     for p in g1.get_players():
         p.compensation_type = numeric[0]
@@ -109,6 +118,8 @@ def set_order(group: Group):
         p.compensation_type = numeric[1]
     for p in g3.get_players():
         p.compensation_type = numeric[2]
+    for p in g4.get_players():
+        p.compensation_type = numeric[3]
 
 #    g1.compensation_type = numeric[0]
 #    p2.compensation_type = numeric[1]
@@ -118,7 +129,7 @@ def set_order(group: Group):
 
 def set_payoff(player: Player):
     # retrieving the relevant round:
-    for p in player.in_rounds(1,3):
+    for p in player.in_rounds(1,4):
         if p.compensation_type == player.compensation_type:
             me = p
     if me.discriminated == 1:
@@ -150,20 +161,41 @@ def set_payoff(player: Player):
     if player.compensation_type==1:
         if player.num_correct > efforts[1]:
             player.my_wage = C.winner_wage
+            player.winner = True
         else:
             player.my_wage = C.loser_wage
+            player.winner = False
     # piece rate
     elif player.compensation_type==0:
         player.my_wage = C.basic_wage
+        player.winner = False
     # AA tournament
     elif player.compensation_type==2:
         if player.aa_efforts > aa_efforts[1]:
             player.my_wage = C.winner_wage
+            player.winner = True
         else:
             player.my_wage = C.loser_wage
+            player.winner = False
+    elif player.compensation_type == 3:
+    # TAX tournament
+        if player.num_correct > efforts[1]:
+            player.my_wage = C.winner_wage
+            player.winner = True
+        else:
+            player.my_wage = C.loser_wage
+            player.winner = False
 
     # computing the earnings
     player.earnings = player.my_wage*player.num_correct
+    # computing the taxes:
+    if player.compensation_type == 4:
+        if player.winner == True:
+            player.earnings = player.earnings*(1-C.tax)
+        else:
+            tax_earning = (efforts[0]+efforts[1])*C.winner_wage*C.tax/2
+            player.earnings = player.earnings + tax_earning
+
 
 
 
@@ -188,7 +220,7 @@ class TaskInstructions(Page):
 
 class CompensationInstructions(Page):
     def is_displayed(player):
-        return player.round_number <= 3
+        return player.round_number <= C.NUM_ROUNDS-1
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -237,7 +269,7 @@ class PracticeTask(Page):
 
 class RealTask(Page):
     def is_displayed(player):
-        return player.round_number <= 4
+        return player.round_number <= C.NUM_ROUNDS
 
     timeout_seconds = C.real_time
     template_name = './_templates/RET.html'
@@ -283,7 +315,7 @@ class Results(Page):
 
 class TournamentWaitPage(WaitPage):
     def is_displayed(player):
-        return player.round_number == 4
+        return player.round_number == C.NUM_ROUNDS
 
     @staticmethod
     def after_all_players_arrive(group: Group):
@@ -299,7 +331,7 @@ class CompensationChoice(Page):
     form_fields = ['chosen_compensation']
 
     def is_displayed(player):
-        return player.round_number == 4
+        return player.round_number == C.NUM_ROUNDS
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -332,7 +364,7 @@ class CompensationChoice(Page):
 
 class ResultsWaitPage(WaitPage):
     def is_displayed(player):
-        return player.round_number == 4
+        return player.round_number == C.NUM_ROUNDS
 
     def after_all_players_arrive(group: Group):
         for p in group.get_players():
@@ -340,7 +372,7 @@ class ResultsWaitPage(WaitPage):
 
 class Results(Page):
     def is_displayed(player):
-        return player.round_number == 4
+        return player.round_number == C.NUM_ROUNDS
 
     @staticmethod
     def vars_for_template(player: Player):
