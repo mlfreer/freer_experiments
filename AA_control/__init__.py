@@ -66,7 +66,7 @@ class Player(BasePlayer):
     # 2 = affirmative action
     # 3 = taxes
     # chosen task:
-    chosen_compensation = models.IntegerField(min=0,max=2)
+    chosen_compensation = models.IntegerField(min=0,max=3)
     alt1 = models.IntegerField(min=0,max=2)
     alt2 = models.IntegerField(min=0,max=2)
 #-----------------------------------------------------------------------------------
@@ -323,10 +323,10 @@ class TournamentWaitPage(WaitPage):
     def after_all_players_arrive(group: Group):
         players = group.get_players()
         for p in players:
-            numeric = [0, 1, 2]
+            numeric = [1, 2, 3]
             random.shuffle(numeric)
-            p.alt1 = numeric[0]
-            p.alt2 = numeric[1]
+            p.alt1 = 0
+            p.alt2 = numeric[0]
 
 class CompensationChoice(Page):
     form_model = 'player'
@@ -361,7 +361,9 @@ class CompensationChoice(Page):
             alt1 = player.alt1,
             alt2 = player.alt2,
             tournament_round = tournament_round,
-            aa_round = aa_round
+            aa_round = aa_round,
+            multiplier = C.multiplier,
+            tax = 100*C.tax
             )
 
 class ResultsWaitPage(WaitPage):

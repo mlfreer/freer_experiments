@@ -10,7 +10,7 @@
     <div class="card-body">
         <font size="4">
 
-In all four tasks you will be asked to count zeros in a series of tables.
+In all five tasks you will be asked to count zeros in a series of tables.
 
 <br><br>
 
@@ -26,11 +26,28 @@ The figure below shows how the work screen will look like:
 
 <br><br> 
 
-[SCREENSHOT HERE]
+<table class="table">
+<tr>
+    <td>
+        <img class="pic-center" src="{{ static 'pictures/AA_large_matrix.png' }}"/>
+    </td>
+    <td>
+        <img class="pic-center" src="{{ static 'pictures/AA_small_matrix.png' }}"/>
+    </td>
+</tr>
+<tr>
+    <td style="text-align: center"> Small Table </td>
+    <td style="text-align: center"> Large Table </td>
+</tr>
+<tr>
+    <td style="text-align: center"> {% if discriminated == 0 %} <b>You will face this task </b> {% endif %} </td>
+    <td style="text-align: center"> {% if discriminated == 1 %} <b>You will face this task</b> {% endif %} </td>
+</tr>
+</table>
 
-<br><br>
+<br>
 
-After counting the number of zeros in the table, you have to enter the number into the box on the right side of the screen. After you have entered your answer, you will need to click the <b>Validate</b> button. Once you have clicked the button, a new table will be generated. A new table will be generated regardless of whether the number of zeros you have entered was correct or not. 
+After counting the number of zeros in the table, you have to enter the number into the box in the bottom part of the screen. After you have entered your answer, you will need to click the <b>Validate</b> button. Once you have clicked the button, a new table will be generated. A new table will be generated regardless of whether the number of zeros you have entered was correct or not. 
 
 <br><br>
 
@@ -47,6 +64,21 @@ To gain familiarity with the design, you will now be given 2 minutes to practice
 {% next_button %}
 </div>
 
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.pic-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+
+</style>
 {{ endblock }}
 
 
