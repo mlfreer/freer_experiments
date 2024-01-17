@@ -78,10 +78,19 @@ class Player(BasePlayer):
 
 #-----------------------------------------------------------------------------------
 def creating_session(session: Subsession):
-    groups = session.get_groups()
-    for g in groups:
-        set_types(g)
-        set_order(g)
+    if session.round_number == 1:
+        groups = session.get_groups()
+        for g in groups:
+            set_types(g)
+            set_order(g)
+    else:
+        for p in session.get_players():
+            temp=session.round_number-1
+            pp = p.in_round(temp)
+            p.discriminated = pp.discriminated
+            p.my_x = pp.my_x
+            p.my_y = pp.my_y
+
 
     
 

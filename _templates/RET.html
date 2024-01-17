@@ -5,20 +5,19 @@ Task
 {{ endblock }}
 {{ block content }}
 
-
+<div style="float: center; text-align: center;">
 You have <b>{{time}} minutes to count as many tables as possible</b>. The remaining time is shown above.
+</div>
 
-<table class="table">
+<table style="align: center;  margin-left:auto;margin-right:auto;">
 {% for i in y %}
 <tr style = "border-bottom: 1px solid; border-top: 1px solid; text-align: center;">
     {% for j in x%}  
-    <td style = "border-right: 1px solid; border-left: 1px solid" id="{{i}}{{j}}"> </td> 
+    <td width="50px" style = "border-right: 1px solid; border-left: 1px solid" id="{{i}}{{j}}"> </td> 
     {% endfor %}
-<tr>
+</tr>
 {% endfor %}
-
 </table>
-
 
 <font size="4">
 <table class="table">

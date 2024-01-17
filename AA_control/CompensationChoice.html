@@ -10,24 +10,11 @@
 <font size="4"> 
 
 For Task {{ task_number }}, again you will be given <b>5 minutes</b> to find the correct number of zeros displayed in a series of {% if discriminated == 1 %} <b> large </b> {% else %} <b> small </b> {% endif %}tables. However, for this task, you will be able to choose your payments scheme. 
-You can choose either a <b>Payment Scheme {% if alt1 == 0 %} A {% endif %} </b> or a <b>Payment Scheme</b> {% if alt2 == 0%} <b> A </b> {% elif alt2 == 1 %} <b> B </b> {% elif alt2 == 2 %} <b> C </b> {% elif alt2 == 3 %} <b> D </b> {% endif %}
+You can choose either <b>Payment Scheme {% if alt1 == 0 %} A {% endif %} </b> or <b>Payment Scheme</b> {% if alt2 == 0%} <b> A </b> {% elif alt2 == 1 %} <b> B </b> {% elif alt2 == 2 %} <b> C </b> {% elif alt2 == 3 %} <b> D </b> {% endif %}
 
 <br><br>
 
-You are participating in the group of four participants.
-Your group consists of two types of participants. 
 
-<br><br>
-
-<ul>
-    <li> There are two participants who have to find zeros in a series of small ({{small_x}}x{{all_y}}) tables </li>
-    <li> There are two participants who have to find zeros in a series of large ({{large_x}}x{{all_y}}) tables  </li>
-</ul>
-
-You performance will be compared against the performance of the other participants in the corresponding round.
-Thus you decision and performance will not affect their payoff for this task.
-
-<br><br>
 
 <div style="float: center; text-align: center;">
    <b> You are to choose bettween: </b>
@@ -62,6 +49,22 @@ If Task {{ task_number }} is randomly selected for payment, then your performanc
 
 <br><br>
 
+You are participating in the group of four participants.
+Your group consists of two types of participants. 
+
+<br><br>
+
+<ul>
+    <li> There are two participants who have to find zeros in a series of small ({{small_x}}x{{all_y}}) tables </li>
+    <li> There are two participants who have to find zeros in a series of large ({{large_x}}x{{all_y}}) tables  </li>
+</ul>
+
+You performance will be compared against the performance of the other participants in the corresponding round.
+Thus you decision and performance will not affect their payoff for this task.
+
+
+<br><br>
+
 <ul>
     <li> The two participants who correctly solve the largest number of problems will receive £{{w_wage}},- per correct answer. </li>
     <li> The other two participants will not receive any payment. </li>
@@ -73,6 +76,21 @@ You will not be informed of how you did in the tournament until all tasks have b
             {% elif alt2 == 2 %}
 
 If Task {{ task_number }} is randomly selected for payment, then your performance will be evaluated relative to the performance of the other three participants in your group. The payment will depend on the number of your correct answers compared to the number of correct answers of the three other participants. 
+
+<br><br>
+
+You are participating in the group of four participants.
+Your group consists of two types of participants. 
+
+<br><br>
+
+<ul>
+    <li> There are two participants who have to find zeros in a series of small ({{small_x}}x{{all_y}}) tables </li>
+    <li> There are two participants who have to find zeros in a series of large ({{large_x}}x{{all_y}}) tables  </li>
+</ul>
+
+You performance will be compared against the performance of the other participants in the corresponding round.
+Thus you decision and performance will not affect their payoff for this task.
 
 <br><br>
 
@@ -90,6 +108,21 @@ You will not be informed of how you did in the tournament until all tasks have b
             {% elif alt2 == 3 %}
 
 If Task {{ task_number }} is randomly selected for payment, then your performance will be evaluated relative to the performance of the other three participants in your group. The payment will depend on the number of your correct answers compared to the number of correct answers of the three other participants. 
+
+<br><br>
+
+You are participating in the group of four participants.
+Your group consists of two types of participants. 
+
+<br><br>
+
+<ul>
+    <li> There are two participants who have to find zeros in a series of small ({{small_x}}x{{all_y}}) tables </li>
+    <li> There are two participants who have to find zeros in a series of large ({{large_x}}x{{all_y}}) tables  </li>
+</ul>
+
+You performance will be compared against the performance of the other participants in the corresponding round.
+Thus you decision and performance will not affect their payoff for this task.
 
 <br><br>
 
