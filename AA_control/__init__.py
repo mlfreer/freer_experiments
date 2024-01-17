@@ -291,7 +291,7 @@ class RealTask(Page):
             len_x = player.my_x,
             len_y = player.my_y,
             prob_zero = C.prob_zero,
-            time = int(C.practice_time/60)
+            time = int(C.real_time/60)
             )
 
     @staticmethod
