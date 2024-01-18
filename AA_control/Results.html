@@ -8,20 +8,35 @@
 <table class="table">
     <tr>
         <td > 
+            Round chosen for payment
+        </td>
+        <td> 
+            {{payment_round}}
+        </td>
+    </tr>
+    <tr>
+        <td > 
+            Compensation used
+        </td>
+        <td> 
+            <b>Payment Scheme {% if compensation == 0 %} A {% elif compensation == 1 %} B {% elif compensation == 2 %} C {% elif compensation == 3 %} D {% endif %} </b>
+        </td>
+    </tr>
+    <tr>
+        <td > 
+            Your wage
+        </td>
+        <td> 
+            {{ wage }}
+        </td>
+    </tr>
+    <tr>
+        <td > 
             Number of correctly solved tasks
         </td>
         <td> 
             {{num_correct}}
         </td>
-    </tr>
-        <tr>
-        <td > 
-            Your piece rate
-        </td>
-        <td> 
-            {{my_wage}}
-        </td>
-    </tr>
     </tr>
         <tr>
         <td > 

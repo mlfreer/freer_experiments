@@ -66,9 +66,16 @@ class Player(BasePlayer):
     # 2 = affirmative action
     # 3 = taxes
     # chosen task:
-    chosen_compensation = models.IntegerField(min=0,max=3)
+    chosen_compensation = models.IntegerField(min=0,max=4)
     alt1 = models.IntegerField(min=0,max=2)
     alt2 = models.IntegerField(min=0,max=2)
+
+    #round for payment:
+    payment_round = models.IntegerField(min=0,max=6)
+    final_compensation = models.IntegerField(min=0,max=4)
+    final_wage = models.FloatField()
+    final_effort = models.IntegerField()
+
 #-----------------------------------------------------------------------------------
 
 
@@ -205,8 +212,79 @@ def set_payoff(player: Player):
             tax_earning = (efforts[0]+efforts[1])*C.winner_wage*C.tax/2
             player.earnings = player.earnings + tax_earning
 
+    # retriving payments in previous rounds:
+    for p in player.in_rounds(1,C.NUM_ROUNDS-1):
+        set_previous_payment(p)
+
+def set_previous_payment(player: Player):
+    # retrieving efforts
+    efforts = [0 for i in range(0,3)]
+    aa_efforts = [0 for i in range(0,3)]
+    i=0
+    j=0
+    for p in player.group.get_players():
+        if p.id_in_group != player.id_in_group:
+            efforts[i] = p.num_correct
+            i=i+1
+        if p.id_in_group != player.id_in_group:
+            if p.discriminated==1:            
+                aa_efforts[j] = p.num_correct*C.multiplier
+            else:
+                aa_efforts[j] = p.num_correct
+            j=j+1
 
 
+    efforts.sort(reverse = True)
+    print(efforts)
+    # determining the compensation:
+    # basic tournament
+    if player.compensation_type==1:
+        if player.num_correct > efforts[1]:
+            player.my_wage = C.winner_wage
+            player.winner = True
+        else:
+            player.my_wage = C.loser_wage
+            player.winner = False
+    # piece rate
+    elif player.compensation_type==0:
+        player.my_wage = C.basic_wage
+        player.winner = False
+    # AA tournament
+    elif player.compensation_type==2:
+        if player.aa_efforts > aa_efforts[1]:
+            player.my_wage = C.winner_wage
+            player.winner = True
+        else:
+            player.my_wage = C.loser_wage
+            player.winner = False
+    elif player.compensation_type == 3:
+    # TAX tournament
+        if player.num_correct > efforts[1]:
+            player.my_wage = C.winner_wage
+            player.winner = True
+        else:
+            player.my_wage = C.loser_wage
+            player.winner = False
+
+    # computing the earnings
+    player.earnings = player.my_wage*player.num_correct
+    # computing the taxes:
+    if player.compensation_type == 4:
+        if player.winner == True:
+            player.earnings = player.earnings*(1-C.tax)
+        else:
+            tax_earning = (efforts[0]+efforts[1])*C.winner_wage*C.tax/2
+            player.earnings = player.earnings + tax_earning
+
+
+def set_final_payment(player: Player):
+    if player.round_number == C.NUM_ROUNDS:
+        player.payment_round = random.randint(1,C.NUM_ROUNDS)
+        p = player.in_round(player.payment_round)
+        player.payoff = p.earnings
+        player.final_compensation = p.compensation_type
+        player.final_wage = p.my_wage
+        player.final_effort = p.num_correct
 
 #-----------------------------------------------------------------------------------
 # PAGES
@@ -382,6 +460,7 @@ class ResultsWaitPage(WaitPage):
     def after_all_players_arrive(group: Group):
         for p in group.get_players():
             set_payoff(p)
+            set_final_payment(p)
 
 class Results(Page):
     def is_displayed(player):
@@ -393,9 +472,12 @@ class Results(Page):
             b_wage = C.basic_wage,
             w_wage = C.winner_wage,
             l_wage = C.loser_wage,
-            num_correct = player.num_correct,
+            num_correct = player.final_effort,
             my_wage = player.my_wage,
-            earnings = player.earnings
+            earnings = player.payoff,
+            payment_round = player.payment_round,
+            compensation = player.final_compensation,
+            wage = player.final_wage
             )
 
 
