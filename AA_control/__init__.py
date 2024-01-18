@@ -473,7 +473,6 @@ class Results(Page):
             w_wage = C.winner_wage,
             l_wage = C.loser_wage,
             num_correct = player.final_effort,
-            my_wage = player.my_wage,
             earnings = player.payoff,
             payment_round = player.payment_round,
             compensation = player.final_compensation,
