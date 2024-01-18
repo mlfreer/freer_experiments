@@ -23,6 +23,9 @@ class C(BaseConstants):
     small_x = 10 
     large_x = 15
 
+
+    SHOW_UP_FEE = 5
+
     # Probability of zero appearing:
     prob_zero = .1
 
@@ -171,7 +174,7 @@ def set_payoff(player: Player):
 
 
     efforts.sort(reverse = True)
-    print(efforts)
+    #print(efforts)
     # determining the compensation:
     # basic tournament
     if player.compensation_type==1:
@@ -235,7 +238,7 @@ def set_previous_payment(player: Player):
 
 
     efforts.sort(reverse = True)
-    print(efforts)
+    #print(efforts)
     # determining the compensation:
     # basic tournament
     if player.compensation_type==1:
@@ -278,6 +281,7 @@ def set_previous_payment(player: Player):
 
 
 def set_final_payment(player: Player):
+    player.payoff  = 0
     if player.round_number == C.NUM_ROUNDS:
         player.payment_round = random.randint(1,C.NUM_ROUNDS)
         p = player.in_round(player.payment_round)
@@ -337,7 +341,7 @@ class PracticeTask(Page):
     @staticmethod
     def live_method(player, data):
         player.num_correct = data
-        print('current number of correct answers', data)
+        #print('current number of correct answers', data)
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -366,7 +370,7 @@ class RealTask(Page):
     @staticmethod
     def live_method(player, data):
         player.num_correct = data
-        print('current number of correct answers', data)
+        #print('current number of correct answers', data)
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -428,7 +432,7 @@ class CompensationChoice(Page):
         aa_round = 0
         tournament_round = 0
         for p in player.in_previous_rounds():
-            print(p.compensation_type==2)
+            #print(p.compensation_type==2)
             
             if p.compensation_type == 1:
                 tournament_round = p.round_number
@@ -476,7 +480,9 @@ class Results(Page):
             earnings = player.payoff,
             payment_round = player.payment_round,
             compensation = player.final_compensation,
-            wage = player.final_wage
+            wage = player.final_wage,
+            show_up = cu(C.SHOW_UP_FEE),
+            total = cu(C.SHOW_UP_FEE) + player.payoff
             )
 
 
