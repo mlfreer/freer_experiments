@@ -13,8 +13,8 @@ class C(BaseConstants):
     NAME_IN_URL = 'AA_control'
     PLAYERS_PER_GROUP = 4
     NUM_ROUNDS = 5
-    practice_time = 60#120
-    real_time = 120#300
+    practice_time = 120#120
+    real_time = 300#300
 
     # task parameters (matrix size):
     # y is universal

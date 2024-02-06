@@ -62,7 +62,7 @@ To gain familiarity with the design, you will now be given 2 minutes to practice
 
 <br>
 
-<div style="float: center; text-align: center;">
+<div id="NextButton" style="float: center; text-align: center;" hidden>
 {% next_button %}
 </div>
 
@@ -81,6 +81,23 @@ To gain familiarity with the design, you will now be given 2 minutes to practice
 
 
 </style>
+
+
+
+<script>
+const myTimeout = setTimeout(showButton, 10000);
+
+function showButton() {
+  document.getElementById("NextButton").removeAttribute("hidden")
+}
+
+function myStopFunction() {
+  clearTimeout(myTimeout);
+}
+</script>
+
+
+
 {{ endblock }}
 
 

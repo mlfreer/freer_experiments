@@ -146,8 +146,22 @@ You will not be informed of how you did in the tournament until all tasks have b
 </table>
 </font>
 
-<div style="float: center; text-align: center;">
+<div id="NextButton" style="float: center; text-align: center;" hidden>
 {% next_button %}
 </div>
+
+
+<script>
+const myTimeout = setTimeout(showButton, 15000);
+
+function showButton() {
+  document.getElementById("NextButton").removeAttribute("hidden")
+}
+
+function myStopFunction() {
+  clearTimeout(myTimeout);
+}
+</script>
+
 
 {{ endblock }}
