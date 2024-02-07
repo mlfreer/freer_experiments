@@ -34,8 +34,8 @@ class C(BaseConstants):
     # tax rate
     tax = .5
 
-    basic_wage = 1 # standard wage
-    winner_wage = 2
+    basic_wage = .50 # standard wage
+    winner_wage = 1
     loser_wage = 0
 
 class Subsession(BaseSubsession):
@@ -370,7 +370,7 @@ class RealTask(Page):
     @staticmethod
     def live_method(player, data):
         player.num_correct = data
-        #print('current number of correct answers', data)
+        print('current number of correct answers', data)
 
     @staticmethod
     def vars_for_template(player: Player):
