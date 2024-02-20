@@ -110,14 +110,14 @@ ROOMS = [
 
 PARTICIPANT_FIELDS = []
 SESSION_FIELDS = ['params']
-participation_fee = 6
+participation_fee = 5
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
 LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'EUR'
+REAL_WORLD_CURRENCY_CODE = 'GBP'
 USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'
