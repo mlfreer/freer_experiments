@@ -16,11 +16,20 @@ doc = """
 class Constants(BaseConstants):
     name_in_url = "CC_BestResponse"
     players_per_group = None
-    num_rounds = 1
+    num_rounds = 5
 
     task_time = 60
 
-    tournament = [25, 20, 10]
+    tournament = [0 for i in range(0,5)]
+    tournament[0] = [17, 11, 5]
+    tournament[1] = [17, 10, 2]
+    tournament[2] = [17, 7, 5]
+    tournament[3] = [17, 13, 5]
+    tournament[4] = [17, 10, 8]
+
+
+
+
 
 
 
@@ -276,7 +285,7 @@ def play_game(player: Player, message: dict):
 
 # setting the ranking:
 def set_ranking(player: Player):
-    investments = Constants.tournament
+    investments = Constants.tournament[player.round_number-1]
 
     k=0
     if player.invest >= investments[k] and player.rank==0:
@@ -294,7 +303,7 @@ def set_ranking(player: Player):
     if player.invest < investments[k-1] and player.rank==0:
         player.rank = k+1
 
-    invest = [Constants.tournament[0], Constants.tournament[1], Constants.tournament[2], player.invest]
+    invest = [investments[0], investments[1], investments[2], player.invest]
     invest = sorted(invest,reverse = True)
     player.invest1 = invest[0]
     player.invest2 = invest[1]
@@ -327,7 +336,9 @@ class RealEffortTask(Page):
     def vars_for_template(player: Player):
         return dict(
             params=player.session.params,
-            DEBUG=settings.DEBUG
+            DEBUG=settings.DEBUG,
+            round_number = player.round_number+5,
+            num_rounds = Constants.num_rounds
         )
 
     @staticmethod
@@ -348,12 +359,15 @@ class Invest(Page):
 
     def vars_for_template(player: Player):
         tournament = [0 for x in range(0,3)]
+        temp_tournament = Constants.tournament[player.round_number-1]
         for i in range(0,3):
-            tournament[i] = [i+1, Constants.tournament[i]]
+            tournament[i] = [i+1, temp_tournament[i]]
 
         return dict(
             earnings = player.num_correct,
-            tournament = tournament
+            tournament = tournament,
+            round_number = player.round_number+5,
+            num_rounds = Constants.num_rounds
             )
     def before_next_page(player:Player,timeout_happened):
         set_ranking(player)
@@ -380,7 +394,9 @@ class TournamentResults(Page):
             earnings = player.num_correct,
             invest = player.invest,
             rank = player.rank,
-            tournament = tournament
+            tournament = tournament,
+            round_number = player.round_number+5,
+            num_rounds = Constants.num_rounds
             )
 
 class WTA(Page):
@@ -400,7 +416,9 @@ class WTA(Page):
             earnings = player.num_correct,
             invest = player.invest,
             rank = player.rank,
-            tournament = tournament
+            tournament = tournament,
+            round_number = player.round_number+5,
+            num_rounds = Constants.num_rounds
             )
 
     @staticmethod
@@ -410,6 +428,16 @@ class WTA(Page):
             player.price_certificate = number
         else:
             player.price_certificate=-1
+
+        temp = [player.invest1, player.invest2, player.invest3, player.invest4]
+        tournament = [0 for x in range(0,4)]
+        for i in range(0,4):
+            tournament[i] = [i+1, temp[i]]
+
+        if player.subsession.round_number == Constants.num_rounds:
+            p = player.in_round(player.subsession.paying_round)
+            player.participant.vars['T2_earnings'] = p.num_correct
+            player.participant.vars['T2_certificate'] = p.price_certificate
 
 
 class Results(Page):
@@ -431,7 +459,9 @@ class Results(Page):
             invest = player.invest,
             rank = player.rank,
             tournament = tournament,
-            price_certificate = player.price_certificate
+            price_certificate = player.price_certificate,
+            round_number = player.round_number+5,
+            num_rounds = Constants.num_rounds
             )
 
 
@@ -440,7 +470,7 @@ page_sequence = [
             Invest,
             TournamentResults,
             WTA,
-            Results
+#            Results
             ]
 
 

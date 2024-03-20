@@ -40,7 +40,7 @@ class Results(Page):
             player.final_certificate = player.participant.vars['T2_certificate']*C.exchange_rate
 
         if player.final_certificate>0:
-            player.payoff = player.final_earnings + player.final_certificate
+            player.payoff = (player.final_earnings + player.final_certificate)
         else:
             player.payoff = player.final_earnings
         

@@ -16,7 +16,7 @@ doc = """
 class Constants(BaseConstants):
     name_in_url = "CC_T0"
     players_per_group = 4
-    num_rounds = 1
+    num_rounds = 5
 
     task_time = 60
 
@@ -332,7 +332,9 @@ class RealEffortTask(Page):
     def vars_for_template(player: Player):
         return dict(
             params=player.session.params,
-            DEBUG=settings.DEBUG
+            DEBUG=settings.DEBUG,
+            round_number = player.round_number,
+            num_rounds = Constants.num_rounds
         )
 
     @staticmethod
@@ -353,7 +355,9 @@ class Invest(Page):
 
     def vars_for_template(player: Player):
         return dict(
-            earnings = player.num_correct
+            earnings = player.num_correct,
+            round_number = player.round_number,
+            num_rounds = Constants.num_rounds
             )
 
 class InvestWaitPage(WaitPage):
@@ -377,7 +381,9 @@ class TournamentResults(Page):
             earnings = player.num_correct,
             invest = player.invest,
             rank = player.rank,
-            tournament = tournament
+            tournament = tournament,
+            round_number = player.round_number,
+            num_rounds = Constants.num_rounds
             )
 
 class WTA(Page):
@@ -397,7 +403,9 @@ class WTA(Page):
             earnings = player.num_correct,
             invest = player.invest,
             rank = player.rank,
-            tournament = tournament
+            tournament = tournament,
+            round_number = player.round_number,
+            num_rounds = Constants.num_rounds
             )
 
     @staticmethod
@@ -407,6 +415,16 @@ class WTA(Page):
             player.price_certificate = number
         else:
             player.price_certificate=-1
+
+        temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        tournament = [0 for x in range(0,4)]
+        for i in range(0,4):
+            tournament[i] = [i+1, temp[i]]
+
+        if player.subsession.round_number == Constants.num_rounds:
+            p = player.in_round(player.subsession.paying_round)
+            player.participant.vars['T1_earnings'] = p.num_correct
+            player.participant.vars['T1_certificate'] = p.price_certificate
 
 
 class Results(Page):
@@ -428,7 +446,9 @@ class Results(Page):
             invest = player.invest,
             rank = player.rank,
             tournament = tournament,
-            price_certificate = player.price_certificate
+            price_certificate = player.price_certificate,
+            round_number = player.round_number,
+            num_rounds = Constants.num_rounds
             )
 
 
@@ -438,7 +458,7 @@ page_sequence = [
             InvestWaitPage,
             TournamentResults,
             WTA,
-            Results
+#            Results
             ]
 
 
