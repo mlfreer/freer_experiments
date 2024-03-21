@@ -353,6 +353,11 @@ class RealEffortTask(Page):
             player.num_correct = puzzle.num_correct
 #            player.payoff = player.num_correct
 
+class Welcome(Page):
+    def is_displayed(player):
+        return player.round_number == 1
+
+
 class Invest(Page):
     form_model='player'
     form_fields = ['invest']
@@ -466,6 +471,7 @@ class Results(Page):
 
 
 page_sequence = [
+            Welcome,
             RealEffortTask,
             Invest,
             TournamentResults,
