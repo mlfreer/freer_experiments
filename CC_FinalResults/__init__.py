@@ -27,8 +27,22 @@ class Player(BasePlayer):
     final_earnings = models.FloatField(default=0,max_digits=5, decimal_places=2)
     final_certificate = models.FloatField(default=0,max_digits=5, decimal_places=2)
 
+    reasoning = models.StringField(required = False)
+    wta = models.StringField(required = False)
+    certificate = models.StringField(required = False)
 
+
+#----------------------------------------
 # PAGES
+
+#----------------------------------------
+class Survey(Page):
+    form_model = 'player'
+    form_fields = ['reasoning', 'wta', 'certificate']
+#----------------------------------------
+
+
+#----------------------------------------
 class Results(Page):
     def vars_for_template(player):
         random_number = random.random()
@@ -52,6 +66,12 @@ class Results(Page):
             payoff = cu(player.payoff + C.SHOW_UP_FEE),
             code = player.participant.code
             )
+#----------------------------------------
 
 
-page_sequence = [Results]
+
+#----------------------------------------
+
+
+page_sequence = [Survey,
+                Results]

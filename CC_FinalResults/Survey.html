@@ -1,0 +1,50 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Survey
+{% endblock %}
+
+{% block content %}
+<font size="4">
+ 
+
+Thank you for participating in our experiment.
+We are now preparing the payment. 
+In the meantime, we would like to ask you to answer some questions.
+
+
+<br><br>
+
+What was your approach to the decisions in the 10 rounds?
+
+<br>
+
+<textarea id="reasoning"  name="reasoning" cols="95" rows="5">Text here...</textarea>
+
+<br><br>
+
+Why have you invested in the tournament score?
+
+<br>
+
+<textarea id="certificate"  name="certificate" cols="95" rows="5">Text here...</textarea>
+
+<br><br>
+
+Why have you decided to take certificate instead of money?
+
+<textarea id="wta"  name="wta" cols="95" rows="5">Text here...</textarea>
+
+
+
+<br><br>
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+</font>
+
+
+{% endblock %}
