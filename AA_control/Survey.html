@@ -1,0 +1,82 @@
+{{ block title }}
+<div style="float: center; text-align: center;">
+    Post-Experimental Survey
+</div>
+{{ endblock }}
+
+{{ block content }}
+
+
+<font size="4">
+    <table class="table">
+        <tr  style="border-bottom:2pt solid black;">
+            <td style="width: 32%">  </td>
+            <td style="width: 14%"> Disagree strongly </td>
+            <td style="width: 14%"> Disagree a little </td>
+            <td style="width: 14%"> Neither agree nor disagree </td>
+            <td style="width: 14%"> Agree a little </td>
+            <td style="width: 14%"> Agree strongly </td>
+        </tr>
+        <tr>
+            <td> I enjoy taking risks </td>
+            <td> <input id="risk" type="radio" name="risk" value="1" required> </td>
+            <td> <input id="risk" type="radio" name="risk" value="2" required> </td>
+            <td> <input id="risk" type="radio" name="risk" value="3" required> </td>
+            <td> <input id="risk" type="radio" name="risk" value="4" required> </td>
+            <td> <input id="risk" type="radio" name="risk" value="5" required> </td>
+        </tr>
+        <tr>
+            <td> I deeply care about other people </td>
+            <td> <input id="altruism" type="radio" name="altruism" value="1" required> </td>
+            <td> <input id="altruism" type="radio" name="altruism" value="2" required> </td>
+            <td> <input id="altruism" type="radio" name="altruism" value="3" required> </td>
+            <td> <input id="altruism" type="radio" name="altruism" value="4" required> </td>
+            <td> <input id="altruism" type="radio" name="altruism" value="5" required> </td>
+        </tr>
+        <tr>
+            <td> I am competitive person </td>
+            <td> <input id="competitiveness" type="radio" name="competitiveness" value="1" required> </td>
+            <td> <input id="competitiveness" type="radio" name="competitiveness" value="2" required> </td>
+            <td> <input id="competitiveness" type="radio" name="competitiveness" value="3" required> </td>
+            <td> <input id="competitiveness" type="radio" name="competitiveness" value="4" required> </td>
+            <td> <input id="competitiveness" type="radio" name="competitiveness" value="5" required> </td>
+        </tr>
+        <tr>
+            <td> I am confident in my abilities </td>
+            <td> <input id="confidence" type="radio" name="confidence" value="1" required> </td>
+            <td> <input id="confidence" type="radio" name="confidence" value="2" required> </td>
+            <td> <input id="confidence" type="radio" name="confidence" value="3" required> </td>
+            <td> <input id="confidence" type="radio" name="confidence" value="4" required> </td>
+            <td> <input id="confidence" type="radio" name="confidence" value="5" required> </td>
+        </tr>
+        <tr>
+            <td> I won most of the tournaments today (Payment Schemes B, C, D) </td>
+            <td> <input id="confidence_treatment" type="radio" name="confidence_treatment" value="1" required> </td>
+            <td> <input id="confidence_treatment" type="radio" name="confidence_treatment" value="2" required> </td>
+            <td> <input id="confidence_treatment" type="radio" name="confidence_treatment" value="3" required> </td>
+            <td> <input id="confidence_treatment" type="radio" name="confidence_treatment" value="4" required> </td>
+            <td> <input id="confidence_treatment" type="radio" name="confidence_treatment" value="5" required> </td>
+        </tr>
+
+     </table>
+
+<br><br>
+
+When choosing a compensation scheme today, I did so because... 
+
+<textarea id="reasoning"  name="reasoning" cols="95" rows="5">Please type here...</textarea>
+
+
+
+<br>
+<br>
+
+<div style="float: center; text-align: center;">
+{% next_button %}
+</div>
+
+
+</font>
+
+
+{{ endblock }}

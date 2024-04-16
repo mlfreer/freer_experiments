@@ -80,6 +80,16 @@ class Player(BasePlayer):
     final_wage = models.FloatField()
     final_effort = models.IntegerField()
 
+
+    # survey:
+
+    risk = models.IntegerField(initial=-1)
+    competitiveness = models.IntegerField(initial = -1)
+    altruism = models.IntegerField(initial = -1)
+    confidence = models.IntegerField(initial= -1)
+    confidence_treatment = models.IntegerField(initial=-1)
+    reasoning = models.StringField(required=False)
+
 #-----------------------------------------------------------------------------------
 
 
@@ -534,6 +544,18 @@ class ResultsWaitPage(WaitPage):
             set_payoff(p)
             set_final_payment(p)
 
+
+class Survey(Page):
+    def is_displayed(player):
+        return player.round_number == C.NUM_ROUNDS
+
+    form_model = 'player'
+    form_fields = ['risk', 'altruism', 'competitiveness', 'confidence', 'confidence_treatment', 'reasoning']
+
+
+
+
+
 class Results(Page):
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
@@ -565,5 +587,6 @@ page_sequence = [
     CompensationChoice,
     RealTask,
     ResultsWaitPage,
+    Survey,
     Results
 ]
