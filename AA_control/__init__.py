@@ -477,9 +477,14 @@ class TournamentWaitPage(WaitPage):
     def after_all_players_arrive(group: Group):
         players = group.get_players()
         for p in players:
-            numeric = [1, 2, 3]
+            num_alt1 = [0,1]
+            random.shuffle(num_alt1)
+            p.alt1 = num_alt1[0]
+            if num_alt1[0] == 0:
+                numeric = [1, 2, 3]
+            else:
+                numeric = [2,3]
             random.shuffle(numeric)
-            p.alt1 = 0
             p.alt2 = numeric[0]
 
 class CompensationChoice(Page):
