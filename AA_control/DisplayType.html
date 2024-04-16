@@ -2,7 +2,7 @@
 
 {{ block title }}
 <div style="float: center; text-align: center;">
-    Instructions: Counting Zeros
+    Type of Task
 </div>
 {{ endblock }}
 
@@ -12,22 +12,12 @@
     <div class="card-body">
         <font size="4">
 
-In all five tasks you will be asked to count zeros in a series of tables.
-
-<br><br>
-
-You will have to find the correct number of zeros in either a <b>small</b> {{small_x}}x{{all_y}} table or in a <b>large</b> {{large_x}}x{{all_y}} table. Which kind of table you will work with will be determined randomly and will stay the same throughout the study.
-
-<br><br>
-
-You will have to find the correct number of zeros in a {% if discriminated == 1 %} <b> large </b> {% else %} <b> small </b> {% endif %} table. 
+The type of table you will be facing is <b> {% if discriminated == 0 %} small{% else %} large{% endif %}</b>.
+You will now proceed to the main part of the experiment.
+You will be facing only <b> {% if discriminated == 0 %} small {% else %} large {% endif %} tables</b> tasks throughout remainder of the experiment.
 
 <br><br>
  
-The figure below shows how the work screen will look like:
-
-<br><br> 
-
 <table class="table">
 <tr>
     <td>
@@ -41,24 +31,14 @@ The figure below shows how the work screen will look like:
     <td style="text-align: center"> Small Table </td>
     <td style="text-align: center"> Large Table </td>
 </tr>
-<!--
 <tr>
     <td style="text-align: center"> {% if discriminated == 0 %} <b>You will face this task </b> {% endif %} </td>
     <td style="text-align: center"> {% if discriminated == 1 %} <b>You will face this task</b> {% endif %} </td>
 </tr>
--->
 </table>
 
-<br>
 
-After counting the number of zeros in the table, you have to enter the number into the box in the bottom part of the screen. After you have entered your answer, you will need to click the <b>Validate</b> button. Once you have clicked the button, a new table will be generated. A new table will be generated regardless of whether the number of zeros you have entered was correct or not. 
-
-<br><br>
-
-To gain familiarity with the design, you will now be given 2 minutes to practice the task. This practice round will not count for your payment. 
-
-
-        </font>
+       </font>
     </div>
 </div>
 
@@ -101,5 +81,4 @@ function myStopFunction() {
 
 
 {{ endblock }}
-
 

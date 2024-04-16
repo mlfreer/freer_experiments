@@ -56,6 +56,7 @@ class Player(BasePlayer):
     # earnings:
     my_wage = models.FloatField()
     num_correct = models.IntegerField(initial=0)
+    num_attempts = models.IntegerField(initial=0)
     aa_efforts = models.FloatField(default=0)
     earnings = models.FloatField()
 
@@ -331,7 +332,7 @@ class CompensationInstructions(Page):
             )
 
 
-class PracticeTask(Page):
+class PracticeTask_large(Page):
     timeout_seconds = C.practice_time
     template_name = './_templates/RET.html'
 
@@ -340,18 +341,21 @@ class PracticeTask(Page):
 
     @staticmethod
     def live_method(player, data):
-        player.num_correct = data
-        #print('current number of correct answers', data)
+        player.num_correct = data['num_correct']
+        player.num_attempts = data['num_attempts']
+        print('current number of correct answers', data)
 
     @staticmethod
     def vars_for_template(player: Player):
         return dict(
-            x = range(0,player.my_x),
-            y = range(0,player.my_y),
-            len_x = player.my_x,
-            len_y = player.my_y,
+            x = range(0,C.large_x),
+            y = range(0,C.all_y),
+            len_x = C.large_x,
+            len_y = C.all_y,
             prob_zero = C.prob_zero,
-            time = int(C.practice_time/60)
+            time = int(C.practice_time/60),
+            small = 0,
+            large =1
             )
 
     @staticmethod
@@ -359,6 +363,62 @@ class PracticeTask(Page):
         if timeout_happened:
             player.my_wage = C.basic_wage
             player.earnings = player.my_wage*player.num_correct
+
+class PracticeTask_small(Page):
+    timeout_seconds = C.practice_time
+    template_name = './_templates/RET.html'
+
+    def is_displayed(player):
+        return player.round_number == 1
+
+    @staticmethod
+    def live_method(player, data):
+        player.num_correct = data['num_correct']
+        player.num_attempts = data['num_attempts']
+        print('current number of correct answers', data)
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            x = range(0,C.small_x),
+            y = range(0,C.all_y),
+            len_x = C.small_x,
+            len_y = C.all_y,
+            prob_zero = C.prob_zero,
+            time = int(C.practice_time/60),
+            small=1,
+            large=0
+            )
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        if timeout_happened:
+            player.my_wage = C.basic_wage
+            player.earnings = player.my_wage*player.num_correct
+
+
+class DisplayType(Page):
+    def is_displayed(player):
+        return player.round_number == 1
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(
+            discriminated = player.discriminated,
+            time = int(C.real_time/60),
+            treatment = player.compensation_type,
+            b_wage = C.basic_wage,
+            w_wage = C.winner_wage,
+            l_wage = C.loser_wage,
+            task_number = player.round_number,
+            all_y = C.all_y,
+            small_x = C.small_x,
+            large_x = C.large_x,
+            multiplier = C.multiplier,
+            tax = 100*C.tax
+            )
+
+
 
 class RealTask(Page):
     def is_displayed(player):
@@ -369,7 +429,8 @@ class RealTask(Page):
 
     @staticmethod
     def live_method(player, data):
-        player.num_correct = data
+        player.num_correct = data['num_correct']
+        player.num_attempts = data['num_attempts']
         print('current number of correct answers', data)
 
     @staticmethod
@@ -382,7 +443,9 @@ class RealTask(Page):
             len_x = player.my_x,
             len_y = player.my_y,
             prob_zero = C.prob_zero,
-            time = int(C.real_time/60)
+            time = int(C.real_time/60),
+            small=0,
+            large=0
             )
 
     @staticmethod
@@ -489,7 +552,9 @@ class Results(Page):
 page_sequence = [
     InitialInstructions,
     TaskInstructions,
-    PracticeTask,
+    PracticeTask_small,
+    PracticeTask_large,
+    DisplayType,
     CompensationInstructions,
     TournamentWaitPage,
     CompensationChoice,
