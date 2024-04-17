@@ -1,6 +1,6 @@
 {{ block title }}
 <div style="float: center; text-align: center;">
-Task {% if small == 1%} (Small Task) {% endif %} {% if large == 1%} (Large Task) {% endif %}
+Task {% if small == 1%} (Small Table) {% endif %} {% if large == 1%} (Large Table) {% endif %}
 </div>
 {{ endblock }}
 {{ block content }}
@@ -30,9 +30,9 @@ You have <b>{{time}} minutes to count as many tables as possible</b>. The remain
 </font>
 
 
-<p id="zeros" > </p>
-<p id="num_correct" > </p>
-<p id="num_attempts" > </p>
+<p id="zeros" hidden > </p>
+<p id="num_correct" hidden > </p>
+<p id="num_attempts" hidden> </p>
 
 <script>
 // initializing number of correct answers
