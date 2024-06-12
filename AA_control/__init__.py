@@ -82,13 +82,18 @@ class Player(BasePlayer):
 
 
     # survey:
-
     risk = models.IntegerField(initial=-1)
     competitiveness = models.IntegerField(initial = -1)
     altruism = models.IntegerField(initial = -1)
     confidence = models.IntegerField(initial= -1)
     confidence_treatment = models.IntegerField(initial=-1)
     reasoning = models.StringField(required=False)
+
+    # demographics:
+    gender = models.IntegerField(initial=-1)
+    british = models.IntegerField(initial=-1)
+    age = models.IntegerField(intiial=-1)
+    ethnicity = models.StringField(required=False)
 
 #-----------------------------------------------------------------------------------
 
@@ -553,6 +558,13 @@ class Survey(Page):
     form_fields = ['risk', 'altruism', 'competitiveness', 'confidence', 'confidence_treatment', 'reasoning']
 
 
+class Demographics(Page):
+    def is_displayed(player):
+        return player.round_number == C.NUM_ROUNDS
+
+    form_model = 'player'
+    form_fields = ['gender', 'age', 'british', 'ethnicity']
+
 
 
 
@@ -588,5 +600,6 @@ page_sequence = [
     RealTask,
     ResultsWaitPage,
     Survey,
+    Demographics,
     Results
 ]
