@@ -288,7 +288,7 @@ def set_previous_payment(player: Player):
     # computing the earnings
     player.earnings = player.my_wage*player.num_correct
     # computing the taxes:
-    if player.compensation_type == 4:
+    if player.compensation_type == 3:
         if player.winner == True:
             player.earnings = player.earnings*(1-C.tax)
         else:
