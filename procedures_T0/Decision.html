@@ -1,0 +1,173 @@
+{{ block title }}
+    Page title
+{{ endblock }}
+{{ block content }}
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 30%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 5px; height: 30%}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  background-color: #f1f1f1;
+  display: flex;
+}
+
+.c-bottom{
+    position: absolute;
+    bottom:2%;
+    left: 15%;
+    width: 70%;
+}
+
+.c-top{
+    position: absolute;
+    top:2%;
+    left: 15%;
+    width: 70%;
+}
+.c-middle{
+    position: absolute;
+    top:30%;
+    bottom: 70%;
+    height: 50%;
+    left: 15%;
+    width: 70%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
+  grid-template-rows: 200px 200px 200px 200px;
+  gap: 5%;
+/*  background-color: #2196F3; */
+  padding: 5px;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid black;
+  text-align: center;
+  font-size: 30px;
+}
+</style>
+
+<p>Resize the browser window to see the effect.</p>
+
+<div class="grid-container">
+    
+    <div id="card1" class="card">
+      <div class="c-top">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
+    </div>
+      <div class="c-middle">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
+    </div>
+      <div class="c-bottom">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
+    </div>
+    </div>
+
+
+    <div id="card1" class="card">
+      <div class="c-top">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
+    </div>
+      <div class="c-middle">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
+    </div>
+      <div class="c-bottom">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
+    </div>
+    </div>
+
+
+    <div id="card1" class="card">
+      <div class="c-top">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
+    </div>
+      <div class="c-middle">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
+    </div>
+      <div class="c-bottom">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
+    </div>
+    </div>
+
+    <div id="card1" class="card">
+      <div class="c-top">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
+    </div>
+      <div class="c-middle">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
+    </div>
+      <div class="c-bottom">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
+    </div>
+    </div>
+
+    <div id="card1" class="card">
+      <div class="c-top">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
+    </div>
+      <div class="c-middle">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
+    </div>
+      <div class="c-bottom">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
+    </div>
+    </div>
+
+    <div id="card1" class="card">
+      <div class="c-top">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
+    </div>
+      <div class="c-middle">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
+    </div>
+      <div class="c-bottom">  
+        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
+    </div>
+    </div>
+</div>
+
+
+{{ endblock }}

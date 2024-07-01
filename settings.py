@@ -1,12 +1,7 @@
 from os import environ
 
 SESSION_CONFIGS = [
-     dict(
-         name='Attention_Welfare_Experiment',
-         display_name='Attention Welfare Experiment',
-         app_sequence=['attention_welfare_choice'],
-         num_demo_participants=1,
-     ),
+     
      dict(
         name="AA_control",
         display_name="Competition Control Treatment",
@@ -67,23 +62,35 @@ SESSION_CONFIGS = [
          num_demo_participants = 1,
          app_sequence = ['WelcomeScreen'],
      ),
-     dict(
-        name="CC_T0",
-        display_name="Consp Consumption: Baseline",
-        num_demo_participants=4,
-        app_sequence=["CC_T0","CC_BestResponse","CC_FinalResults"],
-    ),
+#     dict(
+#        name="CC_T0",
+#        display_name="Consp Consumption: Baseline",
+#        num_demo_participants=4,
+#        app_sequence=["CC_T0","CC_BestResponse","CC_FinalResults"],
+#    ),
+#    dict(
+#        name="CC_BestResponse",
+#        display_name="Consp Consumption: Best Response",
+#        num_demo_participants=1,
+#        app_sequence=["CC_BestResponse"],
+#    ),
     dict(
-        name="CC_BestResponse",
-        display_name="Consp Consumption: Best Response",
+         name='Attention_Welfare_Experiment',
+         display_name='Attention Welfare Experiment',
+         app_sequence=['attention_welfare_choice'],
+         num_demo_participants=1,
+     ),
+    dict(
+        name='procedures_T0',
+        display_name='Choices and Procedures, T0: Delegated Procedure',
+        app_sequence=['procedures_T0'],
         num_demo_participants=1,
-        app_sequence=["CC_BestResponse"],
-    ),
+        )
 ]
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = False
+DEBUG = True
 #------------------------------------------------------------------------------------
 
 
