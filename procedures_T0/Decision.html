@@ -1,17 +1,19 @@
 {{ block title }}
-    Page title
+<div style="float: center; text-align: center; font-family: Georgia, Times, serif;">
+    Decision (<b>{{round}}</b> out of {{total_rounds}})
+</div>
 {{ endblock }}
 {{ block content }}
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-* {
+/* * {
   box-sizing: border-box;
-}
+}*/
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Georgia, sans-serif;
 }
 
 /* Float four columns side by side */
@@ -32,7 +34,7 @@ body {
 }
 
 /* Responsive columns */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 100%) {
   .column {
     width: 100%;
     display: block;
@@ -75,99 +77,295 @@ body {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 30% 30% 30%;
-  grid-template-rows: 200px 200px 200px 200px;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 250px 250px 250px 250px;
   gap: 5%;
 /*  background-color: #2196F3; */
   padding: 5px;
 }
 
 .grid-container > div {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid black;
+  background-color: #D3D3D3;
+  border: 0px solid black;
   text-align: center;
   font-size: 30px;
 }
 </style>
 
-<p>Resize the browser window to see the effect.</p>
-
-<div class="grid-container">
-    
-    <div id="card1" class="card">
-      <div class="c-top">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
-    </div>
-      <div class="c-middle">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
-    </div>
-      <div class="c-bottom">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
-    </div>
-    </div>
-
-
-    <div id="card1" class="card">
-      <div class="c-top">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
-    </div>
-      <div class="c-middle">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
-    </div>
-      <div class="c-bottom">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
-    </div>
-    </div>
-
-
-    <div id="card1" class="card">
-      <div class="c-top">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
-    </div>
-      <div class="c-middle">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
-    </div>
-      <div class="c-bottom">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
-    </div>
-    </div>
-
-    <div id="card1" class="card">
-      <div class="c-top">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
-    </div>
-      <div class="c-middle">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
-    </div>
-      <div class="c-bottom">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
-    </div>
-    </div>
-
-    <div id="card1" class="card">
-      <div class="c-top">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
-    </div>
-      <div class="c-middle">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
-    </div>
-      <div class="c-bottom">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
-    </div>
-    </div>
-
-    <div id="card1" class="card">
-      <div class="c-top">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Top</button> 
-    </div>
-      <div class="c-middle">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Middle</button> 
-    </div>
-      <div class="c-bottom">  
-        <button type="button" class="btn btn-outline-primary" style="width:100%">Bottom</button> 
-    </div>
-    </div>
+<div id="array">
 </div>
 
+<div class="grid-container">
+{% for i in budget %}    
+    <div id="card{{i}}" class="card">
+      <div class="c-top">  
+        <button id="selected{{i}}" type="button" class="btn btn-success disabled" style="width:100%; display:none" >
+          Selected
+        </button> 
+    </div>
+      <div class="c-top">  
+        <button id="select{{i}}" type="button" class="btn btn-success" style="width:100%; display: none" onclick="SelectLottery({{i}})">
+          Select
+        </button>
+          
+    </div>
+    
+
+      <div  class="c-middle" >  
+        <p id="lottery{{i}}" style="display:none"> 
+          X if HEADS <br>
+          Y if TAILS
+        </p> 
+    </div>  
+    <div  class="c-middle" >  
+        <p id="discarded{{i}}" style="display:none">
+        Discarded
+      </p> 
+    </div> 
+      
+      <div class="c-bottom">  
+        <button id="hide{{i}}" type="button" class="btn btn-danger" style="width:100%; display:none" onclick="DiscardLottery({{i}})">
+        Discard
+      </button> 
+      </div>
+      <div class="c-bottom">  
+        <button id="confirm{{i}}" class="btn btn-primary" style="width:100%" name="choice" value={{i}} >
+        Confirm
+      </button> 
+      </div>
+      <div class="c-bottom">  
+        <button id="show{{i}}" type="button" class="btn btn-secondary" style="width:100%" onclick="ShowLottery({{i}})">
+        Show
+        </button> 
+      </div>
+    </div>
+{% endfor %}
+</div>
+
+
+<script>
+let len = {{budget_size}};
+
+var facecards = Array(len).fill(0);
+var selectedcards  = Array(len).fill(0);
+var lostcards = Array(len).fill(0);
+
+  window.onload = function() {    
+    // window.alert(facecards);
+    document.getElementById("array").innerHTML= selectedcards;
+/*    for (i=0; i<facecards.length; i++) {
+      temp2 = i.toString();
+
+      temp1 = "lottery";  
+      lottery = temp1.concat(temp2);
+      document.getElementById(lottery).style.visibility="hidden";
+      document.getElementById("array").innerHTML = lottery
+
+      temp1 = "confirm";  
+      confirm = temp1.concat(temp2);
+      document.getElementById(confirm).style.visibility="hidden";
+      document.getElementById("array").innerHTML = confirm
+
+      temp1 = "hide";  
+      discard = temp1.concat(temp2);
+      document.getElementById(discard).style.visibility="hidden";
+      document.getElementById("array").innerHTML = discard
+
+      temp1 = "discarded";  
+      discarded = temp1.concat(temp2);
+      document.getElementById(discarded).style.visibility="hidden";
+
+      temp1 = "selected";  
+      selected = temp1.concat(temp2);
+      document.getElementById(selected).style.visibility="hidden";
+
+      temp1 = "select";  
+      select = temp1.concat(temp2);
+      document.getElementById(select).style.visibility="hidden";
+
+      temp1 = "show";  
+      show = temp1.concat(temp2);
+      document.getElementById(show).style.visibility="visible";
+
+    } */
+  };
+  
+
+  function ShowLottery(i) {
+
+    sum = 0;
+    for (var j = 0; j<facecards.length; j++) {
+      sum = sum + facecards[j];
+ //     document.getElementById("array").innerHTML=facecards;
+    }
+
+    if (sum<2) {
+    temp1 = "lottery";
+    temp2 = i.toString();
+    lottery = temp1.concat(temp2);
+    document.getElementById(lottery).style.display = "inline";
+
+    temp1 = "show";
+    show = temp1.concat(temp2);
+    document.getElementById(show).style.display = "none";
+
+    temp1 = "hide";
+    hide = temp1.concat(temp2);
+    document.getElementById(hide).style.display = "inline";
+
+    temp1 = "select";
+    select = temp1.concat(temp2);
+    document.getElementById(select).style.display = "inline";
+
+    temp1 = "card";
+    card = temp1.concat(temp2);
+    document.getElementById(card).style.backgroundColor = "#A89CD9";
+
+    temp1 = "selected";
+    selected = temp1.concat(temp2);
+    document.getElementById(selected).style.display = "none";
+
+    temp1 = "confirm";
+    confirm = temp1.concat(temp2);
+    document.getElementById(confirm).style.display = "none";
+
+    facecards[i] = 1;
+    document.getElementById("array").innerHTML=selectedcards;
+
+    for (var j = 0; j<selectedcards.length; j++) {
+      if (j!=i  &&  selectedcards[j]==1 && facecards[j] == 1) {
+        UnSelect(j);
+        document.getElementById("array").innerHTML=selectedcards;
+      }
+    }
+
+    }
+    else{
+      window.alert("You cannot open more than two cards")
+    }
+  };
+
+  function UnSelect(i) {
+    temp2 = i.toString();
+
+    temp1 = "selected";
+    selected = temp1.concat(temp2);
+    document.getElementById(selected).style.display = "none";
+
+    temp1 = "confirm";
+    confirm = temp1.concat(temp2);
+    document.getElementById(confirm).style.display = "none";
+
+    temp1 = "select";
+    select = temp1.concat(temp2);
+    document.getElementById(select).style.display = "inline";
+
+    temp1 = "hide";
+    hide = temp1.concat(temp2);
+    document.getElementById(hide).style.display = "inline";
+
+    temp1 = "card";
+    card = temp1.concat(temp2);
+    document.getElementById(card).style.backgroundColor = "#A89CD9";
+
+    selectedcards[i] = 0; 
+  }
+
+
+  function DiscardLottery(i) {
+    temp2 = i.toString();
+
+    var sum = 0;
+    for (var j = 0; j<lostcards.length; j++) {
+      sum = sum + lostcards[j];
+      document.getElementById("array").innerHTML= sum;
+      }
+
+    if (sum <= (len-2) ) {
+    temp1 = "show";
+    show = temp1.concat(temp2);
+    document.getElementById(show).style.display = "none";
+
+    temp1 = "hide";
+    hide = temp1.concat(temp2);
+    document.getElementById(hide).style.display = "none";
+
+    temp1 = "lottery";
+    lottery = temp1.concat(temp2);
+    document.getElementById(lottery).style.display = "none";
+
+    temp1 = "select";
+    select = temp1.concat(temp2);
+    document.getElementById(select).style.display = "none";
+
+    temp1 = "card";
+    card = temp1.concat(temp2);
+    document.getElementById(card).style.backgroundColor = "#EAA0A5";
+
+    temp1 = "discarded";
+    discarded = temp1.concat(temp2);
+    document.getElementById(discarded).style.display = "inline";
+
+    temp1 = "selected";
+    selected = temp1.concat(temp2);
+    document.getElementById(selected).style.display = "none";
+
+    temp1 = "confirm";
+    confirm = temp1.concat(temp2);
+    document.getElementById(confirm).style.display = "none";
+
+    facecards[i] = 0;
+    lostcards[i] = 1;
+    selectedcards[i] = 0;
+    document.getElementById("array").innerHTML = selectedcards
+
+    
+    }
+    else {
+      window.alert("You have to choose at least one element");
+    }
+  };
+
+
+
+  function SelectLottery(i) {
+    temp2 = i.toString();
+
+    temp1 = "card";
+    card = temp1.concat(temp2);
+    document.getElementById(card).style.backgroundColor = "#A3E19A";
+    selected[i] = 1;
+
+    temp1 = "select";
+    select = temp1.concat(temp2);
+    document.getElementById(select).style.display = "none";
+
+    temp1 = "selected";
+    selected = temp1.concat(temp2);
+    document.getElementById(selected).style.display = "inline";
+
+    temp1 = "hide";
+    hide = temp1.concat(temp2);
+    document.getElementById(hide).style.display = "none";
+
+    temp1 = "confirm";
+    confirm = temp1.concat(temp2);
+    document.getElementById(confirm).style.display = "inline";
+
+    selectedcards[i] = 1;
+    document.getElementById("array").innerHTML = selectedcards;
+
+    for (var j = 0; j<facecards.length; j++) {
+      if (facecards[j]==1 && i!=j) {
+        DiscardLottery(j);
+      }
+  //    document.getElementById("array").innerHTML=sum;
+    }
+
+
+
+  }
+
+</script>
 
 {{ endblock }}
