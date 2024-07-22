@@ -12,3 +12,5 @@
 
 - closed_from_pair = liost of pairs from which the alternative has been discarded recorded as string of pair separated by ";": "(0,1,); (1,2,);" where after each number there is "," symbol and after every pair there is ";" symbol.
 NB! when alternative is chosen, another alternative is discarded and it is recorded, that has to be taken into account when clearning the data. 
+
+- choice_times = the time subject used to take the decision on the problem.
