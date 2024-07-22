@@ -128,7 +128,7 @@ body {
       </button> 
       </div>
       <div class="c-bottom">  
-        <button id="confirm{{i.0}}" class="btn btn-primary" style="width:100%" name="choice" value={{i.0}} >
+        <button id="confirm{{i.0}}" class="btn btn-primary" style="width:100%" name="choice" value={{i.0}} onclick="Submit()">
         Confirm
       </button> 
       </div>
@@ -143,6 +143,7 @@ body {
 
 
 <script>
+
 let len = {{budget_size}};
 
 var opened = " ";
@@ -155,45 +156,23 @@ var facecards = Array(len).fill(0);
 var selectedcards  = Array(len).fill(0);
 var lostcards = Array(len).fill(0);
 
+let timeAtStart;
+let timeAtSubmit;
+let timeOverall;
+
   window.onload = function() {    
     // window.alert(facecards);
     document.getElementById("array").innerHTML= selectedcards;
-/*    for (i=0; i<facecards.length; i++) {
-      temp2 = i.toString();
 
-      temp1 = "lottery";  
-      lottery = temp1.concat(temp2);
-      document.getElementById(lottery).style.visibility="hidden";
-      document.getElementById("array").innerHTML = lottery
-
-      temp1 = "confirm";  
-      confirm = temp1.concat(temp2);
-      document.getElementById(confirm).style.visibility="hidden";
-      document.getElementById("array").innerHTML = confirm
-
-      temp1 = "hide";  
-      discard = temp1.concat(temp2);
-      document.getElementById(discard).style.visibility="hidden";
-      document.getElementById("array").innerHTML = discard
-
-      temp1 = "discarded";  
-      discarded = temp1.concat(temp2);
-      document.getElementById(discarded).style.visibility="hidden";
-
-      temp1 = "selected";  
-      selected = temp1.concat(temp2);
-      document.getElementById(selected).style.visibility="hidden";
-
-      temp1 = "select";  
-      select = temp1.concat(temp2);
-      document.getElementById(select).style.visibility="hidden";
-
-      temp1 = "show";  
-      show = temp1.concat(temp2);
-      document.getElementById(show).style.visibility="visible";
-
-    } */
+    // start time:
+    timeAtStart = new Date();
   };
+
+  function Submit() {
+    timeAtSubmit = new Date();
+    timeOverall = (timeAtSubmit - timeAtStart)/1000;
+    liveSend({'type': 'time', 'value': timeOverall});
+  }
   
 
   function ShowLottery(i) {

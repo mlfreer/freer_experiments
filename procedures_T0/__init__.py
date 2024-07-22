@@ -65,6 +65,9 @@ class Player(BasePlayer):
     chosen_from_pair = models.StringField()
     closed_from_pair = models.StringField()
 
+    # decision time:
+    choice_times = models.FloatField(default=0,max_digits=5, decimal_places=2)
+
 
 #----------------------------------------------------------
 
@@ -121,6 +124,9 @@ class Decision(Page):
 
         if (t == 'closed_from_pair'):
             player.closed_from_pair = data['value']
+
+        if (t == 'time'):
+            player.choice_times = data['value']
 
 
 class ResultsWaitPage(WaitPage):
