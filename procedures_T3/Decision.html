@@ -166,6 +166,10 @@ let timeOverall;
 
     // start time:
     timeAtStart = new Date();
+
+    for (var i=0; i<len; i++) {
+      ShowLottery(i)
+    }
   };
 
   function Submit() {
@@ -183,7 +187,7 @@ let timeOverall;
  //     document.getElementById("array").innerHTML=facecards;
     }
 
- //   if (sum<2) {
+//    if (sum<2) {
     temp1 = "lottery";
     temp2 = i.toString();
     lottery = temp1.concat(temp2);
@@ -213,6 +217,10 @@ let timeOverall;
     confirm = temp1.concat(temp2);
     document.getElementById(confirm).style.display = "none";
 
+    temp1 = "discarded";
+    discarded = temp1.concat(temp2);
+    document.getElementById(discarded).style.display = "none";
+
     facecards[i] = 1;
     document.getElementById("array").innerHTML=facecards;
 
@@ -222,12 +230,12 @@ let timeOverall;
 
     for (var j = 0; j<selectedcards.length; j++) {
       if (j!=i  &&  selectedcards[j]==1 && facecards[j] == 1) {
-        UnSelect(j);
+  //      UnSelect(j);
         document.getElementById("array").innerHTML=facecards;
       }
     }
 
- /*   }
+  /*  }
     else{
       window.alert("You cannot open more than two cards")
     } */
@@ -256,6 +264,10 @@ let timeOverall;
     card = temp1.concat(temp2);
     document.getElementById(card).style.backgroundColor = "#A89CD9";
 
+    temp1 = "discarded";
+    discarded = temp1.concat(temp2);
+    document.getElementById(discarded).style.display = "none";
+
     selectedcards[i] = 0; 
 
   }
@@ -270,11 +282,11 @@ let timeOverall;
       document.getElementById("array").innerHTML= sum;
       }
 
-    if (sum <= (len-2) ) {
+ //   if (sum <= (len-2) ) {
 
     temp1 = "show";
     show = temp1.concat(temp2);
-    document.getElementById(show).style.display = "none";
+    document.getElementById(show).style.display = "inline";
 
     temp1 = "hide";
     hide = temp1.concat(temp2);
@@ -326,10 +338,10 @@ let timeOverall;
     offed = offed.concat(',');
     liveSend({'type': 'closed', 'value': offed});    
     
-    }
+ /*   }
     else {
       window.alert("You have to choose at least one element");
-    }
+    } */
   };
 
 
@@ -353,6 +365,10 @@ let timeOverall;
     temp1 = "hide";
     hide = temp1.concat(temp2);
     document.getElementById(hide).style.display = "none";
+
+    temp1 = "discarded";
+    discarded = temp1.concat(temp2);
+    document.getElementById(discarded).style.display = "none";
 
     temp1 = "confirm";
     confirm = temp1.concat(temp2);
@@ -380,7 +396,8 @@ let timeOverall;
 
     for (var j = 0; j<facecards.length; j++) {
       if (facecards[j]==1 && i!=j) {
-        DiscardLottery(j);
+ //       DiscardLottery(j);
+        UnSelect(j)
       }
   //    document.getElementById("array").innerHTML=sum;
     }
