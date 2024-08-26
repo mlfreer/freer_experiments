@@ -1,6 +1,8 @@
 from otree.api import *
 
 import random
+from random import shuffle
+import numpy as np
 import math
 
 
@@ -15,30 +17,37 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 5
 
-    BUDGET_SIZE = [3, 4, 5, 6, 7]
+    # POINTS:
+    POINTS_X = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 14, 12, 8, 6, 4]
+    POINTS_Y = [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 2, 6, 14, 18, 22]
+
+
+    # BUDGET SiZES:
+    BUDGET_SIZE = [6,10,7,7,10,6,8,7,7,6,5,8,7,6,4,2,2,2,2,2]
 
     # MENUS:
-    MENU = [[[0 for i in range(0,10)] for j in range(0,10)] for k in range(0,10)]
-    
-    # MENU 0:
-    MENU[0][0] = [10, 20, 30]
-    MENU[0][1] = [30, 20, 10]
+    MENUS = [[0 for j in range(0,20)] for k in range(0,20)]
+    MENUS[0] = [0,0,1,0,0,1,0,0,0,1,1,0,0,0,1,1,0,0]
+    MENUS[1] = [0,1,0,1,1,1,1,0,1,0,0,1,0,0,1,1,1,0]
+    MENUS[2] = [0,0,1,1,0,0,1,0,0,1,0,1,1,0,1,0,0,0]
+    MENUS[3] = [0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,0,1]
+    MENUS[4] = [1,0,1,1,0,1,1,0,1,0,0,1,0,1,0,0,1,1]
+    MENUS[5] = [0,1,1,0,1,0,0,0,0,0,1,0,0,1,0,0,1,0]
+    MENUS[6] = [1,0,1,0,1,1,0,1,0,1,0,1,0,0,0,0,0,1]
+    MENUS[7] = [0,0,0,0,1,0,1,0,0,1,1,0,1,1,1,0,0,0]
+    MENUS[8] = [1,1,0,0,1,0,0,1,1,0,1,0,1,0,0,0,0,0]
+    MENUS[9] = [0,0,0,1,1,0,0,1,0,0,0,1,1,0,1,0,0,0]
+    MENUS[10] = [0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0]
+    MENUS[11] = [1,1,0,1,1,0,1,0,0,0,0,0,1,1,0,0,1,0]
+    MENUS[12] = [0,1,1,0,0,0,1,0,0,0,0,1,1,1,0,1,0,0]
+    MENUS[13] = [0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,1,1,0]
+    MENUS[14] = [0,0,0,0,1,0,0,0,0,0,0,1,1,1,0,0,0,0]
+    MENUS[15] = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0]
+    MENUS[16] = [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0]
+    MENUS[17] = [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
+    MENUS[18] = [0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0]
+    MENUS[19] = [0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]
 
-    # MENU 1:
-    MENU[1][0] = [10, 20, 30, 40]
-    MENU[1][1] = [40, 30, 20, 10]
-
-    # MENU 2:
-    MENU[2][0] = [10, 20, 30, 40, 50]
-    MENU[2][1] = [50, 40, 30, 20, 10]
-
-    # MENU 3:
-    MENU[3][0] = [10, 20, 30, 40, 50, 60]
-    MENU[3][1] = [60, 50, 40, 30, 20, 10]
-
-    # MENU 3:
-    MENU[3][0] = [10, 20, 30, 40, 50, 60, 70]
-    MENU[3][1] = [70, 60, 50, 40, 30, 20, 10]
 #----------------------------------------------------------
 
 
@@ -56,6 +65,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     choice = models.IntegerField(default = -1)
     budget_id = models.IntegerField(default = -1)
+    payment_round = models.IntegerField(default= -1)
 
     # storing sequence of actions as the strings recording the sequence of events:
     opened = models.StringField()
@@ -82,6 +92,23 @@ def set_budgets_order(player: Player):
     for p in player.in_all_rounds():
         p.budget_id = budgets[p.subsession.round_number-1]
 
+def compute_payoff(player: Player):
+    player.payment_round = random.randint(1,C.NUM_ROUNDS)
+    coin_flip = random.randint(0,1)
+    p = player.in_round(player.payment_round)
+
+    budget_id = p.budget_id
+    temp_menu = [k for k in range(0,18) if C.MENUS[budget_id][k]!=0 ]
+    temp_id = temp_menu[p.choice]
+
+    if coin_flip == 0:
+        player.payoff = cu(C.POINTS_X[temp_id])
+    else:
+        player.payoff = cu(C.POINTS_Y[temp_id])
+
+
+
+
 
 
 #----------------------------------------------------------
@@ -96,9 +123,15 @@ class Decision(Page):
         budget_array = range(0,C.BUDGET_SIZE[budget_id])
         lotteries = [[0 for i in range(0,3)  ] for j in range(0,C.BUDGET_SIZE[budget_id])]
 
+        temp_menu = [k for k in range(0,18) if C.MENUS[budget_id][k]!=0 ]
+        #print(temp_menu)
         for j in range(0,C.BUDGET_SIZE[budget_id]):
-            lotteries[j] = [j, C.MENU[budget_id][0][j], C.MENU[budget_id][1][j]]
+            temp_id = temp_menu[j] #C.MENUS[budget_id][j]
+            lotteries[j] = [j, C.POINTS_X[temp_id], C.POINTS_Y[temp_id]]
 
+        print(lotteries)
+        shuffle(lotteries)
+        print(lotteries)
         return dict(
             total_rounds = C.NUM_ROUNDS,
             round = player.subsession.round_number,
@@ -128,16 +161,23 @@ class Decision(Page):
         if (t == 'time'):
             player.choice_times = data['value']
 
+    def before_next_page(player, timeout_happened):
+        if player.round_number == C.NUM_ROUNDS:
+            compute_payoff(player)
+
+
 
 class ResultsWaitPage(WaitPage):
     pass
 
 
 class Results(Page):
-    pass
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == C.NUM_ROUNDS
 
 
 page_sequence = [Decision, 
 #                ResultsWaitPage, 
-#                Results
+                Results
                 ]
