@@ -1,0 +1,394 @@
+{{ block title }}
+<div style="float: center; text-align: center; font-family: Georgia, Times, serif;">
+    Decision (<b>{{round}}</b> out of {{total_rounds}})
+</div>
+{{ endblock }}
+{{ block content }}
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* * {
+  box-sizing: border-box;
+}*/
+
+body {
+  font-family: Georgia, sans-serif;
+}
+
+/* Float four columns side by side */
+.column {
+  float: left;
+  width: 30%;
+  padding: 0 10px;
+}
+
+/* Remove extra left and right margins, due to padding */
+.row {margin: 0 5px; height: 30%}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 100%) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+/* Style the counter cards */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  background-color: #f1f1f1;
+  display: flex;
+}
+
+.c-bottom{
+    position: absolute;
+    bottom:2%;
+    left: 15%;
+    width: 70%;
+}
+
+.c-top{
+    position: absolute;
+    top:2%;
+    left: 15%;
+    width: 70%;
+}
+.c-middle{
+    position: absolute;
+    top:30%;
+    bottom: 70%;
+    height: 50%;
+    left: 15%;
+    width: 70%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 250px 250px 250px 250px;
+  gap: 5%;
+/*  background-color: #2196F3; */
+  padding: 5px;
+}
+
+.grid-container > div {
+  background-color: #D3D3D3;
+  border: 0px solid black;
+  text-align: center;
+  font-size: 24px;
+}
+</style>
+
+<div id="array">
+</div>
+
+<div class="grid-container">
+{% for i in list_lotteries %}  
+    <div id="card{{i.0}}" class="card">
+      <div class="c-top">  
+        <button id="selected{{i.0}}" type="button" class="btn btn-success disabled" style="width:100%; display:none" >
+          Selected
+        </button> 
+    </div>
+      <div class="c-top">  
+        <button id="select{{i.0}}" type="button" class="btn btn-success" style="width:100%; display: none" onclick="SelectLottery({{i.0}})">
+          Select
+        </button>
+          
+    </div>
+
+      <div  class="c-middle" >  
+        <p id="lottery{{i.0}}" style="display:none"> 
+          {{i.1}} if HEADS <br>
+          {{i.2}} if TAILS
+        </p> 
+    </div>  
+    <div  class="c-middle" >  
+        <p id="discarded{{i.0}}" style="display:none">
+        Discarded
+      </p> 
+    </div> 
+      
+      <div class="c-bottom">  
+        <button id="hide{{i.0}}" type="button" class="btn btn-danger" style="width:100%; display:none" onclick="DiscardLottery({{i.0}})">
+        Discard
+      </button> 
+      </div>
+      <div class="c-bottom">  
+        <button id="confirm{{i.0}}" class="btn btn-primary" style="width:100%" name="choice" value={{i.0}} onclick="Submit()">
+        Confirm
+      </button> 
+      </div>
+      <div class="c-bottom">  
+        <button id="show{{i.0}}" type="button" class="btn btn-secondary" style="width:100%" onclick="ShowLottery({{i.0}})">
+        Show
+        </button> 
+      </div>
+    </div>
+{% endfor %}
+</div>
+
+
+<script>
+
+let len = {{budget_size}};
+
+var opened = " ";
+var offed = " ";
+var chosen = " ";
+var chosen_from_pair = " ";
+var closedfrompair = " ";
+
+var facecards = Array(len).fill(0);
+var selectedcards  = Array(len).fill(0);
+var lostcards = Array(len).fill(0);
+
+let timeAtStart;
+let timeAtSubmit;
+let timeOverall;
+
+  window.onload = function() {    
+    // window.alert(facecards);
+    document.getElementById("array").innerHTML= selectedcards;
+
+    // start time:
+    timeAtStart = new Date();
+  };
+
+  function Submit() {
+    timeAtSubmit = new Date();
+    timeOverall = (timeAtSubmit - timeAtStart)/1000;
+    liveSend({'type': 'time', 'value': timeOverall});
+  }
+  
+
+  function ShowLottery(i) {
+
+    sum = 0;
+    for (var j = 0; j<facecards.length; j++) {
+      sum = sum + facecards[j];
+ //     document.getElementById("array").innerHTML=facecards;
+    }
+
+    if (sum<2) {
+    temp1 = "lottery";
+    temp2 = i.toString();
+    lottery = temp1.concat(temp2);
+    document.getElementById(lottery).style.display = "inline";
+
+    temp1 = "show";
+    show = temp1.concat(temp2);
+    document.getElementById(show).style.display = "none";
+
+    temp1 = "hide";
+    hide = temp1.concat(temp2);
+    document.getElementById(hide).style.display = "inline";
+
+    temp1 = "select";
+    select = temp1.concat(temp2);
+    document.getElementById(select).style.display = "inline";
+
+    temp1 = "card";
+    card = temp1.concat(temp2);
+    document.getElementById(card).style.backgroundColor = "#A89CD9";
+
+    temp1 = "selected";
+    selected = temp1.concat(temp2);
+    document.getElementById(selected).style.display = "none";
+
+    temp1 = "confirm";
+    confirm = temp1.concat(temp2);
+    document.getElementById(confirm).style.display = "none";
+
+    facecards[i] = 1;
+    document.getElementById("array").innerHTML=facecards;
+
+    opened = opened.concat(temp2);
+    opened = opened.concat(',');
+    liveSend({'type': 'opened', 'value': opened});
+
+    for (var j = 0; j<selectedcards.length; j++) {
+      if (j!=i  &&  selectedcards[j]==1 && facecards[j] == 1) {
+        UnSelect(j);
+        document.getElementById("array").innerHTML=facecards;
+      }
+    }
+
+    }
+    else{
+      window.alert("You cannot open more than two cards")
+    }
+  };
+
+  function UnSelect(i) {
+    temp2 = i.toString();
+
+    temp1 = "selected";
+    selected = temp1.concat(temp2);
+    document.getElementById(selected).style.display = "none";
+
+    temp1 = "confirm";
+    confirm = temp1.concat(temp2);
+    document.getElementById(confirm).style.display = "none";
+
+    temp1 = "select";
+    select = temp1.concat(temp2);
+    document.getElementById(select).style.display = "inline";
+
+    temp1 = "hide";
+    hide = temp1.concat(temp2);
+    document.getElementById(hide).style.display = "inline";
+
+    temp1 = "card";
+    card = temp1.concat(temp2);
+    document.getElementById(card).style.backgroundColor = "#A89CD9";
+
+    selectedcards[i] = 0; 
+
+  }
+
+
+  function DiscardLottery(i) {
+    temp2 = i.toString();
+
+    var sum = 0;
+    for (var j = 0; j<lostcards.length; j++) {
+      sum = sum + lostcards[j];
+      document.getElementById("array").innerHTML= sum;
+      }
+
+    if (sum <= (len-2) ) {
+
+    temp1 = "show";
+    show = temp1.concat(temp2);
+    document.getElementById(show).style.display = "none";
+
+    temp1 = "hide";
+    hide = temp1.concat(temp2);
+    document.getElementById(hide).style.display = "none";
+
+    temp1 = "lottery";
+    lottery = temp1.concat(temp2);
+    document.getElementById(lottery).style.display = "none";
+
+    temp1 = "select";
+    select = temp1.concat(temp2);
+    document.getElementById(select).style.display = "none";
+
+    temp1 = "card";
+    card = temp1.concat(temp2);
+    document.getElementById(card).style.backgroundColor = "#EAA0A5";
+
+    temp1 = "discarded";
+    discarded = temp1.concat(temp2);
+    document.getElementById(discarded).style.display = "inline";
+
+    temp1 = "selected";
+    selected = temp1.concat(temp2);
+    document.getElementById(selected).style.display = "none";
+
+    temp1 = "confirm";
+    confirm = temp1.concat(temp2);
+    document.getElementById(confirm).style.display = "none";
+
+    tpair = "(";
+    for (var j=0; j<facecards.length; j++) {
+      if (facecards[j]==1) {
+        t = j.toString();
+        tpair = tpair.concat(t);
+        tpair = tpair.concat(",");
+      }
+    }
+    tpair = tpair.concat("); ");
+    closedfrompair = closedfrompair.concat(tpair);
+    liveSend({'type': 'closed_from_pair', 'value': closedfrompair});
+
+
+    facecards[i] = 0;
+    lostcards[i] = 1;
+    selectedcards[i] = 0;
+    document.getElementById("array").innerHTML = facecards;
+
+    offed = offed.concat(temp2);
+    offed = offed.concat(',');
+    liveSend({'type': 'closed', 'value': offed});    
+    
+    }
+    else {
+      window.alert("You have to choose at least one element");
+    }
+  };
+
+
+
+  function SelectLottery(i) {
+    temp2 = i.toString();
+
+    temp1 = "card";
+    card = temp1.concat(temp2);
+    document.getElementById(card).style.backgroundColor = "#A3E19A";
+    selected[i] = 1;
+
+    temp1 = "select";
+    select = temp1.concat(temp2);
+    document.getElementById(select).style.display = "none";
+
+    temp1 = "selected";
+    selected = temp1.concat(temp2);
+    document.getElementById(selected).style.display = "inline";
+
+    temp1 = "hide";
+    hide = temp1.concat(temp2);
+    document.getElementById(hide).style.display = "none";
+
+    temp1 = "confirm";
+    confirm = temp1.concat(temp2);
+    document.getElementById(confirm).style.display = "inline";
+
+    selectedcards[i] = 1;
+    document.getElementById("array").innerHTML = facecards;
+
+    chosen = chosen.concat(temp2)
+    chosen = chosen.concat(',')
+    liveSend({'type': 'chosen', 'value': chosen})
+
+    t_pair = "("
+    for (var j=0; j<facecards.length; j++) {
+      if (facecards[j]==1) {
+        t = j.toString();
+        t_pair = t_pair.concat(t);
+        t_pair = t_pair.concat(",");
+      }
+    }
+    t_pair = t_pair.concat("); ");
+    chosen_from_pair = chosen_from_pair.concat(t_pair);
+    liveSend({'type': 'chosen_from_pair', 'value': chosen_from_pair});
+
+
+    for (var j = 0; j<facecards.length; j++) {
+      if (facecards[j]==1 && i!=j) {
+        DiscardLottery(j);
+      }
+  //    document.getElementById("array").innerHTML=sum;
+    }
+
+
+
+  }
+
+</script>
+
+{{ endblock }}
