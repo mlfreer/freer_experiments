@@ -85,13 +85,31 @@ SESSION_CONFIGS = [
         display_name='Choices and Procedures, T0: Delegated Procedure',
         app_sequence=['procedures_T0'],
         num_demo_participants=1,
-        )
+        ),
     dict(
         name='procedures_T1',
         display_name='Choices and Procedures, T1: Assisted Binary Choice Procedure',
         app_sequence=['procedures_T1'],
         num_demo_participants=1,
-        )
+        ),
+    dict(
+        name='procedures_T2a',
+        display_name='Choices and Procedures, T2a: Assisted Choice Procedure without Recovering Discarded Cards',
+        app_sequence=['procedures_T2a'],
+        num_demo_participants=1,
+        ),
+    dict(
+        name='procedures_T2b',
+        display_name='Choices and Procedures, T2b: Assisted Choice Procedure with Receovering Discarded Cards',
+        app_sequence=['procedures_T2b'],
+        num_demo_participants=1,
+        ),
+    dict(
+        name='procedures_T3',
+        display_name='Choices and Procedures, T3: Free Choice Procedure',
+        app_sequence=['procedures_T3'],
+        num_demo_participants=1,
+        ),
 ]
 
 #------------------------------------------------------------------------------------

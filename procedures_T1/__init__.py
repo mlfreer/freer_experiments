@@ -12,7 +12,7 @@ Your app description
 #----------------------------------------------------------
 # CONSTANTS
 class C(BaseConstants):
-    NAME_IN_URL = 'procedures_T0'
+    NAME_IN_URL = 'procedures_T1'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 5
 
