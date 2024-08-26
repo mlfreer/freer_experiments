@@ -128,12 +128,12 @@ body {
       </button> 
       </div>
       <div class="c-bottom">  
-        <button id="confirm{{i.0}}" class="btn btn-primary" style="width:100%" name="choice" value={{i.0}} onclick="Submit()">
+        <button id="confirm{{i.0}}" class="btn btn-primary" style="width:100%; display:none" name="choice" value={{i.0}} onclick="Submit()">
         Confirm
       </button> 
       </div>
       <div class="c-bottom">  
-        <button id="show{{i.0}}" type="button" class="btn btn-secondary" style="width:100%" onclick="ShowLottery({{i.0}})">
+        <button id="show{{i.0}}" type="button" class="btn btn-secondary" style="width:100%; display:none" onclick="ShowLottery({{i.0}})">
         Show
         </button> 
       </div>
@@ -156,6 +156,9 @@ var facecards = Array(len).fill(0);
 var selectedcards  = Array(len).fill(0);
 var lostcards = Array(len).fill(0);
 
+
+var Current_Card = 0
+
 let timeAtStart;
 let timeAtSubmit;
 let timeOverall;
@@ -166,6 +169,12 @@ let timeOverall;
 
     // start time:
     timeAtStart = new Date();
+
+    // Opening first two cards
+    ShowLottery(Current_Card)
+    Current_Card++
+    ShowLottery(Current_Card)
+    Current_Card++
   };
 
   function Submit() {
@@ -183,7 +192,7 @@ let timeOverall;
  //     document.getElementById("array").innerHTML=facecards;
     }
 
-    if (sum<2) {
+//    if (sum<2) {
     temp1 = "lottery";
     temp2 = i.toString();
     lottery = temp1.concat(temp2);
@@ -227,10 +236,10 @@ let timeOverall;
       }
     }
 
-    }
+ /*   }
     else{
       window.alert("You cannot open more than two cards")
-    }
+    } */
   };
 
   function UnSelect(i) {
@@ -304,6 +313,9 @@ let timeOverall;
     confirm = temp1.concat(temp2);
     document.getElementById(confirm).style.display = "none";
 
+    ShowLottery(Current_Card)
+    Current_Card++
+
     tpair = "(";
     for (var j=0; j<facecards.length; j++) {
       if (facecards[j]==1) {
@@ -325,6 +337,7 @@ let timeOverall;
     offed = offed.concat(temp2);
     offed = offed.concat(',');
     liveSend({'type': 'closed', 'value': offed});    
+    
     
     }
     else {
@@ -377,13 +390,17 @@ let timeOverall;
     chosen_from_pair = chosen_from_pair.concat(t_pair);
     liveSend({'type': 'chosen_from_pair', 'value': chosen_from_pair});
 
-
+    t = 0
     for (var j = 0; j<facecards.length; j++) {
       if (facecards[j]==1 && i!=j) {
-        DiscardLottery(j);
-      }
-  //    document.getElementById("array").innerHTML=sum;
+        t=j;
+      };
     }
+    DiscardLottery(t);
+ //   ShowLottery(Current_Card)
+//  Current_Card++
+  //    document.getElementById("array").innerHTML=sum;
+    
 
 
 
