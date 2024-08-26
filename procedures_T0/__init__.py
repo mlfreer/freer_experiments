@@ -2,7 +2,6 @@ from otree.api import *
 
 import random
 from random import shuffle
-import numpy as np
 import math
 
 
