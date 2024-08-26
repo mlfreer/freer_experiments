@@ -86,6 +86,12 @@ SESSION_CONFIGS = [
         app_sequence=['procedures_T0'],
         num_demo_participants=1,
         )
+    dict(
+        name='procedures_T1',
+        display_name='Choices and Procedures, T1: Assisted Binary Choice Procedure',
+        app_sequence=['procedures_T1'],
+        num_demo_participants=1,
+        )
 ]
 
 #------------------------------------------------------------------------------------
