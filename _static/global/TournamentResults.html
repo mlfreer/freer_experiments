@@ -14,6 +14,10 @@
 
 <table class="table">
     <tr>
+        <td> Your username is </td>
+        <td> <b> {{user_name}} </b> </td>
+    </tr>
+    <tr>
         <td> Your earnings from the task are</td>
         <td> <b> {{earnings}} tokens </b></td>
     </tr>
@@ -38,16 +42,19 @@
 <table class="table">
     <tr class="center">
         <td> <b> Rank </b> </td>
+        <td> <b> User name </b> </td>
         <td> <b> Investment </b> </td>
     </tr>
 
 {% for p in tournament %}
     <tr class="center" >
-        {% if rank == p.0 %}
+        {% if user_name == p.2 %}
         <td style="background-color:#D9DDDC"> {{p.0}} </td>
+        <td style="background-color:#D9DDDC"> <b> {{p.2}} </b> </td>
         <td style="background-color:#D9DDDC"> {{p.1}} </td>
         {% else %}
         <td>  {{p.0}}  </td>
+        <td> <b> {{p.2}} </b> </td>
         <td>  {{p.1}}  </td>
         {% endif %}
     </tr>

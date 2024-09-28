@@ -1,5 +1,6 @@
 import time
 import json
+from random_username.generate import generate_username
 
 from otree import settings
 from otree.api import *
@@ -40,6 +41,12 @@ def creating_session(subsession: Subsession):
     for param in defaults:
         session.params[param] = session.config.get(param, defaults[param])
 
+#    for p in subsession.get_players():
+#        temp = generate_username(1)
+#        print(temp[0])
+#        p.user_name = temp[0]
+#        p.user_name = temp
+
 def set_paying_round(session: Subsession):
     p_round = random.randint(1,Constants.num_rounds)
     s = session.in_round(Constants.num_rounds)
@@ -53,8 +60,21 @@ class Group(BaseGroup):
     invest3 = models.IntegerField(initial=0)
     invest4 = models.IntegerField(initial=0)
 
+    user_name1 = models.StringField()
+    user_name2 = models.StringField()
+    user_name3 = models.StringField()
+    user_name4 = models.StringField()
+
+    rank_1 = models.IntegerField(initial=0)
+    rank_2 = models.IntegerField(initial=0)
+    rank_3 = models.IntegerField(initial=0)
+    rank_4 = models.IntegerField(initial=0)
+
+
 
 class Player(BasePlayer):
+    user_name = models.StringField(initial = 'default')
+
     # only suported 1 iteration for now
     iteration = models.IntegerField(initial=0)
 
@@ -274,6 +294,7 @@ def set_ranking(group: Group):
     players  = group.get_players()
 
     investments = [0 for x in range(0,4)]
+    usernames = {}
     i=0
     for p in players:
         investments[i] = p.invest
@@ -282,28 +303,53 @@ def set_ranking(group: Group):
     investments = sorted(investments,reverse = True)
 
     k=0
+    u = 0
     group.invest1 = investments[k]
     for p in players:
         if p.invest == investments[k] and p.rank==0:
             p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
 
     k=1
     group.invest2 = investments[k]
     for p in players:
         if p.invest == investments[k] and p.rank==0:
             p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
 
     k=2
     group.invest3 = investments[k]
     for p in players:
         if p.invest == investments[k] and p.rank==0 :
             p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
 
     k=3
     group.invest4 = investments[k]
     for p in players:
         if p.invest == investments[k] and p.rank==0:
             p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
+    group.user_name1 = usernames[0]
+    group.user_name2 = usernames[1]
+    group.user_name3 = usernames[2]
+    group.user_name4 = usernames[3]
+
+    ranks = [0 for i in range(0,4)]
+    i=0
+    for p in players: 
+        ranks[i] = p.rank
+        i=i+1
+    ranks = sorted(ranks,reverse = False)
+    group.rank_1 = ranks[0]
+    group.rank_2 = ranks[1]
+    group.rank_3 = ranks[2]
+    group.rank_4 = ranks[3]
+
 
 
 
@@ -311,6 +357,7 @@ def set_ranking(group: Group):
 
 
 #-----------------------------------------------------------------------
+
 
 
 
@@ -354,12 +401,37 @@ class Welcome(Page):
         return player.round_number == 1
 
 
+class GenerateUsername(Page):
+    def is_displayed(player):
+        if player.round_number > 1:
+            p = player.in_round(player.round_number-1)
+            player.user_name = p.user_name
+
+        return player.round_number == 1
+
+    def live_method(player, data):
+        temp = generate_username(1)
+        player.user_name = temp[0]
+        for p in player.in_all_rounds():
+            p.user_name = temp[0]
+#        print(temp[0])
+        return {player.id_in_group : temp}
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        temp = player.user_name
+        for p in player.in_all_rounds():
+          p.user_name  = temp
+
+
+
 class Invest(Page):
     form_model='player'
     form_fields = ['invest']
 
     def vars_for_template(player: Player):
         return dict(
+            user_name = player.user_name,
             earnings = player.num_correct,
             round_number = player.round_number,
             num_rounds = Constants.num_rounds
@@ -377,12 +449,15 @@ class TournamentResults(Page):
 
     def vars_for_template(player: Player):
         temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        user_names = [player.group.user_name1, player.group.user_name2, player.group.user_name3, player.group.user_name4]
+        ranks = [player.group.rank_1, player.group.rank_2, player.group.rank_3, player.group.rank_4]
         tournament = [0 for x in range(0,4)]
         for i in range(0,4):
-            tournament[i] = [i+1, temp[i]]
+            tournament[i] = [ranks[i], temp[i], user_names[i]]
 
 
         return dict(
+            user_name = player.user_name,
             earnings = player.num_correct,
             invest = player.invest,
             rank = player.rank,
@@ -399,12 +474,15 @@ class WTA(Page):
 
     def vars_for_template(player: Player):
         temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        user_names = [player.group.user_name1, player.group.user_name2, player.group.user_name3, player.group.user_name4]
+        ranks = [player.group.rank_1, player.group.rank_2, player.group.rank_3, player.group.rank_4]
         tournament = [0 for x in range(0,4)]
         for i in range(0,4):
-            tournament[i] = [i+1, temp[i]]
+            tournament[i] = [ranks[i], temp[i], user_names[i]]
 
 
         return dict(
+            user_name = player.user_name,
             earnings = player.num_correct,
             invest = player.invest,
             rank = player.rank,
@@ -422,9 +500,10 @@ class WTA(Page):
             player.price_certificate=-1
 
         temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        user_names = [player.group.user_name1, player.group.user_name2, player.group.user_name3, player.group.user_name4]
         tournament = [0 for x in range(0,4)]
         for i in range(0,4):
-            tournament[i] = [i+1, temp[i]]
+            tournament[i] = [i+1, temp[i], user_names[i]]
 
         if player.subsession.round_number == Constants.num_rounds:
             p = player.in_round(player.subsession.paying_round)
@@ -437,16 +516,19 @@ class Results(Page):
 
     def vars_for_template(player: Player):
         temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
+        user_names = [player.group.user_name1, player.group.user_name2, player.group.user_name3, player.group.user_name4]
         tournament = [0 for x in range(0,4)]
         for i in range(0,4):
-            tournament[i] = [i+1, temp[i]]
+            tournament[i] = [i+1, temp[i], user_names[i]]
 
         if player.subsession.round_number == Constants.num_rounds:
             p = player.in_round(player.subsession.paying_round)
+            player.participant.vars['user_name'] = p.user_name
             player.participant.vars['T1_earnings'] = p.num_correct
             player.participant.vars['T1_certificate'] = p.price_certificate
 
         return dict(
+            user_name = player.user_name,
             earnings = player.num_correct,
             invest = player.invest,
             rank = player.rank,
@@ -459,6 +541,7 @@ class Results(Page):
 
 page_sequence = [
             Welcome,
+            GenerateUsername,
             RealEffortTask,
             Invest,
             InvestWaitPage,
