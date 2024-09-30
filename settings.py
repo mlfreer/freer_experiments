@@ -62,11 +62,17 @@ SESSION_CONFIGS = [
 #         num_demo_participants = 1,
 #         app_sequence = ['WelcomeScreen'],
 #     ),
-     dict(
+    dict(
         name="CC_T0",
         display_name="Consp Consumption: Cardinal Visibility",
         num_demo_participants=4,
         app_sequence=["CC_T0","CC_FinalResults"],
+    ),
+    dict(
+        name="CC_OrdinalVisibility",
+        display_name="Consp Consumption: Ordinal Visibility",
+        num_demo_participants=4,
+        app_sequence=["CC_OrdinalVisibility","CC_FinalResults"],
     ),
      dict(
         name="CC_NoVisibility",
