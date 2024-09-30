@@ -14,21 +14,14 @@
 
 <table class="table">
     <tr>
+        <td> Your user name is </td>
+        <td> <b> {{user_name}} </b></td>
+    </tr>
+    <tr>
         <td> Your earnings from the task are</td>
         <td> <b> {{final_earnings}} </b></td>
     </tr>
 
-{% if final_certificate <= 0 %}
-    <tr> 
-        <td> You will get the certificate. </td>
-        <td> </td>
-    </tr>
-{% else %}
-    <tr> 
-        <td> You will get <b> {{final_certificate}}</b> instead of certificate </td>
-        <td> </td>
-    </tr>
-{% endif %}
     <tr style="border-bottom:2px solid black">
         <td> Show up fee is </td>
         <td> <b> {{show_up_fee}} </b></td>

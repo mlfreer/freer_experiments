@@ -38,33 +38,22 @@ class Player(BasePlayer):
 #----------------------------------------
 class Survey(Page):
     form_model = 'player'
-    form_fields = ['reasoning', 'wta', 'certificate']
+    form_fields = ['reasoning', 'certificate']
 #----------------------------------------
 
 
 #----------------------------------------
 class Results(Page):
-    def vars_for_template(player):
-        random_number = random.random()
-        if random_number >= .5:
-            player.final_earnings = player.participant.vars['T1_earnings']*C.exchange_rate
-            player.final_certificate = player.participant.vars['T1_certificate']*C.exchange_rate
-        else:
-            player.final_earnings = player.participant.vars['T2_earnings']*C.exchange_rate
-            player.final_certificate = player.participant.vars['T2_certificate']*C.exchange_rate
-
-        if player.final_certificate>0:
-            player.payoff = (player.final_earnings + player.final_certificate)
-        else:
-            player.payoff = player.final_earnings
-        
-
+    def vars_for_template(player):   
+        player.final_earnings = player.participant.vars['T1_earnings']*C.exchange_rate
+        player.payoff = player.final_earnings+C.SHOW_UP_FEE
+        user_name = player.participant.vars['user_name']
         return dict(
             final_earnings = cu(player.final_earnings),
-            final_certificate = cu(player.final_certificate),
             show_up_fee = cu(C.SHOW_UP_FEE),
-            payoff = cu(player.payoff + C.SHOW_UP_FEE),
-            code = player.participant.code
+            payoff = cu(player.payoff),
+            code = player.participant.code,
+            user_name= user_name
             )
 #----------------------------------------
 

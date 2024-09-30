@@ -15,9 +15,9 @@ doc = """
 
 
 class Constants(BaseConstants):
-    name_in_url = "CC_T0"
+    name_in_url = "CC_NoVisibility"
     players_per_group = 4
-    num_rounds = 10
+    num_rounds = 1
 
     task_time = 60
 
@@ -445,7 +445,7 @@ class InvestWaitPage(WaitPage):
         set_ranking(group)
 
 class TournamentResults(Page):
-    template_name = '_static/global/TournamentResults.html'
+#    template_name = '_static/global/TournamentResults.html'
 
     def vars_for_template(player: Player):
         temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
@@ -470,77 +470,6 @@ class TournamentResults(Page):
             player.participant.vars['T1_earnings'] = p.num_correct
             player.participant.vars['user_name'] = p.user_name
 
-class WTA(Page):
-    template_name = '_static/global/WTA.html'
-
-    form_model='player'
-    form_fields = ['WTA']
-
-    def vars_for_template(player: Player):
-        temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
-        user_names = [player.group.user_name1, player.group.user_name2, player.group.user_name3, player.group.user_name4]
-        ranks = [player.group.rank_1, player.group.rank_2, player.group.rank_3, player.group.rank_4]
-        tournament = [0 for x in range(0,4)]
-        for i in range(0,4):
-            tournament[i] = [ranks[i], temp[i], user_names[i]]
-
-
-        return dict(
-            user_name = player.user_name,
-            earnings = player.num_correct,
-            invest = player.invest,
-            rank = player.rank,
-            tournament = tournament,
-            round_number = player.round_number,
-            num_rounds = Constants.num_rounds
-            )
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        number = round(10*random.random(),1)
-        if number >= player.WTA:
-            player.price_certificate = number
-        else:
-            player.price_certificate=-1
-
-        temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
-        user_names = [player.group.user_name1, player.group.user_name2, player.group.user_name3, player.group.user_name4]
-        tournament = [0 for x in range(0,4)]
-        for i in range(0,4):
-            tournament[i] = [i+1, temp[i], user_names[i]]
-
-        if player.subsession.round_number == Constants.num_rounds:
-            p = player.in_round(player.subsession.paying_round)
-            player.participant.vars['T1_earnings'] = p.num_correct
-            player.participant.vars['T1_certificate'] = p.price_certificate
-
-
-class Results(Page):
-    template_name = '_static/global/Results.html'
-
-    def vars_for_template(player: Player):
-        temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
-        user_names = [player.group.user_name1, player.group.user_name2, player.group.user_name3, player.group.user_name4]
-        tournament = [0 for x in range(0,4)]
-        for i in range(0,4):
-            tournament[i] = [i+1, temp[i], user_names[i]]
-
-        if player.subsession.round_number == Constants.num_rounds:
-            p = player.in_round(player.subsession.paying_round)
-            player.participant.vars['user_name'] = p.user_name
-            player.participant.vars['T1_earnings'] = p.num_correct
-            player.participant.vars['T1_certificate'] = p.price_certificate
-
-        return dict(
-            user_name = player.user_name,
-            earnings = player.num_correct,
-            invest = player.invest,
-            rank = player.rank,
-            tournament = tournament,
-            price_certificate = player.price_certificate,
-            round_number = player.round_number,
-            num_rounds = Constants.num_rounds
-            )
 
 
 page_sequence = [
@@ -550,8 +479,6 @@ page_sequence = [
             Invest,
             InvestWaitPage,
             TournamentResults,
-#            WTA,
-#            Results
             ]
 
 

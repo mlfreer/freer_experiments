@@ -64,16 +64,22 @@ SESSION_CONFIGS = [
 #     ),
      dict(
         name="CC_T0",
-        display_name="Consp Consumption: Baseline",
+        display_name="Consp Consumption: Cardinal Visibility",
         num_demo_participants=4,
-        app_sequence=["CC_T0","CC_BestResponse","CC_FinalResults"],
+        app_sequence=["CC_T0","CC_FinalResults"],
     ),
-    dict(
-        name="CC_BestResponse",
-        display_name="Consp Consumption: Best Response",
-        num_demo_participants=1,
-        app_sequence=["CC_BestResponse"],
+     dict(
+        name="CC_NoVisibility",
+        display_name="Consp Consumption: No Visibility",
+        num_demo_participants=4,
+        app_sequence=["CC_NoVisibility","CC_FinalResults"],
     ),
+#    dict(
+#        name="CC_BestResponse",
+#        display_name="Consp Consumption: Best Response",
+#        num_demo_participants=1,
+#        app_sequence=["CC_BestResponse"],
+#    ),
 #    dict(
 #         name='Attention_Welfare_Experiment',
 #         display_name='Attention Welfare Experiment',
