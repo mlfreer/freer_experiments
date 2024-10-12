@@ -400,6 +400,7 @@ class Welcome(Page):
     def is_displayed(player):
         return player.round_number == 1
 
+
 class Instructions(Page):
     def is_displayed(player):
         return player.round_number == 1

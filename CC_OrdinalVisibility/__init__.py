@@ -400,6 +400,9 @@ class Welcome(Page):
     def is_displayed(player):
         return player.round_number == 1
 
+class Instructions(Page):
+    def is_displayed(player):
+        return player.round_number == 1
 
 class GenerateUsername(Page):
     def is_displayed(player):
@@ -474,6 +477,7 @@ class TournamentResults(Page):
 
 page_sequence = [
             Welcome,
+            Instructions,
             GenerateUsername,
             RealEffortTask,
             Invest,
