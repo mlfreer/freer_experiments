@@ -27,6 +27,8 @@ class Player(BasePlayer):
     final_earnings = models.FloatField(default=0,max_digits=5, decimal_places=2)
     final_certificate = models.FloatField(default=0,max_digits=5, decimal_places=2)
 
+    email = models.StringField(required = True)
+
     reasoning = models.StringField(required = False)
     wta = models.StringField(required = False)
     certificate = models.StringField(required = False)
@@ -44,6 +46,9 @@ class Survey(Page):
 
 #----------------------------------------
 class Results(Page):
+    form_model = 'player'
+    form_fields = ['email']
+
     def vars_for_template(player):   
         player.final_earnings = player.participant.vars['T1_earnings']*C.exchange_rate
         player.payoff = player.final_earnings+C.SHOW_UP_FEE
@@ -58,9 +63,15 @@ class Results(Page):
 #----------------------------------------
 
 
+#----------------------------------------
+class FinalPage(Page):
+    pass
+#----------------------------------------
+
 
 #----------------------------------------
 
 
 page_sequence = [Survey,
-                Results]
+                Results,
+                FinalPage]

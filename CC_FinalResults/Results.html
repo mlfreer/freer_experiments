@@ -31,9 +31,17 @@
         <td> <b> {{payoff}} </b></td>
     </tr>
 
+    <tr>
+        <td> Please enter your email address to be used for payment </td>
+        <td> <b> <input type="text" name="email" id="email">     </b></td>
+    </tr>
+
 </table>
 
-
-
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
 </font>
+
+
 {{ endblock }}
