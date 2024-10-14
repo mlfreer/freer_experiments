@@ -477,7 +477,7 @@ class TournamentResults(Page):
 
 
 page_sequence = [
-            Welcome,
+#            Welcome,
             Instructions,
             GenerateUsername,
             RealEffortTask,

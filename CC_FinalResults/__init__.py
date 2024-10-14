@@ -38,6 +38,8 @@ class Player(BasePlayer):
     ethinicity = models.StringField()
     age = models.IntegerField(min=16, max=99)
     undergrad = models.IntegerField(initial=-1)
+    gaming = models.IntegerField(initial = -1)
+    socialmedia = models.IntegerField(initial=-1)
 
 
 #----------------------------------------
@@ -46,7 +48,7 @@ class Player(BasePlayer):
 #----------------------------------------
 class Survey(Page):
     form_model = 'player'
-    form_fields = ['reasoning','gender','age','british','undergrad']
+    form_fields = ['reasoning','gender','age','british','undergrad','socialmedia','gaming']
 #----------------------------------------
 
 
