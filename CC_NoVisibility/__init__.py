@@ -458,11 +458,13 @@ class TournamentResults(Page):
         tournament = [0 for x in range(0,4)]
         for i in range(0,4):
             tournament[i] = [ranks[i], temp[i], user_names[i]]
+        payment = player.num_correct - player.invest
         return dict(
             user_name = player.user_name,
             earnings = player.num_correct,
             invest = player.invest,
             rank = player.rank,
+            pay = payment,
             tournament = tournament,
             round_number = player.round_number,
             num_rounds = Constants.num_rounds
