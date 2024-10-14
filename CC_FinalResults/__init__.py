@@ -31,7 +31,13 @@ class Player(BasePlayer):
 
     reasoning = models.StringField(required = False)
     wta = models.StringField(required = False)
-    certificate = models.StringField(required = False)
+#    certificate = models.StringField(required = False)
+    
+    gender = models.IntegerField(initial = -1)
+    british = models.IntegerField(initial = -1)
+    ethinicity = models.StringField()
+    age = models.IntegerField(min=16, max=99)
+    undergrad = models.IntegerField(initial=-1)
 
 
 #----------------------------------------
@@ -40,7 +46,7 @@ class Player(BasePlayer):
 #----------------------------------------
 class Survey(Page):
     form_model = 'player'
-    form_fields = ['reasoning', 'certificate']
+    form_fields = ['reasoning','gender','age','british','undergrad']
 #----------------------------------------
 
 
