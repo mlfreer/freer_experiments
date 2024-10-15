@@ -17,7 +17,7 @@ doc = """
 class Constants(BaseConstants):
     name_in_url = "CC_NoVisibility"
     players_per_group = 4
-    num_rounds = 10
+    num_rounds = 15
 
     task_time = 60
 
