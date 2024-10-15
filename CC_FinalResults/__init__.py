@@ -40,6 +40,8 @@ class Player(BasePlayer):
     undergrad = models.IntegerField(initial=-1)
     gaming = models.IntegerField(initial = -1)
     socialmedia = models.IntegerField(initial=-1)
+    siblings = models.IntegerField(initial=-1)
+    cohabitants = models.IntegerField(initial=-1)
 
 
 #----------------------------------------
@@ -48,7 +50,7 @@ class Player(BasePlayer):
 #----------------------------------------
 class Survey(Page):
     form_model = 'player'
-    form_fields = ['reasoning','gender','age','british','undergrad','socialmedia','gaming']
+    form_fields = ['reasoning','gender','age','british','undergrad','socialmedia','gaming','siblings','cohabitants']
 #----------------------------------------
 
 
