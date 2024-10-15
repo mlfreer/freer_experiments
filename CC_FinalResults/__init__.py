@@ -53,7 +53,8 @@ class Survey(Page):
     form_fields = ['reasoning','gender','age','british','undergrad','socialmedia','gaming','siblings','cohabitants']
 #----------------------------------------
 
-
+class FinalWaitPage(WaitPage):
+    pass
 #----------------------------------------
 class Results(Page):
     form_model = 'player'
@@ -82,6 +83,7 @@ class FinalPage(Page):
 #----------------------------------------
 
 
-page_sequence = [Survey,
+page_sequence = [FinalWaitPage,
+                Survey,
                 Results,
                 FinalPage]

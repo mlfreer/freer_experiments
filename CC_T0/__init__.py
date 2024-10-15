@@ -442,7 +442,7 @@ class Invest(Page):
             )
 
 class InvestWaitPage(WaitPage):
-    wait_for_all_groups = True
+    wait_for_all_groups = False
 
     @staticmethod
     def after_all_players_arrive(group: Group):
