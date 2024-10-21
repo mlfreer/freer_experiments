@@ -1,0 +1,44 @@
+<font size="4">
+<table class="table">
+    <tr> 
+        <td style="width: 70%;"> Sie sind von Typ </td>
+        <td> <b> {{ my_profile }} </b> </td>
+    </tr>
+</table>
+
+
+Die möglichen Auszahlungen für jeden Typ sind wie folgt. <!-- literally: the possible payments for each type are as follows -->
+<br>
+Die möglichen Auszahlungen für Sie sind fett angegeben.    <!-- literally: the possible payments for you is shown in bold -->
+
+<br>
+<br>
+
+
+<table class="table">
+    </tr>
+    <tr>
+        <td> <b> Type </b> </td>
+        <td style="color:blue"> <b> Blau </b> </td>
+        <td style="color:green"> <b> Grün </b> </td>
+        <td style="color:#c24e00"> <b> Orange</b> </td>
+    </tr>
+
+{% for p in preference_profiles %}
+    <tr>
+        {% if my_profile == p.0 %}
+        <td> <b> {{p.0}} </b> </td>
+        <td> <b> {{p.1}} </b> </td>
+        <td> <b> {{p.2}} </b> </td>
+        <td> <b> {{p.3}} </b> </td>
+        {% else %}
+        <td>  {{p.0}}  </td>
+        <td>  {{p.1}}  </td>
+        <td>  {{p.2}}  </td>
+        <td>  {{p.3}}  </td>
+        {% endif %}
+    </tr>
+{% endfor %}
+
+</table>
+</font>

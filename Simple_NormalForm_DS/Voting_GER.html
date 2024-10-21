@@ -1,0 +1,117 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Wahl (Durchgang <b>{{round_number}}</b> von {{num_rounds}})
+{% endblock %}
+
+
+{{ block content }}
+
+{% include "_static/global/Preferences_Arbitration_GER.html" %}
+
+<br><br>
+
+<table class = "table">
+<tr>
+    <td style="width: 25%"> </td>
+    {% for i in fruits %}
+    <td style="width: 15%"> <b> {{ i }} </b> </td>
+    {% endfor %}
+</tr>
+
+<tr>
+    <td style="width: 25%"> 
+       <b> <input id="vote_s1" type="radio" class="form-check-input" name="vote" value="{{strats.0}}" required>  {{ vegs.0 }} </b>
+    </td>
+    {% for j in outcomes0 %}
+    <td style="width: 15%">  
+        {% if j == blue %}
+        <b  style="color:blue">  Blau </b> 
+        {% elif j == green %}
+        <b  style="color:green">  Grün </b> 
+        {% elif j == orange %}
+        <b  style="color:#c24e00">  Orange </b>
+        {% endif %}
+    </td>
+    {% endfor %}
+</tr>
+
+<tr>
+    <td style="width: 25%"> 
+        <b> <input id="vote_s1" type="radio" class="form-check-input" name="vote" value="{{strats.1}}" required> {{ vegs.1 }} </b>
+    </td>
+    {% for j in outcomes1 %}
+    <td style="width: 15%"> 
+        {% if j == blue %}
+        <b  style="color:blue">  Blau </b> 
+        {% elif j == green %}
+        <b  style="color:green">  Grün </b> 
+        {% elif j == orange %}
+        <b  style="color:#c24e00">  Orange </b>
+        {% endif %}
+    </td>
+    {% endfor %}
+</tr>
+
+<tr>
+    <td style="width: 25%"> 
+        <b> <input id="vote_s1" type="radio" class="form-check-input" name="vote" value="{{strats.2}}" required> {{ vegs.2 }} </b>
+    </td>
+    {% for j in outcomes2 %}
+    <td style="width: 15%">
+        {% if j == blue %}
+        <b  style="color:blue">  Blau </b> 
+        {% elif j == green %}
+        <b  style="color:green">  Grün </b> 
+        {% elif j == orange %}
+        <b  style="color:#c24e00">  Orange </b>
+        {% endif %}
+    </td>
+    {% endfor %}
+</tr>
+
+<tr>
+    <td style="width: 25%"> 
+        <b> <input id="vote_s1" type="radio" class="form-check-input" name="vote" value="{{strats.3}}" required> {{ vegs.3 }} </b>
+    </td>
+    {% for j in outcomes3 %}
+    <td style="width: 15%"> 
+        {% if j == blue %}
+        <b  style="color:blue">  Blau </b> 
+        {% elif j == green %}
+        <b  style="color:green">  Grün </b> 
+        {% elif j == orange %}
+        <b  style="color:#c24e00">  Orange </b>
+        {% endif %}
+    </td>
+    {% endfor %}
+</tr>
+
+<tr>
+    <td style="width: 25%"> 
+        <b> <input id="vote_s1" type="radio" class="form-check-input" name="vote" value="{{strats.4}}" required> {{ vegs.4 }} </b>
+    </td>
+    {% for j in outcomes4 %}
+    <td style="width: 15%"> 
+        {% if j == blue %}
+        <b  style="color:blue">  Blau </b> 
+        {% elif j == green %}
+        <b  style="color:green">  Grün </b> 
+        {% elif j == orange %}
+        <b  style="color:#c24e00">  Orange </b>
+        {% endif %}
+    </td>
+    {% endfor %}
+</tr>
+</table>
+
+<br>
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+
+{{ endblock }}

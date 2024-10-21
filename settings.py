@@ -38,6 +38,12 @@ SESSION_CONFIGS = [
          num_demo_participants = 2,
          app_sequence = ['Consent_GER','WelcomeScreen','Arbitration_SRD2_voting','beauty_contest','risk_elicitation','FinalResults'],
      ),
+     dict(
+         name ='Simple_NormalForm_DS',
+         display_name ='Simplicity in Games: Normal Forms x DS',
+         num_demo_participants = 2,
+         app_sequence = ['Simple_NormalForm_DS'],
+     ),
 #     dict(
 #         name ='Beauty_Contest',
 #         display_name ='Beauty Contest',
@@ -62,24 +68,24 @@ SESSION_CONFIGS = [
 #         num_demo_participants = 1,
 #         app_sequence = ['WelcomeScreen'],
 #     ),
-    dict(
-        name="CC_T0",
-        display_name="Consp Consumption: Cardinal Visibility",
-        num_demo_participants=4,
-        app_sequence=["CC_T0","CC_FinalResults"],
-    ),
-    dict(
-        name="CC_OrdinalVisibility",
-        display_name="Consp Consumption: Ordinal Visibility",
-        num_demo_participants=4,
-        app_sequence=["CC_OrdinalVisibility","CC_FinalResults"],
-    ),
-     dict(
-        name="CC_NoVisibility",
-        display_name="Consp Consumption: No Visibility",
-        num_demo_participants=4,
-        app_sequence=["CC_NoVisibility","CC_FinalResults"],
-    ),
+#    dict(
+#        name="CC_T0",
+#        display_name="Consp Consumption: Cardinal Visibility",
+#        num_demo_participants=4,
+#        app_sequence=["CC_T0","CC_FinalResults"],
+#    ),
+#    dict(
+#        name="CC_OrdinalVisibility",
+#        display_name="Consp Consumption: Ordinal Visibility",
+#        num_demo_participants=4,
+#        app_sequence=["CC_OrdinalVisibility","CC_FinalResults"],
+#    ),
+#     dict(
+#        name="CC_NoVisibility",
+#        display_name="Consp Consumption: No Visibility",
+#        num_demo_participants=4,
+#        app_sequence=["CC_NoVisibility","CC_FinalResults"],
+#    ),
 #    dict(
 #        name="CC_BestResponse",
 #        display_name="Consp Consumption: Best Response",
@@ -126,7 +132,7 @@ SESSION_CONFIGS = [
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = False
+DEBUG = True
 #------------------------------------------------------------------------------------
 
 
