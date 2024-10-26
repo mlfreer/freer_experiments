@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Tournament: Investment (Round <b>{{round_number}}</b>)
+    Stage 2 (Round <b>{{round_number}}</b>)
 {% endblock %}
 
 
@@ -23,7 +23,7 @@
         <td> {{earnings}} tokens</td>
     </tr>
     <tr>
-        <td> How much would you like to invest in the training </td>
+        <td> How many decals would you like to purchase? </td>
         <td> <input type="number" id="invest" name="invest" min="0" max="{{earnings}}"> </td>
     </tr>
 </table>
