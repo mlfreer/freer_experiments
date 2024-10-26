@@ -80,12 +80,12 @@ SESSION_CONFIGS = [
 #        num_demo_participants=4,
 #        app_sequence=["CC_OrdinalVisibility","CC_FinalResults"],
 #    ),
-#     dict(
-#        name="CC_NoVisibility",
-#        display_name="Consp Consumption: No Visibility",
-#        num_demo_participants=4,
-#        app_sequence=["CC_NoVisibility","CC_FinalResults"],
-#    ),
+     dict(
+        name="CC_NoVisibility",
+        display_name="Consp Consumption: No Visibility",
+        num_demo_participants=4,
+        app_sequence=["CC_NoVisibility","CC_FinalResults"],
+    ),
 #    dict(
 #        name="CC_BestResponse",
 #        display_name="Consp Consumption: Best Response",
