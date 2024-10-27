@@ -39,18 +39,20 @@
         <td> <b> Decals purchased </b> </td>
     </tr>
 
-<tr class="center" style = "border-bottom: 3px solid black;">
-    <td style="background-color:#D9DDDC">  </td>
-    <td style="background-color:#D9DDDC"> <b> {{user_name}} </b> </td>
-    <td style="background-color:#D9DDDC"> <img class="pic-center" width="20%" src="{{ static 'pictures/decal.png' }}"/> x {{invest}} </
-</tr>
+
 {% for p in tournament %}
     <tr class="center" >
         <td>   </td>
-        <td> <b>  </b> </td>
-        <td>  <img class="pic-center" width="20%" src="{{ static 'pictures/decal.png' }}"/> x {{p.1}}  </td>
+        <td> <b> </b> </td>
+        <td> <b>{{p.1}} x</b> <img class="pic-center" width="20%" src="{{ static 'pictures/decal.png' }}"/>   </td>
     </tr>
 {% endfor %}
+<tr class="center" style = "border-top: 3px solid black;">
+    <td style="background-color:#D9DDDC">  </td>
+    <td style="background-color:#D9DDDC"> <b> {{user_name}} </b> </td>
+    <td style="background-color:#D9DDDC"> <b> {{invest}} x  </b> <img class="pic-center" width="20%" src="{{ static 'pictures/decal.png' }}"/>  
+    </td>
+</tr>
 </table>
 
 <br>
