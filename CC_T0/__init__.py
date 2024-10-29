@@ -297,13 +297,53 @@ def set_ranking(group: Group):
     usernames = [0 for x in range(0,4)]
     ranks = [0 for x in range(0,4)]
 
-    k=0
+    investments = [0 for x in range(0,4)]
+    usernames = {}
+    i=0
     for p in players:
-        usernames[k] = p.user_name
-        investments[k] = p.invest
-        ranks[k] = p.id_in_group
-        k+=1
+        investments[i] = p.invest
+        i=i+1
 
+    investments = sorted(investments,reverse = True)
+
+    k=0
+    u = 0
+    group.invest1 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0:
+            p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
+
+    k=1
+    group.invest2 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0:
+            p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
+
+    k=2
+    group.invest3 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0 :
+            p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
+
+    k=3
+    group.invest4 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0:
+            p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
+    ranks = [0 for i in range(0,4)]
+    i=0
+    for p in players: 
+        ranks[i] = p.rank
+        i=i+1
+    ranks = sorted(ranks,reverse = False)
 
 
     group.user_name1 = usernames[0]
@@ -428,12 +468,9 @@ class TournamentResults(Page):
         temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
         user_names = [player.group.user_name1, player.group.user_name2, player.group.user_name3, player.group.user_name4]
         ranks = [player.group.rank_1, player.group.rank_2, player.group.rank_3, player.group.rank_4]
-        tournament = [0 for x in range(0,3)]
-        k=0
+        tournament = [0 for x in range(0,4)]
         for i in range(0,4):
-            if ranks[i] != player.id_in_group:
-                tournament[k] = [ranks[i], temp[i], user_names[i]]
-                k+=1
+            tournament[i] = [ranks[i], temp[i], user_names[i]]
         payment = player.num_correct - player.invest
 
         return dict(
