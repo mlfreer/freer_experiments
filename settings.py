@@ -104,6 +104,12 @@ SESSION_CONFIGS = [
         num_demo_participants=4,
         app_sequence=["CC_NV_PAM","CC_FinalResults"],
     ),
+    dict(
+        name="CC_NV_NAM",
+        display_name="Consp Consumption: No Visibility, Negative Assortative Matching",
+        num_demo_participants=4,
+        app_sequence=["CC_NV_NAM","CC_FinalResults"],
+    ),
 #    dict(
 #        name="CC_BestResponse",
 #        display_name="Consp Consumption: Best Response",

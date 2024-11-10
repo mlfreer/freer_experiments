@@ -15,7 +15,7 @@ doc = """
 
 
 class Constants(BaseConstants):
-    name_in_url = "CC_CV_NAM"
+    name_in_url = "CC_NV_NAM"
     players_per_group = 4
     num_rounds = 15
 
@@ -525,8 +525,6 @@ class InvestWaitPage(WaitPage):
             set_ranking(g)
 
 class TournamentResults(Page):
-    template_name = '_static/global/TournamentResults.html'
-
     def vars_for_template(player: Player):
         temp = [player.group.invest1, player.group.invest2, player.group.invest3, player.group.invest4]
         user_names = [player.group.user_name1, player.group.user_name2, player.group.user_name3, player.group.user_name4]
