@@ -80,6 +80,12 @@ SESSION_CONFIGS = [
         num_demo_participants=4,
         app_sequence=["CC_CardinalVis_PAM","CC_FinalResults"],
     ),
+    dict(
+        name="CC_CV_NAM",
+        display_name="Consp Consumption: Cardinal Visibility, Negative Assortative Matching",
+        num_demo_participants=4,
+        app_sequence=["CC_CV_NAM","CC_FinalResults"],
+    ),
 #    dict(
 #        name="CC_OrdinalVisibility",
 #        display_name="Consp Consumption: Ordinal Visibility",
@@ -144,7 +150,7 @@ SESSION_CONFIGS = [
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = False
+DEBUG = True
 #------------------------------------------------------------------------------------
 
 
