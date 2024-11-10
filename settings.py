@@ -8,36 +8,36 @@ SESSION_CONFIGS = [
         num_demo_participants=4,
         app_sequence=["AA_control"],
     ),
-     dict(
-         name ='ArbitrationDS',
-         display_name ='Arbitration Dominant Strategies (DS)',
-         num_demo_participants = 2,
-         app_sequence = ['Consent_GER','WelcomeScreen', 'Arbitration_DS','beauty_contest','risk_elicitation','FinalResults'],
-     ),
-     dict(
-         name ='ArbitrationSS',
-         display_name ='Arbitration Strategically Simple (SS)',
-         num_demo_participants = 2,
-         app_sequence = ['Consent_GER','WelcomeScreen','Arbitration_SS','beauty_contest','risk_elicitation','FinalResults'],
-     ),
-     dict(
-         name ='ArbitrationSRD1',
-         display_name ='Arbitration Srictly Range Dominant: Uninanimuous Agreement (SRD1)',
-         num_demo_participants = 2,
-         app_sequence = ['Consent_GER','WelcomeScreen','Arbitration_SRD1','beauty_contest','risk_elicitation','FinalResults'],
-     ),
+#     dict(
+#         name ='ArbitrationDS',
+#         display_name ='Arbitration Dominant Strategies (DS)',
+#         num_demo_participants = 2,
+#         app_sequence = ['Consent_GER','WelcomeScreen', 'Arbitration_DS','beauty_contest','risk_elicitation','FinalResults'],
+#     ),
+#     dict(
+#         name ='ArbitrationSS',
+#         display_name ='Arbitration Strategically Simple (SS)',
+#         num_demo_participants = 2,
+#         app_sequence = ['Consent_GER','WelcomeScreen','Arbitration_SS','beauty_contest','risk_elicitation','FinalResults'],
+#     ),
+#     dict(
+#         name ='ArbitrationSRD1',
+#         display_name ='Arbitration Srictly Range Dominant: Uninanimuous Agreement (SRD1)',
+#         num_demo_participants = 2,
+#         app_sequence = ['Consent_GER','WelcomeScreen','Arbitration_SRD1','beauty_contest','risk_elicitation','FinalResults'],
+#     ),
 #     dict(
 #         name ='ArbitrationSRD2',
 #         display_name ='Arbitration Srictly Range Dominant: Veto (SRD2)',
 #         num_demo_participants = 2,
 #         app_sequence = ['Consent_GER','WelcomeScreen','Arbitration_SRD2','beauty_contest','risk_elicitation','FinalResults'],
 #     ),
-     dict(
-         name ='ArbitrationSRD2_voting',
-         display_name ='Arbitration Srictly Range Dominant: Veto (SRD2), with two votes',
-         num_demo_participants = 2,
-         app_sequence = ['Consent_GER','WelcomeScreen','Arbitration_SRD2_voting','beauty_contest','risk_elicitation','FinalResults'],
-     ),
+#     dict(
+#         name ='ArbitrationSRD2_voting',
+#         display_name ='Arbitration Srictly Range Dominant: Veto (SRD2), with two votes',
+#         num_demo_participants = 2,
+#         app_sequence = ['Consent_GER','WelcomeScreen','Arbitration_SRD2_voting','beauty_contest','risk_elicitation','FinalResults'],
+#     ),
      dict(
          name ='Simple_NormalForm_DS',
          display_name ='Simplicity in Games: Normal Forms x DS',
@@ -73,6 +73,12 @@ SESSION_CONFIGS = [
         display_name="Consp Consumption: Cardinal Visibility",
         num_demo_participants=4,
         app_sequence=["CC_T0","CC_FinalResults"],
+    ),
+    dict(
+        name="CC_CV_PAM",
+        display_name="Consp Consumption: Cardinal Visibility, Positive Matching (ELKE, PLEASE RUN THIS TREATMENT ON MONDAY AFTERNOON)",
+        num_demo_participants=4,
+        app_sequence=["CC_CardinalVis_PAM","CC_FinalResults"],
     ),
 #    dict(
 #        name="CC_OrdinalVisibility",
@@ -132,7 +138,7 @@ SESSION_CONFIGS = [
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = False
+DEBUG = True
 #------------------------------------------------------------------------------------
 
 
