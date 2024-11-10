@@ -1,0 +1,59 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Choose Username
+{% endblock %}
+
+
+{{ block content }}
+<font size="4">
+
+
+<br><br>
+
+<table class="table">
+<tr>
+    <td width=30%> <b> Your user name is </b> </td>
+    <td id="username" width=30%> </td> 
+    <td width=30%> <button id="generate" type="button" class="btn btn-secondary" style="width:100%; display: inline" onclick="liveSend(0)">
+Generate New </button>
+    </td>
+</tr> 
+</table>
+
+
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+</font>
+
+<script>
+var temp_username = '';
+let username = document.getElementById("username");
+
+window.onload = function() {   
+    liveSend(0)
+};
+
+function sendValue() {
+    liveSend(0);
+};
+
+function liveRecv(data) {
+   
+    // your code goes here
+//    print(data)
+//    username.innerHTML = temp_username;
+    temp_username = data[0];
+//    if ({{player.id_in_subsession}} == data[1]) {
+//    window.alert(temp_username);
+    username.innerHTML = temp_username;
+//};
+};
+</script>
+
+{{ endblock }}

@@ -98,7 +98,7 @@ def set_groups(subsession: Subsession):
 
     else:
         s_old = subsession.in_round(subsession.round_number - 1)
-        old_matrix = s_old.get_grou_matrix()
+        old_matrix = s_old.get_group_matrix()
         subsession.set_group_matrix(old_matrix)
 #------------------------------------------------------------------
 
