@@ -82,13 +82,13 @@ def set_groups(subsession: Subsession):
         k3=0
         k4=0
         for p in players:
-            if p.invest > investments[4]:
+            if (p.invest > investments[4]) and (k1<4):
                 new_matrix[0][k1] = p.id_in_subsession
                 k1=k1+1
-            elif p.invest > investments[8]:
+            elif (p.invest > investments[8]) and (k2<4):
                 new_matrix[1][k2] = p.id_in_subsession
                 k2=k2+1
-            elif p.invest > investments[12]:
+            elif (p.invest > investments[12]) and (k3<4):
                 new_matrix[2][k3] = p.id_in_subsession
                 k3=k3+1
             else:
