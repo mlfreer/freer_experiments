@@ -12,7 +12,7 @@ Dominant strategy mechanism.
 # MODELS
 #-----------------------------------------------------------------------------------
 class C(BaseConstants):
-    NAME_IN_URL = 'Simple_NormalForm_0'
+    NAME_IN_URL = 'Simple_NF_RD1'
     PLAYERS_PER_GROUP = 2
     NUM_ROUNDS = 20
     # replace with 20 for the real thing
@@ -32,10 +32,10 @@ class C(BaseConstants):
 
     outcomes = [0 for i in range(0,5)]
     outcomes[0] = [0, 0, 0, 0, 0]
-    outcomes[1] = [0, 0, 0, 0, 1]
-    outcomes[2] = [0, 0, 0, 1, 1]
-    outcomes[3] = [0, 0, 1, 1, 1]
-    outcomes[4] = [0, 1, 1, 1, 1]
+    outcomes[1] = [0, 0, 0, 1, 0]
+    outcomes[2] = [0, 0, 1, 1, 0]
+    outcomes[3] = [0, 1, 1, 1, 0]
+    outcomes[4] = [0, 0, 0, 0, 2]
 
 
 class Subsession(BaseSubsession):
@@ -184,7 +184,7 @@ class SetupWaitPage(WaitPage):
             set_ordering(g)
 
 class Voting(Page):
-    template_name = './Simple_NormalForm_DS/Voting_GER.html'
+    template_name = './Simple_NF_RD1/Voting_GER.html'
     form_model = 'player'
     form_fields = ['vote']
     def vars_for_template(player):
@@ -246,7 +246,7 @@ class VotingResultsWaitPage(WaitPage):
         set_results(group)
 
 class Results(Page):
-    template_name = './Simple_NormalForm_DS/Results_GER.html'
+    template_name = './Simple_NF_RD1/Results_GER.html'
     def vars_for_template(player):
         if player.subsession.round_number == C.NUM_ROUNDS:
             p = player.in_round(player.subsession.paying_round)

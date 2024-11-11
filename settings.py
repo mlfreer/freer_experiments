@@ -44,6 +44,24 @@ SESSION_CONFIGS = [
          num_demo_participants = 2,
          app_sequence = ['Simple_NormalForm_DS'],
      ),
+     dict(
+         name ='Simple_NF_RD1',
+         display_name ='Simplicity in Games: Normal Forms x RD1',
+         num_demo_participants = 2,
+         app_sequence = ['Simple_NF_RD1'],
+     ),
+     dict(
+         name ='Simple_NF_RD2',
+         display_name ='Simplicity in Games: Normal Forms x RD2',
+         num_demo_participants = 2,
+         app_sequence = ['Simple_NF_RD2'],
+     ),
+     dict(
+         name ='Simple_NF_SS',
+         display_name ='Simplicity in Games: Normal Forms x SS',
+         num_demo_participants = 2,
+         app_sequence = ['Simple_NF_SS'],
+     ),
 #     dict(
 #         name ='Beauty_Contest',
 #         display_name ='Beauty Contest',
@@ -156,7 +174,7 @@ SESSION_CONFIGS = [
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = False
+DEBUG = True
 #------------------------------------------------------------------------------------
 
 
