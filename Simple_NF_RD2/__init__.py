@@ -155,10 +155,16 @@ def set_MyPrefernces(player: Player):
     player.MyPreferences = random.randint(0,3)
 
 def set_payoff(player: Player):
-    choice = player.group.Collective_Choice
+    alt0 = player.group.rank1
+    alt1 = player.group.rank2
+    alt2 = player.group.rank3
+    alts = [alt0, alt1, alt2]
+
+    choice = alts[player.group.Collective_Choice]
     preferences_list = [player.group.rank2*2, player.group.rank2*2+1, player.group.rank3*2, player.group.rank3*2+1]
     j = preferences_list[player.MyPreferences]
     player.earnings = C.preferences[j][choice]
+    
     if player.round_number == C.NUM_ROUNDS:
         p = player.in_round(player.subsession.paying_round)
         player.payoff = p.earnings
