@@ -94,7 +94,7 @@ SESSION_CONFIGS = [
     ),
     dict(
         name="CC_CV_PAM",
-        display_name="Consp Consumption: Cardinal Visibility, Positive Assortative Matching (ELKE, PLEASE RUN THIS TREATMENT ON MONDAY AFTERNOON)",
+        display_name="Consp Consumption: Cardinal Visibility, Positive Assortative Matching",
         num_demo_participants=4,
         app_sequence=["CC_CardinalVis_PAM","CC_FinalResults"],
     ),
@@ -124,7 +124,7 @@ SESSION_CONFIGS = [
     ),
     dict(
         name="CC_NV_NAM",
-        display_name="Consp Consumption: No Visibility, Negative Assortative Matching",
+        display_name="Consp Consumption: No Visibility, Negative Assortative Matching (ELKE, PLEASE RUN THIS TREATMENT ON TUESDAY AFTERNOON)",
         num_demo_participants=4,
         app_sequence=["CC_NV_NAM","CC_FinalResults"],
     ),
