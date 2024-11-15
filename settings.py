@@ -4,7 +4,7 @@ SESSION_CONFIGS = [
      
      dict(
         name="AA_control",
-        display_name="Competition Control Treatment",
+        display_name="Competition Control Treatment (ELKE THIS ONE IS FOR FRIDAY)",
         num_demo_participants=4,
         app_sequence=["AA_control"],
     ),
@@ -124,7 +124,7 @@ SESSION_CONFIGS = [
     ),
     dict(
         name="CC_NV_NAM",
-        display_name="Consp Consumption: No Visibility, Negative Assortative Matching (ELKE, PLEASE RUN THIS TREATMENT ON TUESDAY AFTERNOON)",
+        display_name="Consp Consumption: No Visibility, Negative Assortative Matching",
         num_demo_participants=4,
         app_sequence=["CC_NV_NAM","CC_FinalResults"],
     ),
