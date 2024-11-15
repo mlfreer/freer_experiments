@@ -38,30 +38,30 @@ SESSION_CONFIGS = [
 #         num_demo_participants = 2,
 #         app_sequence = ['Consent_GER','WelcomeScreen','Arbitration_SRD2_voting','beauty_contest','risk_elicitation','FinalResults'],
 #     ),
-     dict(
-         name ='Simple_NormalForm_DS',
-         display_name ='Simplicity in Games: Normal Forms x DS',
-         num_demo_participants = 2,
-         app_sequence = ['Simple_NormalForm_DS'],
-     ),
-     dict(
-         name ='Simple_NF_RD1',
-         display_name ='Simplicity in Games: Normal Forms x RD1',
-         num_demo_participants = 2,
-         app_sequence = ['Simple_NF_RD1'],
-     ),
-     dict(
-         name ='Simple_NF_RD2',
-         display_name ='Simplicity in Games: Normal Forms x RD2',
-         num_demo_participants = 2,
-         app_sequence = ['Simple_NF_RD2'],
-     ),
-     dict(
-         name ='Simple_NF_SS',
-         display_name ='Simplicity in Games: Normal Forms x SS',
-         num_demo_participants = 2,
-         app_sequence = ['Simple_NF_SS'],
-     ),
+#     dict(
+#         name ='Simple_NormalForm_DS',
+#         display_name ='Simplicity in Games: Normal Forms x DS',
+#         num_demo_participants = 2,
+#         app_sequence = ['Simple_NormalForm_DS'],
+#     ),
+#     dict(
+#         name ='Simple_NF_RD1',
+#         display_name ='Simplicity in Games: Normal Forms x RD1',
+#         num_demo_participants = 2,
+#         app_sequence = ['Simple_NF_RD1'],
+#     ),
+#     dict(
+#         name ='Simple_NF_RD2',
+#         display_name ='Simplicity in Games: Normal Forms x RD2',
+#         num_demo_participants = 2,
+#         app_sequence = ['Simple_NF_RD2'],
+#     ),
+#     dict(
+#         name ='Simple_NF_SS',
+#         display_name ='Simplicity in Games: Normal Forms x SS',
+#         num_demo_participants = 2,
+#         app_sequence = ['Simple_NF_SS'],
+#     ),
 #     dict(
 #         name ='Beauty_Contest',
 #         display_name ='Beauty Contest',
@@ -140,36 +140,37 @@ SESSION_CONFIGS = [
 #         app_sequence=['attention_welfare_choice'],
 #         num_demo_participants=1,
 #     ),
-    dict(
-        name='procedures_T0',
-        display_name='Choices and Procedures, T0: Delegated Procedure. Prearranged sequence of all binary comparisons, at each stage subject discards one of the alternatives.',
-        app_sequence=['procedures_T0'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T1',
-        display_name='Choices and Procedures, T1: Assisted Binary  Procedure. Free Choise of Binary Comparisons, with no more than two cards open at the same time and no returning discarded alternatives.',
-        app_sequence=['procedures_T1'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T2a',
-        display_name='Choices and Procedures, T2a: Assisted  Procedure A. Free choice to open several cards (no limit on how many), no returning of the discarded cards.',
-        app_sequence=['procedures_T2a'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T2b',
-        display_name='Choices and Procedures, T2b: Assisted  Procedure B. Free choice to open several cards (no limits on how many) with possibility to return the discarded cards.',
-        app_sequence=['procedures_T2b'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T3',
-        display_name='Choices and Procedures, T3: Free  Procedure. All cards are open, choosing the element without procedure tracking. ',
-        app_sequence=['procedures_T3'],
-        num_demo_participants=1,
-        ),
+
+#    dict(
+#        name='procedures_T0',
+#       display_name='Choices and Procedures, T0: Delegated Procedure. Prearranged sequence of all binary comparisons, at each stage subject discards one of the alternatives.',
+#        app_sequence=['procedures_T0'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T1',
+#        display_name='Choices and Procedures, T1: Assisted Binary  Procedure. Free Choise of Binary Comparisons, with no more than two cards open at the same time and no returning discarded alternatives.',
+#        app_sequence=['procedures_T1'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T2a',
+#        display_name='Choices and Procedures, T2a: Assisted  Procedure A. Free choice to open several cards (no limit on how many), no returning of the discarded cards.',
+#        app_sequence=['procedures_T2a'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T2b',
+#        display_name='Choices and Procedures, T2b: Assisted  Procedure B. Free choice to open several cards (no limits on how many) with possibility to return the discarded cards.',
+#        app_sequence=['procedures_T2b'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T3',
+#        display_name='Choices and Procedures, T3: Free  Procedure. All cards are open, choosing the element without procedure tracking. ',
+#        app_sequence=['procedures_T3'],
+#        num_demo_participants=1,
+#        ),
 ]
 
 #------------------------------------------------------------------------------------
