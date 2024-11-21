@@ -42,25 +42,25 @@ SESSION_CONFIGS = [
          name ='Simple_NormalForm_DS',
          display_name ='Simplicity in Games: Normal Forms x DS',
          num_demo_participants = 2,
-         app_sequence = ['Simple_NormalForm_DS'],
+         app_sequence = ['Consent_GER','WelcomeScreen','Simple_NormalForm_DS','beauty_contest','risk_elicitation','FinalResults'],
      ),
      dict(
          name ='Simple_NF_RD1',
          display_name ='Simplicity in Games: Normal Forms x RD1',
          num_demo_participants = 2,
-         app_sequence = ['Simple_NF_RD1'],
+         app_sequence = ['Consent_GER','WelcomeScreen','Simple_NF_RD1','beauty_contest','risk_elicitation','FinalResults'],
      ),
      dict(
          name ='Simple_NF_RD2',
          display_name ='Simplicity in Games: Normal Forms x RD2',
          num_demo_participants = 2,
-         app_sequence = ['Simple_NF_RD2'],
+         app_sequence = ['Consent_GER','WelcomeScreen','Simple_NF_RD2','beauty_contest','risk_elicitation','FinalResults'],
      ),
      dict(
          name ='Simple_NF_SS',
          display_name ='Simplicity in Games: Normal Forms x SS',
          num_demo_participants = 2,
-         app_sequence = ['Simple_NF_SS'],
+         app_sequence = ['Consent_GER','WelcomeScreen','Simple_NF_SS','beauty_contest','risk_elicitation','FinalResults'],
      ),
 #     dict(
 #         name ='Beauty_Contest',
@@ -205,7 +205,7 @@ participation_fee = 5
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'de'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'GBP'
