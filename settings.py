@@ -208,7 +208,7 @@ participation_fee = 5
 LANGUAGE_CODE = 'de'
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'GBP'
+REAL_WORLD_CURRENCY_CODE = 'EUR'
 USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'
