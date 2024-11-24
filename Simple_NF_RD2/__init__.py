@@ -14,7 +14,7 @@ Dominant strategy mechanism.
 class C(BaseConstants):
     NAME_IN_URL = 'Simple_NF_RD2'
     PLAYERS_PER_GROUP = 2
-    NUM_ROUNDS = 2
+    NUM_ROUNDS = 20
     # replace with 20 for the real thing
 
     preferences = [0 for i in range(0,6)]
