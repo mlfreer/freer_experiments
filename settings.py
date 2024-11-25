@@ -187,7 +187,7 @@ DEBUG = False
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=5.00, doc=""
+    real_world_currency_per_point=1.00, participation_fee=6.00, doc=""
 )
 
 ROOMS = [
@@ -201,7 +201,7 @@ ROOMS = [
 
 PARTICIPANT_FIELDS = []
 SESSION_FIELDS = ['params']
-participation_fee = 5
+participation_fee = 6
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
