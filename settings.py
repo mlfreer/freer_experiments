@@ -4,7 +4,7 @@ SESSION_CONFIGS = [
      
      dict(
         name="AA_control",
-        display_name="Competition Control Treatment (ELKE THIS ONE IS FOR FRIDAY)",
+        display_name="Competition Control Treatment",
         num_demo_participants=4,
         app_sequence=["AA_control"],
     ),
@@ -92,18 +92,18 @@ SESSION_CONFIGS = [
         num_demo_participants=4,
         app_sequence=["CC_T0","CC_FinalResults"],
     ),
-    dict(
-        name="CC_CV_PAM",
-        display_name="Consp Consumption: Cardinal Visibility, Positive Assortative Matching",
-        num_demo_participants=4,
-        app_sequence=["CC_CardinalVis_PAM","CC_FinalResults"],
-    ),
-    dict(
-        name="CC_CV_NAM",
-        display_name="Consp Consumption: Cardinal Visibility, Negative Assortative Matching",
-        num_demo_participants=4,
-        app_sequence=["CC_CV_NAM","CC_FinalResults"],
-    ),
+#    dict(
+#        name="CC_CV_PAM",
+#        display_name="Consp Consumption: Cardinal Visibility, Positive Assortative Matching",
+#        num_demo_participants=4,
+#        app_sequence=["CC_CardinalVis_PAM","CC_FinalResults"],
+#    ),
+#    dict(
+#        name="CC_CV_NAM",
+#        display_name="Consp Consumption: Cardinal Visibility, Negative Assortative Matching",
+#        num_demo_participants=4,
+#        app_sequence=["CC_CV_NAM","CC_FinalResults"],
+#    ),
 #    dict(
 #        name="CC_OrdinalVisibility",
 #        display_name="Consp Consumption: Ordinal Visibility",
@@ -116,18 +116,24 @@ SESSION_CONFIGS = [
         num_demo_participants=4,
         app_sequence=["CC_NoVisibility","CC_FinalResults"],
     ),
-    dict(
-        name="CC_NV_PAM",
-        display_name="Consp Consumption: No Visibility, Positive Assortative Matching",
+          dict(
+        name="CC_NV_BR",
+        display_name="Consp Consumption: No Visibility and Best Response",
         num_demo_participants=4,
-        app_sequence=["CC_NV_PAM","CC_FinalResults"],
+        app_sequence=["CC_NV_BR","CC_FinalResults"],
     ),
-    dict(
-        name="CC_NV_NAM",
-        display_name="Consp Consumption: No Visibility, Negative Assortative Matching",
-        num_demo_participants=4,
-        app_sequence=["CC_NV_NAM","CC_FinalResults"],
-    ),
+#    dict(
+#        name="CC_NV_PAM",
+#        display_name="Consp Consumption: No Visibility, Positive Assortative Matching",
+#        num_demo_participants=4,
+#        app_sequence=["CC_NV_PAM","CC_FinalResults"],
+#    ),
+#    dict(
+#        name="CC_NV_NAM",
+#        display_name="Consp Consumption: No Visibility, Negative Assortative Matching",
+#        num_demo_participants=4,
+#        app_sequence=["CC_NV_NAM","CC_FinalResults"],
+#    ),
 #    dict(
 #        name="CC_BestResponse",
 #        display_name="Consp Consumption: Best Response",
@@ -175,7 +181,7 @@ SESSION_CONFIGS = [
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = False
+DEBUG = True
 #------------------------------------------------------------------------------------
 
 
