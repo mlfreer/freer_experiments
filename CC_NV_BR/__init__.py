@@ -87,6 +87,7 @@ class Player(BasePlayer):
 
     # amount of money invested in the tournament
     invest = models.IntegerField(initial=0)
+    backup_invest = models.IntegerField(initial=0)
     new_invest = models.IntegerField(initial=0)
     
     # ranking in group
@@ -366,8 +367,86 @@ def set_ranking(group: Group):
     group.invest4 = investments[3]
 
 
+def revise_ranking(group: Group):
+    players  = group.get_players()
+
+    investments = [0 for x in range(0,4)]
+    usernames = [0 for x in range(0,4)]
+    ranks = [0 for x in range(0,4)]
+
+    investments = [0 for x in range(0,4)]
+    usernames = {}
+
+    i=0
+    rand = random.randint(0,3)
+    for p in players:
+        p.rank=0
+        p.backup_invest = p.invest
+        if i==rand:
+            p.invest = p.new_invest
+        i=i+1
+
+    i=0
+    for p in players:
+        investments[i] = p.invest
+        i=i+1
+
+    investments = sorted(investments,reverse = True)
+
+    k=0
+    u = 0
+    group.invest1 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0:
+            p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
+
+    k=1
+    group.invest2 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0:
+            p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
+
+    k=2
+    group.invest3 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0 :
+            p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
+
+    k=3
+    group.invest4 = investments[k]
+    for p in players:
+        if p.invest == investments[k] and p.rank==0:
+            p.rank = k+1
+            usernames[u] = p.user_name
+            u=u+1
+    ranks = [0 for i in range(0,4)]
+    i=0
+    for p in players: 
+        ranks[i] = p.rank
+        i=i+1
+    ranks = sorted(ranks,reverse = False)
 
 
+    group.user_name1 = usernames[0]
+    group.user_name2 = usernames[1]
+    group.user_name3 = usernames[2]
+    group.user_name4 = usernames[3]
+
+    group.rank_1 = ranks[0]
+    group.rank_2 = ranks[1]
+    group.rank_3 = ranks[2]
+    group.rank_4 = ranks[3]
+
+    group.invest1 = investments[0]
+    group.invest2 = investments[1]
+    group.invest3 = investments[2]
+    group.invest4 = investments[3]
 
 #-----------------------------------------------------------------------
 
@@ -417,6 +496,10 @@ class Instructions(Page):
     def is_displayed(player):
         return player.round_number == 1
 
+class AdditionalInstructions(Page):
+    def is_displayed(player):
+        return player.round_number == Constants.best_responce_starts
+
 
 class GenerateUsername(Page):
     def is_displayed(player):
@@ -463,6 +546,9 @@ class InvestWaitPage(WaitPage):
 
 
 class BestResponse(Page):
+    form_model='player'
+    form_fields = ['new_invest']
+
     def is_displayed(player):
         return player.round_number >= Constants.best_responce_starts
 
@@ -489,6 +575,11 @@ class BestResponse(Page):
 class BestResponseWaitPage(WaitPage):
     def is_displayed(player):
         return player.round_number >= Constants.best_responce_starts
+
+    @staticmethod
+    def after_all_players_arrive(group: Group):
+        if group.round_number >= Constants.best_responce_starts:
+            revise_ranking(group)
 
 class TournamentResults(Page):
 #    template_name = '_static/global/TournamentResults.html'
@@ -524,6 +615,7 @@ class TournamentResults(Page):
 page_sequence = [
 #            Welcome,
             Instructions,
+            AdditionalInstructions,
             GenerateUsername,
             RealEffortTask,
             Invest,
