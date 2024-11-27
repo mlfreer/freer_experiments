@@ -1,0 +1,96 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title%}
+Instructions
+{% endblock %}
+{% block content %}
+
+Welcome to the <b>ESSEXLab!</b> You have earned <b>£5 for showing up on time</b>. Please abstain from using any personal electronic devices (including phones, tablets, and headphones) as well as communicating with other players while the experiment is in progress.
+
+<br> 
+<br>
+
+<ul>
+	<li> You will be playing 15 rounds following the rules explained below. </li>
+	<li>	You can earn up to 30 pounds depending on the round chosen for payment. </li>
+	<li>	Before the experiment begins you will choose a user name that will be your <b>virtual identity</b> throughout the experiment. </li>
+</ul>
+
+
+
+
+<h3> Structure of a Round </h3>
+
+You will be assigned to a group of four participants, which will remain the same for the entire experiment. 
+Each round, you and the other members of your group will collect decorative objects called decals, and will compare collections.
+Each round consists of three stages, which are detailed below.
+
+<br>
+<br>
+
+<h3> Stage 1. </h3>
+
+<ul>
+	<li>	You will see a set of sliders on your screen. </li>
+	</li>	You can adjust each slider to any position between 0 and 100 by clicking and dragging with your mouse. </li>
+	<li>	You have one minute to adjust as many sliders as possible to the target position of 50. </li>
+	<li>	You will earn one token for each correctly adjusted slider. </li>
+</ul>
+
+
+<h3> Stage 2. </h3>
+
+
+<ul>
+	<li>	You can purchase digital decals at a cost of one token per decal:
+<img  width="15%" src="{{ static 'pictures/decal.png' }}"/>
+ </li>
+	<li>	Decals have no monetary value and will not affect your final payment. </li>
+	<li>	For example, if you earn 21 tokens from Stage 1 and choose to purchase 10 decals, you will be paid 11 tokens if that round is selected for payment.
+ </li>
+</ul>
+
+<h3> Stage 3. </h3>
+
+<ul>
+	<li> After all participants have made their purchasing decisions, you will proceed to the outcome stage. </li>
+	<li> You will see a table displaying your decals purchase decisions alongside those of your group members. </li>
+<br>
+<img class="pic-center" width="80%" src="{{ static 'pictures/CardinalVisibility.png' }}"/>
+	</li>
+	<li>Other participants will also see your consumption decision. </li>
+	<li>You will then move on to the next round. </li>
+</ul>
+
+<br>
+<br>
+
+<h3> Payment: </h3>
+
+<ul>
+	<li>	Once the experiment concludes, one round will be randomly selected for payment. </li>
+	<li>	Each round has an equal chance of being chosen, so please take them seriously, as a significant amount of money is at stake. </li>
+	<li>	At the end of the experiment, tokens will be converted to pounds at the following exchange rate:
+		<br>
+	<p align="center">
+		<b>1 token = 50 pence</b>
+	</p>
+ </li>
+</ul>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.pic-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+</style>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Stage 3 (Round <b>{{round_number}}</b>)
+{% endblock %} 
+
+
+{{ block content }}
+<font size="4">
+
+
+<br><br>
+
+<table class="table">
+    <tr>
+        <td> Your username is </td>
+        <td> <b> {{user_name}} </b> </td>
+    </tr>
+    <tr>
+        <td> Your earnings from the task are</td>
+        <td> <b> {{earnings}} tokens </b></td>
+    </tr>
+    <tr>
+        <td> If the round chosen for payment you will receive </td>
+        <td> <b> {{pay}} tokens </b></td>
+    </tr>
+</table>
+
+
+<br><br>
+
+
+
+<table class="table">
+    <tr class="center">
+        <td> <b>  </b> </td>
+        <td> <b> User name </b> </td>
+        <td> <b> Investment </b> </td>
+    </tr>
+
+{% for p in tournament %}
+    <tr class="center" >
+        {% if user_name == p.2 %}
+        <td style="background-color:#D9DDDC">  </td>
+        <td style="background-color:#D9DDDC"> <b> {{p.2}} </b> </td>
+        <td style="background-color:#D9DDDC"> <b> {{p.1}} x </b>  <img class="pic-center" width="20%" src="{{ static 'pictures/decal.png' }}"/> </td>
+        {% else %}
+        <td>   </td>
+        <td> <b> {{p.2}} </b> </td>
+        <td> <b> {{p.1}} x</b> <img class="pic-center" width="20%" src="{{ static 'pictures/decal.png' }}"/> </td>
+        {% endif %}
+    </tr>
+{% endfor %}
+</table>
+
+<br>
+
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+
+</font>
+
+<style>
+input[type='number']{
+    width: 80px;
+} 
+ .center {
+            text-align-last: center;
+            border: 1px solid black;
+        }
+
+</style>
+
+{{ endblock }}
