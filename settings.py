@@ -86,12 +86,12 @@ SESSION_CONFIGS = [
 #         num_demo_participants = 1,
 #         app_sequence = ['WelcomeScreen'],
 #     ),
-    dict(
-        name="CC_T0",
-        display_name="Consp Consumption: Cardinal Visibility",
-        num_demo_participants=4,
-        app_sequence=["CC_T0","CC_FinalResults"],
-    ),
+#    dict(
+#        name="CC_T0",
+#        display_name="Consp Consumption: Cardinal Visibility",
+#        num_demo_participants=4,
+#        app_sequence=["CC_T0","CC_FinalResults"],
+#    ),
     dict(
         name="CC_CV_BR",
         display_name="Consp Consumption: Cardinal Visibility and Best Response",
@@ -116,12 +116,12 @@ SESSION_CONFIGS = [
 #        num_demo_participants=4,
 #        app_sequence=["CC_OrdinalVisibility","CC_FinalResults"],
 #    ),
-     dict(
-        name="CC_NoVisibility",
-        display_name="Consp Consumption: No Visibility",
-        num_demo_participants=4,
-        app_sequence=["CC_NoVisibility","CC_FinalResults"],
-    ),
+#     dict(
+#        name="CC_NoVisibility",
+#        display_name="Consp Consumption: No Visibility",
+#        num_demo_participants=4,
+#        app_sequence=["CC_NoVisibility","CC_FinalResults"],
+#    ),
     dict(
         name="CC_NV_BR",
         display_name="Consp Consumption: No Visibility and Best Response",
@@ -187,7 +187,7 @@ SESSION_CONFIGS = [
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = True
+DEBUG = False
 #------------------------------------------------------------------------------------
 
 
