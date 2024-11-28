@@ -162,7 +162,7 @@ let timeOverall;
 
   window.onload = function() {    
     // window.alert(facecards);
-    document.getElementById("array").innerHTML= selectedcards;
+    //document.getElementById("array").innerHTML= selectedcards;
 
     // start time:
     timeAtStart = new Date();
@@ -218,7 +218,7 @@ let timeOverall;
     document.getElementById(discarded).style.display = "none";
 
     facecards[i] = 1;
-    document.getElementById("array").innerHTML=facecards;
+    //document.getElementById("array").innerHTML=facecards;
 
     opened = opened.concat(temp2);
     opened = opened.concat(',');
@@ -227,7 +227,7 @@ let timeOverall;
     for (var j = 0; j<selectedcards.length; j++) {
       if (j!=i  &&  selectedcards[j]==1 && facecards[j] == 1) {
         UnSelect(j);
-        document.getElementById("array").innerHTML=facecards;
+        //document.getElementById("array").innerHTML=facecards;
       }
     }
 
@@ -275,7 +275,7 @@ let timeOverall;
     var sum = 0;
     for (var j = 0; j<lostcards.length; j++) {
       sum = sum + lostcards[j];
-      document.getElementById("array").innerHTML= sum;
+      //document.getElementById("array").innerHTML= sum;
       }
 
  //   if (sum <= (len-2) ) {
@@ -328,7 +328,7 @@ let timeOverall;
     facecards[i] = 0;
     lostcards[i] = 1;
     selectedcards[i] = 0;
-    document.getElementById("array").innerHTML = facecards;
+    //document.getElementById("array").innerHTML = facecards;
 
     offed = offed.concat(temp2);
     offed = offed.concat(',');
@@ -371,7 +371,7 @@ let timeOverall;
     document.getElementById(confirm).style.display = "inline";
 
     selectedcards[i] = 1;
-    document.getElementById("array").innerHTML = facecards;
+    //document.getElementById("array").innerHTML = facecards;
 
     chosen = chosen.concat(temp2)
     chosen = chosen.concat(',')

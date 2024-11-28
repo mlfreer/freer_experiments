@@ -14,7 +14,7 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'procedures_T3'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 5
+    NUM_ROUNDS = 20
 
     # POINTS:
     POINTS_X = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 14, 12, 8, 6, 4]
@@ -167,7 +167,10 @@ class Decision(Page):
 
 
 class ResultsWaitPage(WaitPage):
-    pass
+    wait_for_all_groups = True
+
+    def is_displayed(player):
+        return player.round_number == C.NUM_ROUNDS
 
 
 class Results(Page):
@@ -177,6 +180,6 @@ class Results(Page):
 
 
 page_sequence = [Decision, 
-#                ResultsWaitPage, 
+                ResultsWaitPage, 
                 Results
                 ]
