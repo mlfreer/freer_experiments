@@ -19,7 +19,7 @@ class Constants(BaseConstants):
     players_per_group = 4
     num_rounds = 15
 
-    best_responce_starts = 10
+    best_responce_starts = 11
 
     task_time = 60
 
