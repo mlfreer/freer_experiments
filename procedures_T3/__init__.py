@@ -17,15 +17,15 @@ class C(BaseConstants):
     NUM_ROUNDS = 20
 
     # POINTS:
-    POINTS_X = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 14, 12, 8, 6, 4]
-    POINTS_Y = [14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 2, 6, 14, 18, 22]
+    POINTS_X = [14, 13, 12, 11, 10, 12, 14, 16, 18, 20, 22, 24, 26, 14, 12, 14, 18, 22]
+    POINTS_Y = [2, 4, 6, 8, 10, 9, 8, 7, 6, 5, 4, 3, 2, 2, 6, 8, 6, 4]
 
 
     # BUDGET SiZES:
-    BUDGET_SIZE = [6,10,7,7,10,6,8,7,7,6,5,8,7,6,4,2,2,2,2,2]
+    BUDGET_SIZE = [6,10,7,7,10,6,8,7,7,6,5,8,7,6,4,2,2,2,2,2,9]
 
     # MENUS:
-    MENUS = [[0 for j in range(0,20)] for k in range(0,20)]
+    MENUS = [[0 for j in range(0,21)] for k in range(0,21)]
     MENUS[0] = [0,0,1,0,0,1,0,0,0,1,1,0,0,0,1,1,0,0]
     MENUS[1] = [0,1,0,1,1,1,1,0,1,0,0,1,0,0,1,1,1,0]
     MENUS[2] = [0,0,1,1,0,0,1,0,0,1,0,1,1,0,1,0,0,0]
@@ -46,6 +46,9 @@ class C(BaseConstants):
     MENUS[17] = [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
     MENUS[18] = [0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0]
     MENUS[19] = [0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]
+
+    # MENU FOR PRACTICE ROUND
+    MENUS[20] = [1,0,1,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0]
 
 #----------------------------------------------------------
 
@@ -76,6 +79,18 @@ class Player(BasePlayer):
 
     # decision time:
     choice_times = models.FloatField(default=0,max_digits=5, decimal_places=2)
+
+    # for PRACTICE ROUND storing sequence of actions as the strings recording the sequence of events:
+    test_choice = models.IntegerField(default = -1)
+    test_opened = models.StringField()
+    test_chosen = models.StringField()
+    test_closed = models.StringField()
+
+    test_chosen_from_pair = models.StringField()
+    test_closed_from_pair = models.StringField()
+
+    # PRACTICE ROUND decision time:
+    test_choice_times = models.FloatField(default=0,max_digits=5, decimal_places=2)
 
 
 #----------------------------------------------------------
@@ -112,6 +127,58 @@ def compute_payoff(player: Player):
 
 #----------------------------------------------------------
 # PAGES
+class PracticeDecision(Page):
+    form_model = 'player'
+    form_fields = ['test_choice']
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+
+    @staticmethod
+    def vars_for_template(player):
+        budget_id = 20
+        budget_array = range(0,C.BUDGET_SIZE[budget_id])
+        lotteries = [[0 for i in range(0,3)  ] for j in range(0,C.BUDGET_SIZE[budget_id])]
+
+        temp_menu = [k for k in range(0,18) if C.MENUS[budget_id][k]!=0 ]
+        #print(temp_menu)
+        for j in range(0,C.BUDGET_SIZE[budget_id]):
+            temp_id = temp_menu[j] #C.MENUS[budget_id][j]
+            lotteries[j] = [j, C.POINTS_X[temp_id], C.POINTS_Y[temp_id]]
+
+        print(lotteries)
+        shuffle(lotteries)
+        print(lotteries)
+        return dict(
+            total_rounds = C.NUM_ROUNDS,
+            round = player.subsession.round_number,
+            budget = budget_array,
+            budget_size = C.BUDGET_SIZE[budget_id],
+            list_lotteries = lotteries
+            )
+
+    def live_method(player, data):
+        t = data['type']
+
+        if (t == 'opened'):
+            player.test_opened = data['value']
+
+        if (t == 'closed'):
+            player.test_closed = data['value']
+
+        if (t == 'chosen'):
+            player.test_chosen = data['value']
+
+        if (t == 'chosen_from_pair'):
+            player.test_chosen_from_pair = data['value']
+
+        if (t == 'closed_from_pair'):
+            player.test_closed_from_pair = data['value']
+
+        if (t == 'time'):
+            player.test_choice_times = data['value']
+
 class Decision(Page):
     form_model = 'player'
     form_fields = ['choice']
@@ -179,7 +246,8 @@ class Results(Page):
         return player.round_number == C.NUM_ROUNDS
 
 
-page_sequence = [Decision, 
+page_sequence = [PracticeDecision,
+                Decision, 
                 ResultsWaitPage, 
                 Results
                 ]

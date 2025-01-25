@@ -1,6 +1,6 @@
 {{ block title }}
 <div style="float: center; text-align: center; font-family: Georgia, Times, serif;">
-    Decision (<b>{{round}}</b> out of {{total_rounds}})
+    Practice Decision (Round <b>0</b>)
 </div>
 {{ endblock }}
 {{ block content }}
@@ -128,7 +128,7 @@ body {
       </button> 
       </div>
       <div class="c-bottom">  
-        <button id="confirm{{i.0}}" class="btn btn-primary" style="width:100%; display:none" name="choice" value={{i.0}} onclick="Submit()">
+        <button id="confirm{{i.0}}" class="btn btn-primary" style="width:100%; display:none" name="test_choice" value={{i.0}} onclick="Submit()">
         Confirm
       </button> 
       </div>
@@ -336,7 +336,7 @@ let timeOverall;
     offed = offed.concat(temp2);
     offed = offed.concat(',');
     liveSend({'type': 'closed', 'value': offed});    
-
+    
     ShowLottery(Current_Card)
     Current_Card++
     
