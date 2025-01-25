@@ -1,0 +1,61 @@
+{{ block title }}
+<div style="float: center; text-align: center;">
+    Post-Experimental Survey
+</div>
+{{ endblock }}
+
+{{ block content }}
+
+<font size="4">
+    <table class="table">
+        <tr  style="border-bottom:2pt solid black;">
+            <td> What is your age?  </td>
+            <td> 
+<input type="number" min="16" max="99" class="form-control" name = "age" id="age" style="width:75%">
+            </td>
+        </tr>
+        <tr  style="border-bottom:2pt solid black;">
+            <td> What is your sex? </td>
+            <td> 
+<select class="form-select" name="gender" id="gender" style="width:75%">
+  <option selected>Please select</option>
+  <option value="0">Male</option>
+  <option value="1">Female</option>
+  <option value="99">Prefer not to say</option>
+
+</select>
+            </td>
+        </tr>
+        <tr  style="border-bottom:2pt solid black;">
+            <td> Have you been born in the UK? </td>
+            <td> 
+<select class="form-select" name="british" id="british" style="width:75%">
+  <option selected>Please select</option>
+  <option value="1">Yes</option>
+  <option value="0">No</option>
+  <option value="99">Prefer not to say</option>
+</select>
+            </td>
+        </tr>
+    </table>
+
+
+When taking decisions today, I did so because... 
+
+<textarea id="reasoning"  name="reasoning" cols="95" rows="5">Please type here...</textarea>
+
+
+</font>
+
+<br>
+<br>
+
+<div style="float: center; text-align: center;">
+{% next_button %}
+</div>
+
+
+</font>
+
+
+{{ endblock }}

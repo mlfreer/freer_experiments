@@ -92,6 +92,12 @@ class Player(BasePlayer):
     # PRACTICE ROUND decision time:
     test_choice_times = models.FloatField(default=0,max_digits=5, decimal_places=2)
 
+    # demographics:
+    gender = models.IntegerField(initial=-1)
+    british = models.IntegerField(initial=-1)
+    age = models.IntegerField(intiial=-1)
+    reasoning = models.StringField(required=False)
+
 
 #----------------------------------------------------------
 
@@ -240,6 +246,15 @@ class ResultsWaitPage(WaitPage):
         return player.round_number == C.NUM_ROUNDS
 
 
+class Survey(Page):
+    template_name = './_static/global/ProceduresSurvey.html'
+
+    form_model = 'player'
+    form_fields = ['age', 'gender', 'british', 'reasoning']
+
+    def is_displayed(player):
+        return player.round_number == C.NUM_ROUNDS
+
 class Results(Page):
     @staticmethod
     def is_displayed(player):
@@ -248,6 +263,7 @@ class Results(Page):
 
 page_sequence = [PracticeDecision,
                 Decision, 
-                ResultsWaitPage, 
+                ResultsWaitPage,
+                Survey,
                 Results
                 ]
