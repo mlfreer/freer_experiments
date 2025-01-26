@@ -1,0 +1,43 @@
+{{ block title }}
+    Final Results
+{{ endblock }}
+
+{{ block content }}
+
+<font size="4">
+
+
+<table class="table">
+<tr>
+    <td> The round chosen for payment is </td>
+    <td> {{ player.payment_round }}</td>
+</tr>
+
+<tr>
+    <td> Your <b>earning from the lottery</b> is </td>
+    <td> {{ player.payoff }}</td>
+</tr>
+
+<tr>
+    <td> Your <b>show-up fee</b> is </td>
+    <td> {{ showup }}</td>
+</tr>
+
+<tr>
+    <td> Your <b>total earnings today</b> is </td>
+    <td> <b>{{ payment }} </b> </td>
+</tr>
+</table>
+
+
+<div style="float: center; text-align: center;">
+{% next_button %}
+</div>
+
+
+</font>
+
+
+{{ endblock }}
+
+

@@ -256,6 +256,22 @@ class Survey(Page):
 
 
 class Results(Page):
+    template_name = './_static/global/ProceduresResults.html'
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == C.NUM_ROUNDS
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            showup = player.session.config['participation_fee'],
+            payment = player.payoff + player.session.config['participation_fee']
+            )
+
+class FinalPage(Page):
+    template_name = './_static/global/ProceduresFinalPage.html'
+
     @staticmethod
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
@@ -265,5 +281,6 @@ page_sequence = [PracticeDecision,
                 Decision, 
                 ResultsWaitPage,
                 Survey, 
-                Results
+                Results,
+                FinalPage
                 ]
