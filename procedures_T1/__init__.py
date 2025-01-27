@@ -240,7 +240,7 @@ class Decision(Page):
 
 
 class ResultsWaitPage(WaitPage):
-    wait_for_all_groups = True
+    wait_for_all_groups = False
 
     def is_displayed(player):
         return player.round_number == C.NUM_ROUNDS
