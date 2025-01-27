@@ -278,7 +278,7 @@ class FinalPage(Page):
 
 page_sequence = [PracticeDecision,
                 Decision, 
-                ResultsWaitPage,
+                #ResultsWaitPage,
                 Survey,
                 Results,
                 FinalPage
