@@ -210,6 +210,10 @@ ROOMS = [
         participant_label_file='econ_lab.txt',
 #        use_secure_urls=False
     ),
+    {
+        'name': 'live_demo',
+        'display_name': 'Room for live demo (no participant labels)',
+    },
 ]
 
 PARTICIPANT_FIELDS = []
