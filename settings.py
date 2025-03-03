@@ -183,11 +183,17 @@ SESSION_CONFIGS = [
         app_sequence=['WelcomeScreen','procedures_T3'],
         num_demo_participants=1,
         ),
+    dict(
+        name="Dynamic_Contracts_t2",
+        display_name="Dynamic_Contracts_t=2",
+        num_demo_participants=1,
+        app_sequence=["SBC_S1_t2_"],
+    ),
 ]
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = False
+DEBUG = True
 #------------------------------------------------------------------------------------
 
 
