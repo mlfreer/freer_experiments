@@ -156,7 +156,7 @@ SESSION_CONFIGS = [
     dict(
         name='procedures_T0',
         display_name='Choices and Procedures, T0: Delegated Procedure. Prearranged sequence of all binary comparisons, at each stage subject discards one of the alternatives.',
-        app_sequence=['WelcomeScreen','procedures_T0'],
+        app_sequence=['Procedures_Consent_form','procedures_T0'],
         num_demo_participants=1,
         ),
     dict(
