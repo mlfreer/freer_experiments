@@ -2,12 +2,12 @@ from os import environ
 
 SESSION_CONFIGS = [
      
-     dict(
-        name="AA_control",
-        display_name="Competition Control Treatment",
-        num_demo_participants=4,
-        app_sequence=["AA_control"],
-    ),
+#     dict(
+#        name="AA_control",
+#        display_name="Competition Control Treatment",
+#        num_demo_participants=4,
+#        app_sequence=["AA_control"],
+#    ),
 #     dict(
 #         name ='ArbitrationDS',
 #         display_name ='Arbitration Dominant Strategies (DS)',
@@ -92,12 +92,12 @@ SESSION_CONFIGS = [
 #        num_demo_participants=4,
 #        app_sequence=["CC_T0","CC_FinalResults"],
 #    ),
-    dict(
-        name="CC_CV_BR",
-        display_name="Consp Consumption: Cardinal Visibility and Best Response",
-        num_demo_participants=4,
-        app_sequence=["CC_CV_BR","CC_FinalResults"],
-    ),
+#    dict(
+#        name="CC_CV_BR",
+#        display_name="Consp Consumption: Cardinal Visibility and Best Response",
+#        num_demo_participants=4,
+#        app_sequence=["CC_CV_BR","CC_FinalResults"],
+#    ),
 #    dict(
 #        name="CC_CV_PAM",
 #        display_name="Consp Consumption: Cardinal Visibility, Positive Assortative Matching",
@@ -122,12 +122,12 @@ SESSION_CONFIGS = [
 #        num_demo_participants=4,
 #        app_sequence=["CC_NoVisibility","CC_FinalResults"],
 #    ),
-    dict(
-        name="CC_NV_BR",
-        display_name="Consp Consumption: No Visibility and Best Response",
-        num_demo_participants=4,
-        app_sequence=["CC_NV_BR","CC_FinalResults"],
-    ),
+#    dict(
+#        name="CC_NV_BR",
+#        display_name="Consp Consumption: No Visibility and Best Response",
+#        num_demo_participants=4,
+#        app_sequence=["CC_NV_BR","CC_FinalResults"],
+#    ),
 #    dict(
 #        name="CC_NV_PAM",
 #        display_name="Consp Consumption: No Visibility, Positive Assortative Matching",
