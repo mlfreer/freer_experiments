@@ -277,7 +277,25 @@ class FinalPage(Page):
         return player.round_number == C.NUM_ROUNDS
 
 
-page_sequence = [PracticeDecision,
+class PracticeRoundNotification(Page):
+    template_name = './_static/global/PracticeRoundNotification.html'
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+
+
+class RealRoundNotification(Page):
+    template_name = './_static/global/RealRoundNotification.html'
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+
+
+page_sequence = [PracticeRoundNotification,
+                PracticeDecision,
+                RealRoundNotification,
                 Decision, 
                 #ResultsWaitPage,
                 Survey, 
