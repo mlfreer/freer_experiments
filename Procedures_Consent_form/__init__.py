@@ -6,6 +6,8 @@ Your app description
 """
 
 
+#---------------------------------------------------------------------------
+# MODELS
 class C(BaseConstants):
     NAME_IN_URL = 'procedures_consent_form'
     PLAYERS_PER_GROUP = None
@@ -21,12 +23,17 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     pass
+#---------------------------------------------------------------------------
 
 
+
+#---------------------------------------------------------------------------
 # PAGES
 class ConsentForm(Page):
     pass
 
+
+#---------------------------------------------------------------------------
 page_sequence = [
     ConsentForm,
 ]

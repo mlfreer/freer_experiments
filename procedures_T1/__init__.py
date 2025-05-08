@@ -291,8 +291,15 @@ class RealRoundNotification(Page):
     def is_displayed(player):
         return player.round_number == 1
 
+class Instructions(Page):
+#    template_name = './_static/global/RealRoundNotification.html'
 
-page_sequence = [PracticeRoundNotification,
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+
+page_sequence = [Instructions, 
+                PracticeRoundNotification,
                 PracticeDecision,
                 RealRoundNotification,
                 Decision, 

@@ -1,0 +1,78 @@
+{{ block title }}
+<div style="float: center; text-align: center;">
+Instructions
+</div>
+{{ endblock }}
+{{ block content }}
+
+<div class="card bg-light">
+    <div class="card-body">
+
+{% include '_static/global/GeneralInstructions.html' %}
+
+<b> Structure of a Round </b>
+
+<br> 
+
+<ul>
+    <li> At the beginning of a round, you will see all the possible alternatives on your screen. </li>
+    <li> Each alternative is either open or closed. </li>
+    <li> If an alternative is open, then it appears face up. You can observe both the high and low payments for the alternative. </li>
+    <li> If an alternative is closed, then it appears face down. You can observe neither the high nor the low payments for the alternative. </li>
+
+</ul>
+
+<br> 
+
+<b> Structure of a Round </b>
+
+<br> 
+
+<ul>
+    <li> For each open alternative, there are four buttons that you can press: </li>
+    <ol>
+        <li> <span style="background-color: gray;"> Show </span> </li>
+        <li > <span style="background-color: red;">  Discard </span> </li> 
+        <li> <span style="background-color: green;">  Select  </span> </li>
+        <li> <span style="background-color: blue;">  Confirm </span> </li>
+    </ol>
+</ul>
+
+<br>
+
+<b> Buttons </b>
+
+<ul>
+    <li> At the beginning of a round, all alternatives are open. </li>
+    <li> If you press the <span style="background-color: gray;">Show</span> button, then it opens the alternative. </li>
+    <li> If you press the <span style="background-color: red;">Discard</span> button, then it closes the alternative. </li>
+    <li> If you press the <span style="background-color: green;">Select</span> button, then it tentatively selects the alternative as your chosen alternative. </li>
+    <li> If you press the <span style="background-color: blue;">Confirm</span> button, then it finalises the alternative as your chosen alternative. This button ends the round. </li>
+</ul>
+
+<br>
+
+
+<b> How Final Earnings are Calculated </b>
+<ul>
+    <li> Your final earnings in the experiment are the sum of the following items: </li>
+    <ul>
+        <li> £X show-up payment </li>
+        <li> earnings from 1 randomly selected round </li>
+        <li> You will be paid after the end of the experiment. </li>
+    </ul>
+</ul>
+    </div>
+</div>
+
+
+
+<br>
+<br>
+
+<div style="float: center; text-align: center;">
+<button type="submit" class="btn btn-success">
+Continue
+</button>
+</div>
+{{ endblock }}
