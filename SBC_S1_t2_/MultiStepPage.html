@@ -1,0 +1,59 @@
+{% extends "global/Page.html" %}
+{% block content %}
+
+<div id="step1" class="step">
+    <p>{{ form.q1.label }}</p>
+    {{ form.q1 }}
+
+    <br>
+    <br>
+
+    <button type="button" class="btn btn-primary"  onclick="nextStep()">Next</button>
+</div>
+
+<div id="step2" class="step" style="display:none">
+    <p>{{ form.q2.label }}</p>
+    {{ form.q2 }}
+
+    <br>
+    <br>
+
+    <button type="button" class="btn btn-primary"  onclick="prevStep()">Back</button>
+    <button type="button" class="btn btn-primary"  onclick="nextStep()">Next</button>
+</div>
+
+<div id="step3" class="step" style="display:none">
+    <p>{{ form.q3.label }}</p>
+    {{ form.q3 }}
+
+    <br>
+    <br>
+
+    <button type="button" class="btn btn-primary"  onclick="prevStep()">Back</button>
+</div>
+
+<script>
+let currentStep = 0;
+const steps = document.querySelectorAll('.step');
+
+function showStep(index) {
+    steps.forEach((step, i) => {
+        step.style.display = i === index ? 'block' : 'none';
+    });
+    currentStep = index;
+}
+
+function nextStep() {
+    if (currentStep < steps.length - 1) {
+        showStep(currentStep + 1);
+    }
+}
+
+function prevStep() {
+    if (currentStep > 0) {
+        showStep(currentStep - 1);
+    }
+}
+</script>
+
+{% endblock %}

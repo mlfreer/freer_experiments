@@ -24,7 +24,13 @@ class Group(BaseGroup):
 class Player(BasePlayer):
 	prolificID = models.StringField()
 
+	# test variabbles:
 	test_variable = models.StringField()
+	q1 = models.StringField(label="Question 1")
+	q2 = models.StringField(label="Question 2")
+	q3 = models.StringField(label="Question 2")
+
+
 #--------------------------------------------------------
 # FUNCTIONS
 
@@ -59,6 +65,7 @@ class LOGIN(Page):
 		if player.round_number == 1:
 			retrieve_data(player)
 
+# TEST PAGE WITH PROLIFIC ID
 class TEST(Page):
    
    @staticmethod
@@ -73,6 +80,15 @@ class TEST(Page):
    		)
 
 
+# PAGE WITH MULTIPLE STEPS (BACK AND FORTH BUTTON
+class MultiStepPage(Page):
+    form_model = 'player'
+    form_fields = ['q1', 'q2', 'q3']  # all questions across steps
+
+    def vars_for_template(self):
+        return dict()
+
+
 
 class ResultsWaitPage(WaitPage):
 	pass
@@ -82,4 +98,4 @@ class Results(Page):
 	pass
 
 
-page_sequence = [LOGIN, TEST, Results]
+page_sequence = [LOGIN, TEST, MultiStepPage, Results]

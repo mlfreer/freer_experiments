@@ -1,0 +1,26 @@
+{{ block title }}
+<div style="float: center; text-align: center;">
+    Prolific ID
+</div>
+{{ endblock }}
+
+{{ block content }}
+<font size="4"> 
+    <table class="table">
+        <tr>
+            <td> Please enter your ProlificID </td>
+            <td>                 
+                <input type="text" class="form-control" id="ProlificID" name="ProlificID"/>
+            </td>
+        </tr>
+        <tr>
+            <td> Entering ProlificID is crucial in order to receive the variable bonus. </td>
+            <td> </td>
+        </tr>
+    </table>
+
+<div id="NextButton" style="float: right;">
+{% next_button %}
+</div>
+</font>
+{{ endblock }}

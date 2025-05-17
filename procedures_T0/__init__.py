@@ -311,6 +311,6 @@ page_sequence = [Instructions,
                 Decision, 
                 #ResultsWaitPage,
                 Survey,
-                Results,
-                FinalPage
+#                Results,
+#                FinalPage
                 ]
