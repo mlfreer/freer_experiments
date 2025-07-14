@@ -21,6 +21,7 @@ class C(BaseConstants):
     POINTS_Y = [2, 4, 6, 8, 10, 9, 8, 7, 6, 5, 4, 3, 2, 2, 6, 8, 6, 4]
 
 
+    QUIZ_ANSWERS = [2,3,0]
     # BUDGET SiZES:
     BUDGET_SIZE = [6,10,7,7,10,6,8,7,7,6,5,8,7,6,4,2,2,2,2,2,9]
 
@@ -98,6 +99,14 @@ class Player(BasePlayer):
     british = models.IntegerField(initial=-1)
     age = models.IntegerField(intiial=-1)
     reasoning = models.StringField(required=False)
+
+    # variables for the quiz answers:
+    q1 = models.IntegerField()
+    q2 = models.IntegerField()
+    q3 = models.IntegerField()
+    # model to count the quiz attempts
+    quiz_attempts = models.IntegerField(initial = 0)
+    # Prolific rule: 3 fails => return the study
 
 
 #----------------------------------------------------------
@@ -303,8 +312,25 @@ class Instructions(Page):
     def is_displayed(player):
         return player.round_number == 1
 
+# Quiz to check whether subject understands the lotteries
+class Quiz(Page):
+    template_name = './_static/global/Procedures_Quiz.html'
+
+    form_model = 'player'
+    form_fields = ['q1','q2','q3']
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+
+    def error_message(player, value):
+        if (value['q1']!=C.QUIZ_ANSWERS[0]) or (value['q2']!=C.QUIZ_ANSWERS[1]) or (value['q3']!=C.QUIZ_ANSWERS[2]):
+            result = 'Wrong answer! Try again!'
+            return result
+
 
 page_sequence = [Instructions,
+                Quiz,
                 PracticeRoundNotification,
                 PracticeDecision,
                 RealRoundNotification,
