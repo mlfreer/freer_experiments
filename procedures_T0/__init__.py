@@ -17,8 +17,8 @@ class C(BaseConstants):
     NUM_ROUNDS = 20
 
     # POINTS:
-    POINTS_X = [14, 13, 12, 11, 10, 12, 14, 16, 18, 20, 22, 24, 26, 14, 12, 14, 18, 22]
-    POINTS_Y = [2, 4, 6, 8, 10, 9, 8, 7, 6, 5, 4, 3, 2, 2, 6, 8, 6, 4]
+    POINTS_X = [14.0,   13.0,   12.0,   11.0,   10.0,   12.0,   14.0,   16.0,   18.0,   20.0,   22.0,   24.0,   26.0,   2.0,    6.0,    8.0,    6.0,    4.0]
+    POINTS_Y = [2.0,    4.0,    6.00,   8.00,   10.0,   9.0,    8.0,    7.0,    6.0,    5.0,    4.0,    3.0,    2.0,    14.0,   12.0,   14.0,   18.0,   22.0]
 
 
     QUIZ_ANSWERS = [2,3,0]
@@ -106,6 +106,7 @@ class Player(BasePlayer):
     q3 = models.IntegerField()
     # model to count the quiz attempts
     quiz_attempts = models.IntegerField(initial = 0)
+    return_study = models.IntegerField(initial = 0)
     # Prolific rule: 3 fails => return the study
 
 
@@ -324,13 +325,23 @@ class Quiz(Page):
         return player.round_number == 1
 
     def error_message(player, value):
-        if (value['q1']!=C.QUIZ_ANSWERS[0]) or (value['q2']!=C.QUIZ_ANSWERS[1]) or (value['q3']!=C.QUIZ_ANSWERS[2]):
+        if ((value['q1']!=C.QUIZ_ANSWERS[0]) or (value['q2']!=C.QUIZ_ANSWERS[1]) or (value['q3']!=C.QUIZ_ANSWERS[2])) and (player.return_study == 0):
             result = 'Wrong answer! Try again!'
+            player.quiz_attempts = player.quiz_attempts + 1
+            if player.quiz_attempts >= 2:
+                player.return_study = 1
             return result
 
+class ReturnStudy(Page):
+    template_name =  './_static/global/ReturnStudy.html'
+
+    @staticmethod
+    def is_displayed(player):
+        return player.return_study == 1
 
 page_sequence = [Instructions,
                 Quiz,
+                ReturnStudy,
                 PracticeRoundNotification,
                 PracticeDecision,
                 RealRoundNotification,
