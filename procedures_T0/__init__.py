@@ -310,10 +310,16 @@ class RealRoundNotification(Page):
 
 class Instructions(Page):
 #    template_name = './_static/global/RealRoundNotification.html'
-
     @staticmethod
     def is_displayed(player):
         return player.round_number == 1
+
+    @staticmethod
+    def vars_for_template(player):
+        return dict(
+            showup = player.session.config['participation_fee']
+            )
+
 
 # Quiz to check whether subject understands the lotteries
 class Quiz(Page):
