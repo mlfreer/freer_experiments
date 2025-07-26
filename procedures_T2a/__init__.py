@@ -310,7 +310,9 @@ class Instructions(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
-            showup = player.session.config['participation_fee']
+            showup = player.session.config['participation_fee'],
+            min_pay = cu(player.session.config['min_pay']),
+            max_pay = cu(player.session.config['max_pay'])
             )
 
 
