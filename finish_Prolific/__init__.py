@@ -45,6 +45,8 @@ class Results(Page):
     @staticmethod
     def vars_for_template(player):
         return dict(
+            showup = player.session.config['participation_fee'],
+            payment = player.participant.payoff #player.payoff #+ player.session.config['participation_fee']
             )
 
 
