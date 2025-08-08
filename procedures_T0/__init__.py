@@ -16,49 +16,24 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'procedures_T0'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 20
+    NUM_ROUNDS = 25
 
     # POINTS:
-#   POINTS_X = [14.00,   13.0,  12.0,   11.0,   10.0,   12.0,   14.0,   16.0,   18.0,   20.0,   22.0,    24.0,    26.0,    2.0,     6.0,     8.00,    6.0,    4.0]
-#   POINTS_Y = [2.00,    4.0,   6.00,   8.00,   10.0,   9.0,    8.0,    7.0,    6.0,    5.0,    4.0,     3.0,     2.0,     14.0,    12.0,    14.00,   18.0,   22.0]
-#    POINTS_X = [7.00,   7.50,   6.00,   5.50,   5.00,   6.00,   7.00,   4.00,   9.00,   10.00,   11.00,   12.00,   13.00,   1.00,    3.00,    4.00,    3.00,   2.00,    3.00,   3.00    ]
-#    POINTS_Y = [1.00,   2.00,   3.00,   4.00,   5.00,   4.50,   4.00,   3.50,   3.00,   2.50,    2.00,    3.00,    1.00,    7.00,    6.00,    7.00,    9.00,   11.00,   3.00,   10.00   ]
     POINTS_X = pd.read_csv('./_static/global/points.csv').x.values
     POINTS_Y = pd.read_csv('./_static/global/points.csv').y.values
 
+    # NUMBER OF ALTERNATIVES:
     L = len(POINTS_X)
 
     # BUDGET SiZES:
     BUDGET_SIZE = pd.read_csv('./_static/global/budget_sizes.csv').N.values   # adding 5 budgets size 16
-    
-
-    QUIZ_ANSWERS = [2,3,0]
 
     # MENUS:
-#    MENUS = [[0 for j in range(0,21)] for k in range(0,21)]
-#    MENUS[0] = [0,0,1,0,0,1,0,0,0,1,1,0,0,0,1,1,0,0]
-#   MENUS[1] = [0,1,0,1,1,1,1,0,1,0,0,1,0,0,1,1,1,0]
-#    MENUS[2] = [0,0,1,1,0,0,1,0,0,1,0,1,1,0,1,0,0,0]
-#    MENUS[3] = [0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,0,1]
-#    MENUS[4] = [1,0,1,1,0,1,1,0,1,0,0,1,0,1,0,0,1,1]
-#    MENUS[5] = [0,1,1,0,1,0,0,0,0,0,1,0,0,1,0,0,1,0]
-#    MENUS[6] = [1,0,1,0,1,1,0,1,0,1,0,1,0,0,0,0,0,1]
-#    MENUS[7] = [0,0,0,0,1,0,1,0,0,1,1,0,1,1,1,0,0,0]
-#    MENUS[8] = [1,1,0,0,1,0,0,1,1,0,1,0,1,0,0,0,0,0]
-#    MENUS[9] = [0,0,0,1,1,0,0,1,0,0,0,1,1,0,1,0,0,0]
-#    MENUS[10] = [0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0]
-#    MENUS[11] = [1,1,0,1,1,0,1,0,0,0,0,0,1,1,0,0,1,0]
-#    MENUS[12] = [0,1,1,0,0,0,1,0,0,0,0,1,1,1,0,1,0,0]
-#    MENUS[13] = [0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,1,1,0]
-#    MENUS[14] = [0,0,0,0,1,0,0,0,0,0,0,1,1,1,0,0,0,0]
-#    MENUS[15] = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0]
-#    MENUS[16] = [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0]
-#    MENUS[17] = [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
-#    MENUS[18] = [0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0]
-#    MENUS[19] = [0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]
     MENUS = pd.read_csv('./_static/global/new_menus.csv').values.T
-    # MENU FOR PRACTICE ROUND
-#    MENUS[20] = [1,0,1,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0]
+    # 25 real + 1 practice budget
+
+    # QUIZ ANSWERS:
+    QUIZ_ANSWERS = [2,3,0]
 
 #----------------------------------------------------------
 
@@ -164,7 +139,7 @@ class PracticeDecision(Page):
     @staticmethod
     def vars_for_template(player):
         budget_id = 20
-        print(C.BUDGET_SIZE, '\n', C.POINTS_X, '\n', C.POINTS_Y, '\n', C.MENUS)
+        #print(C.BUDGET_SIZE, '\n', C.POINTS_X, '\n', C.POINTS_Y, '\n', C.MENUS)
         budget_array = range(0,C.BUDGET_SIZE[budget_id])
 
         lotteries = [[0 for i in range(0,3)  ] for j in range(0,C.BUDGET_SIZE[budget_id])]

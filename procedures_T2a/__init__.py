@@ -1,9 +1,10 @@
 from otree.api import *
 
 import random
+import pandas as pd
+import numpy as np
 from random import shuffle
 import math
-
 
 doc = """
 Your app description
@@ -14,43 +15,24 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'procedures_T2a'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 20
+    NUM_ROUNDS = 25
 
     # POINTS:
-    POINTS_X = [7.00,   7.50,   6.00,   5.50,   5.00,   6.00,   7.00,   4.00,   9.00,   10.00,   11.00,   12.00,   13.00,   1.00,    3.00,    4.00,    3.00,   2.00]
-    POINTS_Y = [1.00,   2.00,   3.00,   4.00,   5.00,   4.50,   4.0,    3.50,   3.00,   2.50,    2.00,    3.00,    1.00,    7.00,    6.00,    7.00,    9.00,   11.00]
+    POINTS_X = pd.read_csv('./_static/global/points.csv').x.values
+    POINTS_Y = pd.read_csv('./_static/global/points.csv').y.values
 
+    # NUMBER OF ALTERNATIVES:
+    L = len(POINTS_X)
 
-    QUIZ_ANSWERS = [2,3,0]
     # BUDGET SiZES:
-    BUDGET_SIZE = [6,10,7,7,10,6,8,7,7,6,5,8,7,6,4,2,2,2,2,2,9]
+    BUDGET_SIZE = pd.read_csv('./_static/global/budget_sizes.csv').N.values   # adding 5 budgets size 16
 
     # MENUS:
-    MENUS = [[0 for j in range(0,21)] for k in range(0,21)]
-    MENUS[0] = [0,0,1,0,0,1,0,0,0,1,1,0,0,0,1,1,0,0]
-    MENUS[1] = [0,1,0,1,1,1,1,0,1,0,0,1,0,0,1,1,1,0]
-    MENUS[2] = [0,0,1,1,0,0,1,0,0,1,0,1,1,0,1,0,0,0]
-    MENUS[3] = [0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,1,0,1]
-    MENUS[4] = [1,0,1,1,0,1,1,0,1,0,0,1,0,1,0,0,1,1]
-    MENUS[5] = [0,1,1,0,1,0,0,0,0,0,1,0,0,1,0,0,1,0]
-    MENUS[6] = [1,0,1,0,1,1,0,1,0,1,0,1,0,0,0,0,0,1]
-    MENUS[7] = [0,0,0,0,1,0,1,0,0,1,1,0,1,1,1,0,0,0]
-    MENUS[8] = [1,1,0,0,1,0,0,1,1,0,1,0,1,0,0,0,0,0]
-    MENUS[9] = [0,0,0,1,1,0,0,1,0,0,0,1,1,0,1,0,0,0]
-    MENUS[10] = [0,0,1,0,0,0,0,0,1,0,1,0,1,0,0,0,1,0]
-    MENUS[11] = [1,1,0,1,1,0,1,0,0,0,0,0,1,1,0,0,1,0]
-    MENUS[12] = [0,1,1,0,0,0,1,0,0,0,0,1,1,1,0,1,0,0]
-    MENUS[13] = [0,0,0,0,0,0,1,1,0,0,0,1,0,1,0,1,1,0]
-    MENUS[14] = [0,0,0,0,1,0,0,0,0,0,0,1,1,1,0,0,0,0]
-    MENUS[15] = [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0]
-    MENUS[16] = [1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0]
-    MENUS[17] = [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0]
-    MENUS[18] = [0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0]
-    MENUS[19] = [0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]
-
-    # MENU FOR PRACTICE ROUND
-    MENUS[20] = [1,0,1,1,0,1,0,1,0,0,1,0,1,0,1,0,1,0]
-
+    MENUS = pd.read_csv('./_static/global/new_menus.csv').values.T
+    # 25 real + 1 practice budget
+    
+    # QUIZ ANSWERS:
+    QUIZ_ANSWERS = [2,3,0]
 #----------------------------------------------------------
 
 
@@ -157,7 +139,7 @@ class PracticeDecision(Page):
         budget_array = range(0,C.BUDGET_SIZE[budget_id])
         lotteries = [[0 for i in range(0,3)  ] for j in range(0,C.BUDGET_SIZE[budget_id])]
 
-        temp_menu = [k for k in range(0,18) if C.MENUS[budget_id][k]!=0 ]
+        temp_menu = [k for k in range(0,C.L) if C.MENUS[budget_id][k]!=0 ]
         #print(temp_menu)
         for j in range(0,C.BUDGET_SIZE[budget_id]):
             temp_id = temp_menu[j] #C.MENUS[budget_id][j]
@@ -205,7 +187,7 @@ class Decision(Page):
         budget_array = range(0,C.BUDGET_SIZE[budget_id])
         lotteries = [[0 for i in range(0,3)  ] for j in range(0,C.BUDGET_SIZE[budget_id])]
 
-        temp_menu = [k for k in range(0,18) if C.MENUS[budget_id][k]!=0 ]
+        temp_menu = [k for k in range(0,C.L) if C.MENUS[budget_id][k]!=0 ]
         #print(temp_menu)
         for j in range(0,C.BUDGET_SIZE[budget_id]):
             temp_id = temp_menu[j] #C.MENUS[budget_id][j]
