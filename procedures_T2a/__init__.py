@@ -135,7 +135,7 @@ class PracticeDecision(Page):
 
     @staticmethod
     def vars_for_template(player):
-        budget_id = 20
+        budget_id = C.NUM_ROUNDS
         budget_array = range(0,C.BUDGET_SIZE[budget_id])
         lotteries = [[0 for i in range(0,3)  ] for j in range(0,C.BUDGET_SIZE[budget_id])]
 

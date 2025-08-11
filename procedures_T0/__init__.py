@@ -1,4 +1,5 @@
 from otree.api import *
+from django.templatetags.static import static
 
 import random
 import pandas as pd
@@ -29,7 +30,8 @@ class C(BaseConstants):
     BUDGET_SIZE = pd.read_csv('./_static/global/budget_sizes.csv').N.values   # adding 5 budgets size 16
 
     # MENUS:
-    MENUS = pd.read_csv('./_static/global/new_menus.csv').values.T
+    #MENUS = pd.read_csv('./_static/global/new_menus.csv').values.T
+    MENUS = pd.read_csv('./new_menus.csv').values.T
     # 25 real + 1 practice budget
 
     # QUIZ ANSWERS:
@@ -138,7 +140,7 @@ class PracticeDecision(Page):
 
     @staticmethod
     def vars_for_template(player):
-        budget_id = 20
+        budget_id = C.NUM_ROUNDS
         #print(C.BUDGET_SIZE, '\n', C.POINTS_X, '\n', C.POINTS_Y, '\n', C.MENUS)
         budget_array = range(0,C.BUDGET_SIZE[budget_id])
 
