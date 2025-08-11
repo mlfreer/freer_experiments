@@ -31,7 +31,7 @@ class C(BaseConstants):
 
     # MENUS:
     #MENUS = pd.read_csv('./_static/global/new_menus.csv').values.T
-    MENUS = pd.read_csv('./new_menus.csv').values.T
+    MENUS = pd.read_csv('./_static/global/new_menus.csv').values.T
     # 25 real + 1 practice budget
 
     # QUIZ ANSWERS:
