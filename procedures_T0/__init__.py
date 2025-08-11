@@ -1,5 +1,4 @@
 from otree.api import *
-from django.templatetags.static import static
 
 import random
 import pandas as pd
