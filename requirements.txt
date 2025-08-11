@@ -7,4 +7,4 @@ sentry-sdk==0.7.9
 Pillow~=8.0
 random_username>= 1.0.0a
 pandas>=1.5.3
-numpy>=2.3
+numpy>=2.3.2
