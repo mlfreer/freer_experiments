@@ -191,15 +191,15 @@ SESSION_CONFIGS = [
     ),
     dict(
         name="Dynamic_Contracts_S1_t1",
-        display_name="Dynamic_Contracts_t=1",
+        display_name="Dynamic_Contracts t=1 (Static, Upfront Payment)",
         num_demo_participants=1,
-        app_sequence=["SBC_S1_t1_"],
+        app_sequence=["SBC_consent_form", "SBC_S1_t1_"],
     ),
     dict(
         name="Dynamic_Contracts_S1_t2",
-        display_name="Dynamic_Contracts_t=2",
+        display_name="Dynamic_Contracts t=2 (Static, Upfront Payment)",
         num_demo_participants=1,
-        app_sequence=["SBC_S1_t2_"],
+        app_sequence=["SBC_consent_form", "SBC_S1_t2_"],
     ),
     
 
@@ -224,7 +224,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     participation_fee=3.00,
     min_pay = 1.00,
     max_pay = 15.00,
-    A_BAR = 16.00,
+    A_BAR = 16,
     doc=""
 )
 
@@ -272,9 +272,13 @@ ROOMS = [
 ]
 
 PARTICIPANT_FIELDS = [
+    'price_order', 
+    'optionprices_order', 
+    'selected_round', 
+    'params',
     'x_draw'
 ]
-SESSION_FIELDS = ['params']
+SESSION_FIELDS = [ ]
 participation_fee = 5
 
 # ISO-639 code
