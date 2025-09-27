@@ -1,0 +1,38 @@
+    <div class="card-body">
+        <font size=3.5>
+        <h2>
+            Overview
+        </h2>
+
+<p>This study consists of two parts. This is the first part of this study. The second part will take place next week and will be advertised via Prolific. You only complete this study if you complete both parts.</p>
+
+<p>You can complete the second part at any time during the next two weeks. <b>Please note that you will receive your payment only if you participate in both parts.</b></p>
+
+<p>For today’s study, you will earn a reward of {{ session.config.participation_fee }}. For the second part, you earn an additional reward of {{ session.config.participation_fee }}. In addition, you can earn a substantial bonus payment, that can be as high as £{{ session.config.max_pay }}. Note that you will only receive your reward and bonus payment if you complete both parts of this study.</p>
+
+<h3>Lottery ticket:</h3>
+
+<p>Today, you will evaluate a lottery ticket. The lottery ticket consists of two lotteries with different monetary amounts. Each lottery has two possible outcomes that are equally likely. What outcomes will be paid out to you will be determined by the flip of two independent virtual coins.</p>
+
+<ul>
+    <li><b>Lottery 1</b>: Pays £{{ session.config.A_BAR }} if the first coin flip results in heads, and £{{ participant.x_draw }} if it results in tails.</li>
+    <li><b>Lottery 2</b>: Pays £{{ session.config.A_BAR }} if the second coin flip results in heads, and £0 if it results in tails.</li>
+</ul>
+
+<p>Your earnings from the lottery ticket are given by the sum of payments from the two lotteries. For example, if the first coin flip is tails and the second is heads, you will earn £{{ participant.x_draw }} + £{{ session.config.A_BAR }}.</p>
+
+<p>When do you learn more about your lotteries?</p>
+<ul>
+<li>When you return to the study for part 2 next week, you will learn the outcome of Lottery 1.</li>
+<li>Afterwards, you may make additional decisions. Then, you will learn the result of Lottery 2.</li>
+<li>At the end of part 2 of this study, you will learn what your total payoff for the participation of this study will be.</li>
+</ul>
+
+
+<h3>Payment</h3>
+
+<p>25% of participants in this study will be randomly selected for the bonus payment and will receive the bonus payment within two weeks of the completion of the study. For 98% of participants, we will implement exactly their decisions. For the remaining 2% of participants, you will make decisions as if you purchased  the lottery ticket. That means that all participants will make decisions in Study 2, because it may be that the computer randomly selects them to make a purchase, and everyone's decisions may potentially involve receiving a lottery ticket.
+    <br><br>
+Please remember that all payments can only be paid out to you if you complete part 2 of the study next week. </p>
+    </font>
+    </div>
