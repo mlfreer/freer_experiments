@@ -153,42 +153,50 @@ SESSION_CONFIGS = [
 #         num_demo_participants=1,
 #     ),
 
+#    dict(
+#        name='procedures_T0',
+#        display_name='Choices and Procedures, T0: Delegated Procedure. Prearranged sequence of all binary comparisons, at each stage subject discards one of the alternatives.',
+#        app_sequence=['Procedures_Consent_form','procedures_T0','finish_Prolific'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T1',
+#        display_name='Choices and Procedures, T1: Assisted Binary  Procedure. Free Choise of Binary Comparisons, with no more than two cards open at the same time and no returning discarded alternatives.',
+#        app_sequence=['Procedures_Consent_form','procedures_T1','finish_Prolific'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T2a',
+#        display_name='Choices and Procedures, T2a: Assisted  Procedure A. Free choice to open several cards (no limit on how many), no returning of the discarded cards.',
+#        app_sequence=['Procedures_Consent_form','procedures_T2a','finish_Prolific'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T2b',
+#        display_name='Choices and Procedures, T2b: Assisted  Procedure B. Free choice to open several cards (no limits on how many) with possibility to return the discarded cards.',
+#        app_sequence=['Procedures_Consent_form','procedures_T2b','finish_Prolific'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T3',
+#        display_name='Choices and Procedures, T3: Free  Procedure. All cards are open, choosing the element without procedure tracking. ',
+#        app_sequence=['Procedures_Consent_form','procedures_T3','finish_Prolific'],
+#        num_demo_participants=1,
+#        ),
     dict(
-        name='procedures_T0',
-        display_name='Choices and Procedures, T0: Delegated Procedure. Prearranged sequence of all binary comparisons, at each stage subject discards one of the alternatives.',
-        app_sequence=['Procedures_Consent_form','procedures_T0','finish_Prolific'],
+        name="Dynamic_Contracts_t1",
+        display_name="Dynamic_Contracts_t=1",
         num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T1',
-        display_name='Choices and Procedures, T1: Assisted Binary  Procedure. Free Choise of Binary Comparisons, with no more than two cards open at the same time and no returning discarded alternatives.',
-        app_sequence=['Procedures_Consent_form','procedures_T1','finish_Prolific'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T2a',
-        display_name='Choices and Procedures, T2a: Assisted  Procedure A. Free choice to open several cards (no limit on how many), no returning of the discarded cards.',
-        app_sequence=['Procedures_Consent_form','procedures_T2a','finish_Prolific'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T2b',
-        display_name='Choices and Procedures, T2b: Assisted  Procedure B. Free choice to open several cards (no limits on how many) with possibility to return the discarded cards.',
-        app_sequence=['Procedures_Consent_form','procedures_T2b','finish_Prolific'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T3',
-        display_name='Choices and Procedures, T3: Free  Procedure. All cards are open, choosing the element without procedure tracking. ',
-        app_sequence=['Procedures_Consent_form','procedures_T3','finish_Prolific'],
-        num_demo_participants=1,
-        ),
+        app_sequence=["SBC_S1_t1_"],
+    ),
     dict(
         name="Dynamic_Contracts_t2",
         display_name="Dynamic_Contracts_t=2",
         num_demo_participants=1,
         app_sequence=["SBC_S1_t2_"],
     ),
+    
+
 ]
 
 #------------------------------------------------------------------------------------
