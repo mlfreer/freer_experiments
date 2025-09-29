@@ -273,8 +273,8 @@ ROOMS = [
 ]
 
 PARTICIPANT_FIELDS = [
-    'price_order', 
-    'optionprices_order', 
+    'price_order_t1', 
+    'price_order_t2', 
     'selected_round', 
     'params',
     'x_draw',
