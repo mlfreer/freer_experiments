@@ -225,6 +225,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     min_pay = 1.00,
     max_pay = 15.00,
     A_BAR = 16,
+    treatment = 0, # treatment enumeration starts with 0 and goes to 3 so we can simplify the presentation of the constants.
     doc=""
 )
 
@@ -276,7 +277,8 @@ PARTICIPANT_FIELDS = [
     'optionprices_order', 
     'selected_round', 
     'params',
-    'x_draw'
+    'x_draw',
+    'treatment'
 ]
 SESSION_FIELDS = [ ]
 participation_fee = 5

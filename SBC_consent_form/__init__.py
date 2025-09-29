@@ -12,6 +12,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'SBC_consent_form'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
+    ENDOWMENT = 15
 
 
 class Subsession(BaseSubsession):
@@ -35,6 +36,7 @@ def draw_x(player: Player):
     session = player.session
     participant = player.participant
     participant.x_draw = round(random.randint(0, session.config['A_BAR']), 0)
+    participant.treatment = session.config['treatment']
 
 
 #-----------------------------------------------------------------------------
