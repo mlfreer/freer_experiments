@@ -187,12 +187,21 @@ SESSION_CONFIGS = [
         name="Dynamic_Contracts_Consent",
         display_name="Dynamic_Contracts_Consent_Form",
         num_demo_participants=1,
+        treatment = 0,
         app_sequence=["SBC_consent_form"],
     ),
     dict(
         name="Dynamic_Contracts_S1_t1",
         display_name="Dynamic_Contracts t=1 (Static, Upfront Payment)",
         num_demo_participants=1,
+        treatment=0,
+        app_sequence=["SBC_consent_form", "SBC_S1_t1_"],
+    ),
+    dict(
+        name="Dynamic_Contracts_D1_t1",
+        display_name="Dynamic_Contracts t=1 (Dynamic, Option to buy)",
+        num_demo_participants=1,
+        treatment=2,
         app_sequence=["SBC_consent_form", "SBC_S1_t1_"],
     ),
     dict(
