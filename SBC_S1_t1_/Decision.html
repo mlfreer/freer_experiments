@@ -21,7 +21,14 @@
 <p>
     This round, the option price is <b>{{ player.price_t1 }}</b> and lottery price is <b>{{ player.price_t2 }}</b>.
     <br><br>
-   Do you want to purchase the the option to buy the following lottery ticket for {{ player.price_t1 }}?
+   Do you want to purchase the option to buy the following lottery ticket for {{ player.price_t1 }}?
+    <br>
+</p>
+{% elif participant.treatment == 3 %}
+<p>
+    This round, the price is <b>{{ player.price_t1 }}</b> with the possibility of the refund of <b>{{ player.price_t2 }}</b>.
+    <br><br>
+   Do you want to purchase the following lottery ticket for {{ player.price_t1 }}?
     <br>
 </p>
 {% endif %}

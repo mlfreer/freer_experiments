@@ -183,13 +183,13 @@ SESSION_CONFIGS = [
 #        app_sequence=['Procedures_Consent_form','procedures_T3','finish_Prolific'],
 #        num_demo_participants=1,
 #        ),
-    dict(
-        name="Dynamic_Contracts_Consent",
-        display_name="Dynamic_Contracts_Consent_Form",
-        num_demo_participants=1,
-        treatment = 0,
-        app_sequence=["SBC_consent_form"],
-    ),
+#    dict(
+#        name="Dynamic_Contracts_Consent",
+#        display_name="Dynamic_Contracts_Consent_Form",
+#        num_demo_participants=1,
+#        treatment = 0,
+#        app_sequence=["SBC_consent_form"],
+#    ),
     dict(
         name="Dynamic_Contracts_S1_t1",
         display_name="Dynamic_Contracts t=1 (Static, Upfront Payment)",
@@ -198,10 +198,24 @@ SESSION_CONFIGS = [
         app_sequence=["SBC_consent_form", "SBC_S1_t1_"],
     ),
     dict(
+        name="Dynamic_Contracts_S2_t1",
+        display_name="Dynamic_Contracts t=1 (Static, t=2 Payment)",
+        num_demo_participants=1,
+        treatment=1,
+        app_sequence=["SBC_consent_form", "SBC_S1_t1_"],
+    ),
+    dict(
         name="Dynamic_Contracts_D1_t1",
         display_name="Dynamic_Contracts t=1 (Dynamic, Option to buy)",
         num_demo_participants=1,
         treatment=2,
+        app_sequence=["SBC_consent_form", "SBC_S1_t1_"],
+    ),
+    dict(
+        name="Dynamic_Contracts_D2_t1",
+        display_name="Dynamic_Contracts t=1 (Dynamic, Refund)",
+        num_demo_participants=1,
+        treatment=3,
         app_sequence=["SBC_consent_form", "SBC_S1_t1_"],
     ),
     dict(
@@ -232,8 +246,8 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, 
     participation_fee=3.00,
     min_pay = 1.00,
-    max_pay = 15.00,
-    A_BAR = 16,
+    max_pay = 16.00,
+    A_BAR = 8,
     treatment = 0, # treatment enumeration starts with 0 and goes to 3 so we can simplify the presentation of the constants.
     doc=""
 )
