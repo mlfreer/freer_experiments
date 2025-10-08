@@ -44,18 +44,18 @@ SESSION_CONFIGS = [
 #         num_demo_participants = 2,
 #         app_sequence = ['Simple_NormalForm_DS'],
 #     ),
-#     dict(
-#         name ='Simple_NF_RD1',
-#         display_name ='Simplicity in Games: Normal Forms x RD1',
-#         num_demo_participants = 2,
-#         app_sequence = ['Simple_NF_RD1'],
-#     ),
-#     dict(
-#         name ='Simple_NF_RD2',
-#         display_name ='Simplicity in Games: Normal Forms x RD2',
-#         num_demo_participants = 2,
-#         app_sequence = ['Simple_NF_RD2'],
-#     ),
+     dict(
+         name ='Simple_NF_RD1_b',
+         display_name ='Simplicity in Games: Normal Forms x RD1 (new, balanced)',
+         num_demo_participants = 2,
+         app_sequence = ['Simple_NF_RD1_b'],
+     ),
+     dict(
+         name ='Simple_NF_RD2',
+         display_name ='Simplicity in Games: Normal Forms x RD2 (new, unbalanced)',
+         num_demo_participants = 2,
+         app_sequence = ['Simple_NF_RD2_b'],
+     ),
 #     dict(
 #         name ='Simple_NF_SS',
 #         display_name ='Simplicity in Games: Normal Forms x SS',
@@ -86,66 +86,7 @@ SESSION_CONFIGS = [
 #         num_demo_participants = 1,
 #         app_sequence = ['WelcomeScreen'],
 #     ),
-#    dict(
-#        name="CC_T0",
-#        display_name="Consp Consumption: Cardinal Visibility",
-#        num_demo_participants=4,
-#        app_sequence=["CC_T0","CC_FinalResults"],
-#    ),
-#    dict(
-#        name="CC_CV_BR",
-#        display_name="Consp Consumption: Cardinal Visibility and Best Response",
-#        num_demo_participants=4,
-#        app_sequence=["CC_CV_BR","CC_FinalResults"],
-#    ),
-#    dict(
-#        name="CC_CV_PAM",
-#        display_name="Consp Consumption: Cardinal Visibility, Positive Assortative Matching",
-#        num_demo_participants=4,
-#        app_sequence=["CC_CardinalVis_PAM","CC_FinalResults"],
-#    ),
-#    dict(
-#        name="CC_CV_NAM",
-#        display_name="Consp Consumption: Cardinal Visibility, Negative Assortative Matching",
-#        num_demo_participants=4,
-#        app_sequence=["CC_CV_NAM","CC_FinalResults"],
-#    ),
-#    dict(
-#        name="CC_OrdinalVisibility",
-#        display_name="Consp Consumption: Ordinal Visibility",
-#        num_demo_participants=4,
-#        app_sequence=["CC_OrdinalVisibility","CC_FinalResults"],
-#    ),
-#     dict(
-#        name="CC_NoVisibility",
-#        display_name="Consp Consumption: No Visibility",
-#        num_demo_participants=4,
-#        app_sequence=["CC_NoVisibility","CC_FinalResults"],
-#    ),
-#    dict(
-#        name="CC_NV_BR",
-#        display_name="Consp Consumption: No Visibility and Best Response",
-#        num_demo_participants=4,
-#        app_sequence=["CC_NV_BR","CC_FinalResults"],
-#    ),
-#    dict(
-#        name="CC_NV_PAM",
-#        display_name="Consp Consumption: No Visibility, Positive Assortative Matching",
-#        num_demo_participants=4,
-#        app_sequence=["CC_NV_PAM","CC_FinalResults"],
-#    ),
-#    dict(
-#        name="CC_NV_NAM",
-#        display_name="Consp Consumption: No Visibility, Negative Assortative Matching",
-#        num_demo_participants=4,
-#        app_sequence=["CC_NV_NAM","CC_FinalResults"],
-#    ),
-#    dict(
-#        name="CC_BestResponse",
-#        display_name="Consp Consumption: Best Response",
-#        num_demo_participants=1,
-#        app_sequence=["CC_BestResponse"],
-#    ),
+
 #    dict(
 #         name='Attention_Welfare_Experiment',
 #         display_name='Attention Welfare Experiment',
@@ -153,42 +94,36 @@ SESSION_CONFIGS = [
 #         num_demo_participants=1,
 #     ),
 
-    dict(
-        name='procedures_T0',
-        display_name='Choices and Procedures, T0: Delegated Procedure. Prearranged sequence of all binary comparisons, at each stage subject discards one of the alternatives.',
-        app_sequence=['Procedures_Consent_form','procedures_T0','finish_Prolific'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T1',
-        display_name='Choices and Procedures, T1: Assisted Binary  Procedure. Free Choise of Binary Comparisons, with no more than two cards open at the same time and no returning discarded alternatives.',
-        app_sequence=['Procedures_Consent_form','procedures_T1','finish_Prolific'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T2a',
-        display_name='Choices and Procedures, T2a: Assisted  Procedure A. Free choice to open several cards (no limit on how many), no returning of the discarded cards.',
-        app_sequence=['Procedures_Consent_form','procedures_T2a','finish_Prolific'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T2b',
-        display_name='Choices and Procedures, T2b: Assisted  Procedure B. Free choice to open several cards (no limits on how many) with possibility to return the discarded cards.',
-        app_sequence=['Procedures_Consent_form','procedures_T2b','finish_Prolific'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name='procedures_T3',
-        display_name='Choices and Procedures, T3: Free  Procedure. All cards are open, choosing the element without procedure tracking. ',
-        app_sequence=['Procedures_Consent_form','procedures_T3','finish_Prolific'],
-        num_demo_participants=1,
-        ),
-    dict(
-        name="Dynamic_Contracts_t2",
-        display_name="Dynamic_Contracts_t=2",
-        num_demo_participants=1,
-        app_sequence=["SBC_S1_t2_"],
-    ),
+#    dict(
+#        name='procedures_T0',
+#        display_name='Choices and Procedures, T0: Delegated Procedure. Prearranged sequence of all binary comparisons, at each stage subject discards one of the alternatives.',
+#        app_sequence=['Procedures_Consent_form','procedures_T0','finish_Prolific'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T1',
+#        display_name='Choices and Procedures, T1: Assisted Binary  Procedure. Free Choise of Binary Comparisons, with no more than two cards open at the same time and no returning discarded alternatives.',
+#        app_sequence=['Procedures_Consent_form','procedures_T1','finish_Prolific'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T2a',
+#        display_name='Choices and Procedures, T2a: Assisted  Procedure A. Free choice to open several cards (no limit on how many), no returning of the discarded cards.',
+#        app_sequence=['Procedures_Consent_form','procedures_T2a','finish_Prolific'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T2b',
+#        display_name='Choices and Procedures, T2b: Assisted  Procedure B. Free choice to open several cards (no limits on how many) with possibility to return the discarded cards.',
+#        app_sequence=['Procedures_Consent_form','procedures_T2b','finish_Prolific'],
+#        num_demo_participants=1,
+#        ),
+#    dict(
+#        name='procedures_T3',
+#        display_name='Choices and Procedures, T3: Free  Procedure. All cards are open, choosing the element without procedure tracking. ',
+#        app_sequence=['Procedures_Consent_form','procedures_T3','finish_Prolific'],
+#        num_demo_participants=1,
+#        ),
 ]
 
 #------------------------------------------------------------------------------------
