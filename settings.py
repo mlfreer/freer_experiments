@@ -48,13 +48,13 @@ SESSION_CONFIGS = [
          name ='Simple_NF_RD1_b',
          display_name ='Simplicity in Games: Normal Forms x RD1 (new, balanced)',
          num_demo_participants = 2,
-         app_sequence = ['Simple_NF_RD1_b'],
+         app_sequence = ['Consent_GER','WelcomeScreen','Simple_NF_RD1_b','beauty_contest','risk_elicitation','FinalResults'],
      ),
      dict(
          name ='Simple_NF_RD2',
          display_name ='Simplicity in Games: Normal Forms x RD2 (new, unbalanced)',
          num_demo_participants = 2,
-         app_sequence = ['Simple_NF_RD2_b'],
+         app_sequence = ['Consent_GER','WelcomeScreen','Simple_NF_RD2_b','beauty_contest','risk_elicitation','FinalResults'],
      ),
 #     dict(
 #         name ='Simple_NF_SS',
