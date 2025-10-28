@@ -222,7 +222,7 @@ SESSION_CONFIGS = [
         name="Dynamic_Contracts_S1_t2",
         display_name="Dynamic_Contracts t=2 (Static, Upfront Payment)",
         num_demo_participants=1,
-        app_sequence=["SBC_consent_form", "SBC_S1_t2_"],
+        app_sequence=["SBC_consent_t2", "SBC_S1_t2_"],
     ),
     
 
