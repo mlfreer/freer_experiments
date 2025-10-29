@@ -2,9 +2,9 @@
         <font size=3.5>
 <p>This study consists of two parts. This is the first part of this study. The second part will take place next week and will be advertised via Prolific. You only complete this study if you complete both parts.</p>
 
-<p>You can complete the second part at any time during the next two weeks. <b>Please note that you will receive your payment only if you participate in both parts.</b></p>
+<p>You can complete part 2 at any time during the next two weeks. <b>Please note that you will receive any payment only if you participate in both parts.</b></p>
 
-<p>For today's study, you will earn a reward of {{ session.config.participation_fee }}. For the second part, you earn an additional reward of {{ session.config.participation_fee }}. In addition, you can earn a substantial bonus payment, that can be as high as £{{ session.config.max_pay }}. Note that you will only receive your reward and bonus payment if you complete both parts of this study.</p>
+<p>For today's study, you will earn a reward of {{ session.config.participation_fee }}. For part 2, you earn an additional reward of {{ session.config.participation_fee }}. In addition, you can earn a substantial bonus payment, that can be as high as £{{ session.config.max_pay }}.</p>
 
 <h3>Lottery ticket:</h3>
 
@@ -19,7 +19,7 @@
 
 <p>When do you learn more about your lotteries?</p>
 <ul>
-<li>When you return to the study for part 2 next week, you will learn the outcome of Lottery 1. This means that you will now whether Lottery 1 pays you £{{ session.config.A_BAR }} or £{{ participant.x_draw }}. However, you will not learn the outcome of Lottery 2 until later.</li>
+<li>When you return to the study for part 2 next week, you will learn the outcome of Lottery 1. This means that you will know whether Lottery 1 pays you £{{ session.config.A_BAR }} or £{{ participant.x_draw }}. However, you will not learn the outcome of Lottery 2 until later.</li>
 <li>Afterwards, you may make additional decisions.</li>
 <li>At the end of part 2 of this study, you will learn the result of Lottery 2 and your total payoff for the participation of this study.</li>
 
@@ -34,15 +34,15 @@
 <p>Today, you can buy the right to purchase the lottery ticket next week and thereby fix the price of the lottery ticket. This right is called an <i>option</i>. Only if you buy the option, you can purchase the lottery ticket at a fixed price in part 2 next week. The option has no other benefit other than giving you the right to purchase the lottery. 
 </p>
 <p>
-    This means that you will make two decision:
+    This means that you will make two decision across the two parts of this study:
     <ol>
-        <li>Buying the option in part 1.</li>
-        <li>If you bought the option in part 2, you can purchase the lottery ticket in part 2 at a pre-specified price.</li>
+        <li>Whether you want to buy the option in part 1.</li>
+        <li>Only if you bought the option in part 1, you decide whether to purchase the lottery ticket in part 2 at a pre-specified price.</li>
     </ol>
-    Therefore, your total payment consists of the payment for the option in part 1 and the payment for the lottery ticket in part 2 (if you choose to buy it).</p>
+    Your total payment consists of the payment for the option in part 1 and the payment for the lottery ticket in part 2 (if you choose to buy the option and/or the purchase the lottery ticket).</p>
 <br><br>
-<p>You decide today whether you want to buy the option. In part 2, you will first learn the outcome of the coin flip for Lottery 1, so whether you will be paid £{{ session.config.A_BAR }} or £{{ participant.x_draw }} for Lottery 1. Afterwards, you will decide whether to purchase the lottery ticket. This means that you can decide whether to pay the pre-specified price of the lottery ticket based on the outcome of Lottery 1. However, if you do not buy the option today, you cannot purchase the lottery ticket in part 2.</p>
-<p>Your payment in this study depends both on the decisions that you make today and the decisions that you make in part 2. In particular, you can also decide not to purchase the lottery ticket in part 2 in case you buy the option today.<br>
+<p>Today, you decide whether you want to buy the option. In part 2, you will first learn the outcome of the coin flip for Lottery 1, so whether you will be paid £{{ session.config.A_BAR }} or £{{ participant.x_draw }} for Lottery 1. Afterwards, you will decide whether to purchase the lottery ticket. This means that you can decide whether to pay the pre-specified price of the lottery ticket based on the outcome of Lottery 1. However, you will make a decision before learning the outcome of Lottery 2. Importantly, if you do not buy the option today, you cannot purchase the lottery ticket in part 2.</p>
+<p>Your payment in this study depends both on the decisions that you make today and the decisions that you make in part 2. In particular, you can also decide not to purchase the lottery ticket in part 2 in case you buy the option today, which means that you only need to pay for the option.<br>
 </p>
 {{ endif }}
 {{ if participant.treatment == 3 }}
@@ -52,14 +52,22 @@
 
 <h3>Payment</h3>
 <p>
-To be able to purchase the lottery ticket, you will receive a budget of {{ C.ENDOWMENT }}. At the end of both parts of the study, any payments for the lottery ticket will be subtracted from that budget. You will receive the remaining budget as a bonus payment, in addition to all payments from  {{ if participant.treatment == 2 }} the option and {{ endif }} the lottery ticket you purchase
-.</p>
+To be able to purchase the lottery ticket, you will receive a budget of {{ C.ENDOWMENT }} in this study. At the end of both parts of the study, any payments for purchasing {{ if participant.treatment == 2 }} the option and {{ endif }} the lottery ticket will be subtracted from that budget. You will receive the remaining budget as a bonus payment.</p>
 
-<p>Today, you will be asked a series of questions about your valuation of the {{ if participant.treatment == 2 }} the option to buy {{ endif }} the lottery ticket. For different prices, you can either choose whether to purchase {{ if participant.treatment == 2 }} the option to buy {{ endif }} the lottery ticket at that price. An example decision screen is presented below.</p>
+{{ if participant.treatment == 0 or participant.treatment == 3 }}
+<p>Today, you will be asked a series of questions about your valuation of the lottery ticket. For different prices, you can either choose whether to purchase the lottery ticket at that price. An example decision screen is presented below.</p>
+{{ endif }}
+{{ if participant.treatment == 2 }}
+<p>Today, you will be asked a series of questions about your valuation of the the option to buy the lottery ticket. For different prices, you can either choose whether to purchase the option to buy the lottery ticket at that price. An example decision screen is presented below.</p>
+{{ endif }}
+{{ if participant.treatment == 1 }}
+<p>Today, you will not make any decisions, as you will only decide whether to purchase the lottery ticket in part 2 of this study. In part 2, you will be asked a series of questions about your valuation of the lottery ticket. For different prices and refund options, you can choose whether to purchase the lottery ticket at that price. An example decision screen is presented below.</p>
+{{ endif }}
+
 
 <p>...include appropriate screenshot here...</p>
 
 <p>At the end of the study, the computer will randomly select one of the prices, with each question being equally likely to be chosen. If you chose to purchase {{ if participant.treatment == 2 }} the option to buy {{ endif }} the lottery ticket in that question, you will receive {{ if participant.treatment == 2 }} the option to buy {{ endif }} the lottery ticket, but your budget of {{ C.ENDOWMENT }} will be reduced by that price. Otherwise, you will not receive {{ if participant.treatment == 2 }} the option to buy {{ endif }} the lottery ticket.</p>.
 <br>
-<p>25% of participants in this study will be randomly selected for the bonus payment and will receive the bonus payment within two weeks of the completion of the study. For 98% of participants, we will implement exactly their decisions. For the remaining 2% of participants, you will make decisions as if you purchased {{ if participant.treatment == 2 }} the option to buy {{ endif }} the lottery ticket. That means that all participants will make decisions in Study 2, because it may be that the computer randomly selects them to make a purchase, and everyone's decisions may potentially involve receiving a lottery ticket.<br><br>Please remember that all payments can only be paid out to you if you complete part 2 of the study next week. </p>
+<p>25% of participants in this study will be randomly selected for the bonus payment and will receive the bonus payment within two weeks of the completion of the study. For 98% of participants, we will implement exactly their decisions. For the remaining 2% of participants, you will make decisions as if you purchased {{ if participant.treatment == 2 }} the option to buy {{ endif }} the lottery ticket. {{ if participant.treatment == 2 or participant.treatment == 3 }} That means that all participants will make decisions in part 2, because it may be that the computer randomly selects them to make a purchase, and everyone's decisions may potentially involve receiving a lottery ticket.{{ endif }}<br><br>Please remember that all payments can only be paid out to you if you complete part 2 of the study next week. </p>
     </div>
