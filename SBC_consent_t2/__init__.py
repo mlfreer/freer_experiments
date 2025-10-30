@@ -37,7 +37,5 @@ class Results(Page):
     pass
 
 
-page_sequence = [ConsentForm,  
-                ReturnStudy, 
-                Instructions,
-                Quiz]
+page_sequence = [  
+                MyPage]
