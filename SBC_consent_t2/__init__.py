@@ -10,6 +10,8 @@ class C(BaseConstants):
     NAME_IN_URL = 'SBC_consent_t2'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
+    # QUIZ ANSWERS:
+    QUIZ_ANSWERS = [1,0,3]
 
 
 class Subsession(BaseSubsession):
@@ -25,6 +27,17 @@ class Player(BasePlayer):
 
 
 # PAGES
+class Instructions(Page):
+    @staticmethod
+    def vars_for_template(player: Player):
+        session = player.session
+        participant = player.participant
+        return dict(
+            # Used in instr.html to avoid unsupported '+' expressions in templates
+            example_sum=session.config['A_BAR'] + participant.x_draw
+        )
+
+
 class MyPage(Page):
     pass
 
@@ -36,9 +49,5 @@ class ResultsWaitPage(WaitPage):
 class Results(Page):
     pass
 
-
-page_sequence = [Consent_t2,  
-                ReturnStudy, 
-                Instructions,
-                Quiz,
-                ReturnStudy]
+page_sequence = [  
+                MyPage]

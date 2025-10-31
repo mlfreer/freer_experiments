@@ -15,7 +15,7 @@ class C(BaseConstants):
     ENDOWMENT = 15
 
     # QUIZ ANSWERS:
-    QUIZ_ANSWERS = [2,3,0]
+    QUIZ_ANSWERS = [1,3,3]
 
 
 class Subsession(BaseSubsession):
@@ -68,7 +68,14 @@ class ReturnStudy(Page):
         return (player.consent==False) or (player.return_study == True)
 
 class Instructions(Page):
-    pass
+    @staticmethod
+    def vars_for_template(player: Player):
+        session = player.session
+        participant = player.participant
+        return dict(
+            # Used in instr.html to avoid unsupported '+' expressions in templates
+            example_sum=session.config['A_BAR'] + participant.x_draw
+        )
 
 class Quiz(Page):
     form_model = 'player'
@@ -79,12 +86,24 @@ class Quiz(Page):
         return (player.round_number == 1) and (player.return_study == False)
 
     def error_message(player, value):
-        if ((value['q1']!=C.QUIZ_ANSWERS[1]) or (value['q2']!=C.QUIZ_ANSWERS[3]) or (value['q3']!=C.QUIZ_ANSWERS[3])) and (player.return_study == 0):
+        if ((value['q1']!=C.QUIZ_ANSWERS[0]) or (value['q2']!=C.QUIZ_ANSWERS[1]) or (value['q3']!=C.QUIZ_ANSWERS[2])) and (player.return_study == 0):
             result = 'Wrong answer! Try again!'
             player.quiz_attempts = player.quiz_attempts + 1
             if player.quiz_attempts >= 2:
                 player.return_study = 1
             return result
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        session = player.session
+        participant = player.participant
+        a_bar = session.config['A_BAR']
+        return dict(
+            # Used in Quiz.html to avoid unsupported '+' expressions in templates
+            two_heads_sum=a_bar + a_bar,
+            heads_tails_sum=a_bar + participant.x_draw,
+            example_sum=session.config['A_BAR'] + participant.x_draw
+        )
 
 #-----------------------------------------------------------------------------
 

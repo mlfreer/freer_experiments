@@ -1,0 +1,135 @@
+{{ block title }}
+    Quiz (I)
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    function open_instructions() {
+        let x = document.getElementById("instructions");
+        let instructions_button = document.getElementById("instructions_button");
+        if (x.style.display === "none") {
+            instructions_button.innerHTML = "Close Your Instructions"
+            x.style.display = "block";
+            instructions_button_other.innerHTML = "Reveal Instructions"
+        } else {
+            instructions_button.innerHTML = "Reveal Instructions"
+            x.style.display = "none";
+        }
+    }
+</script>
+{{ endblock }}
+
+
+{{ block content }}
+
+<div class="card bg-light">
+    <div class="card-body">
+
+    <h3>Quiz</h3>
+    Please answer the following questions to the best of your knowledge. If you answer any of the questions incorrectly, you will see an error message and you will have to answer the questions again. You have up to three attempts to answer the questions correctly. If you fail to answer all questions correctly within three attempts, you will not be able to continue with the study. 
+
+    <br>
+    <br>
+    <br>
+
+    <b> 1. </b> What bonus payment can you earn if you purchase the lottery ticket and the first lottery results in heads and the also the second lottery results in heads?
+    <br>
+    <input type="radio" name = "q1" value = "0"> £{{ session.config.A_BAR }}
+    <br>
+    <input type="radio" name = "q1" value = "1"> £{{ two_heads_sum }}
+    <br>
+    <input type="radio" name = "q1" value = "2"> £{{ heads_tails_sum }}
+    <br>
+    <input type="radio" name = "q1" value = "3"> £{{ participant.x_draw }}
+    <br><br>
+
+    <b> 2. </b> Will you receive a bonus payment of up to £{{ two_heads_sum }} if you complete today's study and are randomly selected for payment?
+    <br>
+    <input type="radio" name = "q2" value = "0"> Yes.
+    <br>
+    <input type="radio" name = "q2" value = "1"> If I do not purchase the lottery ticket today, I will always get paid.
+    <br>
+    <input type="radio" name = "q2" value = "2"> It depends on the outcomes of the lotteries.
+    <br>
+    <input type="radio" name = "q2" value = "3"> No.
+
+    <br><br>
+
+
+    <b> 3. </b> 
+    {{ if participant.treatment == 0 }}
+    What happens if you decide to purchase the lottery ticket today?
+        <br>
+    <input type="radio" name = "q3" value = "0"> Because you have returned to part 2 of this study, your payment does not depend on your decisions anymore.
+    <br>
+    <input type="radio" name = "q3" value = "1"> You can only earn a fixed payment of £{{ session.config.participation_fee }}.
+    <br>
+    <input type="radio" name = "q3" value = "2"> You can only earn a bonus payment if both lotteries result in heads.
+    <br>
+    <input type="radio" name = "q3" value = "3"> Today, you will learn the outcome of Lottery 1 and Lottery 2 and you can receive the corresponding bonus payment.
+    <br><br>
+    {{ endif }}
+    {{ if participant.treatment == 1 }}
+    What happens if you decide to purchase the lottery ticket in part 2 of this study next week?
+            <br>
+    <input type="radio" name = "q3" value = "0"> Because you have returned to part 2 of this study, your payment does not depend on your decisions anymore.
+    <br>
+    <input type="radio" name = "q3" value = "1"> You can only earn a fixed payment of £{{ session.config.participation_fee }}.
+    <br>
+    <input type="radio" name = "q3" value = "2"> You can only earn a bonus payment if both lotteries result in heads.
+    <br>
+    <input type="radio" name = "q3" value = "3"> Today, you will first learn the outcome of Lottery 1. You can then decide to purchase the lottery ticket and will receive a corresponding bonus payment depending on your decision and the outcome of the lottery ticket.
+    <br><br>
+    {{ endif }}
+    {{ if participant.treatment == 2 }}
+    What happens if you decide to buy the option to purchase the lottery ticket today?
+            <br>
+    <input type="radio" name = "q3" value = "0"> Because you have returned to part 2 of this study, your payment does not depend on your decisions anymore.
+    <br>
+    <input type="radio" name = "q3" value = "1"> You can only earn a fixed payment of £{{ session.config.participation_fee }}.
+    <br>
+    <input type="radio" name = "q3" value = "2"> You can only earn a bonus payment if both lotteries result in heads.
+    <br>
+    <input type="radio" name = "q3" value = "3"> Today, you will first learn the outcome of Lottery 1. If you have decided to buy the option in part 1, you can then purchase the lottery ticket and receive a corresponding bonus payment depending on your decision and the outcome of the lottery ticket. If you did not buy the option in part 1, you cannot purchase the lottery ticket today and you will not receive an additional bonus payment from the lottery ticket.
+    <br><br>
+    {{ endif }}
+    {{ if participant.treatment == 3 }}
+    What happens if you decide to purchase the lottery ticket today?
+        What happens if you decide to buy the option to purchase the lottery ticket today?
+            <br>
+    <input type="radio" name = "q3" value = "0"> Because you have returned to part 2 of this study, your payment does not depend on your decisions anymore.
+    <br>
+    <input type="radio" name = "q3" value = "1"> You can only earn a fixed payment of £{{ session.config.participation_fee }}.
+    <br>
+    <input type="radio" name = "q3" value = "2"> You can only earn a bonus payment if both lotteries result in heads.
+    <br>
+    <input type="radio" name = "q3" value = "3"> Today, you will first learn the outcome of Lottery 1. You can then decide to return the lottery ticket for a pre-specified refund and you can receive the corresponding bonus payment. If you decide <i>not</i> to return the lottery ticket, you will keep the lottery ticket and receive a corresponding bonus payment depending on the outcome of the lottery ticket.
+    <br><br>
+    {{ endif }}
+    <br><br>
+
+
+    </div>
+</div>
+
+<br>
+
+<div style="float: center; text-align: center;">
+   {{next_button}}
+</div>
+
+<div style="text-align: center">
+    <button class="otree-btn-next btn btn-secondary next-button otree-next-button" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="height: 62px; width: 250px; padding: 0px;">Reveal Instructions</button>
+</div><br>
+
+
+<div style="display: none" id="instructions">
+    <div class="card bg-light">
+    <div class="card-body">
+{{ include "SBC_consent_form/instr.html" }}
+        </div></div>
+    </div>
+
+{{ endblock }}
+
+
