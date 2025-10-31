@@ -79,7 +79,7 @@ class Quiz(Page):
         return (player.round_number == 1) and (player.return_study == False)
 
     def error_message(player, value):
-        if ((value['q1']!=C.QUIZ_ANSWERS[0]) or (value['q2']!=C.QUIZ_ANSWERS[1]) or (value['q3']!=C.QUIZ_ANSWERS[2])) and (player.return_study == 0):
+        if ((value['q1']!=C.QUIZ_ANSWERS[1]) or (value['q2']!=C.QUIZ_ANSWERS[3]) or (value['q3']!=C.QUIZ_ANSWERS[3])) and (player.return_study == 0):
             result = 'Wrong answer! Try again!'
             player.quiz_attempts = player.quiz_attempts + 1
             if player.quiz_attempts >= 2:

@@ -1,0 +1,112 @@
+{{ block title }}
+    Consent Form
+{{ endblock }}
+{{ block content }}
+
+
+
+<div class="card bg-light">
+    <h2>Consent Form Part 2</h2>
+<p><b>Welcome back to part 2 of our study. Below, you see the same consent form as was presented to you during part 1 of the study. To continue, please <u>confirm your consent</u>.</b></p>
+<br><br>
+
+    <div class="card-body" style="border:1px solid grey;"></div>>
+        <font size=3.5>
+<b>Invitation to our study</b>
+    <br>
+    
+We would like to invite you to participate in our research. This experiment is conducted by Dr Mikhail Freer, researcher in the Department of Economics at the University of Essex. Please read this information carefully. Should you have any questions, you can raise them with the Principal Investigator (contact details below).
+
+<br><br>
+
+<b>Background on the project</b>
+<br>
+We are conducting a series of experiments on decision-making.
+
+<br><br>
+
+<b>Experiment</b>
+<br>
+The experiment consists of two parts. You will receive {{ session.config.participation_fee }} for showing up on time. During the experiment, you can earn further rewards. How much you earn depends on your decisions, the decisions of others, and random chance. Detailed instructions will be provided to you on your computer screen before each part begins.
+
+At the end of the experiment, one of the rounds in this session will be randomly selected. You will receive the reward you earned in that round. All your answers and decisions will be treated confidentially.
+
+<br><br>
+
+<b>Informed consent</b>
+<br>
+Should you agree to take part in this experiment, you will be asked to sign a consent form before the experiment commences.
+
+<br><br>
+
+<b>Withdrawal</b>
+<br>
+Your participation is voluntary and you will be free to withdraw from the project at any time up to the end of the experimental session without giving any reason and without penalty. If you wish to withdraw during the experiment, you simply need to raise your hand, let us know and you will be able to leave immediately. Any data that have already been collected will be destroyed in this case unless you inform us that you are happy for us to use such data for the scientific purposes of the project. Note that once the experimental session has finished it will not be possible to withdraw your data anymore as all the data are gathered anonymously so your data cannot be identified in order to extract it.
+
+<br><br>
+
+<b>Data gathered</b>
+<br>
+We will collect only the data which you input in the lab experiment, i.e., your answers to the questions we ask. The anonymous data will be analysed and used to write the study reports and academic articles. During the project only the Principal Investigator (Dr Mikhail Freer) and supervisors will have access to the data.
+
+Anonymised data will be deposited in the UK Data Archive upon completion of the project and will be available for researchers to use in the future.
+
+Signed consent forms will be kept separately from individual experimental data and locked in a drawer until the end of the project. Only the research team as well as the Essex Lab manager (Dr Patrick Lown), will have access to the consent forms.
+
+For questions about data management, please contact the Principal Investigator (Dr Mikhail Freer) or the Data Protection Officer (<a href="mailto:dpo@essex.ac.uk">dpo@essex.ac.uk</a>).
+
+<br><br>
+
+<b>Findings</b>
+<br>
+After the end of the project, we will publish the findings of our experiments (all data published will be anonymised). We will be happy to provide you with a lay summary of the main findings and with copies of the articles published if you express an interest.
+
+<br><br>
+
+<b>Concerns and complaints</b>
+<br>
+If you have any concerns about any aspect of the study or you have a complaint, in the first instance please contact the principal investigator of the project. If are still concerned or you think your complaint has not been addressed to your satisfaction, please contact the Head of Department in the principal investigator’s department. If you are still not satisfied, please contact the University’s Research Governance and Planning Manager.
+
+<br><br>
+
+<b>Ethical approval</b>
+<br>
+This project has been reviewed by the Social Science Faculty Ethics Sub-Committee on behalf of the University of Essex Ethics Committee and has been given approval (Approval number: ETH2425-0847).
+
+
+<br><br>
+
+<b> By giving consent below I ... </b>
+<ul>
+    <li> confirm that I have read and understand the Information Sheet for the Decision Making study. 
+    </li>
+
+    <li>
+         understand that my participation is voluntary and that I am free to withdraw from the project at any time without giving any reason and without penalty
+    </li>
+
+    <li>
+        understand that the identifiable data provided will be securely stored and accessible only to members of the research team directly involved in the project, and that confidentiality will be maintained.
+    </li>
+
+    <li>
+        understand that my fully anonymised data will be used for research purposes. Upon completion of the project, the anonymous data will be deposited in the UK Data Archive and will be available to other academic researchers.
+    </li>
+</ul>
+
+        </font>
+    </div>
+</div>
+
+<br><br>
+
+<div style="float: center; text-align: center;">
+    <button name = "consent" value="True" type="submit" class="btn btn-lg btn-success">
+    Yes
+    </button>
+
+    <button name = "consent" value="False" type="submit" class="btn btn-lg btn-secondary">
+    No
+    </button>
+</div>
+{{ endblock }}

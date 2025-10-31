@@ -37,5 +37,8 @@ class Results(Page):
     pass
 
 
-page_sequence = [  
-                MyPage]
+page_sequence = [Consent_t2,  
+                ReturnStudy, 
+                Instructions,
+                Quiz,
+                ReturnStudy]
