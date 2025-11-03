@@ -74,7 +74,7 @@ To be able to purchase the lottery ticket, you have received a budget of £{{ C.
 <p>Today, at the end of the study, the computer will randomly select one of the prices {% if participant.treatment == 2 %} 
     and option prices {% endif %} {% if participant.treatment == 3 %} and refund options {% endif %}, 
     with each question being equally likely to be chosen. If you chose to purchase the lottery ticket  {% if participant.treatment == 3 %} 
-    (and not to return it) {% endif %} in that question, you will receive the lottery ticket, but your budget of £{{ C.ENDOWMENT }} will be reduced by that price. Otherwise, you will not receive the lottery ticket.</p>.
+    (and not to return it) {% endif %} in that question, you will receive the lottery ticket, but your budget of £{{ C.ENDOWMENT }} will be reduced by that price. Otherwise, you will not receive the lottery ticket.</p>
 <p>25% of participants in this study will be randomly selected for the bonus payment and will receive the bonus payment within two weeks of the completion of the study. For 98% of participants, we will implement exactly their decisions. 
     For the remaining 2% of participants, you will make decisions as if you purchased {% if participant.treatment == 2 %} the option to buy {% endif %} the lottery ticket. {% if participant.treatment == 2 or participant.treatment == 3 %}
     That means that all participants will make decisions in today's part 2, because it may be that the computer randomly selects them to make a purchase, and everyone's decisions may potentially involve receiving a lottery ticket.{% endif %}</p>
