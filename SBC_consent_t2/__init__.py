@@ -103,8 +103,8 @@ class Quiz(Page):
         session = player.session
         participant = player.participant
         return dict(
-            two_heads_sum = 2*session.config['A_BAR'] + participant.x_draw,
-            heads_tails_sum = session.config['A_BAR'] + 0,
+            two_heads_sum = 2*session.config['A_BAR'],
+            heads_tails_sum = session.config['A_BAR'] + participant.x_draw + 2,
             example_sum=session.config['A_BAR'] + participant.x_draw
         )
 
