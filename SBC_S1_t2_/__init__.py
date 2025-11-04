@@ -67,7 +67,7 @@ class TEST(Page):
 	   return dict(
    			treatment= participant.treatment,
 			x_draw= participant.x_draw,   		
-		)
+			)
 
 
 # PAGE WITH MULTIPLE STEPS (BACK AND FORTH BUTTON
