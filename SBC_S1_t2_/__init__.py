@@ -22,8 +22,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-	prolificID = models.StringField()
-
+	#prolificID = models.StringField()	
 	# test variabbles:
 	q1 = models.StringField(label="Question 1")
 	q2 = models.StringField(label="Question 2")
@@ -35,26 +34,25 @@ class Player(BasePlayer):
 
 def retrieve_data(player):
     import pandas as pd
+    import os
 
-    df = pd.read_csv('output.csv')
-    prolificID = player.prolificID
-    # once real replace with player.participant.label
+    # Use absolute path to find output.csv in project root
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    csv_path = os.path.join(root_dir, 'output.csv')
+    
+    df = pd.read_csv(csv_path)
 
-    row = df.loc[df['prolificID'] == prolificID]
-
-    #test_variable = row['test_variable'].values
+    # Find the matching row for this participant
+    row = df.loc[df['participant.label'] == player.participant.label].iloc[0]
+    
+    # Set participant variables from the data
+    player.participant.x_draw = float(row['participant.x_draw'])
+    player.participant.treatment = int(row['participant.treatment'])
     
 
 
 #--------------------------------------------------------
 # PAGES
-class LOGIN(Page):
-	form_model = 'player'
-	form_fields = ['prolificID'] 
-
-	def before_next_page(player, timeout_happened):
-		if player.round_number == 1:
-			retrieve_data(player)
 
 # TEST PAGE WITH PROLIFIC ID
 class TEST(Page):
@@ -65,9 +63,11 @@ class TEST(Page):
 
    @staticmethod
    def vars_for_template(player):
-   	return dict(
-   		prolificID = player.prolificID,
-   		)
+	   participant = player.participant
+	   return dict(
+   			treatment= participant.treatment,
+			x_draw= participant.x_draw,   		
+		)
 
 
 # PAGE WITH MULTIPLE STEPS (BACK AND FORTH BUTTON
@@ -88,4 +88,7 @@ class Results(Page):
 	pass
 
 
-page_sequence = [LOGIN, TEST, MultiStepPage, Results]
+page_sequence = [
+	TEST, 
+	MultiStepPage, 
+	Results]

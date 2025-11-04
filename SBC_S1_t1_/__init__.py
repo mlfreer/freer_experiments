@@ -153,6 +153,8 @@ class Decision(Page):
 
 # what should we record for the second stage? 
 class Results(Page):
+    timeout_seconds = 10  # Timeout after 10 seconds
+    
     def is_displayed(player: Player):
         subsession = player.subsession
         return subsession.round_number == C.NUM_ROUNDS
@@ -160,18 +162,32 @@ class Results(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        if player.participant.label and player.participant.label.strip():
-            save_to_csv({
-                "prolificID": player.participant.label,
+        save_to_csv({
+            "participant.label": player.participant.label,
+            "participant.x_draw": player.participant.x_draw,
+            "participant.treatment": player.participant.treatment,
+            "player.payoff": player.payoff,
+            "player.purchase": player.purchase,
                 # add other variables
-            })
+        })
 #-----------------------------------------------------------------------------
 
 
 
 #-----------------------------------------------------------------------------
+# Final completion page
+class CompletionPage(Page):
+    timeout_seconds = 60  # 1 minute to read the message
+
+    @staticmethod
+    def is_displayed(player: Player):
+        subsession = player.subsession
+        return subsession.round_number == C.NUM_ROUNDS
+
+
 # ORDER
 page_sequence = [Welcome,
                 Decision, 
-                Results]
+                Results,
+                CompletionPage]
 #-----------------------------------------------------------------------------

@@ -203,7 +203,7 @@ SESSION_CONFIGS = [
         num_demo_participants=1,
         treatment=1,
         app_sequence=["SBC_consent_form", "SBC_S1_t1_"],
-    ),
+    ),#?participant_label?participant_label=00001
     dict(
         name="Dynamic_Contracts_D1_t1",
         display_name="Dynamic_Contracts t=1 (Dynamic, Option to buy)",
@@ -265,35 +265,38 @@ ROOMS = [
         'display_name': 'Room for live demo (no participant labels)',
     },
     dict(
-        name='Prolific_Study_A',
-        display_name='Prolific_Study_A',
+        name='Prolific_Study_S1',
+        display_name='Prolific_Study_S1',
+        # participant_label_file='_rooms/your_study.txt',
+        # use_secure_urls=True,
+    ),
+    # https://freer-experiments.herokuapp.com/room/Prolific_Study_A?participant_label={{%PROLIFIC_PID%}}&STUDY_ID={{%STUDY_ID%}}&SESSION_ID={{%SESSION_ID%}}	
+
+    dict(
+        name='Prolific_Study_S2',
+        display_name='Prolific_Study_S2',
         # participant_label_file='_rooms/your_study.txt',
         # use_secure_urls=True,
     ),
     dict(
-        name='Prolific_Study_B',
-        display_name='Prolific_Study_B',
+        name='Prolific_Study_D1',
+        display_name='Prolific_Study_D1',
         # participant_label_file='_rooms/your_study.txt',
         # use_secure_urls=True,
     ),
     dict(
-        name='Prolific_Study_C',
-        display_name='Prolific_Study_C',
+        name='Prolific_Study_D2',
+        display_name='Prolific_Study_D2',
         # participant_label_file='_rooms/your_study.txt',
         # use_secure_urls=True,
     ),
     dict(
-        name='Prolific_Study_D',
-        display_name='Prolific_Study_D',
+        name = 'Prolific_Study_T2',
+        display_name = 'Prolific_Study_T2',
         # participant_label_file='_rooms/your_study.txt',
         # use_secure_urls=True,
     ),
-    dict(
-        name = 'Prolific_Study_E',
-        display_name = 'Prolific_Study_E',
-        # participant_label_file='_rooms/your_study.txt',
-        # use_secure_urls=True,
-    ),
+
 ]
 
 PARTICIPANT_FIELDS = [

@@ -41,12 +41,25 @@ class Player(BasePlayer):
 
 # FUNCTIONS:
 
-def recover_data(player: Player):
-    session = player.session
-    participant = player.participant
-    participant.treatment = session.config['treatment']
-    #
-    participant.x_draw = -1 #placeholder value
+
+def retrieve_data(player):
+    import pandas as pd
+    import os
+
+    # Use absolute path to find output.csv in project root
+    #root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    #csv_path = os.path.join(root_dir, 'output.csv')
+    
+    df = pd.read_csv('./output.csv')
+
+    # Find the matching row for this participant
+    print(df)
+    row = df.loc[df['participant.label'] == (player.participant.label)].iloc[0]
+    
+    # Set participant variables from the data
+    player.participant.x_draw = float(row['participant.x_draw'])
+    player.participant.treatment = int(row['participant.treatment'])
+    
 
 
 # PAGES
@@ -56,7 +69,7 @@ class ConsentForm(Page):
     form_fields = ['consent']
 
     def before_next_page(player: Player, timeout_happened):
-        recover_data(player) # use the function that would retrieve the data.
+        retrieve_data(player) # use the function that would retrieve the data.
     
 
 

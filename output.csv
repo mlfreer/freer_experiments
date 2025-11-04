@@ -1,2 +1,6 @@
-prolificID
-20
+participant.label,participant.x_draw,participant.treatment,player.payoff,player.purchase
+0001,5,0,£0.00,True
+0003,7,0,£0.00,True
+0004,3,0,£0.00,True
+0005,4,0,£0.00,True
+x0001,7,0,£0.00,True
