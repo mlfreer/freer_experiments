@@ -1,0 +1,32 @@
+{{ block title }}
+    The experiment will start now...
+{{ endblock }}
+{{ block content }}
+
+
+<div class="card bg-light">
+    <div class="card-body">
+
+The experiment will start after this page...
+
+<br><br>
+
+we need this page, beacuse it helps us to randomize order etc...
+<br><br>
+
+Treatment: <b> {{ treatment }} </b> <br><br>
+
+X: <b> {{ x_draw }} </b> <br><br>
+
+Label: <b> {{ participant.label }} </b> <br><br>
+</div>
+</div>
+
+<br>
+
+<div style="float: center; text-align: center;">
+{{ next_button }}
+</div>
+
+
+{{ endblock }}

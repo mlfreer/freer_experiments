@@ -12,7 +12,7 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'SBC_S1_t1_'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 1
+    NUM_ROUNDS = 15 #setting the full length to ensure that data contains all necesasry info.
 
     ENDOWMENT = cu(15)
     # TREATMENT ORDER:
@@ -31,16 +31,6 @@ class C(BaseConstants):
     PRICES_T2[2] = [0, 12, 10, 0, 10, 10, 8, 8, 8, 6, 6, 6, 1, 1, 1]
     PRICES_T2[3] = [0, 12, 10, 0, 10, 10, 8, 8, 8, 6, 6, 6, 1, 1, 1]
 
-def save_to_csv(data_dict, filename="output.csv"):
-    # Convert dict to DataFrame (1 row)
-    df_new = pd.DataFrame([data_dict])
-
-    # If file exists, append without header
-    if os.path.exists(filename):
-        df_new.to_csv(filename, mode="a", index=False, header=False)
-    else:
-        df_new.to_csv(filename, mode="w", index=False, header=True)
-
 class Subsession(BaseSubsession):
     pass
 
@@ -53,8 +43,8 @@ class Player(BasePlayer):
     x = models.CurrencyField()
     purchase = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], widget=widgets.RadioSelectHorizontal, label='')#, label='Do you want to purchase this lottery ticket?', )
     
-    price_t1 = models.CurrencyField()
-    price_t2 = models.CurrencyField()
+    price_t1 = models.IntegerField()
+    price_t2 = models.IntegerField()
 
     selected_round = models.IntegerField()
     random_draw_1 = models.IntegerField()
@@ -122,6 +112,18 @@ def calculate_payoff(player: Player):
     
 #    print(player.payoff)
 
+def save_to_csv(data_dict, filename="output.csv"):
+    # Convert dict to DataFrame (1 row)
+    df_new = pd.DataFrame([data_dict])
+
+    # If file exists, append without header
+    if os.path.exists(filename):
+        df_new.to_csv(filename, mode="a", index=False, header=False)
+    else:
+        df_new.to_csv(filename, mode="w", index=False, header=True)
+
+
+
 #-----------------------------------------------------------------------------
 # PAGES
 class Welcome(Page):
@@ -134,7 +136,6 @@ class Welcome(Page):
         if subsession.round_number == 1:
             player.x = participant.x_draw
             draw_order(player)
-            return True
 
 
 class Decision(Page):
@@ -145,11 +146,22 @@ class Decision(Page):
         session = player.session
         subsession = player.subsession
         participant = player.participant
-        player.price_t1 = cu(participant.price_order_t1[subsession.round_number-1] )
-        player.price_t2 =cu( participant.price_order_t2[subsession.round_number-1] )
+        player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
+        player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
         player.x =  ( participant.x_draw )
         return participant.treatment != 1
 
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        save_to_csv({
+            "participant.label": player.participant.label,
+            "participant.x_draw": player.participant.x_draw,
+            "participant.treatment": player.participant.treatment,
+            "player.purchase": player.purchase,
+            "player.price_t1": (player.price_t1),
+            "player.price_t2": (player.price_t2),
+                # add other variables
+        })
 
 # what should we record for the second stage? 
 class Results(Page):
@@ -160,16 +172,7 @@ class Results(Page):
         return subsession.round_number == C.NUM_ROUNDS
 
 
-    @staticmethod
-    def before_next_page(player, timeout_happened):
-        save_to_csv({
-            "participant.label": player.participant.label,
-            "participant.x_draw": player.participant.x_draw,
-            "participant.treatment": player.participant.treatment,
-            "player.payoff": player.payoff,
-            "player.purchase": player.purchase,
-                # add other variables
-        })
+    
 #-----------------------------------------------------------------------------
 
 
