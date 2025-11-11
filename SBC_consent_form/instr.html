@@ -27,7 +27,7 @@
 <h3>Your decision:</h3>
 {% if participant.treatment == 0 %}
 <p>Today, you can purchase the lottery ticket.</p>
-<p><i>Note:</i> If you do not purchase the lottery ticket today, you cannot purchase it in part 2. Your payment in this study depends only on the decisions that you make today and you do not make decisions in part 2.</p>
+<p><i>Note:</i> You cannot purchase the lottery ticket in part 2. Your only opportunity to purchase the ticket is today. Your payment in this study depends only on the decisions that you make today and you do not make decisions in part 2.</p>
 {% endif %}
 {% if participant.treatment == 1 %}
 <p>In part 2 of this study next week, you can purchase the lottery ticket. You can decide whether to purchase the ticket <i>after learning the outcome of Lottery 1</i>, so whether Lottery 1 pays you £{{ session.config.A_BAR }} or £{{ participant.x_draw }}. However, you will make a decision before learning the outcome of Lottery 2. Your payment in this study depends only on the decisions that you make in part 2 and you do not make decisions today.</p>
@@ -54,7 +54,7 @@
 
 <h3>Payment</h3>
 <p>
-To be able to purchase the lottery ticket, you will receive a budget of £{{ C.ENDOWMENT }} in this study. At the end of both parts of the study, any payments for purchasing {% if participant.treatment == 2 %} the option and {% endif %} the lottery ticket will be subtracted from that budget. You will receive the remaining budget as a bonus payment.</p>
+To be able to purchase the lottery ticket, you will receive a budget of £{{ C.ENDOWMENT }} in this study. At the end of part 2 of the study, any payments for purchasing {% if participant.treatment == 2 %} the option and {% endif %} the lottery ticket will be subtracted from that budget. You will receive the remaining budget as a bonus payment.</p>
 
 <h3>Today's decision</h3>
 {% if participant.treatment == 0 %}
