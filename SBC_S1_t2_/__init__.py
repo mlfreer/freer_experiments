@@ -38,7 +38,7 @@ class Subsession(BaseSubsession):
 class Group(BaseGroup):
 	pass
 
-
+ 
 class Player(BasePlayer):
 	#prolificID = models.StringField()	
 	# test variabbles:
@@ -72,6 +72,7 @@ def draw_order(player: Player):
 		pricelist_t2 = list( [C.PRICES_T2[participant.treatment][j] for j in indexes ] )
 		participant.price_order_t1 = pricelist_t1
 		participant.price_order_t2 = pricelist_t2
+		participant.indexes = indexes
 
 
 def retrieve_data(player):
@@ -101,15 +102,30 @@ def retrieve_data(player):
 	# assigning the prices:
 	participant = player.participant
 	subsession = player.subsession
+	
+	# retrieving prices:
 	player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
 	player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
-
-
-	rows = df[(df['participant.label'] == label) & (df['player.price_t1'] == player.price_t1) ]
-	print(rows, '\n', player.price_t1, '\n', participant.label, '\n')
+	# retrieiving index:
+	index = participant.indexes[subsession.round_number-1]
+	
+	rows = df[(df['participant.label'] == label) & (df['player.price_t1'] == player.price_t1) & (df['player.price_t2'] == player.price_t2) & (df['participant.indexes'].astype(int) == index)]
+	print(rows, '\n', player.price_t1, '\n', participant.label, '\n', index)
 	if rows.empty:
 		return  # nothing recorded for this label
 	
+	print(rows["player.random_draw_1"].squeeze().astype(int))
+
+	# recording random_draw_1
+	temp = float(rows["player.random_draw_1"].squeeze())
+	temp = int(temp)
+	player.random_draw_1 = temp
+
+	#recording random draw 2
+	temp = float(rows["player.random_draw_2"].squeeze())
+	temp = int(temp)
+	player.random_draw_2 = temp
+	#player.random_draw_1 = rows["player.random_draw_1"].squeeze().astype(int)
 
 	
 
@@ -171,7 +187,8 @@ class ResultsWaitPage(WaitPage):
 
 
 class Results(Page):
-	pass
+	def is_displayed(player):
+		return player.round_number == C.NUM_ROUNDS
 
 
 page_sequence = [

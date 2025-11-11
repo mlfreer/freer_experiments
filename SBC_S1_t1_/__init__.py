@@ -1,5 +1,6 @@
 from otree.api import *
 import pandas as pd
+import random
 import os
 
 
@@ -70,6 +71,7 @@ def draw_order(player: Player):
         pricelist_t2 = list( [C.PRICES_T2[participant.treatment][j] for j in indexes ] )
         participant.price_order_t1 = pricelist_t1
         participant.price_order_t2 = pricelist_t2
+        participant.indexes = indexes
 
 
 def calculate_payoff(player: Player):
@@ -153,13 +155,21 @@ class Decision(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
+
+        # generate the random draws in the first stage of the experiment:
+        player.random_draw_1 = random.randint(0,1)
+        player.random_draw_2 = random.randint(0,1)
+        index = player.participant.indexes[player.subsession.round_number-1]
         save_to_csv({
             "participant.label": player.participant.label,
             "participant.x_draw": player.participant.x_draw,
             "participant.treatment": player.participant.treatment,
             "player.purchase": player.purchase,
             "player.price_t1": (player.price_t1),
-            "player.price_t2": (player.price_t2),
+			"player.price_t2": (player.price_t2),
+			"player.random_draw_1": player.random_draw_1,
+			"player.random_draw_2": player.random_draw_2,
+            "participant.indexes": index,
                 # add other variables
         })
 

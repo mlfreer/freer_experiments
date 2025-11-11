@@ -305,7 +305,8 @@ PARTICIPANT_FIELDS = [
     'selected_round', 
     'params',
     'x_draw',
-    'treatment'
+    'treatment',
+    'indexes',
 ]
 SESSION_FIELDS = [ ]
 participation_fee = 5

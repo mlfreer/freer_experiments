@@ -34,7 +34,7 @@
 {% endif %}
 
     <ul>
-    <li><b>Lottery 1</b>: Pays £{{ session.config.A_BAR }} if the coin flip results in heads, and £{{ x_draw }} if it results in tails.</li>
+    <li><b>Lottery 1</b>: Pays {% if player.random_draw_1 == 1%} £{{ session.config.A_BAR }} {% else  %} £{{ x_draw }} {% endif %} (resolved uncertainty) </li>
     <li><b>Lottery 2</b>: Pays £{{ session.config.A_BAR }} if the coin flip results in heads, and £0 if it results in tails.</li>
 </ul>
 
