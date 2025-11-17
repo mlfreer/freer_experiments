@@ -1,3 +1,4 @@
+from operator import index
 from otree.api import *
 import pandas as pd
 import random
@@ -180,6 +181,16 @@ class Results(Page):
     def is_displayed(player: Player):
         subsession = player.subsession
         return subsession.round_number == C.NUM_ROUNDS
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        if treatment ==1:
+            save_to_csv({
+                "participant.label": player.participant.label,
+                "participant.x_draw": player.participant.x_draw,
+                "participant.treatment": player.participant.treatment,
+                # add other variables
+            })
 
 
     

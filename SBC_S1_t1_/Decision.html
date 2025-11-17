@@ -14,43 +14,46 @@
 <p>
     This round, the price is <b>{{ player.price_t1 }}</b>.
     <br><br>
-   Do you want to purchase the following lottery ticket for {{ player.price_t1 }}?
-    <br>
-</p>
+     Do you want to purchase the following lottery ticket for <b>{{ player.price_t1 }}</b>? &nbsp; &nbsp;
+
 {% elif participant.treatment == 2 %}
 <p>
     This round, the option price is <b>{{ player.price_t1 }}</b> and lottery price is <b>{{ player.price_t2 }}</b>.
     <br><br>
-   Do you want to purchase the option to buy the following lottery ticket for {{ player.price_t1 }}?
-    <br>
-</p>
+   Do you want to purchase the option to buy the following lottery ticket for {{ player.price_t1 }}? &nbsp; &nbsp;
 {% elif participant.treatment == 3 %}
 <p>
     This round, the price is <b>{{ player.price_t1 }}</b> with the possibility of the refund of <b>{{ player.price_t2 }}</b>.
     <br><br>
-   Do you want to purchase the following lottery ticket for {{ player.price_t1 }}?
-    <br>
-</p>
+   Do you want to purchase the following lottery ticket for {{ player.price_t1 }}? &nbsp; &nbsp;
 {% endif %}
 
+
+
+<!-- Do you want to purchase this lottery ticket? &nbsp; &nbsp; -->
+    <input type="radio" name="purchase" value="True"><b>YES</b></input> &nbsp; &nbsp;
+    <input type="radio" name="purchase" value="False"><b>NO</b></input>
+</p>
+    <br>
+
+<div style="float: center; text-align: right;">
+{{ next_button }}
+</div>
+
+<br>
+
+
+<i>Reminder lottery ticket consists of the following two lotteries: </i>  
+<br>
     <ul>
     <li><b>Lottery 1</b>: Pays £{{ session.config.A_BAR }} if the coin flip results in heads, and £{{ player.x }} if it results in tails.</li>
     <li><b>Lottery 2</b>: Pays £{{ session.config.A_BAR }} if the coin flip results in heads, and £0 if it results in tails.</li>
 </ul>
 
 
-Do you want to purchase this lottery ticket? &nbsp; &nbsp;
-    <input type="radio" name="purchase" value="True"><b>YES</b></input> &nbsp; &nbsp;
-    <input type="radio" name="purchase" value="False"><b>NO</b></input>
-
-
 </font>
 <br>
 
-
-<div style="float: center; text-align: right;">
-{{ next_button }}
-</div>
 
 {{ comment }}
 {{ include C.INSTRUCTIONS_TEMPLATE }}

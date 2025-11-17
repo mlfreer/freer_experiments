@@ -168,7 +168,7 @@ class Decision(Page):
 		player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
 		player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
 		x_draw = participant.x_draw # temp variable for x_draw
-		return participant.treatment != 1
+		return participant.treatment != 0
 	
 	@staticmethod
 	def vars_for_template(player: Player):
