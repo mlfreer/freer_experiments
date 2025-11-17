@@ -129,7 +129,7 @@ def save_to_csv(data_dict, filename="output.csv"):
 
 #-----------------------------------------------------------------------------
 # PAGES
-class Welcome(Page):
+class ExperimentStarts(Page):
     form_model = 'player'
     @staticmethod
     def is_displayed(player: Player):
@@ -139,6 +139,8 @@ class Welcome(Page):
         if subsession.round_number == 1:
             player.x = participant.x_draw
             draw_order(player)
+        
+        return player.round_number == 1
 
 
 class Decision(Page):
@@ -184,11 +186,14 @@ class Results(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
-        if treatment ==1:
+        if player.participant.treatment == 1:
             save_to_csv({
                 "participant.label": player.participant.label,
                 "participant.x_draw": player.participant.x_draw,
                 "participant.treatment": player.participant.treatment,
+                "player.price_t1": (player.price_t1),
+			    "player.price_t2": (player.price_t2),
+                "participant.indexes": index,
                 # add other variables
             })
 
@@ -210,7 +215,7 @@ class CompletionPage(Page):
 
 
 # ORDER
-page_sequence = [Welcome,
+page_sequence = [ExperimentStarts,
                 Decision, 
                 Results,
                 CompletionPage]

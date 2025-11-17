@@ -17,6 +17,10 @@ class C(BaseConstants):
     # QUIZ ANSWERS:
     QUIZ_ANSWERS = [1,0,3]
 
+    # INTEGERS TO INPUT IN THE EXAMPLE PAGE:
+    EXAMPLE_ANSWERS = [0,0,0]
+
+    
 
 
 class Subsession(BaseSubsession):
@@ -38,6 +42,12 @@ class Player(BasePlayer):
     quiz_attempts = models.IntegerField(initial = 0)
     return_study = models.IntegerField(initial = 0)
     # Prolific rule: 3 fails => return the studys
+
+    # variables for the example page: 
+    e1 = models.IntegerField()
+    e2 = models.IntegerField()
+    e3 = models.IntegerField()
+
 
 
 # FUNCTIONS:
@@ -84,6 +94,17 @@ class Instructions(Page):
             example_sum=session.config['A_BAR'] + participant.x_draw
         )
 
+class Example(Page):
+    form_model = 'player'
+    form_fields = ['e1','e2','e3']
+
+    @staticmethod
+    def is_displayed(player):
+        return (player.round_number == 1) and (player.return_study == False)
+
+    def error_message(player, value):
+        if (value['e1']!=C.EXAMPLE_ANSWERS[0]) or (value['e2']!=C.EXAMPLE_ANSWERS[1]) or (value['e3']!=C.EXAMPLE_ANSWERS[2]):
+            return 'Wrong answer! Please try again!'
 
 class Quiz(Page):
     form_model = 'player'
@@ -111,6 +132,8 @@ class Quiz(Page):
 
 
 
+
 page_sequence = [ConsentForm,  
+                Example,
                 Instructions,
                 Quiz]

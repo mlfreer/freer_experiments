@@ -3,13 +3,13 @@
 {{ endblock }}
 {{ block content }}
 
-<div style="width: 100%; margin: 0 auto; padding: 1em; font-size: 1.25em; box-sizing: border-box;">
+<div style="width: 100%; margin: 0 auto; padding: 2em; font-size: 1.25em; box-sizing: border-box;">
 
 <div style="background-color: #fff3cd; border: 0.15em solid #ffc107; padding: 1em 1.5em; margin-top: 1.5em; border-radius: 0.4em;">
     <p style="font-size: 1.2em; margin-bottom: 0.6em; line-height: 1.05;"><i>The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
     <ul style="list-style-type: none; padding-left: 0; font-size: 1.15em;">
-        <li style="padding: 0.5em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
-            <b>Lottery 1</b>: Pays {% if player.random_draw_1 == 1%} <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> {% else %} <span style="color: blue; font-size: 1.3em;"><b>£{{ x_draw }}</b></span> {% endif %} (resolved uncertainty)
+        <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
+            <b>Lottery 1</b>: Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> if the coin flip results in <b>heads</b>, and <span style="color: blue; font-size: 1.3em;"><b>£{{ player.x }}</b></span> if it results in <b>tails</b>.
         </li>
         <li style="padding: 0em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
             <b>Lottery 2</b>: Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> if the coin flip results in <b>heads</b>, and <span style="color: blue; font-size: 1.3em;"><b>£0</b></span> if it results in <b>tails</b>.

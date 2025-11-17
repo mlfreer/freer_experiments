@@ -46,7 +46,8 @@ class Player(BasePlayer):
 	q2 = models.StringField(label="Question 2")
 	q3 = models.StringField(label="Question 2")
 
-	purchase = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], widget=widgets.RadioSelectHorizontal, label='')#, label='Do you want to purchase this lottery ticket?', )
+	purchase_t1 = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], widget=widgets.RadioSelectHorizontal, label='')#, label='Do you want to purchase this lottery ticket?', )
+	purchase_t2 = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], widget=widgets.RadioSelectHorizontal, label='')#, label='Do you want to purchase this lottery ticket?', )
 	
 	price_t1 = models.IntegerField()
 	price_t2 = models.IntegerField()
@@ -99,36 +100,47 @@ def retrieve_data(player):
 	csv_path = os.path.join(root_dir, 'output.csv')
 	df = pd.read_csv(csv_path)
 
-	# assigning the prices:
+	if participant.treatment != 1:
+		# assigning the prices:
+		participant = player.participant
+		subsession = player.subsession
+	
+		# retrieving prices:
+		player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
+		player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
+		# retrieiving index:
+		index = participant.indexes[subsession.round_number-1]
+	
+		rows = df[(df['participant.label'] == label) & (df['player.price_t1'] == player.price_t1) & (df['player.price_t2'] == player.price_t2) & (df['participant.indexes'].astype(int) == index)]
+		print(rows, '\n', player.price_t1, '\n', participant.label, '\n', index)
+		
+		# check for the mistakes in the data set
+		if rows.empty:
+			print('Could not find matching row in output.csv for participant:', label)
+			return  # nothing recorded for this label
+	
+		print(rows["player.random_draw_1"].squeeze().astype(int))
+
+		# recording random_draw_1
+		temp = float(rows["player.random_draw_1"].squeeze())
+		temp = int(temp)
+		player.random_draw_1 = temp
+
+		#recording random draw 2
+		temp = float(rows["player.random_draw_2"].squeeze())
+		temp = int(temp)
+		player.random_draw_2 = temp
+
+		# recording the t=1 decision:
+		player.purchase_t1 = bool( int( rows["player.purchase"].squeeze() ) )
+
+	
+def compute_payoff(player: Player):
+	import random
 	participant = player.participant
 	subsession = player.subsession
-	
-	# retrieving prices:
-	player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
-	player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
-	# retrieiving index:
-	index = participant.indexes[subsession.round_number-1]
-	
-	rows = df[(df['participant.label'] == label) & (df['player.price_t1'] == player.price_t1) & (df['player.price_t2'] == player.price_t2) & (df['participant.indexes'].astype(int) == index)]
-	print(rows, '\n', player.price_t1, '\n', participant.label, '\n', index)
-	if rows.empty:
-		return  # nothing recorded for this label
-	
-	print(rows["player.random_draw_1"].squeeze().astype(int))
-
-	# recording random_draw_1
-	temp = float(rows["player.random_draw_1"].squeeze())
-	temp = int(temp)
-	player.random_draw_1 = temp
-
-	#recording random draw 2
-	temp = float(rows["player.random_draw_2"].squeeze())
-	temp = int(temp)
-	player.random_draw_2 = temp
-	#player.random_draw_1 = rows["player.random_draw_1"].squeeze().astype(int)
 
 	
-
 
 #--------------------------------------------------------
 # PAGES
@@ -159,7 +171,7 @@ class ExperimentStarts(Page):
 # PAGE WITH MULTIPLE STEPS (BACK AND FORTH BUTTON
 class Decision(Page):
 	form_model = 'player'
-	form_fields = ['purchase']
+	form_fields = ['purchase_t2']
 	@staticmethod
 	def is_displayed(player: Player):
 		session = player.session
@@ -180,10 +192,6 @@ class Decision(Page):
 			price_t2=player.price_t2,
 			x_draw=player.participant.x_draw,
 		)
-
-class ResultsWaitPage(WaitPage):
-	def is_displayed(player):
-		return player.round_number == C.NUM_ROUNDS
 
 
 class Results(Page):

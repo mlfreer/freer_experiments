@@ -1,59 +1,70 @@
 {{ extends 'global/Page.html' }}
-{{ block title }}  Decision (Round {{ subsession.round_number }} of {{ C.NUM_ROUNDS }})
+{{ block title }}  Decision (<span style="color: blue; font-size: 1.2em;"><b>Round {{ subsession.round_number }} of {{ C.NUM_ROUNDS }}</b></span>)
 {{ endblock }}
 
 {{ block content }}
 
+<div style="width: 100%; margin: 0; padding: 2em; font-size: 1.3em; box-sizing: border-box;">
 
-<br>
-
-<font size = 4>
-
-
-{%if participant.treatment == 0 %}
-<p>
-    This round, the price is <b>{{ player.price_t1 }}</b>.
-    <br><br>
-   Do you want to purchase the following lottery ticket for {{ player.price_t1 }}?
-    <br>
-</p>
-{% elif participant.treatment == 2 %}
-<p>
-    This round, the option price is <b>{{ player.price_t1 }}</b> and lottery price is <b>{{ player.price_t2 }}</b>.
-    <br><br>
-   Do you want to purchase the option to buy the following lottery ticket for {{ player.price_t1 }}?
-    <br>
-</p>
-{% elif participant.treatment == 3 %}
-<p>
-    This round, the price is <b>{{ player.price_t1 }}</b> with the possibility of the refund of <b>{{ player.price_t2 }}</b>.
-    <br><br>
-   Do you want to excercise the right purchase the following lottery ticket for {{ player.price_t2 }}?
-    <br>
-</p>
-{% endif %}
-
-    <ul>
-    <li><b>Lottery 1</b>: Pays {% if player.random_draw_1 == 1%} £{{ session.config.A_BAR }} {% else  %} £{{ x_draw }} {% endif %} (resolved uncertainty) </li>
-    <li><b>Lottery 2</b>: Pays £{{ session.config.A_BAR }} if the coin flip results in heads, and £0 if it results in tails.</li>
-</ul>
-
-
-Do you want to purchase this lottery ticket? &nbsp; &nbsp;
-    <input type="radio" name="purchase" value="True"><b>YES</b></input> &nbsp; &nbsp;
-    <input type="radio" name="purchase" value="False"><b>NO</b></input>
-
-
-</font>
-<br>
-
-
-<div style="float: center; text-align: right;">
-{{ next_button }}
+<div style="background-color: #f5f5f5; border: 0.15em solid #999999; padding: 0.5em; margin-bottom: 1.5em; border-radius: 0.4em; text-align: center;">
+    {%if participant.treatment == 0 %}
+        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
+            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>.
+        </p>
+    {% elif participant.treatment == 2 %}
+        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
+            This round, the option price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span> and lottery price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b></span>.
+        </p>
+    {% elif participant.treatment == 3 %}
+        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
+            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span> with the possibility of the refund of <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b></span>.
+        </p>
+    {% endif %}
 </div>
 
-{{ comment }}
-{{ include C.INSTRUCTIONS_TEMPLATE }}
-{{ endcomment }}
+<div style="background-color: #f5f5f5; border: 0.15em solid #999999; padding: 0.5em; margin-bottom: 1.5em; border-radius: 0.4em; text-align: center;">
+    {%if participant.treatment == 0 %}
+        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
+            Do you want to purchase the following lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t1 }}</b></span>?
+        </p>
+    {% elif participant.treatment == 2 %}
+        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
+            Do you want to purchase the option to buy the following lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t1 }}</b></span>?
+        </p>
+    {% elif participant.treatment == 3 %}
+        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
+            Do you want to exercise the right to purchase the following lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t2 }}</b></span>?
+        </p>
+    {% endif %}
+    
+    <div style="margin-top: .5em;">
+        <label style="display: inline-block; margin: 0 1em; cursor: pointer;">
+            <input type="radio" name="purchase" value="True" style="margin-right: 0.5em; transform: scale(1.5); cursor: pointer;">
+            <span style="color: green; font-size: 1.45em;"><b>YES</b></span>
+        </label>
+        <label style="display: inline-block; margin: 0 1em; cursor: pointer;">
+            <input type="radio" name="purchase" value="False" style="margin-right: 0.5em; transform: scale(1.5); cursor: pointer;">
+            <span style="color: red; font-size: 1.45em;"><b>NO</b></span>
+        </label>
+    </div>
+</div>
+
+<div style="text-align: right; margin-top: 1.5em;">
+    <button class="otree-btn-next btn btn-primary" style="font-size: 1.15em; padding: 0.6em 1.5em; border-radius: 0.5em;">Next</button>
+</div>
+
+<div style="background-color: #fff3cd; border: 0.15em solid #ffc107; padding: 0.5em; margin-top: 1.5em; border-radius: 0.4em;">
+    <p style="font-size: 1.25em; margin-bottom: 0.6em; line-height: 1.05;"><i>The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
+    <ul style="list-style-type: none; padding-left: 0; font-size: 1.2em;">
+        <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
+            <b>Lottery 1</b>: Pays {% if player.random_draw_1 == 1%} <b>£{{ session.config.A_BAR }}</b> {% else %} <b>£{{ x_draw }}</b> {% endif %} (resolved uncertainty)
+        </li>
+        <li style="padding: 0em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
+            <b>Lottery 2</b>: Pays <b>£{{ session.config.A_BAR }}</b> if the coin flip results in <b>heads</b>, and <b>£0</b> if it results in <b>tails</b>.
+        </li>
+    </ul>
+</div>
+
+</div>
 
 {{ endblock }}
