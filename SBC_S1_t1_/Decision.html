@@ -54,7 +54,7 @@
 </div>
 
 <div style="background-color: #fff3cd; border: 0.15em solid #ffc107; padding: 0.5em; margin-top: 1.5em; border-radius: 0.4em;">
-    <p style="font-size: 1.25em; margin-bottom: 0.6em; line-height: 1.05;"><i>Reminder: The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
+    <p style="font-size: 1.25em; margin-bottom: 0.6em; line-height: 1.05;"><i>Reminder: The lottery ticket consists of the following <b>two lotteries</b></i></p>
     <ul style="list-style-type: none; padding-left: 0; font-size: 1.2em;">
         <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
             <b>Lottery 1</b>: Pays <b>£{{ session.config.A_BAR }}</b> if the coin flip results in <b>heads</b>, and <b>£{{ player.x }}</b> if it results in <b>tails</b>.
@@ -63,6 +63,7 @@
             <b>Lottery 2</b>: Pays <b>£{{ session.config.A_BAR }}</b> if the coin flip results in <b>heads</b>, and <b>£0</b> if it results in <b>tails</b>.
         </li>
     </ul>
+    <p style="font-size: 1.2em; margin-bottom: 0.6em; line-height: 1.05;">You can earn the sum of the earnings from both lotteries if you purchase the lottery using your budget of £{{ C.ENDOWMENT }}.</p>
 </div>
 
 </div>
