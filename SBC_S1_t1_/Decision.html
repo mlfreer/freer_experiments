@@ -13,11 +13,11 @@
         </p>
     {% elif participant.treatment == 2 %}
         <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
-            This round, the option price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>. <br> Only if you purchase this option, you can purchase the lottery for <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b> in part 2.</span>.
+            This round, the option price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span> and lottery price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b></span>.
         </p>
     {% elif participant.treatment == 3 %}
         <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
-            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>. <br> Only if you purchase the lottery, you have the possibility of using the refund option and you will be refunded <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b> in part 2.</span>.
+            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span> with the possibility of the refund of <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b></span>.
         </p>
     {% endif %}
 </div>
@@ -54,7 +54,7 @@
 </div>
 
 <div style="background-color: #fff3cd; border: 0.15em solid #ffc107; padding: 0.5em; margin-top: 1.5em; border-radius: 0.4em;">
-    <p style="font-size: 1.25em; margin-bottom: 0.6em; line-height: 1.05;"><i>Reminder: The lottery ticket consists of the following <b>two lotteries</b></i></p>
+    <p style="font-size: 1.25em; margin-bottom: 0.6em; line-height: 1.05;"><i>Reminder: The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
     <ul style="list-style-type: none; padding-left: 0; font-size: 1.2em;">
         <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
             <b>Lottery 1</b>: Pays <b>£{{ session.config.A_BAR }}</b> if the coin flip results in <b>heads</b>, and <b>£{{ player.x }}</b> if it results in <b>tails</b>.
@@ -63,7 +63,6 @@
             <b>Lottery 2</b>: Pays <b>£{{ session.config.A_BAR }}</b> if the coin flip results in <b>heads</b>, and <b>£0</b> if it results in <b>tails</b>.
         </li>
     </ul>
-    <p style="font-size: 1.2em; margin-bottom: 0.6em; line-height: 1.05;">You can earn the sum of the earnings from both lotteries if you purchase the lottery using your budget of {{ C.ENDOWMENT }}.</p>
 </div>
 
 </div>

@@ -134,6 +134,6 @@ class Quiz(Page):
 
 
 page_sequence = [ConsentForm,  
-                Example,
+#                Example,
                 Instructions,
                 Quiz]

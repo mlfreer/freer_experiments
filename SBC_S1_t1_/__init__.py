@@ -139,7 +139,7 @@ class ExperimentStarts(Page):
         if subsession.round_number == 1:
             player.x = participant.x_draw
             draw_order(player)
-        
+       # no choices for static, buy at t=2 treatment at this stage
         return player.round_number == 1
 
 
