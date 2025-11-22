@@ -11,6 +11,10 @@
         <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
             This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>.
         </p>
+    {% elif participant.treatment == 1 %}
+        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
+            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b></span>.
+        </p>
     {% elif participant.treatment == 2 %}
         <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
             This round, the option price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span> and the lottery price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b></span>.
@@ -27,6 +31,10 @@
         <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
             Do you want to purchase the lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t1 }}</b></span>?
         </p>
+    {% elif participant.treatment == 1 %}
+        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
+            Do you want to purchase the lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t2 }}</b></span>?
+        </p>
     {% elif participant.treatment == 2 %}
         <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
             Do you want to buy the option to purchase the lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t1 }}</b></span>?
@@ -39,11 +47,11 @@
     
     <div style="margin-top: .5em;">
         <label style="display: inline-block; margin: 0 1em; cursor: pointer;">
-            <input type="radio" name="purchase" value="True" style="margin-right: 0.5em; transform: scale(1.5); cursor: pointer;">
+            <input type="radio" name="purchase_t2" value="True" style="margin-right: 0.5em; transform: scale(1.5); cursor: pointer;">
             <span style="color: green; font-size: 1.45em;"><b>YES</b></span>
         </label>
         <label style="display: inline-block; margin: 0 1em; cursor: pointer;">
-            <input type="radio" name="purchase" value="False" style="margin-right: 0.5em; transform: scale(1.5); cursor: pointer;">
+            <input type="radio" name="purchase_t2" value="False" style="margin-right: 0.5em; transform: scale(1.5); cursor: pointer;">
             <span style="color: red; font-size: 1.45em;"><b>NO</b></span>
         </label>
     </div>

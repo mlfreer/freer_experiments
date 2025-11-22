@@ -61,7 +61,11 @@ def retrieve_data(player):
     #root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     #csv_path = os.path.join(root_dir, 'output.csv')
     
-    df = pd.read_csv('./output.csv')
+    try:
+        df = pd.read_csv('./output.csv', on_bad_lines='skip')
+    except TypeError:
+        # For older pandas versions that don't support on_bad_lines
+        df = pd.read_csv('./output.csv', error_bad_lines=False, warn_bad_lines=True)
 
     # Find the matching row for this participant
     print(df)

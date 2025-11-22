@@ -167,12 +167,12 @@ class Decision(Page):
             "participant.label": player.participant.label,
             "participant.x_draw": player.participant.x_draw,
             "participant.treatment": player.participant.treatment,
-            "player.purchase": player.purchase,
             "player.price_t1": (player.price_t1),
 			"player.price_t2": (player.price_t2),
+            "participant.indexes": index,
+            "player.purchase": player.purchase,
 			"player.random_draw_1": player.random_draw_1,
 			"player.random_draw_2": player.random_draw_2,
-            "participant.indexes": index,
                 # add other variables
         })
 

@@ -61,6 +61,8 @@ class Player(BasePlayer):
 	random_draw_2 = models.IntegerField()
 	treatment = models.StringField()
 
+	payoff_calculated = models.BooleanField(default=False)
+
 
 #--------------------------------------------------------
 # FUNCTIONS:
@@ -94,6 +96,7 @@ def retrieve_data(player):
 	"""
 	import pandas as pd
 	import os
+	import random
 
 	participant = player.participant
 	label = participant.label
@@ -106,14 +109,15 @@ def retrieve_data(player):
 	#df = pd.read_csv("output.csv")
 	print(df)
 
+	# assigning the prices:
+	participant = player.participant
+	subsession = player.subsession
+
+	# retrieving prices:
+	player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
+	player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
+
 	if participant.treatment != 1:
-		# assigning the prices:
-		participant = player.participant
-		subsession = player.subsession
-	
-		# retrieving prices:
-		player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
-		player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
 		# retrieiving index:
 		index = participant.indexes[subsession.round_number-1]
 	
@@ -139,6 +143,12 @@ def retrieve_data(player):
 
 		# recording the t=1 decision:
 		player.purchase_t1 = bool( int( rows["player.purchase"].squeeze() ) )
+	else:
+		if not hasattr(participant, 'random_draws_generated') or not participant.random_draws_generated:
+			player.random_draw_1 = random.randint(0,1)
+			player.random_draw_2 = random.randint(0,1)
+			player.random_draws_generated = True
+
 
 def select_random_round(player: Player):
 	import random
@@ -151,6 +161,9 @@ def select_random_round(player: Player):
 	player.selected_round = selected_round
 	
 def compute_payoff(player: Player):
+	if player.field_maybe_none('payoff_calculated'):
+		return
+	
 	participant = player.participant
 	subsession = player.subsession
 	session = player.session
@@ -180,32 +193,33 @@ def compute_payoff(player: Player):
 				if p.purchase_t1:
 					player.earnings = int(endowment - price_t1 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2)
 				else:
-					player.earnings = endowment
+					player.earnings = int(endowment)
 				print(f"Treatment 0 - purchase_t1: {p.purchase_t1}, earnings: {player.earnings}")
 
 			elif participant.treatment == 1:  # static, buy at t=2
 				if p.purchase_t2:
-					player.earnings = endowment - price_t2 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2
+					player.earnings = int(endowment - price_t2 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2)
 				else:
-					player.earnings = endowment
+					player.earnings = int(endowment)
 			elif participant.treatment == 2:  # dynamic, option
 				if p.purchase_t1:
 					if p.purchase_t2:
-						player.earnings = endowment - price_t1 - price_t2 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2
+						player.earnings = int(endowment - price_t1 - price_t2 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2)
 					else:
-						player.earnings =  endowment - price_t1
+						player.earnings =  int(endowment - price_t1)
 				else:
-					player.earnings = endowment
+					player.earnings = int(endowment)
 			elif participant.treatment == 3:  # dynamic, refund
 				if p.purchase_t1:
 					if p.purchase_t2:
-						player.earnings = endowment - price_t1 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2
+						player.earnings = int(endowment - price_t1 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2)
 					else:
-						player.earnings = endowment - price_t1 + price_t2
+						player.earnings = int(endowment - price_t1 + price_t2)
 				else:
-					player.earnings = endowment
+					player.earnings = int(endowment)
 			
 			print(f"Final earnings set to: {player.earnings}")
+			player.payoff_calculated = True # marking the fact that payoff is calculated
 			break  # Found the selected round, no need to continue
 
 #--------------------------------------------------------
@@ -243,7 +257,7 @@ class ExperimentStarts(Page):
 		)
 
 
-# PAGE WITH MULTIPLE STEPS (BACK AND FORTH BUTTON
+# PAGE WITH MULTIPLE STEPS (BACK AND FORTH BUTTON) ?? 
 class Decision(Page):
 	form_model = 'player'
 	form_fields = ['purchase_t2']
