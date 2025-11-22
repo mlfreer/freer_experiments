@@ -94,6 +94,15 @@ class Example(Page):
     def is_displayed(player):
         return (player.round_number == 1) and (player.return_study == False)
 
+    @staticmethod
+    def vars_for_template(player: Player):
+        session = player.session
+        participant = player.participant
+        return dict(
+            # Used in Example.html to avoid unsupported '+' expressions in templates
+            example_sum=session.config['A_BAR'] + participant.x_draw
+        )
+
     def error_message(player, value):
         if (value['e1']!=C.EXAMPLE_ANSWERS[0]) or (value['e2']!=C.EXAMPLE_ANSWERS[1]) or (value['e3']!=C.EXAMPLE_ANSWERS[2]):
             return 'Wrong answer! Please try again!'

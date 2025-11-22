@@ -72,7 +72,7 @@ def retrieve_data(player):
     row = df.loc[df['participant.label'] == (player.participant.label)].iloc[0]
     
     # Set participant variables from the data
-    player.participant.x_draw = float(row['participant.x_draw'])
+    player.participant.x_draw = int(row['participant.x_draw'])
     player.participant.treatment = int(row['participant.treatment'])
     
 

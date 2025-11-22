@@ -141,6 +141,16 @@ class ExperimentStarts(Page):
             draw_order(player)
        # no choices for static, buy at t=2 treatment at this stage
         return player.round_number == 1
+    
+    @staticmethod
+    def vars_for_template(player: Player):
+        session = player.session
+        participant = player.participant
+        return dict(
+            two_heads_sum = 2*session.config['A_BAR'],
+            heads_tails_sum = session.config['A_BAR'] + participant.x_draw + 2,
+            example_sum= session.config['A_BAR'] + participant.x_draw
+        )
 
 
 class Decision(Page):
@@ -175,6 +185,16 @@ class Decision(Page):
 			"player.random_draw_2": player.random_draw_2,
                 # add other variables
         })
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        session = player.session
+        participant = player.participant
+        return dict(
+            two_heads_sum = 2*session.config['A_BAR'],
+            heads_tails_sum = session.config['A_BAR'] + participant.x_draw + 2,
+            example_sum= session.config['A_BAR'] + participant.x_draw
+        )
 
 # what should we record for the second stage? 
 class Results(Page):

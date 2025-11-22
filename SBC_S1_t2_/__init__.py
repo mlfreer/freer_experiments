@@ -62,6 +62,7 @@ class Player(BasePlayer):
 	treatment = models.StringField()
 
 	payoff_calculated = models.BooleanField(default=False)
+	random_draws_generated = models.BooleanField(default=False)
 
 
 #--------------------------------------------------------
@@ -109,19 +110,23 @@ def retrieve_data(player):
 	#df = pd.read_csv("output.csv")
 	print(df)
 
-	# assigning the prices:
-	participant = player.participant
-	subsession = player.subsession
-
-	# retrieving prices:
-	player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
-	player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
-
 	if participant.treatment != 1:
+		# assigning the prices:
+		participant = player.participant
+		subsession = player.subsession
+	
+		# retrieving prices:
+		player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
+		player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
 		# retrieiving index:
 		index = participant.indexes[subsession.round_number-1]
 	
-		rows = df[(df['participant.label'] == label) & (df['player.price_t1'] == player.price_t1) & (df['player.price_t2'] == player.price_t2) & (df['participant.indexes'].astype(int) == index)]
+		# Coerce potentially malformed index values to numeric safely
+		idx_series = pd.to_numeric(df['participant.indexes'], errors='coerce')
+		rows = df[(df['participant.label'] == label)
+				 & (df['player.price_t1'] == player.price_t1)
+				 & (df['player.price_t2'] == player.price_t2)
+				 & (idx_series == index)]
 		print(rows, '\n', player.price_t1, '\n', participant.label, '\n', index)
 		
 		# check for the mistakes in the data set
@@ -144,7 +149,9 @@ def retrieve_data(player):
 		# recording the t=1 decision:
 		player.purchase_t1 = bool( int( rows["player.purchase"].squeeze() ) )
 	else:
-		if not hasattr(participant, 'random_draws_generated') or not participant.random_draws_generated:
+		if player.field_maybe_none('random_draws_generated'):
+			return
+		else:
 			player.random_draw_1 = random.randint(0,1)
 			player.random_draw_2 = random.randint(0,1)
 			player.random_draws_generated = True
@@ -248,16 +255,24 @@ class ExperimentStarts(Page):
 	@staticmethod
 	def vars_for_template(player):
 		participant = player.participant
+		session = player.session
 		# Load data from stage t1 before drawing any new order.
 		draw_order(player)
 		retrieve_data(player)
+		
+		# Calculate example_sum for instructions
+		a_bar = session.config['A_BAR']
+		x_draw = participant.x_draw
+		example_sum = x_draw + a_bar
+		
 		return dict(
 			treatment=participant.treatment,
-			x_draw=participant.x_draw,
+			x_draw=x_draw,
+			example_sum=example_sum,
 		)
 
 
-# PAGE WITH MULTIPLE STEPS (BACK AND FORTH BUTTON) ?? 
+# PAGE WITH MULTIPLE STEPS (BACK AND FORTH BUTTON
 class Decision(Page):
 	form_model = 'player'
 	form_fields = ['purchase_t2']
@@ -276,11 +291,19 @@ class Decision(Page):
 	def vars_for_template(player: Player):
 		# recovering the data:
 		retrieve_data(player)
+		
+		# Calculate example_sum for instructions
+		participant = player.participant
+		session = player.session
+		a_bar = session.config['A_BAR']
+		x_draw = participant.x_draw
+		example_sum = x_draw + a_bar
 
 		return dict(
 			price_t1=player.price_t1,
 			price_t2=player.price_t2,
-			x_draw=player.participant.x_draw,
+			x_draw=x_draw,
+			example_sum=example_sum,
 		)
 	
 	@staticmethod

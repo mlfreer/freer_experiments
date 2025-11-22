@@ -1,6 +1,23 @@
 {{ block title }}
     The lottery
 {{ endblock }}
+
+{{ block scripts }}
+<script>
+    function open_instructions() {
+        let x = document.getElementById("instructions");
+        let instructions_button = document.getElementById("instructions_button");
+        if (x.style.display === "none") {
+            instructions_button.innerHTML = "Close Your Instructions"
+            x.style.display = "block";
+        } else {
+            instructions_button.innerHTML = "Reveal Instructions"
+            x.style.display = "none";
+        }
+    }
+</script>
+{{ endblock }}
+
 {{ block content }}
 
 <div style="width: 100%; margin: 0 auto; padding: 1em; font-size: 1.25em; box-sizing: border-box;">
@@ -9,7 +26,7 @@
     <p style="font-size: 1.2em; margin-bottom: 0.6em; line-height: 1.05;"><i>The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
     <ul style="list-style-type: none; padding-left: 0; font-size: 1.15em;">
         <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
-            <b>Lottery 1</b>: Pays {% if player.random_draw_1 == 1%} <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> {% else %} <span style="color: blue; font-size: 1.3em;"><b>£{{ x_draw }}</b></span> {% endif %} (resolved uncertainty)
+            <b>Lottery 1</b>: {% if player.random_draw_1 == 1 %}Resulted in <b>Heads</b> – Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span>{% else %}Resulted in <b>Tails</b> – Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ x_draw }}</b></span>{% endif %} (resolved uncertainty)
         </li>
         <li style="padding: 0em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
             <b>Lottery 2</b>: Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> if the coin flip results in <b>heads</b>, and <span style="color: blue; font-size: 1.3em;"><b>£0</b></span> if it results in <b>tails</b>.
@@ -18,9 +35,21 @@
 </div>
 
 <div style="text-align: right; margin-top: 1.5em;">
-    <button class="otree-btn-next btn btn-primary" style="font-size: 1.15em; padding: 0.6em 1.5em; border-radius: 0.5em;">Next</button>
+    <button class="otree-btn-next btn btn-primary" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">Next</button>
+</div>
+
+<div style="text-align: center; margin-top: 1.5em;">
+    <button class="btn btn-warning" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">Reveal Instructions</button>
 </div>
 
 </div>
+
+<div style="display: none" id="instructions">
+    <div class="card bg-light">
+    <div class="card-body">
+{{ include "SBC_consent_form/instr.html" }}
+        </div></div>
+    </div>
+
 
 {{ endblock }}

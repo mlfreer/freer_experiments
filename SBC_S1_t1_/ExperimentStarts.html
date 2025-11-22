@@ -1,6 +1,23 @@
 {{ block title }}
     The lottery
 {{ endblock }}
+
+{{ block scripts }}
+<script>
+    function open_instructions() {
+        let x = document.getElementById("instructions");
+        let instructions_button = document.getElementById("instructions_button");
+        if (x.style.display === "none") {
+            instructions_button.innerHTML = "Close Your Instructions"
+            x.style.display = "block";
+            instructions_button_other.innerHTML = "Reveal Instructions"
+        } else {
+            instructions_button.innerHTML = "Reveal Instructions"
+            x.style.display = "none";
+        }
+    }
+</script>
+{{ endblock }}
 {{ block content }}
 
 <div style="width: 100%; margin: 0 auto; padding: 2em; font-size: 1.25em; box-sizing: border-box;">
@@ -21,9 +38,23 @@
 <p>The study will start on the next screen. One of your decisions may be randomly selected to be paid out to you if you return to part 2 of this study.</p>
 <br>
 <div style="text-align: right; margin-top: 1.5em;">
-    <button class="otree-btn-next btn btn-primary" style="font-size: 1.15em; padding: 0.6em 1.5em; border-radius: 0.5em;">Next</button>
+    <button class="otree-btn-next btn btn-primary" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">Next</button>
 </div>
 
 </div>
+
+
+
+<div style="text-align: center">
+    <button class="btn btn-warning" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">Reveal Instructions</button>
+</div><br>
+
+
+<div style="display: none" id="instructions">
+    <div class="card bg-light">
+    <div class="card-body">
+{{ include "SBC_consent_form/instr.html" }}
+        </div></div>
+    </div>
 
 {{ endblock }}
