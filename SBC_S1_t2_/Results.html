@@ -49,7 +49,7 @@
             {% if treatment == 0 %}
                 <!-- Static, buy at t=1 -->
                 <p style="line-height: 1.6; font-size: 1.1em; margin: 0;">
-                    <strong>At time 1:</strong> You 
+                    <strong>In part 1:</strong> You 
                     {% if purchase_t1 %}
                         <span style="color: #28a745; font-weight: bold;">purchased</span> the lottery ticket for <strong>£{{ price_t1 }}</strong>
                     {% else %}
@@ -60,7 +60,7 @@
             {% elif treatment == 1 %}
                 <!-- Static, buy at t=2 -->
                 <p style="line-height: 1.6; font-size: 1.1em; margin: 0;">
-                    <strong>At time 2:</strong> You 
+                    <strong>In part 2:</strong> You 
                     {% if purchase_t2 %}
                         <span style="color: #28a745; font-weight: bold;">purchased</span> the lottery ticket for <strong>£{{ price_t2 }}</strong>
                     {% else %}
@@ -71,7 +71,7 @@
             {% elif treatment == 2 %}
                 <!-- Dynamic, option -->
                 <p style="line-height: 1.6; font-size: 1.1em; margin-bottom: 0.8em;">
-                    <strong>At time 1:</strong> You 
+                    <strong>In part 1:</strong> You 
                     {% if purchase_t1 %}
                         <span style="color: #28a745; font-weight: bold;">purchased</span> the option for <strong>£{{ price_t1 }}</strong>
                     {% else %}
@@ -80,7 +80,7 @@
                 </p>
                 {% if purchase_t1 %}
                     <p style="line-height: 1.6; font-size: 1.1em; margin: 0;">
-                        <strong>At time 2:</strong> You 
+                        <strong>In part 2:</strong> You 
                         {% if purchase_t2 %}
                             <span style="color: #28a745; font-weight: bold;">exercised</span> the option and paid <strong>£{{ price_t2 }}</strong>
                         {% else %}
@@ -92,7 +92,7 @@
             {% elif treatment == 3 %}
                 <!-- Dynamic, refund -->
                 <p style="line-height: 1.6; font-size: 1.1em; margin-bottom: 0.8em;">
-                    <strong>At time 1:</strong> You 
+                    <strong>In part 1:</strong> You 
                     {% if purchase_t1 %}
                         <span style="color: #28a745; font-weight: bold;">purchased</span> the lottery ticket for <strong>£{{ price_t1 }}</strong>
                     {% else %}
@@ -101,7 +101,7 @@
                 </p>
                 {% if purchase_t1 %}
                     <p style="line-height: 1.6; font-size: 1.1em; margin: 0;">
-                        <strong>At time 2:</strong> You 
+                        <strong>In part 2:</strong> You 
                         {% if purchase_t2 %}
                             <span style="color: #28a745; font-weight: bold;">kept</span> the lottery ticket
                         {% else %}
