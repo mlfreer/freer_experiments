@@ -74,6 +74,9 @@ def retrieve_data(player):
     # Set participant variables from the data
     player.participant.x_draw = int(row['participant.x_draw'])
     player.participant.treatment = int(row['participant.treatment'])
+    player.participant.random_draw_1 = int(row['player.random_draw_1'])
+    player.participant.random_draw_2 = int(row['player.random_draw_2'])
+    
     
 
 

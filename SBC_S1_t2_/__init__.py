@@ -117,7 +117,7 @@ def retrieve_data(player):
 	
 		# retrieving prices:
 		player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
-		player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
+		player.price_t2 = (participant.price_order_t2[subsession.round_number-1] )
 		# retrieiving index:
 		index = participant.indexes[subsession.round_number-1]
 	
@@ -148,13 +148,10 @@ def retrieve_data(player):
 
 		# recording the t=1 decision:
 		player.purchase_t1 = bool( int( rows["player.purchase"].squeeze() ) )
-	else:
-		if player.field_maybe_none('random_draws_generated'):
-			return
-		else:
-			player.random_draw_1 = random.randint(0,1)
-			player.random_draw_2 = random.randint(0,1)
-			player.random_draws_generated = True
+
+	player.random_draw_1 = int(participant.random_draw_1)
+	player.random_draw_2 = int(participant.random_draw_2)
+
 
 
 def select_random_round(player: Player):
@@ -218,7 +215,7 @@ def compute_payoff(player: Player):
 					player.earnings = int(endowment)
 			elif participant.treatment == 3:  # dynamic, refund
 				if p.purchase_t1:
-					if p.purchase_t2:
+					if p.purchase_t2==0:
 						player.earnings = int(endowment - price_t1 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2)
 					else:
 						player.earnings = int(endowment - price_t1 + price_t2)

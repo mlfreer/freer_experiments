@@ -102,7 +102,7 @@
                 {% if purchase_t1 %}
                     <p style="line-height: 1.6; font-size: 1.1em; margin: 0;">
                         <strong>In part 2:</strong> You 
-                        {% if purchase_t2 %}
+                        {% if not purchase_t2 %}
                             <span style="color: #28a745; font-weight: bold;">kept</span> the lottery ticket
                         {% else %}
                             <span style="color: #dc3545; font-weight: bold;">returned</span> the lottery ticket for a refund of <strong>£{{ price_t2 }}</strong>

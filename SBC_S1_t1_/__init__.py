@@ -63,7 +63,7 @@ def draw_order(player: Player):
     session = player.session
     subsession = player.subsession
     participant = player.participant
-    if subsession.round_number == 1:
+    if (subsession.round_number == 1) or (participant.treatment == 1):
         import random
         indexes = list( range(len(C.PRICES_T1[participant.treatment])) )
         random.shuffle(indexes)
@@ -74,46 +74,14 @@ def draw_order(player: Player):
         participant.price_order_t2 = pricelist_t2
         participant.indexes = indexes
 
+        random_draw_1 = random.randint(0, 1)
+        participant.random_draw_1 = random_draw_1
 
-def calculate_payoff(player: Player):
-    session = player.session
-    participant = player.participant
-    print("x")
-    print(player.x)
-    
-    import random
-    random_round = random.randint(1, C.NUM_ROUNDS)
-    player.selected_round = random_round
-    participant.selected_round = random_round
-#    print("selected round was")
-#    print(player.selected_round)
-    player_decision = player.in_round(random_round).purchase
-#    print("decision was")
-#    print(player_decision)
-    
-    random_draw_1 = random.randint(0, 1)
-    player.random_draw_1 = random_draw_1
-#    print("first flip")
-#    print(player.random_draw_1)    
-    random_draw_2 = random.randint(0, 1)
-    player.random_draw_2 = random_draw_2
-#    print("second flip")
-#    print(player.random_draw_2)
-    
-    if player_decision is False:
-        player.payoff = C.ENDOWMENT
-    
-    if player_decision is True:
-        totalpayoff = C.ENDOWMENT - player.in_round(random_round).price_t1 - player.in_round(random_round).price_t2
- #       print("until first part payoff")
- #       print(totalpayoff)    
-        if random_draw_1 == 1:
-            totalpayoff = totalpayoff + player.x
-        elif random_draw_1 == 0:
-            totalpayoff = totalpayoff + session.config['A_BAR']
-        player.payoff = totalpayoff
-    
-#    print(player.payoff)
+        random_draw_2 = random.randint(0, 1)
+        participant.random_draw_2 = random_draw_2
+
+
+
 
 def save_to_csv(data_dict, filename="output.csv"):
     # Convert dict to DataFrame (1 row)
@@ -170,8 +138,9 @@ class Decision(Page):
     def before_next_page(player, timeout_happened):
 
         # generate the random draws in the first stage of the experiment:
-        player.random_draw_1 = random.randint(0,1)
-        player.random_draw_2 = random.randint(0,1)
+        player.random_draw_1 = int(player.participant.random_draw_1)
+        player.random_draw_2 = int(player.participant.random_draw_2)
+
         index = player.participant.indexes[player.subsession.round_number-1]
         save_to_csv({
             "participant.label": player.participant.label,
@@ -180,9 +149,9 @@ class Decision(Page):
             "player.price_t1": (player.price_t1),
 			"player.price_t2": (player.price_t2),
             "participant.indexes": index,
-            "player.purchase": player.purchase,
 			"player.random_draw_1": player.random_draw_1,
 			"player.random_draw_2": player.random_draw_2,
+            "player.purchase": player.purchase,
                 # add other variables
         })
 
@@ -214,7 +183,8 @@ class Results(Page):
                 "player.price_t1": (player.price_t1),
 			    "player.price_t2": (player.price_t2),
                 "participant.indexes": index,
-                # add other variables
+			    "player.random_draw_1": player.participant.random_draw_1,
+			    "player.random_draw_2": player.participant.random_draw_2,
             })
 
 
