@@ -25,15 +25,15 @@
 <div style="background-color: #f5f5f5; border: 0.15em solid #999999; padding: 0.5em; margin-bottom: 1.5em; border-radius: 0.4em; text-align: center;">
     {%if participant.treatment == 0 %}
         <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
-            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>.
+            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b>.</span>
         </p>
     {% elif participant.treatment == 2 %}
         <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
-            This round, the option price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>. If you buy this option, you can decide to purchase lottery for a price of <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b> in part 2.</span>.
+            This round, the option price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>. <br> In part 2, if you buy this option, you can decide to purchase lottery for a price of <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b> (after learning the outcome of lottery 1).</span>
         </p>
     {% elif participant.treatment == 3 %}
         <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
-            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span> with the possibility of the refund of <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b></span>.
+            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>. <br> In part 2, you can return the lottery ticket and receive a refund of <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b> (after learning the outcome of lottery 1).</span>
         </p>
     {% endif %}
 </div>
