@@ -1,82 +1,157 @@
-    <div class="card-body">
-        <font size=3.5>
-<p>Welcome to part 2 of this study. You have completed part 1 successfully and will complete this study if you complete today's part 2. Below, we explain the structure of this study and what you may decide today.</p>
-    
-<p>For part 1, you receive a payment of {{ session.config.participation_fee }}. For today's part 2, you receive an additional payment of {{ session.config.participation_fee }}. In addition, you can earn a <i>substantial bonus payment</i> that can be as high as £{{ session.config.max_pay }}. This bonus payment depends on your choice and chance.</p>
+<div class="card-body">
+    <font size=3.5>
+        <p>Welcome to part 2 of this study. You have completed part 1 successfully and will complete this study if you
+            complete today's part 2. Below, we explain the structure of this study and what you may decide today.</p>
 
-<h3>Lottery ticket</h3>
+        <p>For part 1, you receive a payment of {{ session.config.participation_fee }}. For today's part 2, you receive
+            an additional payment of {{ session.config.participation_fee }}. In addition, you can earn a <i>substantial
+                bonus payment</i> that can be as high as £{{ session.config.max_pay }}. This bonus payment depends on
+            your choice and chance.</p>
 
-<p>In this study, you evaluate a lottery ticket. The lottery ticket consists of two lotteries with different monetary amounts that you can receive as part of your bonus payment. Each lottery has two possible outcomes that are equally likely. What outcomes will be paid out to you will be determined by the flip of two independent virtual coins.</p>
+        <h3>Lottery ticket</h3>
 
-<ul>
-    <li><b>Lottery 1</b>: Pays £{{ session.config.A_BAR }} if the first coin flip results in heads, and £{{ participant.x_draw }} if it results in tails.</li>
-    <li><b>Lottery 2</b>: Pays £{{ session.config.A_BAR }} if the second coin flip results in heads, and £0 if it results in tails.</li>
-</ul>
+        <p>In this study, you evaluate a lottery ticket. The lottery ticket consists of two lotteries with different
+            monetary amounts that you can receive as part of your bonus payment. Each lottery has two possible outcomes
+            that are equally likely. What outcomes will be paid out to you will be determined by the flip of two
+            independent virtual coins.</p>
 
-<p>Your lottery ticket earnings are given by the sum of payments from the two lotteries. For example, if the first coin flip is tails and the second is heads, your lottery ticket earnings are £{{ participant.x_draw }} + £{{ session.config.A_BAR }} = £{{ example_sum }}. As another example, if the first coin flip is heads and the second is tails, your lottery ticket earnings are £{{ session.config.A_BAR }} + £0 = £{{ session.config.A_BAR }}.</p>
+        <ul>
+            <li><b>Lottery 1</b>: Pays £{{ session.config.A_BAR }} if the first coin flip results in heads, and £{{
+                participant.x_draw }} if it results in tails.</li>
+            <li><b>Lottery 2</b>: Pays £{{ session.config.A_BAR }} if the second coin flip results in heads, and £0 if
+                it results in tails.</li>
+        </ul>
 
-<h5>When do you learn more about your lotteries?</h5>
-<ul>
-<li>Next, you will learn the outcome of Lottery 1. This means that you will know whether Lottery 1 pays you £{{ session.config.A_BAR }} or £{{ participant.x_draw }}. However, you will not learn the outcome of Lottery 2 until the end of today's part.</li>
-<li>Afterwards, you may make additional decisions.</li>
-<li>At the end of this study today, you will learn the result of Lottery 2 and your bonus payment for the participation of this study.</li>
+        <p>Your lottery ticket earnings are given by the sum of payments from the two lotteries. For example, if the
+            first coin flip is tails and the second is heads, your lottery ticket earnings are £{{ participant.x_draw }}
+            + £{{ session.config.A_BAR }} = £{{ example_sum }}. As another example, if the first coin flip is heads and
+            the second is tails, your lottery ticket earnings are £{{ session.config.A_BAR }} + £0 = £{{
+            session.config.A_BAR }}.</p>
 
-</ul>
-{% if participant.treatment == 0 %}
-<p>In part 1, you decided whether to purchase the lottery ticket.</p>
-{% endif %}
-{% if participant.treatment == 1 %}
-<p>Today, you can purchase the lottery ticket. You can decide whether to purchase the ticket <i>after learning the outcome of Lottery 1</i>, so whether Lottery 1 pays you £{{ session.config.A_BAR }} or £{{ participant.x_draw }}. However, you will make a decision before learning the outcome of Lottery 2.</p>
-{% endif %}
-{% if participant.treatment == 2 %}
-<p>In part 1, you decided whether to buy the right to purchase the lottery ticket and thereby fix the price of the lottery ticket. This right is called an <i>option</i>. Only if you bought the option, you can purchase the lottery ticket at a fixed price in today's part 2. The option has no other benefit other than giving you the right to purchase the lottery. 
-</p>
-<p>
-    This means that you will make two decision across the two parts of this study:
-    <ol>
-        <li>You decided whether to buy the option in part 1.</li>
-        <li>Only if you bought the option in part 1, you decide whether to purchase the lottery ticket at a pre-specified price today.</li>
-    </ol>
-    Your total payment consists of the payment for the option in part 1 and the payment for the lottery ticket in part 2 (if you choose to buy the option and/or the purchase the lottery ticket).</p>
-<br>
-<h3>Your decision</h3>
-<p>Today, you will first learn the outcome of the coin flip for Lottery 1, so whether you will be paid £{{ session.config.A_BAR }} or £{{ participant.x_draw }} for Lottery 1. Afterwards, you can purchase the lottery ticket. This means that you can decide whether to pay the pre-specified price of the lottery ticket based on the outcome of Lottery 1. However, you will make a decision before learning the outcome of Lottery 2.</p>
-<p>Your payment in this study depends both on the decisions that you make in part 1 and the decisions that you make today.<br>
-</p>
-{% endif %}
-{% if participant.treatment == 3 %}
-<p>In part 1, you decided whether to purchase the lottery ticket. Your lottery ticket included a refund option that you can decide to use in today's part 2.</p>
-<p>Next, you will <i>first learn the outcome of Lottery 1</i>, so whether you will be paid £{{ session.config.A_BAR }} or £{{ participant.x_draw }} for Lottery 1. Then, you can decide to either keep your lottery ticket or to receive a pre-specified refund and return your lottery ticket. This means that you can decide whether to return your lottery ticket based on the outcome of Lottery 1. However, you will make a decision before learning the outcome of Lottery 2.</p>
-{% endif %}
+        <h5>When do you learn more about your lotteries?</h5>
+        <ul>
+            <li>Next, you will learn the outcome of Lottery 1. This means that you will know whether Lottery 1 pays you
+                £{{ session.config.A_BAR }} or £{{ participant.x_draw }}. However, you will not learn the outcome of
+                Lottery 2 until the end of today's part.</li>
+            <li>Afterwards, you may make additional decisions.</li>
+            <li>At the end of this study today, you will learn the result of Lottery 2 and your bonus payment for the
+                participation of this study.</li>
 
-<h3>Payment</h3>
-To be able to purchase the lottery ticket, you have received a budget of £{{ C.ENDOWMENT }} in this study. At the end of the study today, any payments for purchasing {% if participant.treatment == 2 %} the option and {% endif %} the lottery ticket will be subtracted from that budget. You will receive the remaining budget as a bonus payment. This means that your total bonus payment in this study will consist of:
-</p>
-        <center>Bonus payment =  <i>Budget</i> - <i>Lottery ticket payment</i> + <i>Lottery earnings</i><center>
-<br>
-<p>For example, if you purchase the lottery ticket for £4 and receive earnings of £{{ session.config.A_BAR }}, your bonus payment will be £{{ C.ENDOWMENT }} - £6 + £{{ session.config.A_BAR }} = £17.</p>
+        </ul>
+        {% if participant.treatment == 0 %}
+        <p>In part 1, you decided whether to purchase the lottery ticket.
+            There is no decision to be taken in this part.
+        </p>
+        {% endif %}
+        {% if participant.treatment == 1 %}
+        <p>Today, you can purchase the lottery ticket. You can decide whether to purchase the ticket <i>after learning
+                the outcome of Lottery 1</i>, so whether Lottery 1 pays you £{{ session.config.A_BAR }} or £{{
+            participant.x_draw }}. However, you will make a decision before learning the outcome of Lottery 2.</p>
+        {% endif %}
+        {% if participant.treatment == 2 %}
+        <p>In part 1, you decided whether to buy the right to purchase the lottery ticket and thereby fix the price of
+            the lottery ticket. This right is called an <i>option</i>. Only if you bought the option, you can purchase
+            the lottery ticket at a fixed price in today's part 2. The option has no other benefit other than giving you
+            the right to purchase the lottery.
+        </p>
+        <p>
+            This means that you will make two decision across the two parts of this study:
+        <ol>
+            <li>You decided whether to buy the option in part 1.</li>
+            <li>Only if you bought the option in part 1, you decide whether to purchase the lottery ticket at a
+                pre-specified price today.</li>
+        </ol>
+        Your total payment consists of the payment for the option in part 1 and the payment for the lottery ticket in
+        part 2 (if you choose to buy the option and to purchase the lottery ticket).</p>
+        <br>
+        <h3>Your decision</h3>
+        <p>Today, you will first learn the outcome of the coin flip for Lottery 1, so whether you will be paid £{{
+            session.config.A_BAR }} or £{{ participant.x_draw }} for Lottery 1. Afterwards, you can purchase the lottery
+            ticket. This means that you can decide whether to pay the pre-specified price of the lottery ticket based on
+            the outcome of Lottery 1. However, you will make a decision before learning the outcome of Lottery 2.</p>
+        <p>Your payment in this study depends both on the decisions that you make in part 1 and the decisions that you
+            make today.
+            You will get the lottery earnings only if you decided to purchase the option in part 1 and decide to
+            purchase the lottery in part 2.
+            <br>
+        </p>
+        {% endif %}
+        {% if participant.treatment == 3 %}
+        <p>In part 1, you decided whether to purchase the lottery ticket. Your lottery ticket included a refund option
+            that you can decide to use in today's part 2.</p>
+        <p>Next, you will <i>first learn the outcome of Lottery 1</i>, so whether you will be paid £{{
+            session.config.A_BAR }} or £{{ participant.x_draw }} for Lottery 1. Then, you can decide to either keep your
+            lottery ticket or to receive a pre-specified refund and return your lottery ticket. This means that you can
+            decide whether to return your lottery ticket based on the outcome of Lottery 1. However, you will make a
+            decision before learning the outcome of Lottery 2.<br></p>
+        <p>Your payment in this study depends both on the decisions that you make in part 1 and the decisions that you
+            make today.
+            You will get the lottery earnings only if you decided to purchase the lottery ticket in part 1 and decide to
+            keep the lottery ticket in part 2.
+            <br>
+        </p>
+        {% endif %}
 
-<h3>Today's decision</h3>
-{% if participant.treatment == 0 %}
-<p>Today, you will not make any additional decisions. Next, you will learn the outcome of Lottery 1, afterwards the outcome of Lottery 2 and your bonus payment for participating in this study.</p>
-{% endif %}
-{% if participant.treatment == 1 %}
-<p>Today, you will first learn the outcome of Lottery 1. Afterwards, you will be asked a series of questions about your valuation of the lottery ticket. For different prices, you can purchase the lottery ticket at that price. An example decision screen is presented below.</p>
-{% endif %}
-{% if participant.treatment == 2 %}
-<p>Today, you will first learn the outcome of Lottery 1. Afterwards, you will be asked a series of questions about your valuation of the lottery ticket. For different prices and different options prices, you can buy the lottery ticket at that price. An example decision screen is presented below.</p>
-{% endif %}
-{% if participant.treatment == 3 %}
-<p>Today, you will first learn the outcome of Lottery 1. Afterwards, you will be asked a series of questions about your valuation of the lottery ticket. For different prices and refund options, you can return the lottery ticket at that refund. An example decision screen is presented below.</p>
-{% endif %}
+        <h3>Payment</h3>
+        <p>
+            To be able to purchase the lottery ticket, you will receive a budget of <b>£{{ C.ENDOWMENT }}</b> in this
+            study. At the end of part 2 of the study, any payments for purchasing {% if participant.treatment == 2 %}
+            the option
+            and {% endif %} the lottery ticket will be subtracted from that budget. You will receive the remaining
+            budget as a bonus payment. This means that your total bonus payment in this study will consist of:
+        </p>
+        <center>
+            <p style="font-size: 20px;font-weight: bold;"> Bonus Payment = <i>Budget</i> - <i>Lottery ticket payment</i>
+                + <i>Lottery earnings</i> </p>
+        </center>
+        <br>
+        <p>For example, if you purchase the lottery ticket for <b>£6</b> and receive earnings of <b>£{{
+                session.config.A_BAR }}</b>, your bonus payment will be
+        </p>
+        <center>
+            <p style="font-size: 20px;font-weight: bold;"> £{{ C.ENDOWMENT }} - £6 + £{{
+                session.config.A_BAR }} = £17
+            </p>
+        </center>
+
+        <h3>Today's decision</h3>
+        {% if participant.treatment == 0 %}
+        <p>Today, you will not make any additional decisions. Next, you will learn the outcome of Lottery 1, afterwards
+            the outcome of Lottery 2 and your bonus payment for participating in this study.</p>
+        {% endif %}
+        {% if participant.treatment == 1 %}
+        <p>Today, you will first learn the outcome of Lottery 1. Afterwards, you will be asked a series of questions
+            about your valuation of the lottery ticket. For different prices, you can purchase the lottery ticket at
+            that price. An example decision screen is presented below.</p>
+        {% endif %}
+        {% if participant.treatment == 2 %}
+        <p>Today, you will first learn the outcome of Lottery 1. Afterwards, you will be asked a series of questions
+            about your valuation of the lottery ticket. For different prices and different options prices, you can buy
+            the lottery ticket at that price. An example decision screen is presented below.</p>
+        {% endif %}
+        {% if participant.treatment == 3 %}
+        <p>Today, you will first learn the outcome of Lottery 1. Afterwards, you will be asked a series of questions
+            about your valuation of the lottery ticket. For different prices and refund options, you can return the
+            lottery ticket at that refund. An example decision screen is presented below.</p>
+        {% endif %}
 
 
-<p>...include appropriate screenshot here...</p>
+        <p>...include appropriate screenshot here...</p>
 
-<h3>Random selection</h3>
-<p>Today, at the end of the study, the computer will randomly select one of the questions, with each question being equally likely to be chosen. If you chose to purchase the lottery ticket  {% if participant.treatment == 3 %} 
-    (and not to return it) {% endif %} in that question, you will receive the lottery ticket, but your budget of £{{ C.ENDOWMENT }} will be reduced by that price. Otherwise, you will not receive the lottery ticket. You will then not receive any earnings from the lottery ticket, but you will keep your budget.</p>
-<p>25% of participants in this study will be randomly selected for the bonus payment and will receive the bonus payment within two weeks of the completion of the study. For 98% of participants, we will implement exactly their decisions. 
-    For the remaining 2% of participants, you will be paid and make decisions as if you purchased {% if participant.treatment == 2 %} the option to buy {% endif %} the lottery ticket. {% if participant.treatment == 2 or participant.treatment == 3 %}
-    That means that all participants will make decisions in today's part 2, because it may be that the computer randomly selects them to make a purchase, and everyone's decisions may potentially involve receiving a lottery ticket.{% endif %}</p>
-    </div>
+        <h3>Random selection</h3>
+        <p>Today, at the end of the study, the computer will randomly select one of the questions, with each question
+            being equally likely to be chosen. If you chose to purchase the lottery ticket {% if participant.treatment
+            == 3 %}
+            (and not to return it) {% endif %} in that question, you will receive the lottery ticket, but your budget of
+            £{{ C.ENDOWMENT }} will be reduced by that price. Otherwise, you will not receive the lottery ticket. You
+            will then not receive any earnings from the lottery ticket, but you will keep your budget.</p>
+        <p>25% of participants in this study will be randomly selected for the bonus payment and will receive the bonus
+            payment within two weeks of the completion of the study. For 98% of participants, we will implement exactly
+            their decisions.
+            For the remaining 2% of participants, you will be paid and make decisions as if you purchased {% if
+            participant.treatment == 2 %} the option to buy {% endif %} the lottery ticket. {% if participant.treatment
+            == 2 or participant.treatment == 3 %}
+            That means that all participants will make decisions in today's part 2, because it may be that the computer
+            randomly selects them to make a purchase, and everyone's decisions may potentially involve receiving a
+            lottery ticket.{% endif %}</p>
+</div>
