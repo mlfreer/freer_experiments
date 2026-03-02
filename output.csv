@@ -1,0 +1,16 @@
+label,treatment,round,index,x_draw,price_t1,price_t2,random_draw_1,random_draw_2,purchase,revised_purchase
+,0,1,11,8,8,0,1,1,True,True
+,0,2,13,8,11,0,1,1,True,True
+,0,3,12,8,9,0,1,1,False,False
+,0,4,9,8,14,0,1,1,False,False
+,0,5,4,8,9,0,1,1,True,True
+,0,6,6,8,11,0,1,1,True,True
+,0,7,5,8,10,0,1,1,False,False
+,0,8,14,8,12,0,1,1,False,False
+,0,9,10,8,15,0,1,1,True,True
+,0,10,8,8,13,0,1,1,True,True
+,0,11,1,8,6,0,1,1,False,False
+,0,12,0,8,5,0,1,1,False,False
+,0,13,2,8,7,0,1,1,True,True
+,0,14,7,8,12,0,1,1,False,False
+,0,15,3,8,8,0,1,1,False,False

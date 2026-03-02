@@ -43,8 +43,13 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     x = models.CurrencyField()
+    # initial purchase variable. 
     purchase = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], widget=widgets.RadioSelectHorizontal, label='')#, label='Do you want to purchase this lottery ticket?', )
     
+    # we start by introducing the revised purchase to every period. 
+    revised_purchase = models.BooleanField(choices=[[True, 'Yes'], [False, 'No']], widget=widgets.RadioSelectHorizontal, label='')#, label='Do you want to purchase this lottery ticket?', )
+
+
     price_t1 = models.IntegerField()
     price_t2 = models.IntegerField()
 
@@ -141,19 +146,22 @@ class Decision(Page):
         player.random_draw_1 = int(player.participant.random_draw_1)
         player.random_draw_2 = int(player.participant.random_draw_2)
 
+        player.revised_purchase = player.purchase
+
         index = player.participant.indexes[player.subsession.round_number-1]
-        save_to_csv({
-            "participant.label": player.participant.label,
-            "participant.x_draw": player.participant.x_draw,
-            "participant.treatment": player.participant.treatment,
-            "player.price_t1": (player.price_t1),
-			"player.price_t2": (player.price_t2),
-            "participant.indexes": index,
-			"player.random_draw_1": player.random_draw_1,
-			"player.random_draw_2": player.random_draw_2,
-            "player.purchase": player.purchase,
-                # add other variables
-        })
+#        save_to_csv({
+#            "participant.label": player.participant.label,
+#            "participant.x_draw": player.participant.x_draw,
+#            "participant.treatment": player.participant.treatment,
+#            "player.price_t1": (player.price_t1),
+#			"player.price_t2": (player.price_t2),
+#            "participant.indexes": index,
+#			"player.random_draw_1": player.random_draw_1,
+#			"player.random_draw_2": player.random_draw_2,
+#            "player.purchase": player.purchase,
+#            "player.revised_purchase": player.revised_purchase,
+#                # add other variables
+#        })
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -171,7 +179,7 @@ class Results(Page):
     
     def is_displayed(player: Player):
         subsession = player.subsession
-        return subsession.round_number == C.NUM_ROUNDS
+        return (subsession.round_number == C.NUM_ROUNDS) 
 
     @staticmethod
     def before_next_page(player, timeout_happened):
@@ -187,9 +195,56 @@ class Results(Page):
 			    "player.random_draw_2": player.participant.random_draw_2,
             })
 
-
-    
 #-----------------------------------------------------------------------------
+
+
+# REVISION PAGE
+class RevisionPage(Page):
+    form_model = 'player'
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return (player.round_number == C.NUM_ROUNDS) and (player.participant.treatment != 1)
+
+    @staticmethod
+    def live_method(player: Player, data: dict):
+        round_num = data['round']          # which round's decision is being revised
+        revised = data['revised_purchase'] # the new True/False value
+        player.in_round(round_num).revised_purchase = revised  # writes to that round's player object
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        past = []
+        for r in range(1, C.NUM_ROUNDS + 1):
+            p = player.in_round(r)
+            past.append(dict(
+                round=r,
+                price_t1=p.price_t1,
+                price_t2=p.price_t2,
+                purchase=p.purchase,
+                revised_purchase=p.revised_purchase,
+            ))
+        return dict(past_decisions=past)
+    
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        for r in range(1, C.NUM_ROUNDS + 1):
+            p = player.in_round(r)
+            save_to_csv({
+            "label":            player.participant.label,
+            "treatment":        player.participant.treatment,
+            "round":            r,
+            "index":            player.participant.indexes[r - 1],
+            "x_draw":           player.participant.x_draw,
+            "price_t1":         p.price_t1,
+            "price_t2":         p.price_t2,
+            "random_draw_1":    player.participant.random_draw_1,
+            "random_draw_2":    player.participant.random_draw_2,
+            "purchase":         p.purchase,
+            "revised_purchase": p.revised_purchase,
+            })
+
+
 
 
 
@@ -207,6 +262,7 @@ class CompletionPage(Page):
 # ORDER
 page_sequence = [ExperimentStarts,
                 Decision, 
+                RevisionPage,
                 Results,
                 CompletionPage]
 #-----------------------------------------------------------------------------
