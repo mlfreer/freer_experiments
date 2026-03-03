@@ -6,16 +6,12 @@ Revision of Decisions
 
 {{ block scripts }}
 <script>
-    function updateRevisions() {
-        let revisions = {};
-        {{ for d in past_decisions }}
-        document.querySelectorAll('input[name="revised_{{ d.round }}"]').forEach(r => {
-            if (r.checked) revisions[{{ d.round }}] = (r.value === "True");
+    function sendRevision(el) {
+        liveSend({
+            round: parseInt(el.dataset.round),
+            revised_purchase: el.value === 'True'
         });
-        {{ endfor }}
-        document.getElementById('revised_purchases_input').value = JSON.stringify(revisions);
     }
-    window.onload = updateRevisions;
 </script>
 {{ endblock }}
 
@@ -28,9 +24,6 @@ Revision of Decisions
             Below are all your decisions. You may revise any of them before submitting.
         </p>
     </div>
-
-    {{ formfields }}
-    <input type="hidden" name="revised_purchases_json" id="revised_purchases_input">
 
     <table style="width: 100%; border-collapse: collapse; font-size: 1em;">
         <thead>
@@ -75,15 +68,17 @@ Revision of Decisions
                     <label style="margin: 0 1em; cursor: pointer;">
                         <input type="radio" name="revised_{{ d.round }}" value="True"
                             {{ if d.revised_purchase }}checked{{ endif }}
+                            data-round="{{ d.round }}"
                             style="margin-right: 0.4em; transform: scale(1.5); cursor: pointer;"
-                            onchange="updateRevisions()">
+                            onchange="sendRevision(this)">
                         <span style="color: green; font-size: 1.2em;"><b>YES</b></span>
                     </label>
                     <label style="margin: 0 1em; cursor: pointer;">
                         <input type="radio" name="revised_{{ d.round }}" value="False"
                             {{ if not d.revised_purchase }}checked{{ endif }}
+                            data-round="{{ d.round }}"
                             style="margin-right: 0.4em; transform: scale(1.5); cursor: pointer;"
-                            onchange="updateRevisions()">
+                            onchange="sendRevision(this)">
                         <span style="color: red; font-size: 1.2em;"><b>NO</b></span>
                     </label>
                 </td>
