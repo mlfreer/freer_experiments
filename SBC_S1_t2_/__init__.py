@@ -50,6 +50,8 @@ class Player(BasePlayer):
 
 	purchase_t1 = models.BooleanField(default=False)
 	purchase_t2 = models.BooleanField(default=False)
+
+	revised_purchase_t2 = models.BooleanField(default=False)
 	
 	price_t1 = models.IntegerField()
 	price_t2 = models.IntegerField()
@@ -148,9 +150,9 @@ def retrieve_data(player):
 
 		# recording the t=1 decision:
 		player.purchase_t1 = bool( int( rows["player.purchase"].squeeze() ) )
-
-	player.random_draw_1 = int(participant.random_draw_1)
-	player.random_draw_2 = int(participant.random_draw_2)
+	else:
+		player.random_draw_1 = int(participant.random_draw_1)
+		player.random_draw_2 = int(participant.random_draw_2)
 
 
 
@@ -201,13 +203,13 @@ def compute_payoff(player: Player):
 				print(f"Treatment 0 - purchase_t1: {p.purchase_t1}, earnings: {player.earnings}")
 
 			elif participant.treatment == 1:  # static, buy at t=2
-				if p.purchase_t2:
+				if p.revised_purchase_t2:
 					player.earnings = int(endowment - price_t2 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2)
 				else:
 					player.earnings = int(endowment)
 			elif participant.treatment == 2:  # dynamic, option
 				if p.purchase_t1:
-					if p.purchase_t2:
+					if p.revised_purchase_t2:
 						player.earnings = int(endowment - price_t1 - price_t2 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2)
 					else:
 						player.earnings =  int(endowment - price_t1)
@@ -215,7 +217,7 @@ def compute_payoff(player: Player):
 					player.earnings = int(endowment)
 			elif participant.treatment == 3:  # dynamic, refund
 				if p.purchase_t1:
-					if p.purchase_t2==0:
+					if p.revised_purchase_t2==0:
 						player.earnings = int(endowment - price_t1 + a_bar*won_t1 + x_draw*(1-won_t1) + a_bar*won_t2)
 					else:
 						player.earnings = int(endowment - price_t1 + price_t2)
@@ -305,9 +307,47 @@ class Decision(Page):
 	
 	@staticmethod
 	def before_next_page(player: Player, timeout_happened):
-		if player.subsession.round_number == C.NUM_ROUNDS:
-			select_random_round(player)
-			compute_payoff(player)
+		player.revised_purchase_t2 = player.purchase_t2
+		
+		# temporary removing to compute the payoffs after the revision page
+#		if player.subsession.round_number == C.NUM_ROUNDS:
+#			select_random_round(player)
+#			compute_payoff(player)
+
+
+# REVISION PAGE
+class RevisionPage(Page):
+    form_model = 'player'
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return (player.round_number == C.NUM_ROUNDS) and (player.participant.treatment != 0)
+
+    @staticmethod
+    def live_method(player: Player, data: dict):
+        round_num = data['round']          # which round's decision is being revised
+        revised = data['revised_purchase'] # the new True/False value
+        player.in_round(round_num).revised_purchase_t2 = revised  # writes to that round's player object
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        past = []
+        for r in range(1, C.NUM_ROUNDS + 1):
+            p = player.in_round(r)
+            past.append(dict(
+                round=r,
+                price_t1=p.price_t1,
+                price_t2=p.price_t2,
+                purchase_t2=p.purchase_t2,
+                revised_purchase_t2=p.revised_purchase_t2,
+            ))
+        return dict(past_decisions=past)
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        if player.subsession.round_number == C.NUM_ROUNDS:
+            select_random_round(player)
+            compute_payoff(player)
 
 
 
@@ -344,9 +384,11 @@ class Results(Page):
 			a_bar=session.config['A_BAR'],
 			treatment=participant.treatment,
 		)
+	
 
 
 page_sequence = [
 	ExperimentStarts, 
 	Decision, 
+	RevisionPage,
 	Results]

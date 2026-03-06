@@ -1,4 +1,3 @@
-from operator import index
 from otree.api import *
 import pandas as pd
 import random
@@ -231,17 +230,16 @@ class RevisionPage(Page):
         for r in range(1, C.NUM_ROUNDS + 1):
             p = player.in_round(r)
             save_to_csv({
-            "label":            player.participant.label,
-            "treatment":        player.participant.treatment,
-            "round":            r,
-            "index":            player.participant.indexes[r - 1],
-            "x_draw":           player.participant.x_draw,
-            "price_t1":         p.price_t1,
-            "price_t2":         p.price_t2,
-            "random_draw_1":    player.participant.random_draw_1,
-            "random_draw_2":    player.participant.random_draw_2,
-            "purchase":         p.purchase,
-            "revised_purchase": p.revised_purchase,
+            "participant.label": player.participant.label,
+            "participant.x_draw": player.participant.x_draw,
+            "participant.treatment": player.participant.treatment,
+            "player.price_t1": (p.price_t1),
+			"player.price_t2": (p.price_t2),
+            "participant.indexes": player.participant.indexes[r - 1],
+			"player.random_draw_1": player.participant.random_draw_1,
+			"player.random_draw_2": player.participant.random_draw_2,
+            "player.purchase":         p.purchase,
+            "player.revised_purchase": p.revised_purchase,
             })
 
 
