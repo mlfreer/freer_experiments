@@ -149,7 +149,7 @@ def retrieve_data(player):
 		player.random_draw_2 = temp
 
 		# recording the t=1 decision:
-		player.purchase_t1 = bool( int( rows["player.purchase"].squeeze() ) )
+		player.purchase_t1 = bool( int( rows["player.revised_purchase"].squeeze() ) )
 	else:
 		player.random_draw_1 = int(participant.random_draw_1)
 		player.random_draw_2 = int(participant.random_draw_2)
@@ -377,12 +377,13 @@ class Results(Page):
 			price_t1=selected_player.price_t1,
 			price_t2=selected_player.price_t2,
 			purchase_t1=selected_player.field_maybe_none('purchase_t1'),
-			purchase_t2=selected_player.field_maybe_none('purchase_t2'),
+			purchase_t2=selected_player.field_maybe_none('revised_purchase_t2'),
 			random_draw_1=selected_player.field_maybe_none('random_draw_1'),
 			random_draw_2=selected_player.field_maybe_none('random_draw_2'),
 			x_draw=participant.x_draw,
 			a_bar=session.config['A_BAR'],
 			treatment=participant.treatment,
+#			completion_url=session.config['completion_url'],
 		)
 	
 

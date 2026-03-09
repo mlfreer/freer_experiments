@@ -250,7 +250,8 @@ SESSION_CONFIG_DEFAULTS = dict(
     max_pay = 28.00,
     A_BAR = 8,
     treatment = 0, # treatment enumeration starts with 0 and goes to 3 so we can simplify the presentation of the constants.
-    doc=""
+    doc="",
+    completion_url="https://app.prolific.co",
 )
 
 ROOMS = [

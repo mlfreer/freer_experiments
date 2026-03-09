@@ -136,7 +136,13 @@ class Decision(Page):
         player.price_t1 = (participant.price_order_t1[subsession.round_number-1] )
         player.price_t2 = ( participant.price_order_t2[subsession.round_number-1] )
         player.x =  ( participant.x_draw )
-        return participant.treatment != 1
+        if player.participant.treatment == 1:
+            # for the S2 treatment block the purchase as true.
+            player.purchase = True
+            player.revised_purchase = player.purchase
+            return False
+        else:
+            return True
 
     @staticmethod
     def before_next_page(player, timeout_happened):
@@ -183,16 +189,20 @@ class Results(Page):
     @staticmethod
     def before_next_page(player, timeout_happened):
         if player.participant.treatment == 1:
-            save_to_csv({
-                "participant.label": player.participant.label,
-                "participant.x_draw": player.participant.x_draw,
-                "participant.treatment": player.participant.treatment,
-                "player.price_t1": (player.price_t1),
-			    "player.price_t2": (player.price_t2),
-                "participant.indexes": index,
-			    "player.random_draw_1": player.participant.random_draw_1,
-			    "player.random_draw_2": player.participant.random_draw_2,
-            })
+            for r in range(1, C.NUM_ROUNDS + 1):
+                p = player.in_round(r)
+                save_to_csv({
+                    "participant.label": player.participant.label,
+                    "participant.x_draw": player.participant.x_draw,
+                    "participant.treatment": player.participant.treatment,
+                    "player.price_t1": (p.price_t1),
+			        "player.price_t2": (p.price_t2),
+                    "participant.indexes": player.participant.indexes[r - 1],
+			        "player.random_draw_1": player.participant.random_draw_1,
+			        "player.random_draw_2": player.participant.random_draw_2,
+                    "player.purchase":         p.purchase,
+                    "player.revised_purchase": p.revised_purchase,
+                })
 
 #-----------------------------------------------------------------------------
 
