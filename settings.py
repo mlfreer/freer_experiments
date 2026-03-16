@@ -220,7 +220,7 @@ SESSION_CONFIGS = [
     ),
     dict(
         name="Dynamic_Contracts_S1_t2",
-        display_name="Dynamic_Contracts t=2 (Static, Upfront Payment)",
+        display_name="Period: t=2, for all treatments",
         num_demo_participants=1,
         treatment=0,
         app_sequence=["SBC_consent_t2", "SBC_S1_t2_"],

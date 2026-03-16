@@ -55,7 +55,7 @@ class Player(BasePlayer):
     selected_round = models.IntegerField()
     random_draw_1 = models.IntegerField()
     random_draw_2 = models.IntegerField()
-    treatment = models.StringField()
+    treatment = models.IntegerField()
 #-----------------------------------------------------------------------------
 
 
@@ -105,6 +105,7 @@ class ExperimentStarts(Page):
     form_model = 'player'
     @staticmethod
     def is_displayed(player: Player):
+        print(f"DEBUG ExperimentStarts round={player.round_number}")
         session = player.session
         subsession = player.subsession
         participant = player.participant
@@ -142,6 +143,7 @@ class Decision(Page):
             player.revised_purchase = player.purchase
             return False
         else:
+            
             return True
 
     @staticmethod
@@ -182,6 +184,7 @@ class Decision(Page):
 class Results(Page):
     timeout_seconds = 10  # Timeout after 10 seconds
     
+    @staticmethod
     def is_displayed(player: Player):
         subsession = player.subsession
         return (subsession.round_number == C.NUM_ROUNDS) 

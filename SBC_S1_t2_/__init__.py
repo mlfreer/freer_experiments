@@ -237,9 +237,9 @@ class ExperimentStarts(Page):
 	@staticmethod
 	def is_displayed(player):
 		if player.participant.treatment != 0:
-			return player.round_number == 1
+			return player.subsession.round_number == 1
 		else:
-			return player.round_number == C.NUM_ROUNDS
+			return player.subsession.round_number == C.NUM_ROUNDS
 
 	@staticmethod
 	def before_next_page(player, timeout_happened):
@@ -247,9 +247,7 @@ class ExperimentStarts(Page):
 		if player.participant.treatment == 0:
 			retrieve_data(player)
 			select_random_round(player)
-			compute_payoff(player)
- 
-		
+			compute_payoff(player)		
 
 	@staticmethod
 	def vars_for_template(player):
@@ -264,10 +262,13 @@ class ExperimentStarts(Page):
 		x_draw = participant.x_draw
 		example_sum = x_draw + a_bar
 		
+		result = 'heads' if player.random_draw_1 == 1 else 'tails'
+
 		return dict(
 			treatment=participant.treatment,
 			x_draw=x_draw,
 			example_sum=example_sum,
+			coin_result=result
 		)
 
 
@@ -321,7 +322,7 @@ class RevisionPage(Page):
 
     @staticmethod
     def is_displayed(player: Player):
-        return (player.round_number == C.NUM_ROUNDS) and (player.participant.treatment != 0)
+        return (player.subsession.round_number == C.NUM_ROUNDS) and (player.participant.treatment != 0)
 
     @staticmethod
     def live_method(player: Player, data: dict):
@@ -356,7 +357,7 @@ class Results(Page):
 	def is_displayed(player):
 		# For treatment 0: show results on round 1 (after ExperimentStarts)
 		# For other treatments: show results on final round (after all decisions)
-		return player.round_number == C.NUM_ROUNDS
+		return player.subsession.round_number == C.NUM_ROUNDS
 	
 	@staticmethod
 	def vars_for_template(player: Player):
