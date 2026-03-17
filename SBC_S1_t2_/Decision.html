@@ -81,7 +81,7 @@
     <p style="font-size: 1.25em; margin-bottom: 0.6em; line-height: 1.05;"><i>The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
     <ul style="list-style-type: none; padding-left: 0; font-size: 1.18em;">
         <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
-            <b>Lottery 1</b>: {% if player.random_draw_1 == 1 %}Resulted in <b>Heads</b> – Pays <b>£{{ session.config.A_BAR }}</b>{% else %}Resulted in <b>Tails</b> – Pays <b>£{{ x_draw }}</b>{% endif %} (lottery 1 coin flip is now resolved)
+            <b>Lottery 1</b>: {% if player.random_draw_1 == 1 %}Resulted in <b>Heads</b> – Pays <b>£{{ session.config.A_BAR }}</b>{% else %}Resulted in <b>Tails</b> – Pays <b>£{{ x_draw }}</b>{% endif %}
         </li>
         <li style="padding: 0em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
             <b>Lottery 2</b>: Pays <b>£{{ session.config.A_BAR }}</b> if the coin flip results in <b>heads</b>, and <b>£0</b> if it results in <b>tails</b>.
