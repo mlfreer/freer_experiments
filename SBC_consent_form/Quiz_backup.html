@@ -1,0 +1,130 @@
+{{ block title }}
+    Comprehension Quiz
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    function open_instructions() {
+        let x = document.getElementById("instructions");
+        let instructions_button = document.getElementById("instructions_button");
+        if (x.style.display === "none") {
+            instructions_button.innerHTML = "Close Your Instructions"
+            x.style.display = "block";
+            instructions_button_other.innerHTML = "Reveal Instructions"
+        } else {
+            instructions_button.innerHTML = "Reveal Instructions"
+            x.style.display = "none";
+        }
+    }
+</script>
+{{ endblock }}
+
+
+{{ block content }}
+
+<div class="card bg-light">
+    <div class="card-body">
+
+    Please answer the following questions to the best of your knowledge. If you answer any of the questions incorrectly, you will see an error message and you will have to answer the questions again. You have up to three attempts to answer the questions correctly. <b>If you fail to answer all questions correctly within three attempts, you will not be able to continue with the study.</b>
+    <br><br>
+    <b> 1. </b> What lottery earnings can you receive if you purchase the lottery ticket and the first lottery results in heads and the also the second lottery results in heads?
+    <br>
+    <input type="radio" name = "q1" value = "0"> £{{ session.config.A_BAR }}
+    <br>
+    <input type="radio" name = "q1" value = "1"> £{{ two_heads_sum }}
+    <br>
+    <input type="radio" name = "q1" value = "2"> £{{ heads_tails_sum }}
+    <br>
+    <input type="radio" name = "q1" value = "3"> £{{ participant.x_draw }}
+    <br><br>
+
+    <b> 2. </b> Will you receive any payment in this study if you do <i>not</i> return to complete the second part of the study?
+    <br>
+    <input type="radio" name = "q2" value = "0"> Yes.
+    <br>
+    <input type="radio" name = "q2" value = "1"> If I do not purchase the lottery ticket today, I will always get paid.
+    <br>
+    <input type="radio" name = "q2" value = "2"> It depends on the outcomes of the lotteries.
+    <br>
+    <input type="radio" name = "q2" value = "3"> No.
+
+    <br><br>
+
+
+    <b> 3. </b>
+    {% if participant.treatment == 0 %}
+    What happens if you decide to purchase the lottery ticket today?
+        <br>
+    <input type="radio" name = "q3" value = "0"> If you do not return to part 2 of this study next week, you will earn the participation fee of {{ session.config.participation_fee }}.
+    <br>
+    <input type="radio" name = "q3" value = "1"> When you return to part 2 of this study next week, your earnings do not depend on your decision today, so you will receive a fixed bonus payment of {{ session.config.participation_fee }}.
+    <br>
+    <input type="radio" name = "q3" value = "2"> When you will return to part 2 of this study next week, you can only earn a bonus payment if both lotteries result in heads.
+    <br>
+    <input type="radio" name = "q3" value = "3"> When you will return to part 2 of this study next week, you will learn the outcome of Lottery 1 and Lottery 2 and you can receive the corresponding bonus payment.
+    <br><br>
+    {% endif %}
+    {% if participant.treatment == 1 %}
+    What happens if you decide to purchase the lottery ticket in part 2 of this study next week?
+            <br>
+    <input type="radio" name = "q3" value = "0"> If you do not return to part 2 of this study next week, you will earn the participation fee of {{ session.config.participation_fee }}.
+    <br>
+    <input type="radio" name = "q3" value = "1"> When you return to part 2 of this study next week, you will receive a fixed bonus payment of {{ session.config.participation_fee }} and there are no bonus payments available if you purchase the lottery ticket.
+    <br>
+    <input type="radio" name = "q3" value = "2"> When you will return to part 2 of this study next week, you can only earn a bonus payment if both lotteries result in heads.
+    <br>
+    <input type="radio" name = "q3" value = "3"> When you will return to part 2 of this study next week, you will first learn the outcome of Lottery 1. You can then decide to purchase the lottery ticket and will receive a corresponding bonus payment depending on your decision and the outcome of the lottery ticket.
+    <br><br>
+    {% endif %}
+    {% if participant.treatment == 2 %}
+    What happens if you decide to buy the option to purchase the lottery ticket today?
+            <br>
+    <input type="radio" name = "q3" value = "0"> If you do not return to part 2 of this study next week, you will earn the participation fee of {{ session.config.participation_fee }}.
+    <br>
+    <input type="radio" name = "q3" value = "1"> When you return to part 2 of this study next week, you will receive a fixed bonus payment of {{ session.config.participation_fee }} and there are no bonus payments available if you buy the option purchase the lottery ticket today.
+    <br>
+    <input type="radio" name = "q3" value = "2"> When you will return to part 2 of this study next week, you can only earn a bonus payment if both lotteries result in heads.
+    <br>
+    <input type="radio" name = "q3" value = "3"> When you will return to part 2 of this study next week, you will first learn the outcome of Lottery 1. If you have decided to buy the option today, you can then purchase the lottery ticket and receive a corresponding bonus payment depending on your decision and the outcome of the lottery ticket. If you did not buy the option today, you cannot purchase the lottery ticket in part 2 and you will not receive an additional bonus payment from the lottery ticket.
+    <br><br>
+    {% endif %}
+    {% if participant.treatment == 3 %}
+    What happens if you decide to purchase the lottery ticket today?
+        What happens if you decide to buy the option to purchase the lottery ticket today?
+            <br>
+    <input type="radio" name = "q3" value = "0"> If you do not return to part 2 of this study next week, you will earn the participation fee of {{ session.config.participation_fee }}.
+    <br>
+    <input type="radio" name = "q3" value = "1"> When you return to part 2 of this study next week, you will receive a fixed bonus payment of {{ session.config.participation_fee }} and there are no bonus payments available if you purchase the lottery ticket today.
+    <br>
+    <input type="radio" name = "q3" value = "2"> When you will return to part 2 of this study next week, you can only earn a bonus payment if both lotteries result in heads.
+    <br>
+    <input type="radio" name = "q3" value = "3"> When you will return to part 2 of this study next week, you will first learn the outcome of Lottery 1. You can then decide to return the lottery ticket for a pre-specified refund and you can receive the corresponding bonus payment. If you decide <i>not</i> to return the lottery ticket, you will keep the lottery ticket and receive a corresponding bonus payment depending on the outcome of the lottery ticket.
+    <br><br>
+    {% endif %}
+    <br><br>
+
+
+    </div>
+</div>
+
+<br>
+
+<div style="float: center; text-align: center;">
+   <button class="otree-btn-next btn btn-primary" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">Next</button>
+</div>
+
+<div style="text-align: center; margin-top: 1.5em;">
+    <button class="btn btn-warning" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">Reveal Instructions</button>
+</div><br>
+
+
+<div style="display: none" id="instructions">
+    <div class="card bg-light">
+    <div class="card-body">
+{{ include "SBC_consent_form/instr.html" }}
+        </div></div>
+    </div>
+
+{{ endblock }}
+
+

@@ -1,0 +1,114 @@
+{{ block title }}
+Example Earnings{{ endblock }}
+
+{{ block scripts }}
+<script>
+    function open_instructions() {
+        let x = document.getElementById("instructions");
+        let instructions_button = document.getElementById("instructions_button");
+        if (x.style.display === "none") {
+            instructions_button.innerHTML = "Close Your Instructions"
+            x.style.display = "block";
+        } else {
+            instructions_button.innerHTML = "Reveal Instructions"
+            x.style.display = "none";
+        }
+    }
+</script>
+{{ endblock }}
+
+{{ block content }}
+
+
+
+<div class="card bg-light">
+    <div class="card-body">
+        <font size=3.5>
+            </font>
+    On this page, please work through the following examples that are designed to familiarize yourself with the decisions you will face in this study. You can only proceed to the study if you answer all questions correctly.
+    <br><br>
+    All questions refer to the lottery ticket that you will evaluate in the study:
+    <ul>
+        <li><b>Lottery 1</b>: Pays £{{ session.config.A_BAR }} if the first coin flip results in heads, and £{{ participant.x_draw }} if it results in tails.</li>
+        <li><b>Lottery 2</b>: Pays £{{ session.config.A_BAR }} if the second coin flip results in heads, and £0 if it results in tails.</li>
+    </ul>
+    <br>
+    {% if participant.treatment == 0 %}
+    <b> 1. </b> Imagine that you decide <i>not</i> to purchase the lottery ticket at a price of £<i>6</i> today, and that decision is randomly selected to be paid out to you. Further, imagine that, in part 2, the coin flip for lottery 1 results in heads and the coin flip for lottery 2 results in heads. What would be your bonus payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e1">
+    <br><br>
+    <b> 2. </b> Now, imagine that you decide <i>to purchase</i> the lottery ticket at a price of £<i>10</i> today. As above, further imagine that, in part 2, the coin flip for lottery 1 results in heads and the coin flip for lottery 2 results in heads. What would be your bonus payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e2">
+    <br><br>
+    <b> 2. </b>Now, imagine that you decide <i>to purchase</i> the lottery ticket at a price of £<i>10</i> today. Differently, now imagine that, in part 2, the coin flip for lottery 1 results in heads and the coin flip for lottery 2 results in <i>tails</i>. What would be your bonus payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e3">
+    <br><br>
+    {% endif %}
+
+    {% if participant.treatment == 1 %}
+    <b> 1. </b> Imagine that when you return to part 2 of this study and learn that the coin flip for lottery 1 results in heads. Further, imagine that you decide <i>not</i> to purchase the lottery ticket at a price of £<i>6</i> after learning this information, and that decision is randomly selected to be paid out to you. Also, imagine that the coin flip for lottery 2 results in heads. What would be your total payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e1">
+    <br><br>
+    <b> 2. </b> Imagine that when you return to part 2 of this study and learn that the coin flip for lottery 1 results in heads. Further, imagine that you decide <i>to purchase</i> the lottery ticket at a price of £<i>10</i> after learning this information, and that decision is randomly selected to be paid out to you. Also, imagine that the coin flip for lottery 2 results in heads. What would be your bonus payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e2">
+    <br><br>
+    <b> 3. </b> Imagine that when you return to part 2 of this study and learn that the coin flip for lottery 1 results in heads. Further, imagine that you decide <i>to purchase</i> the lottery ticket at a price of £<i>10</i> after learning this information, and that decision is randomly selected to be paid out to you. Also, imagine that the coin flip for lottery 2 results in <i>tails</i>. What would be your bonus payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e3">
+    <br><br>
+    {% endif %}
+
+    {% if participant.treatment == 2 %}
+    <b> 1. </b> Imagine that you decide <i>not</i> to purchase the option to purchase the lottery ticket for a price of £<i>1</i> today, and that decision is randomly selected to be paid out to you. Further, imagine that you return to part 2 of this study and learn that the coin flip for lottery 1 results in heads. As you did not purchase the option today, you then cannot purchase the lottery ticket after learning this information. Also, imagine that the coin flip for lottery 2 results in heads. What would be your total payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e1">
+    <br><br>
+    <b> 2. </b> Imagine that you decide <i>to purchase</i> the option to purchase the lottery ticket for a price of £<i>2</i> today, with a price of the lottery ticket of £8, and that decision is randomly selected to be paid out to you. Further, imagine that you return to part 2 of this study and learn that the coin flip for lottery 1 results in heads. As you <i>did purchase</i> the option today, you then decide to purchase the lottery ticket after learning about the coin flip result for lottery 1. Also, imagine that the coin flip for lottery 2 results in heads. What would be your bonus payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e2">
+    <br><br>
+    <b> 3. </b> Imagine that you decide <i>to purchase</i> the option to purchase the lottery ticket for a price of £<i>2</i> today, with a price of the lottery ticket of £8, and that decision is randomly selected to be paid out to you. Further, imagine that you return to part 2 of this study and learn that the coin flip for lottery 1 results in heads. As you <i>did purchase</i> the option today, you then decide to purchase the lottery ticket after learning about the coin flip result for lottery 1. Also, imagine that the coin flip for lottery 2 results in <i>tails</i>. What would be your bonus payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e3">
+    <br><br>
+    {% endif %}
+
+    {% if participant.treatment == 3 %}
+    <b> 1. </b> Imagine that you decide <i>not</i> to purchase the lottery ticket at a price of £<i>6</i> (with a refund option of £<i>2</i>) today, and that decision is randomly selected to be paid out to you. Further, imagine that you return to part 2 of this study and learn that the coin flip for lottery 1 results in heads and the coin flip for lottery 2 results in heads. What would be your total payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e1">
+    <br><br>
+    <b> 2. </b> Imagine that you decide <i>to purchase</i> the lottery ticket at a price of £<i>10</i> (with a refund option of £<i>6</i>) today, and that decision is randomly selected to be paid out to you. Further, imagine that you return to part 2 of this study and learn that the coin flip for lottery 1 results in heads. As you <i>did purchase</i> the lottery ticket today, you then decide not to use the refund option, and keep the lottery ticket, after learning about the coin flip result for lottery 1. Also, imagine that the coin flip for lottery 2 results in heads.  What would be your bonus payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e2">
+    <br><br>
+    <b> 3. </b> Imagine that you decide <i>not</i> to purchase the lottery ticket at a price of £<i>10</i> (with a refund option of £<i>6</i>) today, and that decision is randomly selected to be paid out to you. Further, imagine that you return to part 2 of this study and learn that the coin flip for lottery 1 results in <i>tails</i>. As you <i>did purchase</i> the lottery ticket today, you then decide <i>to use the refund option</i>, and return the lottery ticket, after learning about the coin flip result for lottery 1. Also, imagine that the coin flip for lottery 2 results in heads. What would be your bonus payment at the end of part 2 of this study?
+    <br>
+    <input type="number" name = "e3">
+    <br><br>
+    {% endif %}
+
+</div>
+</div>
+<br>
+<div style="float: center; text-align: center;">
+   <button class="otree-btn-next btn btn-primary" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">Next</button>
+</div>
+
+<div style="text-align: center; margin-top: 1.5em;">
+    <button class="btn btn-warning" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">Reveal Instructions</button>
+</div>
+
+<div style="display: none" id="instructions">
+    <div class="card bg-light">
+    <div class="card-body">
+{{ include "SBC_consent_form/instr.html" }}
+        </div></div>
+    </div>
+
+{{ endblock }}
