@@ -1,172 +1,783 @@
-<div class="card-body">
-    <font size=3.5>
-        <p>This study consists of two parts. This is the first part of this study. The second part will take place next
-            week and will be advertised via Prolific. You only complete this study if you complete both parts.</p>
+<div class="card-body" style="padding:0;">
 
-        <p>You can complete part 2 at any time during the next two weeks. <b>Please note that you will receive any
-                payment only if you participate in both parts.</b></p>
+<style>
+    body { background: #eef3fa; }
 
-        <p>For today's study, you will receive a payment of {{ session.config.participation_fee }}. For part 2, you
-            receive an additional payment of {{ session.config.participation_fee }}. In addition, you can earn a
-            <i>substantial bonus payment</i> that can be as high as <b>£{{ session.config.max_pay }}</b>. This bonus
-            payment depends on your choice and chance.
-        </p>
+    .study-wrapper {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        max-width: 860px;
+        margin: 24px auto;
+    }
 
-        <h3>Lottery ticket</h3>
+    .page-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1a3a5c;
+        margin-bottom: 14px;
+    }
 
-        <p>Today, you will evaluate a lottery ticket. The lottery ticket consists of two lotteries with different
-            monetary amounts that you can receive as part of your bonus payment. Each lottery has two possible outcomes
-            that are equally likely. What outcomes will be paid out to you will be determined by the flip of two
-            independent virtual coins.
-        </p>
+    .page-title small {
+        font-weight: 400;
+        font-size: 0.88rem;
+        color: #5a7a9a;
+    }
 
-        <ul>
-            <li><b>Lottery 1</b>: Pays £{{ session.config.A_BAR }} if the first coin flip results in heads, and £{{
-                participant.x_draw }} if it results in tails.</li>
-            <li><b>Lottery 2</b>: Pays £{{ session.config.A_BAR }} if the second coin flip results in heads, and £0 if
-                it results in tails.</li>
-        </ul>
+    /* ── Outer card ── */
+    .outer-card {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        overflow: hidden;
+    }
 
-        <p>Your lottery ticket earnings are given by the sum of payments from the two lotteries. For example, if the
-            first coin flip is tails and the second is tails, your lottery ticket earnings are £{{ participant.x_draw
-            }}. As another example, if the first coin flip is heads and
-            the second is tails, your lottery ticket earnings are £{{ session.config.A_BAR }} + £0 = £{{
-            session.config.A_BAR }}.</p>
+    .card-top-bar {
+        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        padding: 16px 28px;
+        color: white;
+        font-size: 1.05rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-        <h5>When do you learn more about your lotteries?</h5>
-        <ul>
-            <li>When you return to the study for part 2 next week, you will learn the outcome of Lottery 1. This means
-                that you will know whether Lottery 1 pays you £{{ session.config.A_BAR }} or £{{ participant.x_draw }}.
-                However, you will not learn the outcome of Lottery 2 until later.</li>
-            <li>Afterwards, you may make additional decisions.</li>
-            <li>At the end of part 2 of this study, you will learn the result of Lottery 2 and your bonus payment for
-                the participation of this study.</li>
+    .part-badge {
+        background: rgba(255,255,255,0.22);
+        border-radius: 20px;
+        padding: 3px 14px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
 
-        </ul>
-        <h3>Your decision</h3>
-        {% if participant.treatment == 0 %}
-        <p>Today, you can purchase the lottery ticket.</p>
-        <p><i>Note:</i> You cannot purchase the lottery ticket in part 2. Your only opportunity to purchase the ticket
-            is today. Your payment in this study depends only on the decisions that you make today and you do not make
-            decisions in part 2.</p>
-        {% endif %}
-        {% if participant.treatment == 1 %}
-        <p>In part 2 of this study next week, you can purchase the lottery ticket. You can decide whether to purchase
-            the ticket <i>after learning the outcome of Lottery 1</i>, so whether Lottery 1 pays you £{{
-            session.config.A_BAR }} or £{{ participant.x_draw }}. However, you will make your decision before learning
-            the outcome of Lottery 2. Your payment in this study depends only on the decisions that you make in part 2
-            and you do not make decisions today.</p>
-        {% endif %}
-        {% if participant.treatment == 2 %}
-        <p>Today, you can buy the right to purchase the lottery ticket next week and thereby fix the price of the
-            lottery ticket. This right is called an <i>option</i>. Only if you buy the option, you can purchase the
-            lottery ticket at a fixed price in part 2 next week. The option has no other benefit other than giving you
-            the right to purchase the lottery.
-        </p>
-        <p>
-            This means that you will make two decisions across the two parts of this study:
-        <ul>
-            <li>In part 1: Whether you want to buy the option to purchase the lottery ticket.</li>
-            <li>In part 2: <i>Only if you buy the option in part 1,</i> you decide whether to purchase the lottery
-                ticket at a pre-specified price. If you do not buy the option in part 1, you <i>cannot</i> purchase the
-                lottery ticket.</li>
-        </ul>
-        Your total payment consists of the payment for the option in part 1 and the payment for the lottery ticket in
-        part 2 (if you choose to buy the option and/or the purchase the lottery ticket).</p>
-        <p>Today, you can buy the option. In part 2, you will <i>first learn the outcome of Lottery 1</i>, so whether
-            you will be paid £{{ session.config.A_BAR }} or £{{ participant.x_draw }} for Lottery 1. Afterwards, you can
-            purchase the lottery ticket. This means that you can decide whether to pay the pre-specified price of the
-            lottery ticket based on the outcome of Lottery 1. However, you will make your decision before learning the
-            outcome of Lottery 2. Importantly, if you do not buy the option today, you cannot purchase the lottery
-            ticket in part 2.</p>
-        <p>Your payment in this study depends both on the decisions that you make today and the decisions that you make
-            in part 2. In particular, you can also decide not to purchase the lottery ticket in part 2 in case you buy
-            the option today, which means that you only need to pay for the option.<br>
-        </p>
-        <p><i>Note:</i> If you do not purchase the right to purchase the ticket today, you cannot purchase the lottery
-            in part 2. You also can only use the refund option in part 2 if you purchase the lottery ticket today. Your
-            payment in this study depends both on the decisions that you make today and the decisions that you make in
-            part 2.</p>
-        {% endif %}
-        {% if participant.treatment == 3 %}
-        <p>Today, you can purchase the lottery ticket. Your lottery ticket includes a <i>refund option</i> that you can
-            decide to use in part 2 of this study next week.</p>
-        <p>When you return for part 2 of the study, you will <i>first learn the outcome of Lottery 1</i>, so whether you
-            will be paid £{{ session.config.A_BAR }} or £{{ participant.x_draw }} for Lottery 1. Then, you can decide to
-            either keep your lottery ticket or to receive a pre-specified refund and return your lottery ticket. This
-            means that you can decide whether to return your lottery ticket based on the outcome of Lottery 1. However,
-            you will make your decision before learning the outcome of Lottery 2.</p>
-        <p><i>Note:</i> If you do not purchase the lottery ticket today, you cannot purchase it in part 2. You also can
-            only use the refund option in part 2 if you purchase the lottery ticket today. Your payment in this study
-            depends both on the decisions that you make today and the decisions that you make in part 2.</p>
-        {% endif %}
+    .card-inner { padding: 26px 30px 34px 30px; }
 
-        <h3>Payment</h3>
-        <p>
-            To be able to purchase the lottery ticket, you will receive a budget of <b>£{{ C.ENDOWMENT }}</b> in this
-            study. At the end of part 2 of the study, any payments for purchasing {% if participant.treatment == 2 %}
-            the option
-            and {% endif %} the lottery ticket will be subtracted from that budget. You will receive the remaining
-            budget as a bonus payment. This means that your total bonus payment in this study will consist of:
-        </p>
-        <center>
-            <p style="font-size: 20px;font-weight: bold;"> Bonus Payment = <i>Budget</i> - <i>Lottery ticket payment</i>
-                + <i>Lottery earnings</i> </p>
-        </center>
-        <br>
-        <p>For example, if you purchase the lottery ticket for <b>£6</b> and receive earnings of <b>£{{
-                session.config.A_BAR }}</b>, your bonus payment will be
-        </p>
-        <center>
-            <p style="font-size: 20px;font-weight: bold;"> £{{ C.ENDOWMENT }} - £6 + £{{
-                session.config.A_BAR }} = £17
-            </p>
-        </center>
+    /* ── Intro box ── */
+    .intro-box {
+        background: #f0f6ff;
+        border-left: 5px solid #4A90D9;
+        border-radius: 0 8px 8px 0;
+        padding: 16px 20px;
+        margin-bottom: 22px;
+        font-size: 15px;
+        line-height: 1.75;
+        color: #223;
+    }
+
+    .intro-box p { margin-bottom: 8px; }
+    .intro-box p:last-child { margin-bottom: 0; }
+
+    .highlight-note {
+        background: #fff3cd;
+        border-left: 4px solid #f0ad00;
+        border-radius: 0 6px 6px 0;
+        padding: 9px 14px;
+        margin-top: 10px;
+        font-size: 0.93rem;
+        color: #664d00;
+    }
+
+    /* ── Progress ── */
+    .progress-wrap { margin-bottom: 16px; }
+
+    .progress-label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: #5a7a9a;
+        margin-bottom: 5px;
+    }
+
+    .progress { height: 6px; border-radius: 10px; background: #d5e6f5; }
+
+    .progress-bar {
+        background: linear-gradient(90deg, #2563b0, #4A90D9);
+        border-radius: 10px;
+        transition: width 0.4s ease;
+    }
+
+    .steps-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #4A90D9;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    /* ── Accordion ── */
+    .accordion-item {
+        border: 1.5px solid #d5e6f5 !important;
+        border-radius: 10px !important;
+        margin-bottom: 10px;
+        overflow: hidden;
+        transition: box-shadow 0.2s, border-color 0.2s;
+    }
+
+    .accordion-item.active-section {
+        box-shadow: 0 4px 18px rgba(74,144,217,0.18) !important;
+        border-color: #4A90D9 !important;
+    }
+
+    .accordion-button {
+        font-size: 0.98rem;
+        font-weight: 600;
+        color: #1a3a5c;
+        background: #eef4fb;
+        border: none;
+        padding: 14px 18px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        color: white;
+        box-shadow: none;
+    }
+
+    .accordion-button:not(.collapsed)::after { filter: brightness(0) invert(1); }
+    .accordion-button:focus { box-shadow: 0 0 0 3px rgba(74,144,217,0.25); }
+
+    .section-icon { font-size: 1.1rem; min-width: 24px; }
+
+    .section-num {
+        background: #c5daf5;
+        color: #1a3a5c;
+        border-radius: 50%;
+        width: 22px; height: 22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .accordion-button:not(.collapsed) .section-num {
+        background: rgba(255,255,255,0.25);
+        color: white;
+    }
+
+    .accordion-body {
+        background: #ffffff;
+        font-size: 15px;
+        line-height: 1.75;
+        color: #2c3e50;
+        padding: 20px 24px 16px 24px;
+    }
+
+    /* ── Content helpers ── */
+    .info-card {
+        background: #f7faff;
+        border: 1px solid #d5e6f5;
+        border-radius: 8px;
+        padding: 14px 16px;
+        margin: 12px 0;
+    }
+
+    .lottery-pill {
+        display: inline-block;
+        background: #2563b0;
+        color: white;
+        border-radius: 20px;
+        padding: 2px 11px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-right: 6px;
+    }
+
+    .timeline-item {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 10px;
+        align-items: flex-start;
+    }
+
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .t-dot {
+        border-radius: 50%;
+        width: 24px; height: 24px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: 700;
+        margin-top: 2px;
+        color: white;
+    }
+
+    .t-dot.blue { background: #4A90D9; }
+    .t-dot.amber { background: #f0a500; }
+    .t-dot.green { background: #1a7a1a; }
+
+    .formula-box {
+        background: linear-gradient(135deg, #fffbe6 0%, #fff8d6 100%);
+        border: 1.5px solid #f0c040;
+        border-radius: 10px;
+        padding: 13px 18px;
+        text-align: center;
+        margin: 14px 0;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #1a3a5c;
+    }
+
+    .formula-box .result { color: #1a7a1a; }
+
+    .note-box {
+        background: #fff8e1;
+        border-left: 4px solid #f0ad00;
+        border-radius: 0 8px 8px 0;
+        padding: 10px 15px;
+        margin-top: 14px;
+        font-size: 0.92rem;
+        color: #555;
+    }
+
+    .stat-row {
+        display: flex;
+        gap: 10px;
+        margin: 14px 0;
+        flex-wrap: wrap;
+    }
+
+    .stat-chip {
+        background: #eef4fb;
+        border: 1px solid #c5daf5;
+        border-radius: 8px;
+        padding: 8px 14px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #1a3a5c;
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+    }
+
+    .stat-chip .stat-num {
+        display: block;
+        font-size: 1.25rem;
+        color: #2563b0;
+    }
+
+    .screenshot-placeholder {
+        background: #f5f5f5;
+        border: 2px dashed #bbb;
+        border-radius: 10px;
+        padding: 30px 20px;
+        text-align: center;
+        color: #999;
+        font-style: italic;
+        margin-top: 12px;
+    }
+
+    /* ── Continue button ── */
+    .continue-btn-wrap {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid #e8f0fa;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .btn-continue {
+        background: linear-gradient(90deg, #2563b0, #4A90D9);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 9px 22px;
+        font-size: 0.93rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        transition: transform 0.15s, box-shadow 0.15s;
+        box-shadow: 0 3px 10px rgba(74,144,217,0.25);
+    }
+
+    .btn-continue:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 16px rgba(74,144,217,0.35);
+    }
+
+    .btn-continue:active { transform: translateY(0); }
+
+    .btn-continue.btn-finish {
+        background: linear-gradient(90deg, #1a7a1a, #28a745);
+        box-shadow: 0 3px 10px rgba(40,167,69,0.25);
+    }
+
+    .btn-continue.btn-finish:hover {
+        box-shadow: 0 5px 16px rgba(40,167,69,0.35);
+    }
+</style>
+
+<div class="study-wrapper">
+
+    <div class="page-title">
+        📋 Study Instructions &nbsp;<small>· Part 1 of 2</small>
+    </div>
+
+    <div class="outer-card">
+
+        <!-- Top bar -->
+        <div class="card-top-bar">
+            <span>Decision-Making Study</span>
+            <span class="part-badge">Part 1 · Today</span>
+        </div>
+
+        <div class="card-inner">
+
+            <!-- ── Intro (always visible) ── -->
+            <div class="intro-box">
+                <p>This study consists of <strong>two parts</strong>. This is the first part. The second part will take
+                    place next week and will be advertised via Prolific.
+                    <strong>You only complete this study if you complete both parts.</strong></p>
+                <p>You can complete part 2 at any time during the next two weeks.</p>
+                <div class="highlight-note">
+                    ⚠️ <strong>Please note:</strong> You will receive any payment
+                    <strong>only if you participate in both parts.</strong>
+                </div>
+                <p style="margin-top:12px; margin-bottom:0;">
+                    For today's study you receive
+                    <strong>{{ session.config.participation_fee }}</strong>.
+                    Part 2 adds another
+                    <strong>{{ session.config.participation_fee }}</strong>.
+                    You can also earn a <em>substantial bonus payment</em> up to
+                    <strong>£{{ session.config.max_pay }}</strong>
+                    depending on your choices and chance.
+                </p>
+            </div>
+
+            <!-- ── Progress bar ── -->
+            <div class="progress-wrap">
+                <div class="progress-label">
+                    <span>Reading instructions…</span>
+                    <span id="prog-label">Section 1 of 5</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" id="progress-bar" style="width:20%;"></div>
+                </div>
+            </div>
+
+            <div class="steps-label">📖 Sections — click any header to expand</div>
+
+            <!-- ══════════════════════════════════════
+                 ACCORDION
+            ══════════════════════════════════════ -->
+            <div class="accordion" id="mainAccordion">
 
 
+                <!-- ① LOTTERY TICKET ─────────────────── -->
+                <div class="accordion-item active-section" id="item-0">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#sec-0"
+                                aria-expanded="true" aria-controls="sec-0">
+                            <span class="section-icon">🎟️</span>
+                            <span class="section-num">1</span>
+                            Lottery Ticket
+                        </button>
+                    </h2>
+                    <div id="sec-0" class="accordion-collapse collapse show">
+                        <div class="accordion-body">
 
+                            <p>Today, you will evaluate a <strong>lottery ticket</strong> consisting of two lotteries.
+                                Each has two equally likely outcomes, determined by independent virtual coin flips.</p>
 
-        <h3>Today's decision</h3>
-        {% if participant.treatment == 0 %}
-        <p>Today, you will be asked a series of questions about your valuation of the lottery ticket. For
-            different prices, you can purchase the lottery ticket at that price. An example decision screen is
-            presented below.</p>
-        {% endif %}
-        {% if participant.treatment == 2 %}
-        <p>Today, you will be asked a series of questions about your valuation of the option to buy the lottery
-            ticket. For different prices, you can purchase the option to buy the lottery ticket at that price.
-            An example decision screen is presented below.</p>
-        {% endif %}
-        {% if participant.treatment == 1 %}
-        <p>Today, you will not make any decisions, as you will only decide whether to purchase the lottery
-            ticket in part 2 of this study. In part 2, you will be asked a series of questions about your
-            valuation of the lottery ticket. For different prices, you can choose whether to purchase the
-            lottery ticket at that price. An example decision screen is presented below.</p>
-        {% endif %}
-        {% if participant.treatment == 3 %}
-        <p>Today, you will be asked a series of questions about your valuation of the lottery ticket. For
-            different prices and refund options, you can purchase the lottery ticket at that price. An example
-            decision screen is presented below.</p>
-        {% endif %}
+                            <div class="info-card">
+                                <div class="timeline-item">
+                                    <div class="t-dot blue">1</div>
+                                    <div>
+                                        <span class="lottery-pill">Lottery 1</span>
+                                        Pays <strong>£{{ session.config.A_BAR }}</strong> if the first coin is
+                                        <em>heads</em>, and
+                                        <strong>£{{ participant.x_draw }}</strong> if it is <em>tails</em>.
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="t-dot blue">2</div>
+                                    <div>
+                                        <span class="lottery-pill">Lottery 2</span>
+                                        Pays <strong>£{{ session.config.A_BAR }}</strong> if the second coin is
+                                        <em>heads</em>, and <strong>£0</strong> if it is <em>tails</em>.
+                                    </div>
+                                </div>
+                            </div>
 
+                            <p>Your lottery ticket earnings equal the <strong>sum</strong> of both lottery outcomes.
+                                For example:</p>
+                            <ul>
+                                <li>First coin <em>tails</em>, second coin <em>tails</em> →
+                                    <strong>£{{ participant.x_draw }}</strong></li>
+                                <li>First coin <em>heads</em>, second coin <em>tails</em> →
+                                    £{{ session.config.A_BAR }} + £0 =
+                                    <strong>£{{ session.config.A_BAR }}</strong></li>
+                            </ul>
 
-        <p>...include appropriate screenshot here...</p>
+                            <p class="mt-3 mb-2"><strong>⏰ When do you learn the outcomes?</strong></p>
+                            <div class="info-card">
+                                <div class="timeline-item">
+                                    <div class="t-dot amber">→</div>
+                                    <div><strong>Part 2 (start):</strong> You learn <strong>Lottery 1</strong>'s result —
+                                        whether it pays £{{ session.config.A_BAR }} or £{{ participant.x_draw }}.
+                                        You will <em>not</em> yet know Lottery 2's result.</div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="t-dot amber">→</div>
+                                    <div>You may then make additional decisions.</div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="t-dot green">✓</div>
+                                    <div><strong>Part 2 (end):</strong> You learn <strong>Lottery 2</strong>'s result
+                                        and your final bonus payment.</div>
+                                </div>
+                            </div>
 
-        <h3>Random selection</h3>
-        <p>At the end of the study, the computer will randomly select one of the questions, with each question
-            being equally likely to be chosen. If you chose to purchase {% if participant.treatment == 2 %} the
-            option to buy {% endif %} the lottery ticket in that question, you will receive {% if
-            participant.treatment == 2 %} the option to buy {% endif %} the lottery ticket, but your budget of
-            £{{ C.ENDOWMENT }} will be reduced by that price. Otherwise, you will not receive {% if
-            participant.treatment == 2 %} the option to buy {% endif %} the lottery ticket and you will not
-            receive any earnings from the lottery, but you will keep your budget.</p>
-        <p>25% of participants in this study will be randomly selected for the bonus payment and will receive
-            the bonus payment within two weeks of the completion of the study. For 98% of participants, we will
-            implement exactly their decisions. For the remaining 2% of participants, you will be paid and make
-            decisions as if you purchased {% if participant.treatment == 2 %} the option to buy {% endif %} the
-            lottery ticket. {% if participant.treatment == 2 or participant.treatment == 3 %} That means that
-            all participants will make decisions in part 2, because it may be that the computer randomly selects
-            them to make a purchase, and everyone's decisions may potentially involve receiving a lottery
-            ticket.{% endif %}<br><br>Please remember that all payments can only be paid out to you if you
-            complete part 2 of the study within the next two weeks. </p>
+<div class="continue-btn-wrap">
+                            <button type="button" class="btn-continue" onclick="goToSection(1)">
+                            Continue &nbsp;→
+                            </button>
 </div>
+
+                        </div>
+                    </div>
+                </div><!-- /① -->
+
+
+                <!-- ② YOUR DECISION ───────────────────── -->
+                <div class="accordion-item" id="item-1">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#sec-1"
+                                aria-expanded="false" aria-controls="sec-1">
+                            <span class="section-icon">🤔</span>
+                            <span class="section-num">2</span>
+                            Your Decision
+                        </button>
+                    </h2>
+                    <div id="sec-1" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+
+                            {% if participant.treatment == 0 %}
+                            <p>Today, you can <strong>purchase the lottery ticket</strong>.</p>
+                            <div class="note-box">
+                                📌 <strong>Note:</strong> You cannot purchase the lottery ticket in Part 2.
+                                Your <em>only</em> opportunity is today. Your payment depends solely on
+                                the decisions you make today — you do not make decisions in Part 2.
+                            </div>
+                            {% endif %}
+
+                            {% if participant.treatment == 1 %}
+                            <p>In <strong>Part 2</strong> next week, you can purchase the lottery ticket.
+                                You will decide <em>after</em> learning the outcome of Lottery 1 — whether
+                                it pays £{{ session.config.A_BAR }} or £{{ participant.x_draw }}.
+                                However, you will decide <em>before</em> learning Lottery 2's outcome.</p>
+                            <div class="note-box">
+                                📌 <strong>Note:</strong> Your payment depends only on decisions you make in
+                                Part 2. You do not make any decisions today.
+                            </div>
+                            {% endif %}
+
+                            {% if participant.treatment == 2 %}
+                            <p>Today, you can buy the <strong>right</strong> to purchase the lottery ticket
+                                next week at a fixed price. This right is called an <strong><em>option</em></strong>.
+                                The option has no benefit other than giving you the right to purchase later.</p>
+
+                            <p>You will make <strong>two decisions</strong> across the two parts:</p>
+                            <div class="info-card">
+                                <div class="timeline-item">
+                                    <div class="t-dot blue">1</div>
+                                    <div><strong>Part 1 (today):</strong> Buy or decline the option to purchase
+                                        the lottery ticket.</div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="t-dot blue">2</div>
+                                    <div><strong>Part 2:</strong> <em>Only if you bought the option</em>,
+                                        decide whether to purchase the lottery ticket at the pre-specified
+                                        price. You cannot purchase if you skipped the option.</div>
+                                </div>
+                            </div>
+
+                            <p>In Part 2 you will <em>first</em> learn Lottery 1's outcome
+                                (£{{ session.config.A_BAR }} or £{{ participant.x_draw }}), then decide
+                                on the ticket — but before learning Lottery 2's outcome.</p>
+
+                            <div class="note-box">
+                                📌 <strong>Note:</strong> If you do not buy the option today, you cannot
+                                purchase the lottery ticket in Part 2. Your total payment covers both
+                                today's and Part 2's decisions.
+                            </div>
+                            {% endif %}
+
+                            {% if participant.treatment == 3 %}
+                            <p>Today, you can purchase the lottery ticket. Your ticket includes a
+                                <strong><em>refund option</em></strong> that you can use in Part 2.</p>
+                            <p>In Part 2 you will <em>first</em> learn Lottery 1's outcome
+                                (£{{ session.config.A_BAR }} or £{{ participant.x_draw }}). You can then
+                                either <strong>keep</strong> your lottery ticket or <strong>return it</strong>
+                                for a pre-specified refund — before learning Lottery 2's outcome.</p>
+                            <div class="note-box">
+                                📌 <strong>Note:</strong> If you do not purchase today, you cannot purchase
+                                in Part 2 and cannot use the refund option. Your payment covers both parts.
+                            </div>
+                            {% endif %}
+
+                            <div class="continue-btn-wrap">
+<button type="button" class="btn-continue" onclick="goToSection(2)">
+    Continue &nbsp;→
+</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!-- /② -->
+
+
+                <!-- ③ PAYMENT ─────────────────────────── -->
+                <div class="accordion-item" id="item-2">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#sec-2"
+                                aria-expanded="false" aria-controls="sec-2">
+                            <span class="section-icon">💷</span>
+                            <span class="section-num">3</span>
+                            Payment
+                        </button>
+                    </h2>
+                    <div id="sec-2" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+
+                            <p>To purchase the lottery ticket, you receive a starting
+                                <strong>budget of £{{ C.ENDOWMENT }}</strong>.
+                                At the end of Part 2, any purchase prices are subtracted from this budget.
+                                You keep the remainder as your bonus payment.</p>
+
+                            <div class="formula-box">
+                                Bonus&nbsp;Payment &nbsp;=&nbsp; <em>Budget</em>
+                                &nbsp;&minus;&nbsp; <em>Ticket&nbsp;price</em>
+                                {% if participant.treatment == 2 %}
+                                &nbsp;&minus;&nbsp; <em>Option&nbsp;price</em>
+                                {% endif %}
+                                &nbsp;+&nbsp; <em>Lottery&nbsp;earnings</em>
+                            </div>
+
+                            <p>For example, if you purchase the lottery ticket for <strong>£6</strong>
+                                and your lottery earnings are
+                                <strong>£{{ session.config.A_BAR }}</strong>:</p>
+
+                            <div class="formula-box">
+                                £{{ C.ENDOWMENT }} &minus; £6 + £{{ session.config.A_BAR }}
+                                = <span class="result">£17</span>
+                            </div>
+
+                            <div class="stat-row">
+                                <div class="stat-chip">
+                                    <span class="stat-num">£{{ C.ENDOWMENT }}</span>
+                                    Starting budget
+                                </div>
+                                <div class="stat-chip">
+                                    <span class="stat-num">£0 – £{{ session.config.max_pay }}</span>
+                                    Lottery range
+                                </div>
+                                <div class="stat-chip">
+                                    <span class="stat-num">£{{ session.config.max_pay }}</span>
+                                    Max lottery win
+                                </div>
+                            </div>
+
+                            <div class="continue-btn-wrap">
+<button type="button" class="btn-continue" onclick="goToSection(3)">
+    Continue &nbsp;→
+</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!-- /③ -->
+
+
+                <!-- ④ TODAY'S DECISION ────────────────── -->
+                <div class="accordion-item" id="item-3">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#sec-3"
+                                aria-expanded="false" aria-controls="sec-3">
+                            <span class="section-icon">📝</span>
+                            <span class="section-num">4</span>
+                            Today's Decision
+                        </button>
+                    </h2>
+                    <div id="sec-3" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+
+                            {% if participant.treatment == 0 %}
+                            <p>Today, you will be asked a series of questions about your
+                                <strong>valuation of the lottery ticket</strong>. For different prices,
+                                you choose whether to purchase at that price.</p>
+                            {% endif %}
+
+                            {% if participant.treatment == 1 %}
+                            <p>Today, you will <strong>not make any decisions</strong>. In Part 2, you will
+                                be asked questions about your valuation of the lottery ticket and choose
+                                whether to purchase at various prices.</p>
+                            {% endif %}
+
+                            {% if participant.treatment == 2 %}
+                            <p>Today, you will be asked a series of questions about your
+                                <strong>valuation of the option</strong> to buy the lottery ticket.
+                                For different prices, you choose whether to purchase the option.</p>
+                            {% endif %}
+
+                            {% if participant.treatment == 3 %}
+                            <p>Today, you will be asked a series of questions about your
+                                <strong>valuation of the lottery ticket</strong>. For different prices
+                                and refund options, you choose whether to purchase.</p>
+                            {% endif %}
+
+                            <p>An example decision screen is shown below:</p>
+
+                            <div class="screenshot-placeholder">
+                                📸 &nbsp;<em>Insert screenshot of example decision screen here</em>
+                            </div>
+
+                            <div class="continue-btn-wrap">
+<button type="button" class="btn-continue" onclick="goToSection(4)">
+    Continue &nbsp;→
+</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!-- /④ -->
+
+
+                <!-- ⑤ RANDOM SELECTION ────────────────── -->
+                <div class="accordion-item" id="item-4">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#sec-4"
+                                aria-expanded="false" aria-controls="sec-4">
+                            <span class="section-icon">🎲</span>
+                            <span class="section-num">5</span>
+                            Random Selection
+                        </button>
+                    </h2>
+                    <div id="sec-4" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+
+                            <p>At the end of the study, the computer <strong>randomly selects one
+                                question</strong> (each equally likely). If you chose to purchase
+                                {% if participant.treatment == 2 %}the option to buy{% endif %}
+                                the lottery ticket in that question, you receive it but your budget of
+                                £{{ C.ENDOWMENT }} is reduced by that price. Otherwise, you keep the
+                                full budget with no lottery earnings.</p>
+
+                            <div class="stat-row">
+                                <div class="stat-chip">
+                                    <span class="stat-num">25%</span>
+                                    Selected for bonus
+                                </div>
+                                <div class="stat-chip">
+                                    <span class="stat-num">98%</span>
+                                    Exact decisions implemented
+                                </div>
+                                <div class="stat-chip">
+                                    <span class="stat-num">2%</span>
+                                    Treated as purchaser
+                                </div>
+                            </div>
+
+                            {% if participant.treatment == 2 or participant.treatment == 3 %}
+                            <p>Because it may be that the computer selects you for a purchase,
+                                <strong>all participants will make decisions in Part 2</strong> and
+                                everyone's choices may potentially involve receiving a lottery ticket.</p>
+                            {% endif %}
+
+                            <div class="note-box">
+                                ⏰ <strong>Remember:</strong> All payments can only be paid out if you
+                                <strong>complete Part 2 within the next two weeks</strong>.
+                            </div>
+
+                            <div class="continue-btn-wrap">
+<button type="button" class="btn-continue btn-finish" onclick="onFinish()">
+    ✅ &nbsp;I've read all sections
+</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div><!-- /⑤ -->
+
+
+            </div><!-- /accordion -->
+        </div><!-- /card-inner -->
+    </div><!-- /outer-card -->
+</div><!-- /study-wrapper -->
+
+</div><!-- /card-body -->
+
+<script>
+    const TOTAL_SECTIONS = 5;
+
+    function goToSection(nextIndex) {
+        for (let i = 0; i < TOTAL_SECTIONS; i++) {
+            const collapseEl = document.getElementById('sec-' + i);
+            const itemEl     = document.getElementById('item-' + i);
+            const btnEl      = itemEl.querySelector('.accordion-button');
+
+            if (i === nextIndex) {
+                // Open target section
+                collapseEl.classList.add('show');
+                btnEl.classList.remove('collapsed');
+                btnEl.setAttribute('aria-expanded', 'true');
+                itemEl.classList.add('active-section');
+                // Scroll after CSS has a moment to open
+                setTimeout(() => {
+                    itemEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 80);
+            } else {
+                // Close all others
+                collapseEl.classList.remove('show');
+                btnEl.classList.add('collapsed');
+                btnEl.setAttribute('aria-expanded', 'false');
+                itemEl.classList.remove('active-section');
+            }
+        }
+        updateProgress(nextIndex + 1);
+    }
+
+    function updateProgress(current) {
+        const pct = Math.round((current / TOTAL_SECTIONS) * 100);
+        document.getElementById('progress-bar').style.width = pct + '%';
+        document.getElementById('prog-label').textContent =
+            'Section ' + current + ' of ' + TOTAL_SECTIONS;
+    }
+
+function onFinish() {
+    // Visual feedback
+    document.getElementById('prog-label').textContent = '✅ All sections read';
+    const bar = document.getElementById('progress-bar');
+    bar.style.width = '100%';
+    bar.style.background = 'linear-gradient(90deg, #1a7a1a, #28a745)';
+
+    // Brief pause so participant sees the green bar, then submit the oTree form
+    setTimeout(() => {
+        document.querySelector('form').submit();
+    }, 500);
+}
+
+    // Keep progress bar in sync when user manually clicks a header
+    document.getElementById('mainAccordion').addEventListener('shown.bs.collapse', function (e) {
+        const idx = parseInt(e.target.id.split('-')[1]);
+        for (let i = 0; i < TOTAL_SECTIONS; i++) {
+            document.getElementById('item-' + i)
+                    .classList.toggle('active-section', i === idx);
+        }
+        updateProgress(idx + 1);
+    });
+</script>
