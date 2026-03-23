@@ -1,0 +1,62 @@
+{{ block title }}
+    The lottery
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    function open_instructions() {
+        let x = document.getElementById("instructions");
+        let instructions_button = document.getElementById("instructions_button");
+        if (x.style.display === "none") {
+            instructions_button.innerHTML = "Close Your Instructions"
+            x.style.display = "block";
+            instructions_button_other.innerHTML = "Reveal Instructions"
+        } else {
+            instructions_button.innerHTML = "Reveal Instructions"
+            x.style.display = "none";
+        }
+    }
+</script>
+{{ endblock }}
+{{ block content }}
+
+<div style="width: 100%; margin: 0 auto; padding: 2em; font-size: 1.25em; box-sizing: border-box;">
+
+<div style="background-color: #fff3cd; border: 0.15em solid #ffc107; padding: 1em 1.5em; margin-top: 1.5em; border-radius: 0.4em;">
+    <p style="font-size: 1.2em; margin-bottom: 0.6em; line-height: 1.05;"><i>The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
+    <ul style="list-style-type: none; padding-left: 0; font-size: 1.15em;">
+        <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
+            <b>Lottery 1</b>: Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> if the coin flip results in <b>heads</b>, and <span style="color: blue; font-size: 1.3em;"><b>£{{ player.x }}</b></span> if it results in <b>tails</b>.
+        </li>
+        <li style="padding: 0em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
+            <b>Lottery 2</b>: Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> if the coin flip results in <b>heads</b>, and <span style="color: blue; font-size: 1.3em;"><b>£0</b></span> if it results in <b>tails</b>.
+        </li>
+    </ul>
+    <p style="font-size: 1.2em; margin-bottom: 0.6em; line-height: 1.05;">You can earn the sum of the earnings from both lotteries if you purchase the lottery using your budget of {{ C.ENDOWMENT }}.</p>
+</div>
+<br>
+    {% if participant.treatment != 1 %}
+        <p>The study will start on the next screen. One of your decisions may be randomly selected to be paid out to you if you return to part 2 of this study.</p>
+    {% endif %}
+<br>
+<div style="text-align: right; margin-top: 1.5em;">
+    <button class="otree-btn-next btn btn-primary" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">Next</button>
+</div>
+
+</div>
+
+
+
+<div style="text-align: center">
+    <button class="btn btn-warning" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">Reveal Instructions</button>
+</div><br>
+
+
+<div style="display: none" id="instructions">
+    <div class="card bg-light">
+    <div class="card-body">
+{{ include "SBC_consent_form/instr.html" }}
+        </div></div>
+    </div>
+
+{{ endblock }}

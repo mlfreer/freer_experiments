@@ -1,22 +1,128 @@
 {{ block title }}
     End of Stage I.
 {{ endblock }}
+
 {{ block content }}
 
-<div class="card bg-light">
-    <div class="card-body">
-        <font size = 4>
+<style>
+    body { background: #eef3fa; }
 
-<p> 
-    Thank you for completing the Stage I of the experiment.
-    Do not forget that you will get notified when the Stage II will open.
-    You will have <b> two weeks </b> from the announcement time to complete the Stage II.
-    Recall that you will only get paid if you have completed both stages of the experiment. 
-</p>
-        </font>
-</div>
-</div>
+    .page-wrapper {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        max-width: 860px;
+        margin: 24px auto;
+    }
 
-<br>
+    .outer-card {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        overflow: hidden;
+        margin-bottom: 18px;
+    }
+
+    .card-top-bar {
+        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        padding: 16px 28px;
+        color: white;
+        font-size: 1.05rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .part-badge {
+        background: rgba(255,255,255,0.22);
+        border-radius: 20px;
+        padding: 3px 14px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .card-inner { padding: 32px 34px 36px 34px; }
+
+    /* ── Completion banner ── */
+    .completion-banner {
+        text-align: center;
+        margin-bottom: 28px;
+    }
+
+    .completion-icon {
+        font-size: 3rem;
+        line-height: 1;
+        margin-bottom: 10px;
+    }
+
+    .completion-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #1a3a5c;
+        margin-bottom: 4px;
+    }
+
+    .completion-sub {
+        font-size: 0.95rem;
+        color: #5a7a9a;
+    }
+
+    /* ── Info boxes ── */
+    .info-box {
+        background: #f0f6ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 16px 22px;
+        margin-bottom: 14px;
+        font-size: 15px;
+        color: #1a3a5c;
+        line-height: 1.75;
+    }
+
+    .info-box strong { color: #2563b0; }
+
+    /* ── Warning box ── */
+    .warning-box {
+        background: #fff8e1;
+        border-left: 5px solid #f0ad00;
+        border-radius: 0 8px 8px 0;
+        padding: 13px 18px;
+        font-size: 14.5px;
+        color: #3d2f00;
+        line-height: 1.75;
+    }
+</style>
+
+
+<div class="page-wrapper">
+
+    <div class="outer-card">
+        <div class="card-top-bar">
+            <span>Decision-Making Study</span>
+            <span class="part-badge">Stage I complete</span>
+        </div>
+
+        <div class="card-inner">
+
+            <div class="completion-banner">
+                <div class="completion-icon">🎉</div>
+                <div class="completion-title">Thank you for completing Stage I!</div>
+                <div class="completion-sub">End of Stage I — please read the information below carefully.</div>
+            </div>
+
+            <div class="info-box">
+                You will be notified when <strong>Stage II</strong> opens.
+                You will have <strong>two weeks</strong> from the announcement time to complete Stage II.
+            </div>
+
+            <div class="warning-box">
+                ⚠️ <strong>Important:</strong> You will only get paid if you have completed
+                <strong>both stages</strong> of the experiment.
+            </div>
+
+        </div>
+    </div>
+
+</div>
 
 {{ endblock }}
+

@@ -5,58 +5,252 @@
 {{ block scripts }}
 <script>
     function open_instructions() {
-        let x = document.getElementById("instructions");
-        let instructions_button = document.getElementById("instructions_button");
-        if (x.style.display === "none") {
-            instructions_button.innerHTML = "Close Your Instructions"
-            x.style.display = "block";
-            instructions_button_other.innerHTML = "Reveal Instructions"
-        } else {
-            instructions_button.innerHTML = "Reveal Instructions"
-            x.style.display = "none";
-        }
+        const panel = document.getElementById("instructions");
+        const btn   = document.getElementById("instructions_button");
+        const isOpen = panel.style.display !== "none";
+        panel.style.display = isOpen ? "none" : "block";
+        btn.innerHTML = isOpen
+            ? "📖 &nbsp;Reveal Instructions"
+            : "✕ &nbsp;Close Instructions";
+        if (!isOpen) panel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 </script>
 {{ endblock }}
+
 {{ block content }}
 
-<div style="width: 100%; margin: 0 auto; padding: 2em; font-size: 1.25em; box-sizing: border-box;">
+<style>
+    body { background: #eef3fa; }
 
-<div style="background-color: #fff3cd; border: 0.15em solid #ffc107; padding: 1em 1.5em; margin-top: 1.5em; border-radius: 0.4em;">
-    <p style="font-size: 1.2em; margin-bottom: 0.6em; line-height: 1.05;"><i>The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
-    <ul style="list-style-type: none; padding-left: 0; font-size: 1.15em;">
-        <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
-            <b>Lottery 1</b>: Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> if the coin flip results in <b>heads</b>, and <span style="color: blue; font-size: 1.3em;"><b>£{{ player.x }}</b></span> if it results in <b>tails</b>.
-        </li>
-        <li style="padding: 0em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
-            <b>Lottery 2</b>: Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> if the coin flip results in <b>heads</b>, and <span style="color: blue; font-size: 1.3em;"><b>£0</b></span> if it results in <b>tails</b>.
-        </li>
-    </ul>
-    <p style="font-size: 1.2em; margin-bottom: 0.6em; line-height: 1.05;">You can earn the sum of the earnings from both lotteries if you purchase the lottery using your budget of {{ C.ENDOWMENT }}.</p>
-</div>
-<br>
-    {% if participant.treatment != 1 %}
-        <p>The study will start on the next screen. One of your decisions may be randomly selected to be paid out to you if you return to part 2 of this study.</p>
-    {% endif %}
-<br>
-<div style="text-align: right; margin-top: 1.5em;">
-    <button class="otree-btn-next btn btn-primary" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">Next</button>
-</div>
+    .page-wrapper {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        max-width: 860px;
+        margin: 24px auto;
+    }
 
-</div>
+    .page-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1a3a5c;
+        margin-bottom: 14px;
+    }
+
+    .outer-card {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        overflow: hidden;
+        margin-bottom: 18px;
+    }
+
+    .card-top-bar {
+        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        padding: 16px 28px;
+        color: white;
+        font-size: 1.05rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .part-badge {
+        background: rgba(255,255,255,0.22);
+        border-radius: 20px;
+        padding: 3px 14px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .card-inner { padding: 26px 30px 30px 30px; }
+
+    /* ── Lottery reference card ── */
+    .lottery-ref {
+        background: #f7faff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 18px 20px;
+        margin-bottom: 20px;
+    }
+
+    .lottery-ref-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1a3a5c;
+        font-style: italic;
+        margin-bottom: 14px;
+    }
+
+    .l-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 12px;
+        font-size: 15px;
+        line-height: 1.65;
+        color: #2c3e50;
+    }
+
+    .l-item:last-child { margin-bottom: 0; }
+
+    .lottery-pill {
+        display: inline-block;
+        background: #2563b0;
+        color: white;
+        border-radius: 20px;
+        padding: 2px 11px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+        margin-top: 3px;
+        flex-shrink: 0;
+    }
+
+    .lottery-amount {
+        color: #2563b0;
+        font-size: 1.05em;
+        font-weight: 700;
+    }
+
+    .budget-note {
+        background: #f0f6ff;
+        border-left: 5px solid #4A90D9;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 18px;
+        margin-top: 16px;
+        font-size: 14.5px;
+        color: #1a3a5c;
+        line-height: 1.7;
+    }
+
+    /* ── Info note ── */
+    .info-note {
+        background: #fff8e1;
+        border-left: 5px solid #f0ad00;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 18px;
+        margin-bottom: 20px;
+        font-size: 14.5px;
+        color: #3d2f00;
+        line-height: 1.7;
+    }
+
+    /* ── Buttons ── */
+    .action-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-top: 8px;
+    }
+
+    .btn-next {
+        background: linear-gradient(90deg, #2563b0, #4A90D9);
+        color: white !important;
+        border: none;
+        border-radius: 8px;
+        padding: 11px 60px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 3px 10px rgba(74,144,217,0.28);
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(74,144,217,0.38); }
+
+    .btn-reveal {
+        background: #fffbe6;
+        color: #7a5800 !important;
+        border: 1.5px solid #f0c040;
+        border-radius: 8px;
+        padding: 9px 28px;
+        font-size: 0.93rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+
+    .btn-reveal:hover { background: #fff3cd; }
+
+    /* ── Instructions panel ── */
+    .instructions-top-bar {
+        background: linear-gradient(90deg, #1a3a5c 0%, #2563b0 100%);
+        padding: 13px 24px;
+        color: white;
+        font-size: 0.97rem;
+        font-weight: 600;
+    }
+</style>
 
 
+<div class="page-wrapper">
 
-<div style="text-align: center">
-    <button class="btn btn-warning" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">Reveal Instructions</button>
-</div><br>
-
-
-<div style="display: none" id="instructions">
-    <div class="card bg-light">
-    <div class="card-body">
-{{ include "SBC_consent_form/instr.html" }}
-        </div></div>
+    <div class="page-title">
+        🎟️ The Lottery &nbsp;<small style="font-weight:400;font-size:0.88rem;color:#5a7a9a;">· Part 1 of 2</small>
     </div>
+
+    <div class="outer-card">
+        <div class="card-top-bar">
+            <span>Decision-Making Study</span>
+            <span class="part-badge">Study starts next</span>
+        </div>
+
+        <div class="card-inner">
+
+            <div class="lottery-ref">
+                <div class="lottery-ref-title">The lottery ticket consists of the following two lotteries:</div>
+
+                <div class="l-item">
+                    <span class="lottery-pill">Lottery 1</span>
+                    <span>Pays <span class="lottery-amount">&pound;{{ session.config.A_BAR }}</span> if the
+                        coin flip results in <strong>heads</strong>, and
+                        <span class="lottery-amount">&pound;{{ player.x }}</span> if it results in
+                        <strong>tails</strong>.</span>
+                </div>
+
+                <div class="l-item">
+                    <span class="lottery-pill">Lottery 2</span>
+                    <span>Pays <span class="lottery-amount">&pound;{{ session.config.A_BAR }}</span> if the
+                        coin flip results in <strong>heads</strong>, and
+                        <span class="lottery-amount">&pound;0</span> if it results in
+                        <strong>tails</strong>.</span>
+                </div>
+
+                <div class="budget-note">
+                    You can earn the sum of the earnings from both lotteries if you purchase the lottery
+                    using your budget of <strong>{{ C.ENDOWMENT }}</strong>.
+                </div>
+            </div>
+
+            {% if participant.treatment != 1 %}
+            <div class="info-note">
+                📌 The study will start on the next screen. One of your decisions may be randomly
+                selected to be paid out to you if you return to Part 2 of this study.
+            </div>
+            {% endif %}
+
+            <div class="action-row">
+                <button class="otree-btn-next btn-next">Next &nbsp;&rarr;</button>
+                <button type="button" class="btn-reveal" id="instructions_button"
+                        onclick="open_instructions()">
+                    📖 &nbsp;Reveal Instructions
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Instructions reveal panel -->
+    <div style="display:none;" id="instructions">
+        <div class="outer-card">
+            <div class="instructions-top-bar">📋 &nbsp;Study Instructions — Reference</div>
+            <div class="card-inner">
+                {{ include "SBC_consent_form/instr.html" }}
+            </div>
+        </div>
+    </div>
+
+</div>
 
 {{ endblock }}
