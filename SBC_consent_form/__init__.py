@@ -86,6 +86,7 @@ class Instructions(Page):
         participant = player.participant
         return dict(
             # Used in instr.html to avoid unsupported '+' expressions in templates
+            two_heads_sum=session.config['A_BAR'] + session.config['A_BAR'],            
             example_sum=session.config['A_BAR'] + participant.x_draw
         )
 
@@ -103,6 +104,7 @@ class Example(Page):
         participant = player.participant
         return dict(
             # Used in Example.html to avoid unsupported '+' expressions in templates
+            two_heads_sum=session.config['A_BAR'] + session.config['A_BAR'],
             example_sum=session.config['A_BAR'] + participant.x_draw
         )
 
