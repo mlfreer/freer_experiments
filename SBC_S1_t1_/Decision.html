@@ -1,7 +1,4 @@
 {{ extends 'global/Page.html' }}
-{{ block title }}
-    Decision (<b>Round <span style="color:#2563b0;">{{ subsession.round_number }}</span> of {{ C.NUM_ROUNDS }}</b>)
-{{ endblock }}
 
 {{ block scripts }}
 <script>
@@ -266,7 +263,7 @@
 
     <div class="outer-card">
         <div class="card-top-bar">
-            <span>Decision-Making Study</span>
+            <span>Decision-Making Study (<b>Round <span style="color:red;">{{ subsession.round_number }}</span> of {{ C.NUM_ROUNDS }}</b>)</span>
             <span class="part-badge">Part 1 &middot; Make your choice</span>
         </div>
 

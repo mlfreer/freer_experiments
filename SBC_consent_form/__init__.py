@@ -46,6 +46,9 @@ class Player(BasePlayer):
     quiz_attempts = models.IntegerField(initial = 0)
     return_study = models.IntegerField(initial = 0)
     # Prolific rule: 3 fails => return the study
+
+    # counting the number of mistakes in the example:
+    example_attempts = models.IntegerField(initial = 0)
 #-----------------------------------------------------------------------------
 
 
@@ -105,6 +108,7 @@ class Example(Page):
 
     def error_message(player, value):
         if (value['e1']!=C.EXAMPLE_ANSWERS[0]) or (value['e2']!=C.EXAMPLE_ANSWERS[1]) or (value['e3']!=C.EXAMPLE_ANSWERS[2]):
+            player.example_attempts += 1
             return 'Wrong answer! Please try again!'
 
 
