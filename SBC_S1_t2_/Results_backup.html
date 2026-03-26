@@ -1,0 +1,138 @@
+{{ block title }}
+{{ endblock }}
+
+{{ block content }}
+
+<div style="width: 100%; max-width: 900px; margin: 2em auto; padding: 2em; font-size: 1.2em; box-sizing: border-box;">
+
+    <!-- Header -->
+    <div style="text-align: center; margin-bottom: 2em;">
+        <h2 style="color: #2c3e50; font-size: 2em; margin-bottom: 0.5em;">Experiment Complete!</h2>
+        <p style="font-size: 1.1em; color: #555;">Thank you for participating. Here are your results.</p>
+    </div>
+
+    <!-- Combined Round, Lottery, and Decision Information -->
+    <div style="background-color: #f8f9fa; border: 2px solid #495057; padding: 2em; margin-bottom: 2em; border-radius: 0.5em;">
+
+        <!--
+        <div style="background-color: #e3f2fd; border-left: 4px solid #2196f3; padding: 1em 1.5em; margin-bottom: 1.5em; border-radius: 0.3em;">
+            <p style="margin: 0; font-size: 1.15em; color: #1976d2;">
+                <strong>Round {{ selected_round }}</strong> out of {{ C.NUM_ROUNDS }} rounds was randomly selected for payment.
+            </p>
+        </div>
+        -->
+
+        <!-- Lottery Outcomes -->
+        <div style="margin-bottom: 1.5em;">
+            <h3 style="margin-top: 0; margin-bottom: 1em; color: #495057; font-size: 1.4em; border-bottom: 2px solid #dee2e6; padding-bottom: 0.5em;">Lottery Outcomes</h3>
+
+            <p style="line-height: 1.6; margin-bottom: 0.8em;"><strong>Lottery 1:</strong>
+                {% if random_draw_1 == 1 %}
+                    Resulted in <strong>Heads</strong> - Paid <span style="color: #28a745; font-weight: bold; font-size: 1.2em;">£{{ a_bar }}</span>
+                {% else %}
+                    Resulted in <strong>Tails</strong> - Paid <span style="color: #28a745; font-weight: bold; font-size: 1.2em;">£{{ x_draw }}</span>
+                {% endif %}
+            </p>
+
+            <p style="line-height: 1.6; margin-bottom: 0;"><strong>Lottery 2:</strong>
+                {% if random_draw_2 == 1 %}
+                    Resulted in <strong>Heads</strong> - Paid <span style="color: #28a745; font-weight: bold; font-size: 1.2em;">£{{ a_bar }}</span>
+                {% else %}
+                    Resulted in <strong>Tails</strong> - Paid <span style="color: #dc3545; font-weight: bold; font-size: 1.2em;">£0</span>
+                {% endif %}
+            </p>
+        </div>
+
+        <!-- Your Decision -->
+        <div>
+            <h3 style="margin-top: 0; margin-bottom: 1em; color: #495057; font-size: 1.4em; border-bottom: 2px solid #dee2e6; padding-bottom: 0.5em;">Your Decision</h3>
+
+            {% if treatment == 0 %}
+                <!-- Static, buy at t=1 -->
+                <p style="line-height: 1.6; font-size: 1.1em; margin: 0;">
+                    <strong>In part 1:</strong> You
+                    {% if purchase_t1 %}
+                        <span style="color: #28a745; font-weight: bold;">purchased</span> the lottery ticket for <strong>£{{ price_t1 }}</strong>
+                    {% else %}
+                        <span style="color: #dc3545; font-weight: bold;">did not purchase</span> the lottery ticket (the price was £{{ price_t1 }})
+                    {% endif %}
+                </p>
+
+            {% elif treatment == 1 %}
+                <!-- Static, buy at t=2 -->
+                <p style="line-height: 1.6; font-size: 1.1em; margin: 0;">
+                    <strong>In part 2:</strong> You
+                    {% if purchase_t2 %}
+                        <span style="color: #28a745; font-weight: bold;">purchased</span> the lottery ticket for <strong>£{{ price_t2 }}</strong>
+                    {% else %}
+                        <span style="color: #dc3545; font-weight: bold;">did not purchase</span> the lottery ticket (the price was £{{ price_t2 }})
+                    {% endif %}
+                </p>
+
+            {% elif treatment == 2 %}
+                <!-- Dynamic, option -->
+                <p style="line-height: 1.6; font-size: 1.1em; margin-bottom: 0.8em;">
+                    <strong>In part 1:</strong> You
+                    {% if purchase_t1 %}
+                        <span style="color: #28a745; font-weight: bold;">bought</span> the option for <strong>£{{ price_t1 }}</strong>
+                    {% else %}
+                        <span style="color: #dc3545; font-weight: bold;">did not buy</span> the option (the price was £{{ price_t1 }})
+                    {% endif %}
+                </p>
+                {% if purchase_t1 %}
+                    <p style="line-height: 1.6; font-size: 1.1em; margin: 0;">
+                        <strong>In part 2:</strong> You
+                        {% if purchase_t2 %}
+                            <span style="color: #28a745; font-weight: bold;">exercised</span> the option, and bought the lottery ticket for <strong>£{{ price_t2 }}</strong>
+                        {% else %}
+                            <span style="color: #dc3545; font-weight: bold;">did not exercise</span> the option (so you did not buy the lottery ticket)
+                        {% endif %}
+                    </p>
+                {% endif %}
+
+            {% elif treatment == 3 %}
+                <!-- Dynamic, refund -->
+                <p style="line-height: 1.6; font-size: 1.1em; margin-bottom: 0.8em;">
+                    <strong>In part 1:</strong> You
+                    {% if purchase_t1 %}
+                        <span style="color: #28a745; font-weight: bold;">purchased</span> the lottery ticket for <strong>£{{ price_t1 }}</strong>
+                    {% else %}
+                        <span style="color: #dc3545; font-weight: bold;">did not purchase</span> the lottery ticket (the price was £{{ price_t1 }})
+                    {% endif %}
+                </p>
+                {% if purchase_t1 %}
+                    <p style="line-height: 1.6; font-size: 1.1em; margin: 0;">
+                        <strong>In part 2:</strong> You
+                        {% if not purchase_t2 %}
+                            <span style="color: #28a745; font-weight: bold;">kept</span> the lottery ticket
+                        {% else %}
+                            <span style="color: #dc3545; font-weight: bold;">returned</span> the lottery ticket for a refund of <strong>£{{ price_t2 }}</strong>
+                        {% endif %}
+                    </p>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Final Payoff -->
+    <div style="background-color: #d4edda; border: 3px solid #28a745; padding: 2em; text-align: center; border-radius: 0.5em; margin-bottom: 2em;">
+        <h3 style="margin: 0 0 0.5em 0; color: #155724; font-size: 1.6em;">Your Total Earnings</h3>
+        <p style="font-size: 2.5em; font-weight: bold; color: #28a745; margin: 0;">£{{ payoff }}</p>
+    </div>
+
+<div style="text-align: center; margin-top: 1.5em; ">
+    <a href="https://app.prolific.co" class="btn btn-primary"
+        style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">
+        Submit the study
+    </a>
+</div>
+
+
+</div>
+
+
+
+
+{{ endblock }}
+
+

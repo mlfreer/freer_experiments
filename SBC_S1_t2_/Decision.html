@@ -1,105 +1,407 @@
 {{ extends 'global/Page.html' }}
-{{ block title }}  Decision (<span style="color: blue; font-size: 1.2em;"><b>Round {{ subsession.round_number }} of {{ C.NUM_ROUNDS }}</b></span>)
-{{ endblock }}
 
 {{ block scripts }}
 <script>
     function open_instructions() {
-        let x = document.getElementById("instructions");
-        let instructions_button = document.getElementById("instructions_button");
-        if (x.style.display === "none") {
-            instructions_button.innerHTML = "Close Your Instructions"
-            x.style.display = "block";
-        } else {
-            instructions_button.innerHTML = "Reveal Instructions"
-            x.style.display = "none";
-        }
+        const panel = document.getElementById("instructions");
+        const btn   = document.getElementById("instructions_button");
+        const isOpen = panel.style.display !== "none";
+        panel.style.display = isOpen ? "none" : "block";
+        btn.innerHTML = isOpen
+            ? "📖 &nbsp;Reveal Instructions"
+            : "✕ &nbsp;Close Instructions";
+        if (!isOpen) panel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 </script>
 {{ endblock }}
 
 {{ block content }}
 
-<div style="width: 100%; margin: 0; padding: 2em; font-size: 1.3em; box-sizing: border-box;">
+<style>
+    body { background: #eef3fa; }
 
-<div style="background-color: #f5f5f5; border: 0.15em solid #999999; padding: 0.5em; margin-bottom: 1.5em; border-radius: 0.4em; text-align: center;">
-    {%if participant.treatment == 0 %}
-        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
-            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b>.</span>
-        </p>
-    {% elif participant.treatment == 1 %}
-        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
-            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b>.</span>
-        </p>
-    {% elif participant.treatment == 2 %}
-        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
-            This round, the option price was <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>. You can now purchase the lottery for a price of <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b>.</span>
-        </p>
-    {% elif participant.treatment == 3 %}
-        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
-            This round, the price was <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>. <br> You can now use the refund option and return the lottery ticket to receive a refund of <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b>.</span>
-        </p>
-    {% endif %}
-</div>
+    .page-wrapper {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        max-width: 860px;
+        margin: 24px auto;
+    }
 
-<div style="background-color: #f5f5f5; border: 0.15em solid #999999; padding: 0.5em; margin-bottom: 1.5em; border-radius: 0.4em; text-align: center;">
-    {%if participant.treatment == 0 %}
-        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
-            Do you want to purchase the lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t1 }}</b></span>?
-        </p>
-    {% elif participant.treatment == 1 %}
-        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
-            Do you want to purchase the lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t2 }}</b></span>?
-        </p>
-    {% elif participant.treatment == 2 %}
-        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
-            Do you want to purchase the lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t2 }}</b></span>?
-        </p>
-    {% elif participant.treatment == 3 %}
-        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
-            Do you want to return the lottery ticket and receive a refund of <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t2 }}</b></span>?
-        </p>
-    {% endif %}
-    
-    <div style="margin-top: .5em;">
-        <label style="display: inline-block; margin: 0 1em; cursor: pointer;">
-            <input type="radio" name="purchase_t2" value="True" style="margin-right: 0.5em; transform: scale(1.5); cursor: pointer;">
-            <span style="color: green; font-size: 1.45em;"><b>YES</b></span>
-        </label>
-        <label style="display: inline-block; margin: 0 1em; cursor: pointer;">
-            <input type="radio" name="purchase_t2" value="False" style="margin-right: 0.5em; transform: scale(1.5); cursor: pointer;">
-            <span style="color: red; font-size: 1.45em;"><b>NO</b></span>
-        </label>
+    .outer-card {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        overflow: hidden;
+        margin-bottom: 18px;
+    }
+
+    .card-top-bar {
+        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        padding: 16px 28px;
+        color: white;
+        font-size: 1.05rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .part-badge {
+        background: rgba(255,255,255,0.22);
+        border-radius: 20px;
+        padding: 3px 14px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .card-inner { padding: 26px 30px 30px 30px; }
+
+    /* ── Price info box ── */
+    .price-box {
+        background: #f0f6ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 16px 22px;
+        margin-bottom: 18px;
+        text-align: center;
+        font-size: 15px;
+        color: #1a3a5c;
+        line-height: 1.7;
+    }
+
+    /* ── Consistent yellowish monetary amount highlight ── */
+    .price-amount {
+        display: inline-block;
+        background: #fff3cd;
+        color: #92400e;
+        font-size: 1.15em;
+        font-weight: 800;
+        border-radius: 6px;
+        padding: 1px 8px;
+        border: 1.5px solid #f0c040;
+        letter-spacing: 0.01em;
+    }
+
+    /* ── Decision card ── */
+    .decision-card {
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 18px;
+    }
+
+    .decision-header {
+        background: #eef4fb;
+        padding: 14px 22px;
+        border-bottom: 1.5px solid #d5e6f5;
+        font-size: 15px;
+        font-weight: 600;
+        color: #1a3a5c;
+        text-align: center;
+    }
+
+    .decision-body {
+        padding: 22px;
+        background: white;
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        flex-wrap: wrap;
+    }
+
+    /* ── YES / NO styled radio labels ── */
+    .choice-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 28px;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        cursor: pointer;
+        font-size: 1.05rem;
+        font-weight: 700;
+        transition: background 0.15s, border-color 0.15s, transform 0.15s;
+        user-select: none;
+    }
+
+    .choice-label.yes {
+        background: #e8f5e9;
+        border-color: #81c784;
+        color: #1b5e20;
+    }
+
+    .choice-label.yes:hover {
+        background: #d0efd2;
+        border-color: #4caf50;
+        transform: translateY(-2px);
+    }
+
+    .choice-label.no {
+        background: #fce4ec;
+        border-color: #f48fb1;
+        color: #880e4f;
+    }
+
+    .choice-label.no:hover {
+        background: #f8bbd0;
+        border-color: #e91e63;
+        transform: translateY(-2px);
+    }
+
+    /* Custom radio circle that inherits the label colour */
+    .choice-label input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 20px; height: 20px;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: background 0.15s;
+    }
+
+    .choice-label input[type="radio"]:checked {
+        background: currentColor;
+        box-shadow: inset 0 0 0 4px white;
+    }
+
+    .choice-label:has(input:checked) {
+        box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+        transform: translateY(-2px);
+    }
+
+    /* ── Lottery reminder ── */
+    .lottery-ref {
+        background: #f7faff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin-bottom: 18px;
+    }
+
+    .lottery-ref-title {
+        font-size: 0.97rem;
+        font-weight: 600;
+        color: #1a3a5c;
+        font-style: italic;
+        margin-bottom: 12px;
+    }
+
+    .l-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 10px;
+        font-size: 14.5px;
+        line-height: 1.65;
+        color: #2c3e50;
+    }
+
+    .l-item:last-child { margin-bottom: 0; }
+
+    .lottery-pill {
+        display: inline-block;
+        background: #2563b0;
+        color: white;
+        border-radius: 20px;
+        padding: 2px 11px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+
+    /* Lottery amounts use the same yellowish style for consistency */
+    .lottery-amount {
+        display: inline-block;
+        background: #fff3cd;
+        color: #92400e;
+        font-weight: 800;
+        border-radius: 5px;
+        padding: 1px 6px;
+        border: 1.5px solid #f0c040;
+        font-size: 0.97em;
+    }
+
+    /* ── Buttons ── */
+    .action-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-top: 6px;
+    }
+
+    .btn-next {
+        background: linear-gradient(90deg, #2563b0, #4A90D9);
+        color: white !important;
+        border: none;
+        border-radius: 8px;
+        padding: 11px 60px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 3px 10px rgba(74,144,217,0.28);
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .btn-next:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 16px rgba(74,144,217,0.38);
+    }
+
+    .btn-reveal {
+        background: #fffbe6;
+        color: #7a5800 !important;
+        border: 1.5px solid #f0c040;
+        border-radius: 8px;
+        padding: 9px 28px;
+        font-size: 0.93rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+
+    .btn-reveal:hover { background: #fff3cd; }
+
+    /* ── Instructions panel ── */
+    .instructions-top-bar {
+        background: linear-gradient(90deg, #1a3a5c 0%, #2563b0 100%);
+        padding: 13px 24px;
+        color: white;
+        font-size: 0.97rem;
+        font-weight: 600;
+    }
+</style>
+
+
+<div class="page-wrapper">
+
+    <div class="outer-card">
+
+        <!-- ── Blue top bar with round counter ── -->
+        <div class="card-top-bar">
+            <span>Decision-Making Study
+                (<b>Round <span style="color:#ffd966;">{{ subsession.round_number }}</span>
+                of {{ C.NUM_ROUNDS }}</b>)
+            </span>
+            <span class="part-badge">Part 2 &middot; Make your choice</span>
+        </div>
+
+        <div class="card-inner">
+
+            <!-- ── Price info: treatment-conditional ── -->
+            <div class="price-box">
+                {% if participant.treatment == 0 %}
+                    This round, the price is
+                    <span class="price-amount">&pound;{{ player.price_t1 }}</span>.
+
+                {% elif participant.treatment == 1 %}
+                    This round, the price is
+                    <span class="price-amount">&pound;{{ player.price_t2 }}</span>.
+
+                {% elif participant.treatment == 2 %}
+                    This round, the option price was
+                    <span class="price-amount">&pound;{{ player.price_t1 }}</span>.<br>
+                    You can now purchase the lottery for a price of
+                    <span class="price-amount">&pound;{{ player.price_t2 }}</span>
+                    (after learning the outcome of Lottery 1).
+
+                {% elif participant.treatment == 3 %}
+                    This round, the price was
+                    <span class="price-amount">&pound;{{ player.price_t1 }}</span>.<br>
+                    You can now use the refund option and return the lottery ticket
+                    to receive a refund of
+                    <span class="price-amount">&pound;{{ player.price_t2 }}</span>
+                    (after learning the outcome of Lottery 1).
+                {% endif %}
+            </div>
+
+            <!-- ── Decision card: question + YES/NO ── -->
+            <div class="decision-card">
+                <div class="decision-header">
+                    {% if participant.treatment == 0 %}
+                        Do you want to purchase the lottery ticket for
+                        <span class="price-amount">&pound;{{ player.price_t1 }}</span>?
+
+                    {% elif participant.treatment == 1 %}
+                        Do you want to purchase the lottery ticket for
+                        <span class="price-amount">&pound;{{ player.price_t2 }}</span>?
+
+                    {% elif participant.treatment == 2 %}
+                        Do you want to purchase the lottery ticket for
+                        <span class="price-amount">&pound;{{ player.price_t2 }}</span>?
+
+                    {% elif participant.treatment == 3 %}
+                        Do you want to return the lottery ticket and receive a refund of
+                        <span class="price-amount">&pound;{{ player.price_t2 }}</span>?
+                    {% endif %}
+                </div>
+                <div class="decision-body">
+                    <label class="choice-label yes">
+                        <input type="radio" name="purchase_t2" value="True">
+                        YES
+                    </label>
+                    <label class="choice-label no">
+                        <input type="radio" name="purchase_t2" value="False">
+                        NO
+                    </label>
+                </div>
+            </div>
+
+            <!-- ── Lottery reminder: Lottery 1 outcome already known ── -->
+            <div class="lottery-ref">
+                <div class="lottery-ref-title">📋 Reminder: The lottery ticket consists of the following two lotteries</div>
+
+                <!-- Lottery 1: outcome revealed on coin flip page -->
+                <div class="l-item">
+                    <span class="lottery-pill">Lottery 1</span>
+                    <span>
+                        {% if player.random_draw_1 == 1 %}
+                            Resulted in <strong>Heads</strong> &mdash;
+                            Pays <span class="lottery-amount">&pound;{{ session.config.A_BAR }}</span>
+                        {% else %}
+                            Resulted in <strong>Tails</strong> &mdash;
+                            Pays <span class="lottery-amount">&pound;{{ x_draw }}</span>
+                        {% endif %}
+                    </span>
+                </div>
+
+                <!-- Lottery 2: outcome still pending -->
+                <div class="l-item">
+                    <span class="lottery-pill">Lottery 2</span>
+                    <span>
+                        Pays <span class="lottery-amount">&pound;{{ session.config.A_BAR }}</span>
+                        if the coin flip results in <strong>heads</strong>, and
+                        <span class="lottery-amount">&pound;0</span>
+                        if it results in <strong>tails</strong>.
+                    </span>
+                </div>
+            </div>
+
+            <!-- ── Next button above, Reveal Instructions below, both centred ── -->
+            <div class="action-row">
+                <!-- otree-btn-next with no type="button" so oTree handles submission -->
+                <button class="otree-btn-next btn-next">Next &nbsp;&rarr;</button>
+                <button type="button" class="btn-reveal" id="instructions_button"
+                        onclick="open_instructions()">
+                    📖 &nbsp;Reveal Instructions
+                </button>
+            </div>
+
+        </div><!-- /card-inner -->
+    </div><!-- /outer-card -->
+
+    <!-- ── Collapsible instructions panel ── -->
+    <div style="display:none;" id="instructions">
+        <div class="outer-card">
+            <div class="instructions-top-bar">📋 &nbsp;Study Instructions — Reference</div>
+            <div class="card-inner">
+                {{ include "SBC_consent_t2/instr.html" }}
+            </div>
+        </div>
     </div>
-</div>
 
-<div style="text-align: right; margin-top: 1.5em;">
-    <button class="otree-btn-next btn btn-primary" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">Next</button>
-</div>
-
-<div style="background-color: #fff3cd; border: 0.15em solid #ffc107; padding: 0.5em; margin-top: 1.5em; border-radius: 0.4em;">
-    <p style="font-size: 1.25em; margin-bottom: 0.6em; line-height: 1.05;"><i>The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
-    <ul style="list-style-type: none; padding-left: 0; font-size: 1.18em;">
-        <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
-            <b>Lottery 1</b>: {% if player.random_draw_1 == 1 %}Resulted in <b>Heads</b> – Pays <b>£{{ session.config.A_BAR }}</b>{% else %}Resulted in <b>Tails</b> – Pays <b>£{{ x_draw }}</b>{% endif %}
-        </li>
-        <li style="padding: 0em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
-            <b>Lottery 2</b>: Pays <b>£{{ session.config.A_BAR }}</b> if the coin flip results in <b>heads</b>, and <b>£0</b> if it results in <b>tails</b>.
-        </li>
-    </ul>
-</div>
-
-<div style="text-align: center; margin-top: 1.5em;">
-    <button class="btn btn-warning" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">Reveal Instructions</button>
-</div>
-
-</div>
-
-<div style="display: none" id="instructions">
-    <div class="card bg-light">
-    <div class="card-body">
-{{ include "SBC_consent_t2/instr.html" }}
-        </div></div>
-    </div>
+</div><!-- /page-wrapper -->
 
 {{ endblock }}

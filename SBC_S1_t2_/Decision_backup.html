@@ -1,0 +1,105 @@
+{{ extends 'global/Page.html' }}
+{{ block title }}  Decision (<span style="color: blue; font-size: 1.2em;"><b>Round {{ subsession.round_number }} of {{ C.NUM_ROUNDS }}</b></span>)
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    function open_instructions() {
+        let x = document.getElementById("instructions");
+        let instructions_button = document.getElementById("instructions_button");
+        if (x.style.display === "none") {
+            instructions_button.innerHTML = "Close Your Instructions"
+            x.style.display = "block";
+        } else {
+            instructions_button.innerHTML = "Reveal Instructions"
+            x.style.display = "none";
+        }
+    }
+</script>
+{{ endblock }}
+
+{{ block content }}
+
+<div style="width: 100%; margin: 0; padding: 2em; font-size: 1.3em; box-sizing: border-box;">
+
+<div style="background-color: #f5f5f5; border: 0.15em solid #999999; padding: 0.5em; margin-bottom: 1.5em; border-radius: 0.4em; text-align: center;">
+    {%if participant.treatment == 0 %}
+        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
+            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b>.</span>
+        </p>
+    {% elif participant.treatment == 1 %}
+        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
+            This round, the price is <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b>.</span>
+        </p>
+    {% elif participant.treatment == 2 %}
+        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
+            This round, the option price was <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>. You can now purchase the lottery for a price of <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b>.</span>
+        </p>
+    {% elif participant.treatment == 3 %}
+        <p style="margin: 0; line-height: 1.2; font-size: 1.2em;">
+            This round, the price was <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t1 }}</b></span>. <br> You can now use the refund option and return the lottery ticket to receive a refund of <span style="color: blue; font-size: 1.35em;"><b>£{{ player.price_t2 }}</b>.</span>
+        </p>
+    {% endif %}
+</div>
+
+<div style="background-color: #f5f5f5; border: 0.15em solid #999999; padding: 0.5em; margin-bottom: 1.5em; border-radius: 0.4em; text-align: center;">
+    {%if participant.treatment == 0 %}
+        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
+            Do you want to purchase the lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t1 }}</b></span>?
+        </p>
+    {% elif participant.treatment == 1 %}
+        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
+            Do you want to purchase the lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t2 }}</b></span>?
+        </p>
+    {% elif participant.treatment == 2 %}
+        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
+            Do you want to purchase the lottery ticket for <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t2 }}</b></span>?
+        </p>
+    {% elif participant.treatment == 3 %}
+        <p style="font-size: 1.2em; margin-bottom: 1em; line-height: 1.2;">
+            Do you want to return the lottery ticket and receive a refund of <span style="color: blue; font-size: 1.25em;"><b>£{{ player.price_t2 }}</b></span>?
+        </p>
+    {% endif %}
+
+    <div style="margin-top: .5em;">
+        <label style="display: inline-block; margin: 0 1em; cursor: pointer;">
+            <input type="radio" name="purchase_t2" value="True" style="margin-right: 0.5em; transform: scale(1.5); cursor: pointer;">
+            <span style="color: green; font-size: 1.45em;"><b>YES</b></span>
+        </label>
+        <label style="display: inline-block; margin: 0 1em; cursor: pointer;">
+            <input type="radio" name="purchase_t2" value="False" style="margin-right: 0.5em; transform: scale(1.5); cursor: pointer;">
+            <span style="color: red; font-size: 1.45em;"><b>NO</b></span>
+        </label>
+    </div>
+</div>
+
+<div style="text-align: right; margin-top: 1.5em;">
+    <button class="otree-btn-next btn btn-primary" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">Next</button>
+</div>
+
+<div style="background-color: #fff3cd; border: 0.15em solid #ffc107; padding: 0.5em; margin-top: 1.5em; border-radius: 0.4em;">
+    <p style="font-size: 1.25em; margin-bottom: 0.6em; line-height: 1.05;"><i>The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
+    <ul style="list-style-type: none; padding-left: 0; font-size: 1.18em;">
+        <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
+            <b>Lottery 1</b>: {% if player.random_draw_1 == 1 %}Resulted in <b>Heads</b> – Pays <b>£{{ session.config.A_BAR }}</b>{% else %}Resulted in <b>Tails</b> – Pays <b>£{{ x_draw }}</b>{% endif %}
+        </li>
+        <li style="padding: 0em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
+            <b>Lottery 2</b>: Pays <b>£{{ session.config.A_BAR }}</b> if the coin flip results in <b>heads</b>, and <b>£0</b> if it results in <b>tails</b>.
+        </li>
+    </ul>
+</div>
+
+<div style="text-align: center; margin-top: 1.5em;">
+    <button class="btn btn-warning" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">Reveal Instructions</button>
+</div>
+
+</div>
+
+<div style="display: none" id="instructions">
+    <div class="card bg-light">
+    <div class="card-body">
+{{ include "SBC_consent_t2/instr.html" }}
+        </div></div>
+    </div>
+
+{{ endblock }}

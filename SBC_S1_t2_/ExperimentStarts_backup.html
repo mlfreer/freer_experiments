@@ -1,0 +1,161 @@
+
+{{ block scripts }}
+<script>
+    function open_instructions() {
+        let x = document.getElementById("instructions");
+        let instructions_button = document.getElementById("instructions_button");
+        if (x.style.display === "none") {
+            instructions_button.innerHTML = "Close Your Instructions"
+            x.style.display = "block";
+        } else {
+            instructions_button.innerHTML = "Reveal Instructions"
+            x.style.display = "none";
+        }
+    }
+
+// oTree passes the server-side result into JS
+const coinResult = "{{ coin_result }}";  // will be "heads" or "tails"
+
+  function flipCoin() {
+    const coin = document.getElementById('coin');
+    const btn = document.getElementById('flipBtn');
+//    const text = document.getElementById('result-text');
+
+    // Reset animation
+    coin.style.animation = 'none';
+    void coin.offsetWidth; // force reflow to restart animation
+
+    // Apply correct animation
+    const animName = coinResult === 'heads' ? 'spin-heads' : 'spin-tails';
+    coin.style.animation = `${animName} 3s ease-out forwards`;
+
+    btn.disabled = true;
+
+// AFTER
+setTimeout(() => {
+//    text.textContent = `Result: ${coinResult.toUpperCase()}`;
+
+    // 🟢 Hide the flip button
+    document.getElementById('flipBtn').style.display = 'none';
+
+    // 🟢 Reveal the resolution block
+    document.getElementById('resolution-block').style.display = 'block';
+
+}, 3000);
+  }
+</script>
+
+
+<style>
+.coin-container {
+  perspective: 1000px;
+  width: 120px;
+  height: 120px;
+  margin: 40px auto;
+}
+
+.coin {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.heads {
+  background: gold;
+  color: #333;
+}
+
+.tails {
+  background: silver;
+  color: #333;
+  transform: rotateX(180deg);
+}
+
+@keyframes spin-heads {
+  0%   { transform: rotateX(0); }
+  100% { transform: rotateX(2160deg); } /* lands face-up = 0° mod 360 */
+}
+
+@keyframes spin-tails {
+  0%   { transform: rotateX(0); }
+  100% { transform: rotateX(1980deg); } /* lands face-down = 180° mod 360 */
+}
+</style>
+
+{{ endblock }}
+
+{{ block content }}
+
+<div class="coin-container">
+  <div class="coin" id="coin">
+    <div class="face heads">H</div>
+    <div class="face tails">T</div>
+  </div>
+</div>
+
+<!-- The button to flip the coin -->
+<div style="text-align: center;">
+    <button
+        class="btn btn-warning"
+        id="flipBtn"
+        onclick="flipCoin()"
+        type="button"
+        style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">
+        Flip Coin
+    </button>
+</div>
+
+
+<!-- <p id="result-text"></p> -->
+
+
+
+
+
+<div id="resolution-block" style="display: none; width: 100%; margin: 0 auto; padding: 1em; font-size: 1.25em; box-sizing: border-box;">
+
+<div style="background-color: #fff3cd; border: 0.15em solid #ffc107; padding: 1em 1.5em; margin-top: 1.5em; border-radius: 0.4em;">
+    <p style="font-size: 1.2em; margin-bottom: 0.6em; line-height: 1.05;"><i>The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
+    <ul style="list-style-type: none; padding-left: 0; font-size: 1.15em;">
+        <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
+            <b>Lottery 1</b>: {% if player.random_draw_1 == 1 %}Resulted in <b>Heads</b> – Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span>{% else %}Resulted in <b>Tails</b> – Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ x_draw }}</b></span>{% endif %}
+        </li>
+        <li style="padding: 0em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
+            <b>Lottery 2</b>: Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> if the coin flip results in <b>heads</b>, and <span style="color: blue; font-size: 1.3em;"><b>£0</b></span> if it results in <b>tails</b>.
+        </li>
+    </ul>
+</div>
+
+<div style="text-align: right; margin-top: 1.5em;">
+    <button class="otree-btn-next btn btn-primary" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">Next</button>
+</div>
+
+<div style="text-align: center; margin-top: 1.5em;">
+    <button class="btn btn-warning" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">Reveal Instructions</button>
+</div>
+
+</div>
+
+<div style="display: none" id="instructions">
+    <div class="card bg-light">
+    <div class="card-body">
+{{ include "SBC_consent_t2/instr.html" }}
+        </div></div>
+    </div>
+
+
+{{ endblock }}

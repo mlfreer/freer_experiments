@@ -1,164 +1,424 @@
-{{ block title }}
-    The lottery
-{{ endblock }}
 
 {{ block scripts }}
-<script>
-    function open_instructions() {
-        let x = document.getElementById("instructions");
-        let instructions_button = document.getElementById("instructions_button");
-        if (x.style.display === "none") {
-            instructions_button.innerHTML = "Close Your Instructions"
-            x.style.display = "block";
-        } else {
-            instructions_button.innerHTML = "Reveal Instructions"
-            x.style.display = "none";
-        }
-    }
-
-// oTree passes the server-side result into JS
-const coinResult = "{{ coin_result }}";  // will be "heads" or "tails"
-
-  function flipCoin() {
-    const coin = document.getElementById('coin');
-    const btn = document.getElementById('flipBtn');
-//    const text = document.getElementById('result-text');
-
-    // Reset animation
-    coin.style.animation = 'none';
-    void coin.offsetWidth; // force reflow to restart animation
-
-    // Apply correct animation
-    const animName = coinResult === 'heads' ? 'spin-heads' : 'spin-tails';
-    coin.style.animation = `${animName} 3s ease-out forwards`;
-
-    btn.disabled = true;
-
-// AFTER
-setTimeout(() => {
-//    text.textContent = `Result: ${coinResult.toUpperCase()}`;
-
-    // 🟢 Hide the flip button
-    document.getElementById('flipBtn').style.display = 'none';
-
-    // 🟢 Reveal the resolution block
-    document.getElementById('resolution-block').style.display = 'block';
-
-}, 3000);
-  }
-</script>
-
 
 <style>
-.coin-container {
-  perspective: 1000px;
-  width: 120px;
-  height: 120px;
-  margin: 40px auto;
+    body { background: #eef3fa; }
+
+    /* ── Main wrapper ── */
+    .lottery-wrapper {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        max-width: 860px;
+        margin: 24px auto;
+    }
+
+    .page-title {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #1a3a5c;
+        margin-bottom: 14px;
+    }
+
+    /* ── Outer white card ── */
+    .outer-card {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        overflow: hidden;
+        margin-bottom: 18px;
+    }
+
+    /* ── Blue gradient top bar ── */
+    .card-top-bar {
+        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        padding: 16px 28px;
+        color: white;
+        font-size: 1.05rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .part-badge {
+        background: rgba(255,255,255,0.22);
+        border-radius: 20px;
+        padding: 3px 14px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .card-inner { padding: 26px 30px 34px 30px; }
+
+    /* ── Coin area ── */
+    .coin-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0 24px 0;
+    }
+
+    .coin-label {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #4A90D9;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 6px;
+    }
+
+    /* ── 3-D coin ── */
+    .coin-container {
+        perspective: 1000px;
+        width: 120px;
+        height: 120px;
+        margin: 20px auto 24px auto;
+    }
+
+    .coin {
+        width: 120px;
+        height: 120px;
+        position: relative;
+        transform-style: preserve-3d;
+    }
+
+    .face {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        backface-visibility: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: bold;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    /* Heads = gold face */
+    .heads {
+        background: radial-gradient(circle at 35% 35%, #ffe066, #f0a500);
+        color: #5a3a00;
+        border: 3px solid #c8860a;
+    }
+
+    /* Tails = silver face (rotated 180° so it starts hidden) */
+    .tails {
+        background: radial-gradient(circle at 35% 35%, #e8e8e8, #aaa);
+        color: #333;
+        transform: rotateX(180deg);
+        border: 3px solid #999;
+    }
+
+    /* Spin ending heads-up: 6 full rotations = 2160° (0° mod 360 = face up) */
+    @keyframes spin-heads {
+        0%   { transform: rotateX(0); }
+        100% { transform: rotateX(2160deg); }
+    }
+
+    /* Spin ending tails-up: 5.5 rotations = 1980° (180° mod 360 = face down) */
+    @keyframes spin-tails {
+        0%   { transform: rotateX(0); }
+        100% { transform: rotateX(1980deg); }
+    }
+
+    /* ── Flip button ── */
+    .btn-flip {
+        background: linear-gradient(90deg, #f0a500, #f5c842);
+        color: #5a3a00;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 36px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(240,165,0,0.30);
+        transition: transform 0.15s, box-shadow 0.15s;
+        letter-spacing: 0.03em;
+    }
+
+    .btn-flip:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(240,165,0,0.42);
+    }
+
+    .btn-flip:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* ── Resolution block (hidden until coin lands) ── */
+    .resolution-block { display: none; }
+
+    /* ── Lottery result card ── */
+    .result-card {
+        background: linear-gradient(135deg, #fffbe6 0%, #fff8d6 100%);
+        border: 1.5px solid #f0c040;
+        border-radius: 10px;
+        padding: 18px 22px;
+        margin-bottom: 20px;
+    }
+
+    .result-card-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: #7a5c00;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        margin-bottom: 14px;
+    }
+
+    /* Each lottery row inside the result card */
+    .lottery-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: rgba(255,255,255,0.65);
+        border: 1px solid #edd97a;
+        margin-bottom: 10px;
+        font-size: 0.96rem;
+        line-height: 1.6;
+        color: #2c3e50;
+    }
+
+    .lottery-row:last-child { margin-bottom: 0; }
+
+    /* Coloured pill label */
+    .lottery-pill {
+        display: inline-block;
+        background: #2563b0;
+        color: white;
+        border-radius: 20px;
+        padding: 2px 12px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+
+    /* Highlighted £ amounts */
+ .amount {
+    display: inline-block;
+    background: #fff3cd;
+    color: #92400e;
+    font-weight: 800;
+    border-radius: 6px;
+    padding: 1px 8px;
+    border: 1.5px solid #f0c040;
+    font-size: 1em;
 }
 
-.coin {
-  width: 120px;
-  height: 120px;
-  position: relative;
-  transform-style: preserve-3d;
+    /* ── Bottom button row ── */
+.btn-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid #e8f0fa;
 }
 
-.face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  backface-visibility: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  font-weight: bold;
-}
+    .btn-next {
+        background: linear-gradient(90deg, #2563b0, #4A90D9);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 11px 32px;
+        font-size: 0.97rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 3px 10px rgba(74,144,217,0.28);
+        transition: transform 0.15s, box-shadow 0.15s;
+    }
 
-.heads {
-  background: gold;
-  color: #333;
-}
+    .btn-next:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(74,144,217,0.38);
+    }
 
-.tails {
-  background: silver;
-  color: #333;
-  transform: rotateX(180deg);
-}
+    .btn-reveal {
+        background: #fff8e1;
+        color: #7a5c00;
+        border: 1.5px solid #e0c84a;
+        border-radius: 8px;
+        padding: 11px 26px;
+        font-size: 0.93rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: transform 0.15s, background 0.15s;
+    }
 
-@keyframes spin-heads {
-  0%   { transform: rotateX(0); }
-  100% { transform: rotateX(2160deg); } /* lands face-up = 0° mod 360 */
-}
+    .btn-reveal:hover {
+        transform: translateY(-2px);
+        background: #fff3cd;
+    }
 
-@keyframes spin-tails {
-  0%   { transform: rotateX(0); }
-  100% { transform: rotateX(1980deg); } /* lands face-down = 180° mod 360 */
-}
+    /* ── Instructions panel ── */
+    .instructions-panel {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        overflow: hidden;
+        margin-top: 18px;
+    }
+
+    .instructions-panel-bar {
+        background: linear-gradient(90deg, #f0c040, #f5d76e);
+        padding: 12px 24px;
+        font-weight: 700;
+        color: #7a5000;
+        font-size: 0.95rem;
+    }
+
+    .instructions-panel-body { padding: 20px 28px; }
 </style>
 
+<script>
+    /* ── Server-side coin result injected by oTree ── */
+    const coinResult = "{{ coin_result }}";  // "heads" or "tails"
+
+    function flipCoin() {
+        const coin   = document.getElementById('coin');
+        const btn    = document.getElementById('flipBtn');
+
+        /* Force CSS animation restart by removing then re-adding it */
+        coin.style.animation = 'none';
+        void coin.offsetWidth; // reflow so browser registers the reset
+
+        /* Choose the correct keyframe based on server result */
+        const animName = coinResult === 'heads' ? 'spin-heads' : 'spin-tails';
+        coin.style.animation = `${animName} 3s ease-out forwards`;
+
+        /* Disable button so it can't be clicked mid-spin */
+        btn.disabled = true;
+
+        /* After the 3 s animation finishes: hide the button, reveal results */
+        setTimeout(() => {
+            document.getElementById('flipBtn').style.display = 'none';
+            document.getElementById('resolution-block').style.display = 'block';
+        }, 3000);
+    }
+
+    function open_instructions() {
+        const panel = document.getElementById('instructions');
+        const btn   = document.getElementById('instructions_button');
+        if (panel.style.display === 'none') {
+            panel.style.display = 'block';
+            btn.innerHTML = '🔼 &nbsp;Close Instructions';
+        } else {
+            panel.style.display = 'none';
+            btn.innerHTML = '📖 &nbsp;Reveal Instructions';
+        }
+    }
+</script>
+
 {{ endblock }}
+
 
 {{ block content }}
 
-<div class="coin-container">
-  <div class="coin" id="coin">
-    <div class="face heads">H</div>
-    <div class="face tails">T</div>
-  </div>
+<div class="lottery-wrapper">
+
+    <div class="page-title">🎲 The Lottery</div>
+
+    <div class="outer-card">
+
+        <div class="card-top-bar">
+            <span>Lottery 1 — Coin Flip</span>
+            <span class="part-badge">Part 2 · Today</span>
+        </div>
+
+        <div class="card-inner">
+
+            <!-- ── Coin animation section ── -->
+            <div class="coin-section">
+
+                <!-- 3-D coin: heads = gold (face-up), tails = silver (starts hidden at 180°) -->
+                <div class="coin-container">
+                    <div class="coin" id="coin">
+                        <div class="face heads">H</div>
+                        <div class="face tails">T</div>
+                    </div>
+                </div>
+
+                <!-- Flip button — hidden after coin lands via JS setTimeout -->
+                <button class="btn-flip" id="flipBtn" onclick="flipCoin()" type="button">
+                    🪙 &nbsp;Flip Coin
+                </button>
+            </div>
+
+            <!-- ── Resolution block: hidden until coin lands ── -->
+            <div class="resolution-block" id="resolution-block">
+
+                <!-- Lottery result summary card -->
+                <div class="result-card">
+                    <div class="result-card-title">🎟️ Your Lottery Ticket Results</div>
+
+                    <!-- Lottery 1: outcome already known from server (random_draw_1) -->
+                    <div class="lottery-row">
+                        <span class="lottery-pill">Lottery 1</span>
+                        <span>
+                            {% if player.random_draw_1 == 1 %}
+                                Resulted in <strong>Heads</strong> &mdash;
+                                Pays <span class="amount">&pound;{{ session.config.A_BAR }}</span>
+                            {% else %}
+                                Resulted in <strong>Tails</strong> &mdash;
+                                Pays <span class="amount">&pound;{{ x_draw }}</span>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <!-- Lottery 2: outcome not yet revealed (coin flip happens live) -->
+                    <div class="lottery-row">
+                        <span class="lottery-pill">Lottery 2</span>
+                        <span>
+                            Pays <span class="amount">&pound;{{ session.config.A_BAR }}</span>
+                            if the coin flip results in <strong>heads</strong>, and
+                            <span class="amount">&pound;0</span>
+                            if it results in <strong>tails</strong>.
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Next + Reveal Instructions buttons -->
+<div class="btn-row">
+    <div style="display:flex; flex-direction:column; align-items:center; gap:10px; width:100%;">
+        <button class="otree-btn-next btn-next">
+            Next &nbsp;&#8594;
+        </button>
+        <button type="button" class="btn-reveal"
+                onclick="open_instructions()" id="instructions_button">
+            📖 &nbsp;Reveal Instructions
+        </button>
+    </div>
 </div>
 
-<!-- The button to flip the coin -->
-<div style="text-align: center;">
-    <button
-        class="btn btn-warning"
-        id="flipBtn"
-        onclick="flipCoin()"
-        type="button"
-        style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">
-        Flip Coin
-    </button>
-</div>
+            </div><!-- /resolution-block -->
 
+        </div><!-- /card-inner -->
+    </div><!-- /outer-card -->
 
-<!-- <p id="result-text"></p> -->
-
-
-
-
-
-<div id="resolution-block" style="display: none; width: 100%; margin: 0 auto; padding: 1em; font-size: 1.25em; box-sizing: border-box;">
-
-<div style="background-color: #fff3cd; border: 0.15em solid #ffc107; padding: 1em 1.5em; margin-top: 1.5em; border-radius: 0.4em;">
-    <p style="font-size: 1.2em; margin-bottom: 0.6em; line-height: 1.05;"><i>The lottery ticket consists of the following <b>two lotteries</b>:</i></p>
-    <ul style="list-style-type: none; padding-left: 0; font-size: 1.15em;">
-        <li style="padding: 0em; margin-bottom: 0.4em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
-            <b>Lottery 1</b>: {% if player.random_draw_1 == 1 %}Resulted in <b>Heads</b> – Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span>{% else %}Resulted in <b>Tails</b> – Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ x_draw }}</b></span>{% endif %}
-        </li>
-        <li style="padding: 0em; background-color: #fff3cd; border-radius: 0.3em; line-height: 1.05;">
-            <b>Lottery 2</b>: Pays <span style="color: blue; font-size: 1.3em;"><b>£{{ session.config.A_BAR }}</b></span> if the coin flip results in <b>heads</b>, and <span style="color: blue; font-size: 1.3em;"><b>£0</b></span> if it results in <b>tails</b>.
-        </li>
-    </ul>
-</div>
-
-<div style="text-align: right; margin-top: 1.5em;">
-    <button class="otree-btn-next btn btn-primary" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em;">Next</button>
-</div>
-
-<div style="text-align: center; margin-top: 1.5em;">
-    <button class="btn btn-warning" data-toggle="button" onclick="open_instructions()" type="button" id="instructions_button" style="font-size: 1.3em; padding: 0.7em 1.6em; border-radius: 0.5em; background-color: #f5e6a3; border-color: #e0d18f;">Reveal Instructions</button>
-</div>
-
-</div>
-
-<div style="display: none" id="instructions">
-    <div class="card bg-light">
-    <div class="card-body">
-{{ include "SBC_consent_t2/instr.html" }}
-        </div></div>
+    <!-- ── Collapsible instructions panel ── -->
+    <div style="display:none;" id="instructions">
+        <div class="instructions-panel">
+            <div class="instructions-panel-bar">📋 Instructions Reference</div>
+            <div class="instructions-panel-body">
+                {{ include "SBC_consent_t2/instr.html" }}
+            </div>
+        </div>
     </div>
 
+</div><!-- /lottery-wrapper -->
 
 {{ endblock }}
