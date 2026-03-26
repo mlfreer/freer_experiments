@@ -337,7 +337,7 @@
                 <p>This study consists of <strong>two parts</strong>. This is the first part. The second part will take
                     place next week and will be advertised via Prolific.
                     <strong>You only complete this study if you complete both parts.</strong></p>
-                <p>You can complete Part 2 at any time during the next two weeks.</p>
+                <p>You can complete Part 2 at any time <emph>within two weeks</emph> after the start of Part 2.</p>
                 <div class="highlight-note">
                     ⚠️ <strong>Please note:</strong> You will receive any payment
                     <strong>only if you participate in both parts.</strong>
@@ -347,7 +347,7 @@
                     <strong>{{ session.config.participation_fee }}</strong>.
                     Part 2 adds another
                     <strong>{{ session.config.participation_fee }}</strong>.
-                    You can also earn a <em>substantial bonus payment</em> up to
+                    You can also earn a <em>substantial bonus payment</em> of up to
                     <strong>£{{ session.config.max_pay }}</strong>
                     depending on your choices and chance.
                 </p>
@@ -387,7 +387,7 @@
                         <div class="accordion-body">
 
                             <p>Today, you will evaluate a <strong>lottery ticket</strong> consisting of two lotteries.
-                                Each has two equally likely outcomes, determined by independent virtual coin flips.</p>
+                                Each has two equally likely outcomes, determined by two independent virtual coin flips.</p>
 
                             <div class="info-card">
                                 <div class="timeline-item">
@@ -413,7 +413,7 @@
                                 For example:</p>
                             <ul>
                                 <li>First coin <em>tails</em>, second coin <em>tails</em> →
-                                    <strong>£{{ participant.x_draw }}</strong></li>
+                                    £{{ participant.x_draw }} + £0 = <strong>£{{ participant.x_draw }}</strong></li>
                                 <li>First coin <em>heads</em>, second coin <em>tails</em> →
                                     £{{ session.config.A_BAR }} + £0 =
                                     <strong>£{{ session.config.A_BAR }}</strong></li>
@@ -427,10 +427,11 @@
                                         whether it pays £{{ session.config.A_BAR }} or £{{ participant.x_draw }}.
                                         You will <em>not</em> yet know Lottery 2's result.</div>
                                 </div>
-                                <div class="timeline-item">
+                                 {% if participant.treatment != 0 %}<div class="timeline-item">
                                     <div class="t-dot amber">→</div>
-                                    <div>You may then make additional decisions.</div>
+                                    <div>You then make additional decisions.</div>
                                 </div>
+                                {% endif %}
                                 <div class="timeline-item">
                                     <div class="t-dot green">✓</div>
                                     <div><strong>Part 2 (end):</strong> You learn <strong>Lottery 2</strong>'s result
@@ -492,8 +493,7 @@
                             <div class="info-card">
                                 <div class="timeline-item">
                                     <div class="t-dot blue">1</div>
-                                    <div><strong>Part 1 (today):</strong> Buy or decline the option to purchase
-                                        the lottery ticket.</div>
+                                    <div><strong>Part 1 (today):</strong> Buy or decline the option.</div>
                                 </div>
                                 <div class="timeline-item">
                                     <div class="t-dot blue">2</div>
@@ -515,7 +515,8 @@
                             {% endif %}
 
                             {% if participant.treatment == 3 %}
-                            <p>Today, you can purchase the lottery ticket. Your ticket includes a
+                            <p>Today, you can purchase the lottery ticket.</p> 
+                            <p>Your ticket includes a
                                 <strong><em>refund option</em></strong> that you can use in Part 2. Today, you will see various combinations of purchase prices for the lottery ticket and possible refund amounts.</p>
                             <p>In Part 2 you will <em>first</em> learn Lottery 1's outcome
                                 (£{{ session.config.A_BAR }} or £{{ participant.x_draw }}). For each combination of lottery price and refund amount, you can then either <strong>keep</strong> your lottery ticket or <strong>return it</strong>
@@ -524,13 +525,13 @@
                                     <div class="timeline-item">
                                         <div class="t-dot amber">→</div>
                                         <div>
-                                            <em>If you keep the lottery ticket and reject the refund,</em> you are paid the lottery ticket earnings but pay the ticket price.
+                                            <em>If you keep the lottery ticket (so reject the refund),</em> you receive the lottery earnings. However, you have then already paid the lottery ticket price.
                                         </div>
                                     </div>
                                     <div class="timeline-item">
                                         <div class="t-dot amber">→</div>
                                         <div>
-                                            <em>If you use the refund and return the lottery ticket,</em> you receive the refund amount back, but you pay the lottery ticket price and you do <i>not</i> receive any lottery earnings.
+                                            <em>If you use the refund (so return the lottery ticket),</em> you receive the refund amount back, but you do <i>not</i> receive any lottery earnings. However, you have then already paid the lottery ticket price.
                                         </div>
                                     </div>
                                 </div>
@@ -721,7 +722,7 @@
                     <div id="sec-4" class="accordion-collapse collapse">
                         <div class="accordion-body">
 
-                            <p>At the end of the study Part 2, the computer <strong>randomly selects 25%</strong> of participants that will receive their bonus payments. If you are selected, you will receive your bonus payment within two weeks of the completion of the study. To calculate your bonus payment, the computer <strong>randomly selects one question</strong> (each equally likely). You will then receive your bonus payment depending on your decision and based on the payment rule described above.</p>
+                            <p>At the end of the study Part 2, the computer <strong>randomly selects 20%</strong> of participants that will receive their bonus payments. If you are selected, you will receive your bonus payment within two weeks of the completion of the study. To calculate your bonus payment, the computer <strong>randomly selects one question</strong> (each equally likely). You will then receive your bonus payment depending on your decision and based on the payment rule described above.</p>
                             <p>For 98% of the selected participants, their decisions will be implemented exactly as they decided. For the remaining 2%, their decisions will be treated as if they had purchased the lottery ticket. 
                                 {% if participant.treatment == 2 or participant.treatment == 3 %}Because it may be that the computer selects you for a purchase,
                                 <strong>all participants will make decisions in Part 2</strong> and

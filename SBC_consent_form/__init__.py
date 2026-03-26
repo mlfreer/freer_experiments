@@ -18,7 +18,7 @@ class C(BaseConstants):
     QUIZ_ANSWERS = [1,3,3]
 
     # INTEGERS TO INPUT IN THE EXAMPLE PAGE:
-    EXAMPLE_ANSWERS = [ENDOWMENT,21,13]
+    EXAMPLE_ANSWERS = [ENDOWMENT,20,12]
 
 
 class Subsession(BaseSubsession):
