@@ -565,7 +565,7 @@
                         <div class="accordion-body">
 
                             <p>To purchase the lottery ticket, you receive a starting
-                                <strong>budget of £{{ C.ENDOWMENT }}</strong>.
+                                <strong>budget of {{ C.ENDOWMENT }}</strong>.
                                 At the end of Part 2, any purchase price for the lottery ticket {% if participant.treatment == 2 %} and option price
                                 {% endif %} is subtracted from this budget.
                                 You keep the remainder as your bonus payment.</p>
@@ -584,7 +584,7 @@
                                 <strong>£{{ session.config.A_BAR }}</strong>:</p>
 
                             <div class="formula-box">
-                                £{{ C.ENDOWMENT }} &minus; £6 + £{{ session.config.A_BAR }}
+                                {{ C.ENDOWMENT }} &minus; £6 + £{{ session.config.A_BAR }}
                                 = <span class="result">£17</span>
                             </div>
                             {% endif %}
@@ -594,7 +594,7 @@
                                 <strong>£{{ session.config.A_BAR }}</strong>:</p>
 
                             <div class="formula-box">
-                                £{{ C.ENDOWMENT }} &minus; £4 &minus; £2 + £{{ session.config.A_BAR }}
+                                {{ C.ENDOWMENT }} &minus; £4 &minus; £2 + £{{ session.config.A_BAR }}
                                 = <span class="result">£17</span>
                             </div>
                             {% endif %}
@@ -628,7 +628,7 @@
                             {% endif %}
                             <div class="stat-row">
                                 <div class="stat-chip">
-                                    <span class="stat-num">£{{ C.ENDOWMENT }}</span>
+                                    <span class="stat-num">{{ C.ENDOWMENT }}</span>
                                     Budget
                                 </div>
                                 <div class="stat-chip">
