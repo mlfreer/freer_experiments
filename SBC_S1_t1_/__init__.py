@@ -13,24 +13,32 @@ Your app description
 class C(BaseConstants):
     NAME_IN_URL = 'SBC_S1_t1_'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 15 #setting the full length to ensure that data contains all necesasry info.
+    NUM_ROUNDS = 11 #setting the full length to ensure that data contains all necesasry info.
 
-    ENDOWMENT = cu(15)
+    ENDOWMENT = cu(14)
     # TREATMENT ORDER:
     # 0 = static, buy at t=1
     # 1 = static, buy at t=2
     # 2 = dynamic, option
     # 3 = dynamic, refund
-    PRICES_T1  = [[ 0 for i in range(15) ] for j in range(4)]
+#    PRICES_T1  = [[ 0 for i in range(15) ] for j in range(4)]
+    PRICES_T1  = [[ 0 for i in range(11) ] for j in range(4)] # changing the parameters to the 11 period setup
     # outside is for treatment: 0 to 3
-    PRICES_T1[0] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 11, 12]
-    PRICES_T1[2] = [8, 0, 0, 10, 1, 2, 1, 2, 3, 2, 3, 4, 7, 8, 9]
-    PRICES_T1[3] = [8, 12, 10, 10, 11, 12, 9, 10, 11, 8, 9, 10, 8, 9, 10]
+    PRICES_T1[0] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    PRICES_T1[2] = [8, 0, 0, 10, 2, 2, 4, 1, 1, 2, 3]
+    PRICES_T1[3] = [8, 12, 10, 10, 12, 10, 10, 9, 10, 9, 10]
+    #PRICES_T1[0] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 11, 12]
+    #PRICES_T1[2] = [8, 0, 0, 10, 1, 2, 1, 2, 3, 2, 3, 4, 7, 8, 9]
+    #PRICES_T1[3] = [8, 12, 10, 10, 11, 12, 9, 10, 11, 8, 9, 10, 8, 9, 10]
 
-    PRICES_T2 = [[0 for i in range(15) ] for j in range(4)]
-    PRICES_T1[1] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 11, 12]
-    PRICES_T2[2] = [0, 12, 10, 0, 10, 10, 8, 8, 8, 6, 6, 6, 1, 1, 1]
-    PRICES_T2[3] = [0, 12, 10, 0, 10, 10, 8, 8, 8, 6, 6, 6, 1, 1, 1]
+    #PRICES_T2 = [[0 for i in range(15) ] for j in range(4)]
+    PRICES_T2 = [[0 for i in range(11) ] for j in range(4)]
+    PRICES_T1[1] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    PRICES_T2[2] = [0, 12, 10, 0, 10, 8, 6, 8, 9, 7, 7]
+    PRICES_T2[3] = [0, 12, 10, 0, 10, 8, 6, 8, 9, 7, 7]
+    #PRICES_T1[1] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 11, 12]
+    #PRICES_T2[2] = [0, 12, 10, 0, 10, 10, 8, 8, 8, 6, 6, 6, 1, 1, 1]
+    #PRICES_T2[3] = [0, 12, 10, 0, 10, 10, 8, 8, 8, 6, 6, 6, 1, 1, 1]
 
 class Subsession(BaseSubsession):
     pass

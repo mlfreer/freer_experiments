@@ -12,7 +12,7 @@ class C(BaseConstants):
     NUM_ROUNDS = 1
 
     # passing the endowment to instructions page
-    ENDOWMENT = 15
+    ENDOWMENT = cu(14)
 
     # QUIZ ANSWERS:
     QUIZ_ANSWERS = [1,0,3]

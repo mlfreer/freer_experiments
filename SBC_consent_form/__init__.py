@@ -12,7 +12,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'SBC_consent_form'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    ENDOWMENT = 15
+    ENDOWMENT = cu(14)
 
     # QUIZ ANSWERS:
     QUIZ_ANSWERS = [1,3,3]
