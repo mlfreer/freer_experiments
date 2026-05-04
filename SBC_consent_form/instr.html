@@ -577,7 +577,7 @@
                                 &nbsp;&minus;&nbsp; <em>Option&nbsp;price</em>
                                 {% endif %}
                                 &nbsp;&minus;&nbsp; <em>Purchase&nbsp;price</em>
-                                &nbsp;+&nbsp; <em>Lottery&nbsp;earnings</em>
+                                &nbsp;+&nbsp; <em>Lottery&nbsp;ticket&nbsp;earnings</em>
                             </div>
                             {% if participant.treatment != 2 %}
                             <p>For example, if you purchase the lottery ticket for <strong>£6</strong>
@@ -696,13 +696,12 @@
                             {% if participant.treatment == 2 %}
                             <p>Today, you will be asked a series of questions about your
                                 <strong>valuation of the option</strong> to buy the lottery ticket.
-                                For different prices, you choose whether to buy the option that gives you the right to purchase the lottery ticket in Part 2 of this study.</p>
+                                For different combinations of option prices and purchase prices, you choose whether to buy the option that gives you the right to purchase the lottery ticket in Part 2 of this study.</p>
                             {% endif %}
 
                             {% if participant.treatment == 3 %}
                             <p>Today, you will be asked a series of questions about your
-                                <strong>valuation of the lottery ticket</strong>. For different prices
-                                and refund options, you choose whether to purchase the lottery ticket with a refund option.</p>
+                                <strong>valuation of the lottery ticket</strong>. For different combinations of purchase prices and refund amounts, you choose whether to purchase the lottery ticket with a refund option.</p>
                             {% endif %}
 
                             <p>An example decision screen is shown below:</p>
