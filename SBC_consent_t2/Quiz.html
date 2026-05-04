@@ -244,7 +244,10 @@
             <div class="question-block">
                 <div class="question-label">Question 1</div>
                 <div class="question-text">
-                    What lottery earnings can you receive if you purchase the lottery ticket
+                    What lottery ticket earnings can you receive if you purchase the lottery ticket
+                    {% if participant.treatment == 3 %}
+                        (and you do not use the refund option today)
+                    {% endif %}
                     and the first lottery results in heads and the second lottery also results
                     in heads?
                 </div>
@@ -270,7 +273,7 @@
             <div class="question-block">
                 <div class="question-label">Question 2</div>
                 <div class="question-text">
-                    Will you receive lottery earnings of up to &pound;{{ two_heads_sum }} if
+                    Will you receive lottery ticket earnings of up to &pound;{{ two_heads_sum }} if
                     you complete today's study and are randomly selected for payment?
                 </div>
                 <label class="radio-option">
@@ -388,7 +391,7 @@
                 <label class="radio-option">
                     <input type="radio" name="q3" value="3">
                     Today, you will first learn the outcome of Lottery 1. You can then decide
-                    to return the lottery ticket for a pre-specified refund. If you decide
+                    to return the lottery ticket for a pre-specified refund amount. If you decide
                     <em>not</em> to return it, you will keep the ticket and receive a bonus
                     payment depending on the lottery outcome.
                 </label>

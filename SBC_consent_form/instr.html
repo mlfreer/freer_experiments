@@ -337,7 +337,7 @@
                 <p>This study consists of <strong>two parts</strong>. This is the first part. The second part will take
                     place next week and will be available on Prolific if you complete Part 1.
                     <strong>You only complete this study if you complete both parts.</strong></p>
-                <p>You can complete Part 2 at any time <emph>within two weeks</emph> after the start of Part 2.</p>
+                <p>You can complete Part 2 at any time <em>within two weeks</em> after the start of Part 2.</p>
                 <div class="highlight-note">
                     ⚠️ <strong>Please note:</strong> You will receive any payment
                     <strong>only if you participate in both parts.</strong>
@@ -489,7 +489,7 @@
                                 next week at a fixed <strong>purchase price</strong>. This right is called an <strong><em>option</em></strong>.
                                 The option has no benefit other than giving you the right to purchase the lottery ticket in Part 2.</p>
 
-                            <p>You will see various combinations of option prices and purchase prices. For each combination, you will make <strong>two decisions</strong> across the two parts:</p>
+                            <p>You will see various combinations of <strong>option prices</strong> and purchase prices. For each combination, you will make <strong>two decisions</strong> across the two parts:</p>
                             <div class="info-card">
                                 <div class="timeline-item">
                                     <div class="t-dot blue">1</div>
@@ -517,7 +517,7 @@
                             {% if participant.treatment == 3 %}
                             <p>Today, you can purchase the lottery ticket.</p> 
                             <p>Your ticket includes a
-                                <strong>refund option</strong> that you can use in Part 2. Today, you will see various combinations of purchase prices for the lottery ticket and possible <strong>refund amounts</strong>.</p>
+                                <strong>refund option</strong> that you can use in Part 2. Today, you will see various combinations of <strong>purchase prices</strong> for the lottery ticket and possible <strong>refund amounts</strong>.</p>
                             <p>In Part 2 you will <em>first</em> learn Lottery 1's outcome
                                 (£{{ session.config.A_BAR }} or £{{ participant.x_draw }}). For each combination of lottery price and refund amount, you can then either <strong>keep</strong> your lottery ticket or <strong>return it</strong>
                                 for a pre-specified refund. You will make that decision after learning Lottery 1's outcome but before learning Lottery 2's outcome.</p>
@@ -567,7 +567,7 @@
 
                             <p>To purchase the lottery ticket, you receive a starting
                                 <strong>budget</strong> of <strong>{{ C.ENDOWMENT }}</strong>.
-                                At the end of Part 2, any purchase price for the lottery ticket {% if participant.treatment == 2 %} and option price
+                                At the end of Part 2, any <strong>purchase price</strong> for the lottery ticket {% if participant.treatment == 2 %} and <strong>option price</strong>
                                 {% endif %} is subtracted from this budget.
                                 The remainder contributes towards your bonus payment.</p>
                             <p>If you purchase the lottery ticket{% if participant.treatment == 3 %} and do not return it in Part 2{% endif %}, your bonus payment is calculated as follows:</p>
@@ -585,7 +585,7 @@
                                 <strong>£{{ session.config.A_BAR }}</strong>:</p>
 
                             <div class="formula-box">
-                                {{ C.ENDOWMENT }} &minus; £6 + £{{ session.config.A_BAR }}
+                                Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; £6 + £{{ session.config.A_BAR }}
                                 = <span class="result">£16</span>
                             </div>
                             {% endif %}
@@ -595,7 +595,7 @@
                                 <strong>£{{ session.config.A_BAR }}</strong>:</p>
 
                             <div class="formula-box">
-                                {{ C.ENDOWMENT }} &minus; £2 &minus; £4 + £{{ session.config.A_BAR }}
+                                Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; £2 &minus; £4 + £{{ session.config.A_BAR }}
                                 = <span class="result">£16</span>
                             </div>
                             {% endif %}
@@ -683,14 +683,14 @@
 
                             {% if participant.treatment == 0 %}
                             <p>Today, you will be asked a series of questions about your
-                                <strong>valuation of the lottery ticket</strong>. For different prices,
+                                <strong>valuation of the lottery ticket</strong>. For different purchase prices,
                                 you choose whether to purchase the lottery ticket at that price.</p>
                             {% endif %}
 
                             {% if participant.treatment == 1 %}
                             <p>Today, you will <strong>not make any decisions</strong>. In Part 2, you will
                                 be asked questions about your valuation of the lottery ticket and choose
-                                whether to purchase the lottery ticket at various prices.</p>
+                                whether to purchase the lottery ticket at various purchase prices.</p>
                             {% endif %}
 
                             {% if participant.treatment == 2 %}
@@ -735,7 +735,7 @@
                     <div id="sec-4" class="accordion-collapse collapse">
                         <div class="accordion-body">
 
-                            <p>At the end of the study Part 2, the computer <strong>randomly selects 20%</strong> of participants that will receive their bonus payments. If you are selected, you will receive your bonus payment within two weeks of the completion of the study. To calculate your bonus payment, the computer 
+                            <p>At the end of Part 2 of the study, the computer <strong>randomly selects 20%</strong> of participants that will receive their bonus payments. If you are selected, you will receive your bonus payment within two weeks of the completion of the study. To calculate your bonus payment, the computer 
                                 {% if participant.treatment == 0 %}
                                     <strong>randomly selects one purchase price </strong> 
                                 {% endif %}
