@@ -335,7 +335,7 @@
             <!-- ── Intro (always visible) ── -->
             <div class="intro-box">
                 <p>This study consists of <strong>two parts</strong>. This is the first part. The second part will take
-                    place next week and will be advertised via Prolific.
+                    place next week and will be available on Prolific if you complete Part 1.
                     <strong>You only complete this study if you complete both parts.</strong></p>
                 <p>You can complete Part 2 at any time <emph>within two weeks</emph> after the start of Part 2.</p>
                 <div class="highlight-note">
@@ -347,7 +347,7 @@
                     <strong>{{ session.config.participation_fee }}</strong>.
                     Part 2 adds another
                     <strong>{{ session.config.participation_fee }}</strong>.
-                    You can also earn a <em>substantial bonus payment</em> of up to
+                    You can also earn a <em>substantial <strong>bonus payment</strong></em> of up to
                     <strong>£{{ session.config.max_pay }}</strong>
                     depending on your choices and chance.
                 </p>
@@ -409,7 +409,7 @@
                                 </div>
                             </div>
 
-                            <p>Your lottery ticket earnings equal the <strong>sum</strong> of both lottery outcomes.
+                            <p>Your <strong>lottery ticket earnings</strong> equal the <strong>sum</strong> of both lottery outcomes.
                                 For example:</p>
                             <ul>
                                 <li>First coin <em>tails</em>, second coin <em>tails</em> →
@@ -486,7 +486,7 @@
 
                             {% if participant.treatment == 2 %}
                             <p>Today, you can buy the <strong>right</strong> to purchase the lottery ticket
-                                next week at a fixed purchase price. This right is called an <strong><em>option</em></strong>.
+                                next week at a fixed <strong>purchase price</strong>. This right is called an <strong><em>option</em></strong>.
                                 The option has no benefit other than giving you the right to purchase the lottery ticket in Part 2.</p>
 
                             <p>You will see various combinations of option prices and purchase prices. For each combination, you will make <strong>two decisions</strong> across the two parts:</p>
@@ -517,7 +517,7 @@
                             {% if participant.treatment == 3 %}
                             <p>Today, you can purchase the lottery ticket.</p> 
                             <p>Your ticket includes a
-                                <strong><em>refund option</em></strong> that you can use in Part 2. Today, you will see various combinations of purchase prices for the lottery ticket and possible refund amounts.</p>
+                                <strong>refund option</strong> that you can use in Part 2. Today, you will see various combinations of purchase prices for the lottery ticket and possible <strong>refund amounts</strong>.</p>
                             <p>In Part 2 you will <em>first</em> learn Lottery 1's outcome
                                 (£{{ session.config.A_BAR }} or £{{ participant.x_draw }}). For each combination of lottery price and refund amount, you can then either <strong>keep</strong> your lottery ticket or <strong>return it</strong>
                                 for a pre-specified refund. You will make that decision after learning Lottery 1's outcome but before learning Lottery 2's outcome.</p>
@@ -525,13 +525,13 @@
                                     <div class="timeline-item">
                                         <div class="t-dot amber">→</div>
                                         <div>
-                                            <em>If you keep the lottery ticket (so reject the refund),</em> you receive the lottery earnings. However, you have then already paid the lottery ticket price.
+                                            <em>If you keep the lottery ticket (so reject the refund),</em> you receive the lottery ticket earnings. However, you have then already paid the lottery purchase price.
                                         </div>
                                     </div>
                                     <div class="timeline-item">
                                         <div class="t-dot amber">→</div>
                                         <div>
-                                            <em>If you use the refund (so return the lottery ticket),</em> you receive the refund amount back, but you do <i>not</i> receive any lottery earnings. However, you have then already paid the lottery ticket price.
+                                            <em>If you use the refund (so return the lottery ticket),</em> you receive the refund amount back, but you do <i>not</i> receive any lottery ticket earnings. However, you have then already paid the lottery purchase price.
                                         </div>
                                     </div>
                                 </div>
@@ -566,44 +566,44 @@
                         <div class="accordion-body">
 
                             <p>To purchase the lottery ticket, you receive a starting
-                                <strong>budget of {{ C.ENDOWMENT }}</strong>.
+                                <strong>budget</strong> of <strong>{{ C.ENDOWMENT }}</strong>.
                                 At the end of Part 2, any purchase price for the lottery ticket {% if participant.treatment == 2 %} and option price
                                 {% endif %} is subtracted from this budget.
-                                You keep the remainder as your bonus payment.</p>
+                                The remainder contributes towards your bonus payment.</p>
                             <p>If you purchase the lottery ticket{% if participant.treatment == 3 %} and do not return it in Part 2{% endif %}, your bonus payment is calculated as follows:</p>
                             <div class="formula-box">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp; <em>Budget</em>
-                                &nbsp;&minus;&nbsp; <em>Ticket&nbsp;price</em>
                                 {% if participant.treatment == 2 %}
                                 &nbsp;&minus;&nbsp; <em>Option&nbsp;price</em>
                                 {% endif %}
+                                &nbsp;&minus;&nbsp; <em>Purchase&nbsp;price</em>
                                 &nbsp;+&nbsp; <em>Lottery&nbsp;earnings</em>
                             </div>
                             {% if participant.treatment != 2 %}
                             <p>For example, if you purchase the lottery ticket for <strong>£6</strong>
-                                and your lottery earnings are
+                                and your lottery ticket earnings are
                                 <strong>£{{ session.config.A_BAR }}</strong>:</p>
 
                             <div class="formula-box">
                                 {{ C.ENDOWMENT }} &minus; £6 + £{{ session.config.A_BAR }}
-                                = <span class="result">£17</span>
+                                = <span class="result">£16</span>
                             </div>
                             {% endif %}
                             {% if participant.treatment == 2 %}
                             <p>For example, if you purchase the option for <strong>£2</strong> and the lottery ticket for <strong>£4</strong>
-                                and your lottery earnings are
+                                and your lottery ticket earnings are
                                 <strong>£{{ session.config.A_BAR }}</strong>:</p>
 
                             <div class="formula-box">
-                                {{ C.ENDOWMENT }} &minus; £4 &minus; £2 + £{{ session.config.A_BAR }}
-                                = <span class="result">£17</span>
+                                {{ C.ENDOWMENT }} &minus; £2 &minus; £4 + £{{ session.config.A_BAR }}
+                                = <span class="result">£16</span>
                             </div>
                             {% endif %}
                             {% if participant.treatment != 2 %}
                             <p>If you <strong>do not purchase</strong> the lottery ticket, you keep your full budget:</p>
 
                             <div class="formula-box">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp;<em>Budget</em>
+                                Bonus&nbsp;Payment &nbsp;=&nbsp;<em>Budget</em> &nbsp;=&nbsp; <span class="result">{{ C.ENDOWMENT }}</span> 
                             </div>
                             {% endif %}
                             {% if participant.treatment == 2 %}
@@ -612,20 +612,34 @@
                             <div class="formula-box">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp; <em>Budget</em> &nbsp;&minus;&nbsp; <em>Option&nbsp;price</em> 
                             </div>
+                            <p>For example, if you purchase the option for <strong>£4</strong> and do not buy the lottery ticket in Part 2:</p>
+
+                            <div class="formula-box">
+                                  Bonus&nbsp;Payment &nbsp;=&nbsp;{{ C.ENDOWMENT }} &minus; £4 
+                                = <span class="result">£10</span>
+                            </div>
+
                             <p>If you <strong>do not purchase</strong> the option today:</p>
 
                             <div class="formula-box">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp;<em>Budget</em>
+                                Bonus&nbsp;Payment &nbsp;=&nbsp;<em>Budget</em> &nbsp;=&nbsp; <span class="result">{{ C.ENDOWMENT }}</span> 
                             </div>
 
                             {% endif %}
 
                             {% if participant.treatment == 3 %}
-                            <p>If you <strong>use the refund option</strong> and return the lottery ticket to receive the refund amount:</p>
+                            <p>If you do purchase the lottery ticket, but you then <strong>use the refund option</strong> and return the lottery ticket to receive the refund amount:</p>
 
                             <div class="formula-box">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp; <em>Budget</em> &nbsp;&minus;&nbsp; <em>Ticket&nbsp;price</em> &nbsp;+&nbsp; <em>Refund&nbsp;amount</em>
+                                Bonus&nbsp;Payment &nbsp;=&nbsp; <em>Budget</em> &nbsp;&minus;&nbsp; <em>Purchase&nbsp;price</em> &nbsp;+&nbsp; <em>Refund&nbsp;amount</em>
                             </div>
+                            <p>For example, if you buy the lottery ticket for <strong>£8</strong> and, in Part 2, return the lottery ticket to receive a refund amount of <strong>£4</strong>:</p>
+
+                            <div class="formula-box">
+                                  Bonus&nbsp;Payment &nbsp;=&nbsp;{{ C.ENDOWMENT }} &minus; £8 + £4
+                                = <span class="result">£10</span>
+                            </div>
+
                             {% endif %}
                             <div class="stat-row">
                                 <div class="stat-chip">
@@ -638,7 +652,7 @@
                                 </div>
                                 <div class="stat-chip">
                                     <span class="stat-num">£{{ two_heads_sum }}</span>
-                                    Max lottery win
+                                    Max lottery ticket earnings
                                 </div>
                             </div>
 
@@ -722,7 +736,20 @@
                     <div id="sec-4" class="accordion-collapse collapse">
                         <div class="accordion-body">
 
-                            <p>At the end of the study Part 2, the computer <strong>randomly selects 20%</strong> of participants that will receive their bonus payments. If you are selected, you will receive your bonus payment within two weeks of the completion of the study. To calculate your bonus payment, the computer <strong>randomly selects one question</strong> (each equally likely). You will then receive your bonus payment depending on your decision and based on the payment rule described above.</p>
+                            <p>At the end of the study Part 2, the computer <strong>randomly selects 20%</strong> of participants that will receive their bonus payments. If you are selected, you will receive your bonus payment within two weeks of the completion of the study. To calculate your bonus payment, the computer 
+                                {% if participant.treatment == 0 %}
+                                    <strong>randomly selects one purchase price </strong> 
+                                {% endif %}
+                                {% if participant.treatment == 1 %}
+                                    <strong>randomly selects one purchase price </strong> 
+                                {% endif %}
+                                {% if participant.treatment == 2 %}
+                                    <strong>randomly selects one combination of option price and purchase price </strong> 
+                                {% endif %}
+                                {% if participant.treatment == 3 %}
+                                    <strong>randomly selects one combination of purchase price and refund amount</strong> 
+                                {% endif %}                                                                
+                                (each equally likely) at the end of Part 2. You will then receive your bonus payment depending on your decision and based on the payment rule described above.</p>
                             <p>For 98% of the selected participants, their decisions will be implemented exactly as they decided. For the remaining 2%, their decisions will be treated as if they had purchased the lottery ticket. 
                                 {% if participant.treatment == 2 or participant.treatment == 3 %}Because it may be that the computer selects you for a purchase,
                                 <strong>all participants will make decisions in Part 2</strong> and

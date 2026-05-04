@@ -262,7 +262,11 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">1</span>
-                    <p>What lottery earnings can you receive if you purchase the lottery ticket and
+                    <p>What lottery ticket earnings can you receive if you purchase the lottery ticket 
+                    {% if participant.treatment == 3 %}
+                        (and you do not use the refund option in Part 2)
+                    {% endif %}
+                        and
                         <em>both</em> the first and second lottery result in <strong>heads</strong>?</p>
                 </div>
                 <div class="question-body">
@@ -291,7 +295,7 @@
                 <div class="question-header">
                     <span class="q-num">2</span>
                     <p>Will you receive <em>any</em> payment in this study if you do <strong>not</strong>
-                        return to complete the second part?</p>
+                        return to complete Part 2?</p>
                 </div>
                 <div class="question-body">
                     <label class="radio-option">
@@ -428,7 +432,7 @@
                         <input type="radio" name="q3" value="3">
                         When you return to Part 2 next week, you will first learn the outcome of
                         Lottery 1. You can then decide to return the lottery ticket for a pre-specified
-                        refund, or keep it and receive a bonus depending on the lottery outcome.
+                        refund amount, or keep it and receive a bonus depending on the lottery outcome.
                     </label>
                     {% endif %}
 
