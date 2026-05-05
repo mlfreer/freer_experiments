@@ -237,11 +237,11 @@
                         {{ if participant.treatment == 2 }}
                             <th>Option Price (&pound;)</th>
                         {{ else }}
-                            <th>Price (&pound;)</th>
+                            <th>Purchase Price (&pound;)</th>
                         {{ endif }}
                         {{ if participant.treatment == 2 or participant.treatment == 3 }}
                             <th>
-                                {{ if participant.treatment == 2 }}Exercise Price (&pound;){{ else }}Refund (&pound;){{ endif }}
+                                {{ if participant.treatment == 2 }}Purchase Price (&pound;){{ else }}Refund Amount (&pound;){{ endif }}
                             </th>
                         {{ endif }}
                         <th>Original Decision</th>

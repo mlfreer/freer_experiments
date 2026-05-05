@@ -211,6 +211,18 @@
     font-size: 1em;
 }
 
+    /* ── Info note ── */
+    .info-note {
+        background: #fff8e1;
+        border-left: 5px solid #f0ad00;
+        border-radius: 0 8px 8px 0;
+        padding: 12px 18px;
+        margin-bottom: 20px;
+        font-size: 14.5px;
+        color: #3d2f00;
+        line-height: 1.7;
+    }
+
     /* ── Bottom button row ── */
 .btn-row {
     display: flex;
@@ -330,7 +342,7 @@
 
 <div class="lottery-wrapper">
 
-    <div class="page-title">🎲 The Lottery</div>
+    <div class="page-title">🎲 The Lottery &nbsp;<small style="font-weight:400;font-size:0.88rem;color:#5a7a9a;">· Part 2 of 2</small></div>
 
     <div class="outer-card">
 
@@ -389,6 +401,29 @@
                             if it results in <strong>tails</strong>.
                         </span>
                     </div>
+                </div>
+
+                <!-- Per-treatment info note about random selection -->
+                <div class="info-note">
+                    📌
+                    {% if participant.treatment == 0 %}
+                        The computer will now randomly select one of your purchase price decisions
+                        from Part 1 to determine your bonus payment.
+                    {% endif %}
+                    {% if participant.treatment == 1 %}
+                        You will now make decisions. One of your decisions, for one of the purchase
+                        prices, can be randomly selected to be paid out to you.
+                    {% endif %}
+                    {% if participant.treatment == 2 %}
+                        You will now make decisions. One of your decisions, for one of the
+                        combinations of option prices and purchase prices, can be randomly selected
+                        to be paid out to you.
+                    {% endif %}
+                    {% if participant.treatment == 3 %}
+                        You will now make decisions. One of your decisions, for one of the
+                        combinations of purchase prices and refund amounts, can be randomly selected
+                        to be paid out to you.
+                    {% endif %}
                 </div>
 
                 <!-- Next + Reveal Instructions buttons -->

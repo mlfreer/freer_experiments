@@ -211,17 +211,7 @@
         flex-shrink: 0;
     }
 
-    /* Lottery amounts use the same yellowish style for consistency */
-    .lottery-amount {
-        display: inline-block;
-        background: #fff3cd;
-        color: #92400e;
-        font-weight: 800;
-        border-radius: 5px;
-        padding: 1px 6px;
-        border: 1.5px solid #f0c040;
-        font-size: 0.97em;
-    }
+    .lottery-amount { color: #2563b0; font-weight: 700; }
 
     /* ── Buttons ── */
     .action-row {
@@ -303,17 +293,15 @@
                 {% elif participant.treatment == 2 %}
                     This round, the option price was
                     <span class="price-amount">&pound;{{ player.price_t1 }}</span>.<br>
-                    You can now purchase the lottery for a price of
-                    <span class="price-amount">&pound;{{ player.price_t2 }}</span>
-                    (after learning the outcome of Lottery 1).
+                    You can now purchase the lottery ticket for a price of
+                    <span class="price-amount">&pound;{{ player.price_t2 }}</span>.
 
                 {% elif participant.treatment == 3 %}
                     This round, the price was
                     <span class="price-amount">&pound;{{ player.price_t1 }}</span>.<br>
                     You can now use the refund option and return the lottery ticket
-                    to receive a refund of
-                    <span class="price-amount">&pound;{{ player.price_t2 }}</span>
-                    (after learning the outcome of Lottery 1).
+                    to receive a refund amount of
+                    <span class="price-amount">&pound;{{ player.price_t2 }}</span>.
                 {% endif %}
             </div>
 
@@ -333,7 +321,7 @@
                         <span class="price-amount">&pound;{{ player.price_t2 }}</span>?
 
                     {% elif participant.treatment == 3 %}
-                        Do you want to return the lottery ticket and receive a refund of
+                        Do you want to return the lottery ticket and receive a refund amount of
                         <span class="price-amount">&pound;{{ player.price_t2 }}</span>?
                     {% endif %}
                 </div>

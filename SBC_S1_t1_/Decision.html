@@ -277,13 +277,13 @@
                 {% elif participant.treatment == 2 %}
                     This round, the option price is
                     <span class="price-amount">&pound;{{ player.price_t1 }}</span>.<br>
-                    In Part 2, if you buy this option, you can decide to purchase the lottery for a price of
+                    In Part 2, if you buy this option, you can decide to purchase the lottery ticket for a price of
                     <span class="price-amount">&pound;{{ player.price_t2 }}</span>
                     <br> (after learning the outcome of Lottery 1).
                 {% elif participant.treatment == 3 %}
                     This round, the price is
                     <span class="price-amount">&pound;{{ player.price_t1 }}</span>.<br>
-                    In Part 2, you can return the lottery ticket and receive a refund of
+                    In Part 2, you can return the lottery ticket and receive a refund amount of
                     <span class="price-amount">&pound;{{ player.price_t2 }}</span>
                     <br> (after learning the outcome of Lottery 1).
                 {% endif %}

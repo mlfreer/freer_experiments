@@ -227,6 +227,11 @@
 
     .formula-box .result { color: #1a7a1a; }
 
+    .formula-box.example {
+        background: #fcf9ea;
+        border: 1px dashed #e0c878;
+    }
+
     .note-box {
         background: #fff8e1;
         border-left: 4px solid #f0ad00;
@@ -334,7 +339,7 @@
 
             <!-- ── Intro (always visible) ── -->
             <div class="intro-box">
-                <p>This study consists of <strong>two parts</strong>. This is the first part. The second part will take
+                <p>This study consists of <strong>two parts</strong>. This is Part 1. Part 2 will take
                     place next week and will be available on Prolific if you complete Part 1.
                     <strong>You only complete this study if you complete both parts.</strong></p>
                 <p>You can complete Part 2 at any time <em>within two weeks</em> after the start of Part 2.</p>
@@ -525,13 +530,13 @@
                                     <div class="timeline-item">
                                         <div class="t-dot amber">→</div>
                                         <div>
-                                            <em>If you keep the lottery ticket (so reject the refund),</em> you receive the lottery ticket earnings. However, you have then already paid the lottery purchase price.
+                                            <em>If you keep the lottery ticket (so reject the refund),</em> you receive the lottery ticket earnings. However, you have then already paid the lottery ticket purchase price.
                                         </div>
                                     </div>
                                     <div class="timeline-item">
                                         <div class="t-dot amber">→</div>
                                         <div>
-                                            <em>If you use the refund (so return the lottery ticket),</em> you receive the refund amount back, but you do <i>not</i> receive any lottery ticket earnings. However, you have then already paid the lottery purchase price.
+                                            <em>If you use the refund (so return the lottery ticket),</em> you receive the refund amount back, but you do <i>not</i> receive any lottery ticket earnings. However, you have then already paid the lottery ticket purchase price.
                                         </div>
                                     </div>
                                 </div>
@@ -584,17 +589,17 @@
                                 and your lottery ticket earnings are
                                 <strong>£{{ session.config.A_BAR }}</strong>:</p>
 
-                            <div class="formula-box">
+                            <div class="formula-box example">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; £6 + £{{ session.config.A_BAR }}
                                 = <span class="result">£16</span>
                             </div>
                             {% endif %}
                             {% if participant.treatment == 2 %}
-                            <p>For example, if you purchase the option for <strong>£2</strong> and the lottery ticket for <strong>£4</strong>
+                            <p>For example, if you buy the option for <strong>£2</strong> and the lottery ticket for <strong>£4</strong>
                                 and your lottery ticket earnings are
                                 <strong>£{{ session.config.A_BAR }}</strong>:</p>
 
-                            <div class="formula-box">
+                            <div class="formula-box example">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; £2 &minus; £4 + £{{ session.config.A_BAR }}
                                 = <span class="result">£16</span>
                             </div>
@@ -607,19 +612,19 @@
                             </div>
                             {% endif %}
                             {% if participant.treatment == 2 %}
-                            <p>If you <strong>purchase only the option</strong> (but you do not buy the lottery ticket in Part 2):</p>
+                            <p>If you <strong>buy only the option</strong> (but you do not purchase the lottery ticket in Part 2):</p>
 
                             <div class="formula-box">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp; <em>Budget</em> &nbsp;&minus;&nbsp; <em>Option&nbsp;price</em> 
                             </div>
-                            <p>For example, if you purchase the option for <strong>£4</strong> and do not buy the lottery ticket in Part 2:</p>
+                            <p>For example, if you buy the option for <strong>£4</strong> and do not purchase the lottery ticket in Part 2:</p>
 
-                            <div class="formula-box">
-                                  Bonus&nbsp;Payment &nbsp;=&nbsp;{{ C.ENDOWMENT }} &minus; £4 
+                            <div class="formula-box example">
+                                  Bonus&nbsp;Payment &nbsp;=&nbsp;{{ C.ENDOWMENT }} &minus; £4
                                 = <span class="result">£10</span>
                             </div>
 
-                            <p>If you <strong>do not purchase</strong> the option today:</p>
+                            <p>If you <strong>do not buy</strong> the option today:</p>
 
                             <div class="formula-box">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp;<em>Budget</em> &nbsp;=&nbsp; <span class="result">{{ C.ENDOWMENT }}</span> 
@@ -635,7 +640,7 @@
                             </div>
                             <p>For example, if you buy the lottery ticket for <strong>£8</strong> and, in Part 2, return the lottery ticket to receive a refund amount of <strong>£4</strong>:</p>
 
-                            <div class="formula-box">
+                            <div class="formula-box example">
                                   Bonus&nbsp;Payment &nbsp;=&nbsp;{{ C.ENDOWMENT }} &minus; £8 + £4
                                 = <span class="result">£10</span>
                             </div>

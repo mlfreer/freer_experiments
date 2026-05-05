@@ -138,7 +138,7 @@ class Quiz(Page):
         return dict(
             # Used in Quiz.html to avoid unsupported '+' expressions in templates
             two_heads_sum=a_bar + a_bar,
-            heads_tails_sum=a_bar + 10,
+            heads_tails_sum=a_bar + 14,
             example_sum=session.config['A_BAR'] + participant.x_draw
         )
 

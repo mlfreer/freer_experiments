@@ -91,7 +91,15 @@ class ConsentForm(Page):
 
     def before_next_page(player: Player, timeout_happened):
         retrieve_data(player) # use the function that would retrieve the data.
-    
+
+
+class ReturnStudy(Page):
+    template_name = "_static/global/ReturnStudy.html"
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return (player.consent == False) or (player.return_study == True)
+
 
 
 class Instructions(Page):
@@ -101,7 +109,8 @@ class Instructions(Page):
         participant = player.participant
         return dict(
             # Used in instr.html to avoid unsupported '+' expressions in templates
-            example_sum=session.config['A_BAR'] + participant.x_draw
+            example_sum=session.config['A_BAR'] + participant.x_draw,
+            two_heads_sum=2 * session.config['A_BAR'],
         )
 
 class Example(Page):
@@ -144,7 +153,9 @@ class Quiz(Page):
 
 
 
-page_sequence = [ConsentForm,  
+page_sequence = [ConsentForm,
+                ReturnStudy,
 #                Example,
                 Instructions,
-                Quiz]
+                Quiz,
+                ReturnStudy]

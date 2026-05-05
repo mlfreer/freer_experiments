@@ -123,10 +123,9 @@
 
     /* ── Custom radio buttons ── */
     .radio-option {
-        display: flex;
-        align-items: flex-start;
-        gap: 12px;
-        padding: 10px 14px;
+        display: block;
+        position: relative;
+        padding: 10px 14px 10px 42px;
         border-radius: 8px;
         margin-bottom: 8px;
         cursor: pointer;
@@ -150,11 +149,11 @@
         width: 18px; height: 18px;
         border: 2px solid #a0bcd8;
         border-radius: 50%;
-        flex-shrink: 0;
-        margin-top: 2px;
+        position: absolute;
+        left: 14px;
+        top: 12px;
         cursor: pointer;
         transition: border-color 0.15s, background 0.15s;
-        position: relative;
     }
 
     .radio-option input[type="radio"]:checked {
@@ -348,17 +347,17 @@
                     <label class="radio-option">
                         <input type="radio" name="q3" value="1">
                         When you return to Part 2 next week, your earnings do not depend on your
-                        decision today, so you will receive a fixed bonus of {{ session.config.participation_fee }}.
+                        decision today, so you will receive a fixed bonus payment of {{ session.config.participation_fee }}.
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="2">
-                        When you return to Part 2 next week, you can only earn a bonus if
+                        When you return to Part 2 next week, you can only earn a bonus payment if
                         <em>both</em> lotteries result in heads.
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="3">
                         When you return to Part 2 next week, you will learn the outcome of Lottery 1
-                        and Lottery 2 and can receive the corresponding bonus payment.
+                        and Lottery 2 and can receive the corresponding lottery ticket earnings.
                     </label>
                     {% endif %}
 
@@ -370,19 +369,19 @@
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="1">
-                        When you return to Part 2 next week, you will receive a fixed bonus of
+                        When you return to Part 2 next week, you will receive a fixed bonus payment of
                         {{ session.config.participation_fee }} and there are no additional bonus payments
                         if you purchase the lottery ticket.
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="2">
-                        When you return to Part 2 next week, you can only earn a bonus if <em>both</em> lotteries result in heads.
+                        When you return to Part 2 next week, you can only earn a bonus payment if <em>both</em> lotteries result in heads.
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="3">
                         When you return to Part 2 next week, you will first learn the outcome of
                         Lottery 1. You can then decide to purchase the lottery ticket and receive a
-                        corresponding bonus depending on your decision and the lottery outcome.
+                        corresponding bonus payment depending on your decision and the lottery outcome.
                     </label>
                     {% endif %}
 
@@ -394,21 +393,21 @@
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="1">
-                        When you return to Part 2 next week, you will receive a fixed bonus of
+                        When you return to Part 2 next week, you will receive a fixed bonus payment of
                         {{ session.config.participation_fee }} and there are no additional bonus payments
                         if you buy the option today.
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="2">
-                        When you return to Part 2 next week, you can only earn a bonus if
+                        When you return to Part 2 next week, you can only earn a bonus payment if
                         <em>both</em> lotteries result in heads.
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="3">
                         When you return to Part 2 next week, you will first learn the outcome of
                         Lottery 1. If you bought the option today, you can then purchase the lottery
-                        ticket and receive a bonus. If you did <i>not</i> buy the option today,
-                        you cannot purchase in Part 2 and will not receive a lottery bonus.
+                        ticket and receive lottery ticket earnings. If you did <i>not</i> buy the option today,
+                        you cannot purchase in Part 2 and will not receive lottery ticket earnings.
                     </label>
                     {% endif %}
 
@@ -420,19 +419,19 @@
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="1">
-                        When you return to Part 2 next week, you will receive a fixed bonus of
+                        When you return to Part 2 next week, you will receive a fixed bonus payment of
                         {{ session.config.participation_fee }} and there are no additional bonus payments
                         if you purchase the lottery ticket today.
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="2">
-                        When you return to Part 2 next week, you can only earn a bonus if <em>both</em> lotteries result in heads.
+                        When you return to Part 2 next week, you can only earn a bonus payment if <em>both</em> lotteries result in heads.
                     </label>
                     <label class="radio-option">
                         <input type="radio" name="q3" value="3">
                         When you return to Part 2 next week, you will first learn the outcome of
                         Lottery 1. You can then decide to return the lottery ticket for a pre-specified
-                        refund amount, or keep it and receive a bonus depending on the lottery outcome.
+                        refund amount, or keep it and receive lottery ticket earnings depending on the lottery outcome.
                     </label>
                     {% endif %}
 

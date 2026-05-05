@@ -246,8 +246,8 @@ DEBUG = True
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, 
     participation_fee=3.00,
-    min_pay = 1.00,
-    max_pay = 28.00,
+    min_pay = 1,
+    max_pay = 28,
     A_BAR = 8,
     treatment = 0, # treatment enumeration starts with 0 and goes to 3 so we can simplify the presentation of the constants.
     doc="",
@@ -320,6 +320,7 @@ LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'GBP'
+REAL_WORLD_CURRENCY_DECIMAL_PLACES = 0
 USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'

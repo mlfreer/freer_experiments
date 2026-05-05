@@ -168,7 +168,7 @@
         font-size: 0.9em;
     }
 
-    /* ── Total earnings card ── */
+    /* ── Bonus payment card ── */
     .earnings-card {
         background: linear-gradient(135deg, #e8f5e9 0%, #f1faf2 100%);
         border: 2px solid #81c784;
@@ -374,7 +374,7 @@
                             the lottery ticket
                         {% else %}
                             <span class="badge-no">returned</span>
-                            the lottery ticket for a refund of
+                            the lottery ticket for a refund amount of
                             <span class="price-amount">&pound;{{ price_t2 }}</span>
                         {% endif %}
                     </span>
@@ -384,9 +384,9 @@
 
             </div>
 
-            <!-- ── Total earnings ── -->
+            <!-- ── Bonus payment ── -->
             <div class="earnings-card">
-                <div class="earnings-label">💰 Your Total Earnings</div>
+                <div class="earnings-label">💰 Your Bonus Payment</div>
                 <div class="earnings-amount">&pound;{{ payoff }}</div>
             </div>
 

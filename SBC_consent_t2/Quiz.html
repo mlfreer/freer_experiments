@@ -119,10 +119,9 @@
     }
 
     .radio-option {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        padding: 9px 13px;
+        display: block;
+        position: relative;
+        padding: 9px 13px 9px 39px;
         border-radius: 7px;
         margin-bottom: 7px;
         cursor: pointer;
@@ -135,12 +134,13 @@
     .radio-option:hover { background: #e8f2ff; }
 
     .radio-option input[type="radio"] {
-        margin-top: 3px;
         accent-color: #2563b0;
-        flex-shrink: 0;
         width: 16px;
         height: 16px;
         cursor: pointer;
+        position: absolute;
+        left: 13px;
+        top: 12px;
     }
 
     .radio-option:has(input:checked) {
@@ -317,7 +317,7 @@
                 <label class="radio-option">
                     <input type="radio" name="q3" value="3">
                     Today, you will learn the outcome of Lottery 1 and Lottery 2 and you can
-                    receive the corresponding bonus payment.
+                    receive the corresponding lottery ticket earnings.
                 </label>
                 {% endif %}
 
@@ -366,9 +366,9 @@
                 <label class="radio-option">
                     <input type="radio" name="q3" value="3">
                     Today, you will first learn the outcome of Lottery 1. If you bought the
-                    option in Part 1, you can then purchase the lottery ticket and receive a
-                    corresponding bonus payment. If you did not buy the option, you cannot
-                    purchase the lottery ticket today.
+                    option in Part 1, you can then purchase the lottery ticket and receive
+                    lottery ticket earnings. If you did not buy the option, you cannot
+                    purchase the lottery ticket today and will not receive lottery ticket earnings.
                 </label>
                 {% endif %}
 
@@ -392,8 +392,8 @@
                     <input type="radio" name="q3" value="3">
                     Today, you will first learn the outcome of Lottery 1. You can then decide
                     to return the lottery ticket for a pre-specified refund amount. If you decide
-                    <em>not</em> to return it, you will keep the ticket and receive a bonus
-                    payment depending on the lottery outcome.
+                    <em>not</em> to return it, you will keep the ticket and receive lottery
+                    ticket earnings depending on the lottery outcome.
                 </label>
                 {% endif %}
 

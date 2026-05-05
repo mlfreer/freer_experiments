@@ -215,15 +215,24 @@
                 </div>
 
                 <div class="budget-note">
-                    You can earn the sum of the earnings from both lotteries if you purchase the lottery
+                    You can earn the sum of the earnings from both lotteries if you purchase the lottery ticket
                     using your budget of <strong>{{ C.ENDOWMENT }}</strong>.
                 </div>
             </div>
 
             {% if participant.treatment != 1 %}
             <div class="info-note">
-                📌 The study will start on the next screen. One of your decisions may be randomly
-                selected to be paid out to you if you return to Part 2 of this study.
+                📌 The study will start on the next screen. One of 
+                {% if participant.treatment == 0 %}             
+                    your decisions, for one of the purchase prices, 
+                {% endif %} 
+                {% if participant.treatment == 2 %}
+                    your decisions, for one of the combinations of option prices and purchase prices, 
+                {% endif %}
+                {% if participant.treatment == 3 %}
+                    your decisions, for one of the combinations of purchase prices and refund amounts, 
+                {% endif %}                 
+                can be randomly selected to be paid out to you if you return to Part 2 of this study.
             </div>
             {% endif %}
 

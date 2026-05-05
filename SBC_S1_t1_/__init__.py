@@ -129,7 +129,7 @@ class ExperimentStarts(Page):
         participant = player.participant
         return dict(
             two_heads_sum = 2*session.config['A_BAR'],
-            heads_tails_sum = session.config['A_BAR'] + participant.x_draw + 2,
+            heads_tails_sum = session.config['A_BAR'] + 14,
             example_sum= session.config['A_BAR'] + participant.x_draw
         )
 
@@ -184,7 +184,7 @@ class Decision(Page):
         participant = player.participant
         return dict(
             two_heads_sum = 2*session.config['A_BAR'],
-            heads_tails_sum = session.config['A_BAR'] + participant.x_draw + 2,
+            heads_tails_sum = session.config['A_BAR'] + 14,
             example_sum= session.config['A_BAR'] + participant.x_draw
         )
 

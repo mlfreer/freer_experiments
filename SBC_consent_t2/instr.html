@@ -216,6 +216,11 @@
 
     .formula-box .result { color: #1a7a1a; }
 
+    .formula-box.example {
+        background: #fcf9ea;
+        border: 1px dashed #e0c878;
+    }
+
     .stat-row {
         display: flex;
         gap: 10px;
@@ -356,10 +361,10 @@
             <div class="progress-wrap">
                 <div class="progress-label">
                     <span>Reading instructions…</span>
-                    <span id="prog-label">Section 1 of 4</span>
+                    <span id="prog-label">Section 1 of 5</span>
                 </div>
                 <div class="progress">
-                    <div class="progress-bar" id="progress-bar" style="width:25%;"></div>
+                    <div class="progress-bar" id="progress-bar" style="width:20%;"></div>
                 </div>
             </div>
 
@@ -407,15 +412,34 @@
                                 </div>
                             </div>
 
-                            <p>Your <strong>lottery ticket earnings</strong> equal the <strong>sum</strong> of both lottery outcomes.</p>
+                            <p>Your <strong>lottery ticket earnings</strong> equal the <strong>sum</strong> of both lottery outcomes.
+                                For example:</p>
+                            <ul>
+                                <li>First coin <em>tails</em>, second coin <em>tails</em> &rarr;
+                                    &pound;{{ participant.x_draw }} + &pound;0 = <strong>&pound;{{ participant.x_draw }}</strong></li>
+                                <li>First coin <em>heads</em>, second coin <em>tails</em> &rarr;
+                                    &pound;{{ session.config.A_BAR }} + &pound;0 =
+                                    <strong>&pound;{{ session.config.A_BAR }}</strong></li>
+                            </ul>
 
-                            <div class="note-box">
-                                <strong>Example 1:</strong> First coin tails, second heads &rarr;
-                                &pound;{{ participant.x_draw }} + &pound;{{ session.config.A_BAR }} =
-                                <span class="price-amount">&pound;{{ example_sum }}</span><br>
-                                <strong>Example 2:</strong> First coin heads, second tails &rarr;
-                                &pound;{{ session.config.A_BAR }} + &pound;0 =
-                                <span class="price-amount">&pound;{{ session.config.A_BAR }}</span>
+                            <p class="mt-3 mb-2"><strong>&#9200; When do you learn the outcomes?</strong></p>
+                            <div class="info-card">
+                                <div class="timeline-item">
+                                    <div class="t-dot amber">&rarr;</div>
+                                    <div><strong>Now:</strong> You learn <strong>Lottery 1</strong>'s result &mdash;
+                                        whether it pays &pound;{{ session.config.A_BAR }} or &pound;{{ participant.x_draw }}.
+                                        You will <em>not</em> yet know Lottery 2's result.</div>
+                                </div>
+                                {% if participant.treatment != 0 %}<div class="timeline-item">
+                                    <div class="t-dot amber">&rarr;</div>
+                                    <div>You then make additional decisions.</div>
+                                </div>
+                                {% endif %}
+                                <div class="timeline-item">
+                                    <div class="t-dot green">&check;</div>
+                                    <div><strong>At the end:</strong> You learn <strong>Lottery 2</strong>'s result
+                                        and your final bonus payment.</div>
+                                </div>
                             </div>
 
                             <div class="continue-btn-wrap">
@@ -427,15 +451,15 @@
                     </div>
                 </div>
 
-                <!-- ② YOUR DECISION TODAY -->
+                <!-- ② YOUR DECISION -->
                 <div class="accordion-item" id="item-1">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#sec-1"
                                 aria-expanded="false" aria-controls="sec-1">
-                            <span class="section-icon">🗳️</span>
+                            <span class="section-icon">&#129300;</span>
                             <span class="section-num">2</span>
-                            Your Decision Today
+                            Your Decision
                         </button>
                     </h2>
                     <div id="sec-1" class="accordion-collapse collapse"
@@ -443,87 +467,78 @@
                         <div class="accordion-body">
 
                             {% if participant.treatment == 0 %}
-                            <div class="treatment-block">
-                                <p>In Part 1, you decided whether to purchase the lottery ticket.
-                                   <strong>There is no decision to be taken in this part.</strong></p>
-                                <p>Next, you will learn the outcome of Lottery 1, then Lottery 2,
-                                   and your bonus payment.</p>
+                            <p>In Part 1, you decided whether to <strong>purchase the lottery ticket</strong>.</p>
+                            <div class="note-box">
+                                &#128204; <strong>Note:</strong> You cannot purchase the lottery ticket today.
+                                Your <em>only</em> opportunity was in Part 1. Your payment depends on
+                                the decisions you made in Part 1 &mdash; you do not make decisions today.
                             </div>
                             {% endif %}
 
                             {% if participant.treatment == 1 %}
-                            <div class="treatment-block">
-                                <p>Today, you will be asked a series of questions about your
-                                   <strong>valuation of the lottery ticket</strong>. For different
-                                   <strong>purchase prices</strong>, you choose whether to purchase the lottery ticket
-                                   at that price. You can decide
-                                   <strong>after learning the outcome of Lottery 1</strong>
-                                   (whether it pays &pound;{{ session.config.A_BAR }} or
-                                   &pound;{{ participant.x_draw }}), but <em>before</em> learning
-                                   the outcome of Lottery 2.</p>
-                                <div class="timeline-item" style="margin-top:10px;">
-                                    <div class="t-dot amber">1</div>
-                                    <div>Learn the outcome of Lottery 1.</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="t-dot amber">2</div>
-                                    <div>Answer a series of questions about your valuation of the
-                                         lottery ticket for different purchase prices.</div>
-                                </div>
-                                <div class="note-box">
-                                    You receive lottery ticket earnings only if you choose to purchase
-                                    the lottery ticket today.
-                                </div>
+                            <p><strong>Today</strong>, you can purchase the lottery ticket.
+                                You will decide <em>after</em> learning the outcome of Lottery 1 &mdash; whether
+                                it pays &pound;{{ session.config.A_BAR }} or &pound;{{ participant.x_draw }}.
+                                However, you will decide <em>before</em> learning Lottery 2's outcome.</p>
+                            <div class="note-box">
+                                &#128204; <strong>Note:</strong> Your payment depends on decisions you make
+                                today. You did not make any decisions in Part 1.
                             </div>
                             {% endif %}
 
                             {% if participant.treatment == 2 %}
-                            <div class="treatment-block">
-                                <p>In Part 1, you decided whether to buy an <strong>option</strong>
-                                   to purchase the lottery ticket at a fixed price. Only if you
-                                   bought the option can you purchase the lottery ticket today. You
-                                   can decide <strong>after learning the outcome of Lottery 1</strong>
-                                   (whether it pays &pound;{{ session.config.A_BAR }} or
-                                   &pound;{{ participant.x_draw }}), but <em>before</em> learning
-                                   the outcome of Lottery 2.</p>
-                                <div class="timeline-item" style="margin-top:10px;">
-                                    <div class="t-dot amber">1</div>
-                                    <div>Learn the outcome of Lottery 1.</div>
+                            <p>In Part 1, you decided whether to buy the <strong>right</strong> to purchase the lottery ticket
+                                today at a fixed <strong>purchase price</strong>. This right is called an <strong><em>option</em></strong>.
+                                The option has no benefit other than giving you the right to purchase the lottery ticket today.</p>
+
+                            <p>In Part 1, you saw various combinations of <strong>option prices</strong> and purchase prices. For each combination, you make <strong>two decisions</strong> across the two parts:</p>
+                            <div class="info-card">
+                                <div class="timeline-item">
+                                    <div class="t-dot blue">1</div>
+                                    <div><strong>Part 1:</strong> You decided whether to buy or decline the option.</div>
                                 </div>
                                 <div class="timeline-item">
-                                    <div class="t-dot amber">2</div>
-                                    <div>Answer a series of questions about your valuation of the
-                                         lottery ticket for different combinations of <strong>purchase prices</strong> and <strong>option prices</strong>.</div>
+                                    <div class="t-dot blue">2</div>
+                                    <div><strong>Part 2 (today):</strong> <em>Only if you bought the option</em>,
+                                        you decide whether to purchase the lottery ticket at the pre-specified
+                                        purchase price. If you <em>did not buy the option in Part 1</em>, you cannot purchase the corresponding lottery ticket today.</div>
                                 </div>
-                                <div class="note-box">
-                                    You receive lottery ticket earnings only if you purchased the option in
-                                    Part 1 <strong>and</strong> decide to purchase the lottery ticket today.
-                                </div>
+                            </div>
+
+                            <p>Today you will <em>first</em> learn Lottery 1's outcome
+                                (&pound;{{ session.config.A_BAR }} or &pound;{{ participant.x_draw }}), then decide
+                                on the ticket &mdash; but before learning Lottery 2's outcome.</p>
+
+                            <div class="note-box">
+                                &#128204; <strong>Note:</strong> If you did not buy the option in Part 1, you cannot
+                                purchase the lottery ticket today. Your total payment covers both
+                                Part 1's and today's decisions.
                             </div>
                             {% endif %}
 
                             {% if participant.treatment == 3 %}
-                            <div class="treatment-block">
-                                <p>In Part 1, you decided whether to purchase the lottery ticket.
-                                   Your ticket includes a <strong>refund option</strong> you can
-                                   use today. You can decide
-                                   <strong>after learning the outcome of Lottery 1</strong>
-                                   (whether it pays &pound;{{ session.config.A_BAR }} or
-                                   &pound;{{ participant.x_draw }}), but <em>before</em> learning
-                                   the outcome of Lottery 2.</p>
-                                <div class="timeline-item" style="margin-top:10px;">
-                                    <div class="t-dot amber">1</div>
-                                    <div>Learn the outcome of Lottery 1.</div>
+                            <p>In Part 1, you decided whether to purchase the lottery ticket.</p>
+                            <p>Your ticket includes a
+                                <strong>refund option</strong> that you can use today. In Part 1, you saw various combinations of <strong>purchase prices</strong> for the lottery ticket and possible <strong>refund amounts</strong>.</p>
+                            <p>Today you will <em>first</em> learn Lottery 1's outcome
+                                (&pound;{{ session.config.A_BAR }} or &pound;{{ participant.x_draw }}). For each combination of lottery price and refund amount, you can then either <strong>keep</strong> your lottery ticket or <strong>return it</strong>
+                                for a pre-specified refund. You will make that decision after learning Lottery 1's outcome but before learning Lottery 2's outcome.</p>
+                                <div class="info-card">
+                                    <div class="timeline-item">
+                                        <div class="t-dot amber">&rarr;</div>
+                                        <div>
+                                            <em>If you keep the lottery ticket (so reject the refund),</em> you receive the lottery ticket earnings. However, you have then already paid the lottery ticket purchase price.
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="t-dot amber">&rarr;</div>
+                                        <div>
+                                            <em>If you use the refund (so return the lottery ticket),</em> you receive the refund amount back, but you do <i>not</i> receive any lottery ticket earnings. However, you have then already paid the lottery ticket purchase price.
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="timeline-item">
-                                    <div class="t-dot amber">2</div>
-                                    <div>Decide whether to <strong>keep</strong> your ticket or
-                                         return it for a pre-specified <strong>refund amount</strong>.</div>
-                                </div>
-                                <div class="note-box">
-                                    You receive lottery ticket earnings only if you purchased the lottery ticket in
-                                    Part 1 <strong>and</strong> keep the ticket today.
-                                </div>
+                            <div class="note-box">
+                                &#128204; <strong>Note:</strong> If you did not purchase the lottery ticket in Part 1, you cannot purchase the lottery ticket today and you cannot use the refund option for that lottery ticket.
                             </div>
                             {% endif %}
 
@@ -542,7 +557,7 @@
                         <button class="accordion-button collapsed" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#sec-2"
                                 aria-expanded="false" aria-controls="sec-2">
-                            <span class="section-icon">💰</span>
+                            <span class="section-icon">&#128183;</span>
                             <span class="section-num">3</span>
                             Your Bonus Payment
                         </button>
@@ -564,7 +579,7 @@
                             <p>If you purchase the lottery ticket today, your bonus payment is calculated as follows:</p>
                             {% endif %}
                             {% if participant.treatment == 2 %}
-                            <p>If you purchased the option in Part 1 and purchase the lottery ticket today, your bonus payment is calculated as follows:</p>
+                            <p>If you bought the option in Part 1 and purchase the lottery ticket today, your bonus payment is calculated as follows:</p>
                             {% endif %}
                             {% if participant.treatment == 3 %}
                             <p>If you purchased the lottery ticket in Part 1 and do not return it today, your bonus payment is calculated as follows:</p>
@@ -584,7 +599,7 @@
                                 and your lottery ticket earnings are
                                 <strong>&pound;{{ session.config.A_BAR }}</strong>:</p>
 
-                            <div class="formula-box">
+                            <div class="formula-box example">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; &pound;6 + &pound;{{ session.config.A_BAR }}
                                 = <span class="result">&pound;16</span>
                             </div>
@@ -594,17 +609,17 @@
                                 and your lottery ticket earnings are
                                 <strong>&pound;{{ session.config.A_BAR }}</strong>:</p>
 
-                            <div class="formula-box">
+                            <div class="formula-box example">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; &pound;6 + &pound;{{ session.config.A_BAR }}
                                 = <span class="result">&pound;16</span>
                             </div>
                             {% endif %}
                             {% if participant.treatment == 2 %}
-                            <p>For example, if you purchased the option for <strong>&pound;2</strong> and purchase the lottery ticket for <strong>&pound;4</strong>
+                            <p>For example, if you bought the option for <strong>&pound;2</strong> and purchase the lottery ticket for <strong>&pound;4</strong>
                                 and your lottery ticket earnings are
                                 <strong>&pound;{{ session.config.A_BAR }}</strong>:</p>
 
-                            <div class="formula-box">
+                            <div class="formula-box example">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; &pound;2 &minus; &pound;4 + &pound;{{ session.config.A_BAR }}
                                 = <span class="result">&pound;16</span>
                             </div>
@@ -613,7 +628,7 @@
                             <p>For example, if you purchased the lottery ticket for <strong>&pound;6</strong>, do not return it today, and your lottery ticket earnings are
                                 <strong>&pound;{{ session.config.A_BAR }}</strong>:</p>
 
-                            <div class="formula-box">
+                            <div class="formula-box example">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; &pound;6 + &pound;{{ session.config.A_BAR }}
                                 = <span class="result">&pound;16</span>
                             </div>
@@ -634,19 +649,19 @@
                             </div>
                             {% endif %}
                             {% if participant.treatment == 2 %}
-                            <p>If you purchased the option in Part 1 but <strong>do not purchase</strong> the lottery ticket today:</p>
+                            <p>If you bought the option in Part 1 but <strong>do not purchase</strong> the lottery ticket today:</p>
 
                             <div class="formula-box">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp; <em>Budget</em> &nbsp;&minus;&nbsp; <em>Option&nbsp;price</em>
                             </div>
-                            <p>For example, if you purchased the option for <strong>&pound;4</strong> and do not buy the lottery ticket today:</p>
+                            <p>For example, if you bought the option for <strong>&pound;4</strong> and do not buy the lottery ticket today:</p>
 
-                            <div class="formula-box">
+                            <div class="formula-box example">
                                   Bonus&nbsp;Payment &nbsp;=&nbsp;{{ C.ENDOWMENT }} &minus; &pound;4
                                 = <span class="result">&pound;10</span>
                             </div>
 
-                            <p>If you <strong>did not purchase</strong> the option in Part 1, you keep your full budget:</p>
+                            <p>If you <strong>did not buy</strong> the option in Part 1, you keep your full budget:</p>
 
                             <div class="formula-box">
                                 Bonus&nbsp;Payment &nbsp;=&nbsp;<em>Budget</em> &nbsp;=&nbsp; <span class="result">{{ C.ENDOWMENT }}</span>
@@ -661,7 +676,7 @@
                             </div>
                             <p>For example, if you purchased the lottery ticket for <strong>&pound;8</strong> and, today, return it to receive a refund amount of <strong>&pound;4</strong>:</p>
 
-                            <div class="formula-box">
+                            <div class="formula-box example">
                                   Bonus&nbsp;Payment &nbsp;=&nbsp;{{ C.ENDOWMENT }} &minus; &pound;8 + &pound;4
                                 = <span class="result">&pound;10</span>
                             </div>
@@ -697,13 +712,13 @@
                     </div>
                 </div>
 
-                <!-- ④ HOW DECISIONS ARE IMPLEMENTED -->
+                <!-- ④ TODAY'S DECISION -->
                 <div class="accordion-item" id="item-3">
                     <h2 class="accordion-header">
                         <button class="accordion-button collapsed" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#sec-3"
                                 aria-expanded="false" aria-controls="sec-3">
-                            <span class="section-icon">⚙️</span>
+                            <span class="section-icon">&#128221;</span>
                             <span class="section-num">4</span>
                             Today's Decision
                         </button>
@@ -713,56 +728,90 @@
                         <div class="accordion-body">
 
                             {% if participant.treatment == 0 %}
-                            <p>Today you will not make any additional decisions. To calculate your
-                               bonus payment, the computer <strong>randomly selects one purchase
-                               price</strong> from your Part 1 decisions (each equally likely).
-                               Next you will learn the outcome of Lottery 1, then Lottery 2, and
-                               your bonus payment.</p>
+                            <p>Today, you will <strong>not make any decisions</strong>. In Part 1, you were
+                                asked a series of questions about your <strong>valuation of the lottery ticket</strong>
+                                and chose whether to purchase the lottery ticket at various purchase prices.</p>
                             {% endif %}
-
-                            {% if participant.treatment == 1 or participant.treatment == 2 or participant.treatment == 3 %}
-                            <p>Today, you will first learn the outcome of Lottery 1. Afterwards,
-                               you will be asked a series of questions about your valuation of the
-                               lottery ticket.</p>
 
                             {% if participant.treatment == 1 %}
-                            <p>For different purchase prices, you choose whether to purchase the lottery ticket. An example decision screen is presented below.</p>
+                            <p>Today, you will be asked a series of questions about your
+                                <strong>valuation of the lottery ticket</strong>. For different purchase prices,
+                                you choose whether to purchase the lottery ticket at that price. You make these
+                                decisions <strong>after learning the outcome of Lottery 1</strong>, but
+                                <em>before</em> learning the outcome of Lottery 2.</p>
                             {% endif %}
+
                             {% if participant.treatment == 2 %}
-                            <p>For different combinations of purchase prices and option prices, you choose whether to purchase the lottery ticket. An example decision screen is presented below.</p>
+                            <p>Today, you will be asked a series of questions about your
+                                <strong>valuation of the lottery ticket</strong>. For each combination of option
+                                prices and purchase prices you saw in Part 1, you choose whether to purchase
+                                the lottery ticket at the corresponding purchase price. You make these decisions
+                                <strong>after learning the outcome of Lottery 1</strong>, but <em>before</em>
+                                learning the outcome of Lottery 2.</p>
                             {% endif %}
+
                             {% if participant.treatment == 3 %}
-                            <p>For different combinations of purchase prices and refund amounts, you choose whether to keep or return the lottery ticket. An example decision screen is presented below.</p>
+                            <p>Today, you will be asked a series of questions about your
+                                <strong>valuation of the lottery ticket</strong>. For each combination of
+                                purchase prices and refund amounts you saw in Part 1, you choose whether to
+                                <strong>keep</strong> or <strong>return</strong> the lottery ticket. You make
+                                these decisions <strong>after learning the outcome of Lottery 1</strong>, but
+                                <em>before</em> learning the outcome of Lottery 2.</p>
                             {% endif %}
+
+                            {% if participant.treatment != 0 %}
+                            <p>An example decision screen is shown below:</p>
 
                             <div class="screenshot-placeholder">
-                                [ Example decision screen — insert screenshot here ]
+                                &#128247; &nbsp;<em>Insert screenshot of example decision screen here</em>
                             </div>
+                            {% endif %}
 
-                            <p style="margin-top:14px;">To calculate your bonus payment, the computer
+                            <div class="continue-btn-wrap">
+                                <button type="button" class="btn-continue" onclick="goToSection(4)">
+                                    Next section &nbsp;&#8594;
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- ⑤ RANDOM SELECTION -->
+                <div class="accordion-item" id="item-4">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#sec-4"
+                                aria-expanded="false" aria-controls="sec-4">
+                            <span class="section-icon">&#127922;</span>
+                            <span class="section-num">5</span>
+                            Random Selection
+                        </button>
+                    </h2>
+                    <div id="sec-4" class="accordion-collapse collapse"
+                         data-bs-parent="#mainAccordion">
+                        <div class="accordion-body">
+
+                            <p>At the end of Part 2 of the study, the computer <strong>randomly selects 20%</strong> of participants that will receive their bonus payments. If you are selected, you will receive your bonus payment within two weeks of the completion of the study. To calculate your bonus payment, the computer
+                                {% if participant.treatment == 0 %}
+                                    <strong>randomly selects one purchase price </strong>
+                                {% endif %}
                                 {% if participant.treatment == 1 %}
-                                    <strong>randomly selects one purchase price</strong>
+                                    <strong>randomly selects one purchase price </strong>
                                 {% endif %}
                                 {% if participant.treatment == 2 %}
-                                    <strong>randomly selects one combination of option price and purchase price</strong>
+                                    <strong>randomly selects one combination of option price and purchase price </strong>
                                 {% endif %}
                                 {% if participant.treatment == 3 %}
                                     <strong>randomly selects one combination of purchase price and refund amount</strong>
                                 {% endif %}
                                 (each equally likely) at the end of Part 2. You will then receive your bonus payment depending on your decision and based on the payment rule described above.</p>
-                            {% endif %}
-
-                            <div class="highlight-note" style="margin-top:14px;">
-                                <strong>20%</strong> of participants will be randomly selected for
-                                the bonus payment and will receive it within two weeks of
-                                completion.<br><br>
-                                For <strong>98%</strong> of the selected participants, their decisions will be implemented exactly as they decided. For the remaining <strong>2%</strong>, their decisions will be treated as if they had purchased the lottery ticket.
-                                {% if participant.treatment == 2 or participant.treatment == 3 %}
-                                Because it may be that the computer selects you for a purchase,
+                            <p>For 98% of the selected participants, their decisions will be implemented exactly as they decided. For the remaining 2%, their decisions will be treated as if they had purchased the lottery ticket.
+                                {% if participant.treatment == 2 or participant.treatment == 3 %}Because it may be that the computer selects you for a purchase,
                                 <strong>all participants will make decisions today</strong> and
                                 everyone's choices may potentially involve receiving a lottery ticket.
-                                {% endif %}
-                            </div>
+                            {% endif %}</p>
+                            <p>Your decisions will not affect whether you are selected for the bonus payment, which decision is implemented for payment, or whether you are treated as having purchased the lottery ticket.</p>
 
                             <div class="continue-btn-wrap">
                                 <button type="button" class="btn-continue btn-finish"

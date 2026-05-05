@@ -274,6 +274,7 @@ class ExperimentStarts(Page):
 			treatment=participant.treatment,
 			x_draw=x_draw,
 			example_sum=example_sum,
+			two_heads_sum=2 * a_bar,
 			coin_result=result
 		)
 
@@ -310,6 +311,7 @@ class Decision(Page):
 			price_t2=player.price_t2,
 			x_draw=x_draw,
 			example_sum=example_sum,
+			two_heads_sum=2 * a_bar,
 		)
 	
 	@staticmethod
