@@ -1,25 +1,26 @@
-
 {{ block scripts }}
 <script>
     function open_instructions() {
         const panel = document.getElementById("instructions");
-        const btn   = document.getElementById("instructions_button");
+        const btn = document.getElementById("instructions_button");
         const isOpen = panel.style.display !== "none";
         panel.style.display = isOpen ? "none" : "block";
-        btn.innerHTML = isOpen ? "📖 &nbsp;Reveal Instructions" : "✕ &nbsp;Close Instructions";
-        if (!isOpen) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+        btn.innerHTML = isOpen
+            ? "📖 &nbsp;Reveal Instructions"
+            : "✕ &nbsp;Close Instructions";
+        if (!isOpen)
+            panel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 </script>
-{{ endblock }}
-
-
-{{ block content }}
+{{ endblock }} {{ block content }}
 
 <style>
-    body { background: #eef3fa; }
+    body {
+        background: #eef3fa;
+    }
 
     .quiz-wrapper {
-        font-family: 'Segoe UI', Arial, sans-serif;
+        font-family: "Segoe UI", Arial, sans-serif;
         max-width: 860px;
         margin: 24px auto;
     }
@@ -34,13 +35,13 @@
     .outer-card {
         background: white;
         border-radius: 14px;
-        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        box-shadow: 0 6px 28px rgba(30, 60, 110, 0.1);
         overflow: hidden;
         margin-bottom: 18px;
     }
 
     .card-top-bar {
-        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
         padding: 16px 28px;
         color: white;
         font-size: 1.05rem;
@@ -51,19 +52,21 @@
     }
 
     .part-badge {
-        background: rgba(255,255,255,0.22);
+        background: rgba(255, 255, 255, 0.22);
         border-radius: 20px;
         padding: 3px 14px;
         font-size: 0.8rem;
         font-weight: 500;
     }
 
-    .card-inner { padding: 24px 30px 28px 30px; }
+    .card-inner {
+        padding: 24px 30px 28px 30px;
+    }
 
     /* ── Intro box ── */
     .intro-box {
         background: #f0f6ff;
-        border-left: 5px solid #4A90D9;
+        border-left: 5px solid #4a90d9;
         border-radius: 0 8px 8px 0;
         padding: 15px 20px;
         margin-bottom: 10px;
@@ -72,8 +75,12 @@
         color: #223;
     }
 
-    .intro-box p { margin-bottom: 8px; }
-    .intro-box p:last-child { margin-bottom: 0; }
+    .intro-box p {
+        margin-bottom: 8px;
+    }
+    .intro-box p:last-child {
+        margin-bottom: 0;
+    }
 
     /* ── Lottery reference card ── */
     .lottery-ref {
@@ -92,7 +99,9 @@
         font-size: 14.5px;
     }
 
-    .l-item:last-child { margin-bottom: 0; }
+    .l-item:last-child {
+        margin-bottom: 0;
+    }
 
     .lottery-pill {
         display: inline-block;
@@ -127,7 +136,8 @@
         background: #2563b0;
         color: white;
         border-radius: 50%;
-        width: 28px; height: 28px;
+        width: 28px;
+        height: 28px;
         min-width: 28px;
         display: inline-flex;
         align-items: center;
@@ -145,7 +155,10 @@
         line-height: 1.6;
     }
 
-    .question-body { padding: 16px 20px; background: white; }
+    .question-body {
+        padding: 16px 20px;
+        background: white;
+    }
 
     /* ── Answer input ── */
     .answer-row {
@@ -162,7 +175,11 @@
         white-space: nowrap;
     }
 
-    .answer-input-wrap { position: relative; display: flex; align-items: center; }
+    .answer-input-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
 
     .pound-prefix {
         position: absolute;
@@ -183,17 +200,23 @@
         color: #1a3a5c;
         width: 140px;
         outline: none;
-        transition: border-color 0.15s, box-shadow 0.15s;
+        transition:
+            border-color 0.15s,
+            box-shadow 0.15s;
         background: #f7faff;
     }
 
     .answer-input:focus {
-        border-color: #4A90D9;
-        box-shadow: 0 0 0 3px rgba(74,144,217,0.18);
+        border-color: #4a90d9;
+        box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.18);
         background: white;
     }
 
-    .answer-hint { font-size: 0.82rem; color: #8a9ab5; font-style: italic; }
+    .answer-hint {
+        font-size: 0.82rem;
+        color: #8a9ab5;
+        font-style: italic;
+    }
 
     /* ── Buttons ── */
     .action-row {
@@ -205,7 +228,7 @@
     }
 
     .btn-next {
-        background: linear-gradient(90deg, #2563b0, #4A90D9);
+        background: linear-gradient(90deg, #2563b0, #4a90d9);
         color: white;
         border: none;
         border-radius: 8px;
@@ -213,11 +236,16 @@
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
-        box-shadow: 0 3px 10px rgba(74,144,217,0.28);
-        transition: transform 0.15s, box-shadow 0.15s;
+        box-shadow: 0 3px 10px rgba(74, 144, 217, 0.28);
+        transition:
+            transform 0.15s,
+            box-shadow 0.15s;
     }
 
-    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(74,144,217,0.38); }
+    .btn-next:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 16px rgba(74, 144, 217, 0.38);
+    }
 
     .btn-reveal {
         background: #fffbe6;
@@ -231,7 +259,9 @@
         transition: background 0.15s;
     }
 
-    .btn-reveal:hover { background: #fff3cd; }
+    .btn-reveal:hover {
+        background: #fff3cd;
+    }
 
     /* ── Instructions panel ── */
     .instructions-top-bar {
@@ -243,11 +273,12 @@
     }
 </style>
 
-
 <div class="quiz-wrapper">
-
     <div class="page-title">
-        🧮 Example Earnings &nbsp;<small style="font-weight:400;font-size:0.88rem;color:#5a7a9a;">· Part 1 of 2</small>
+        🧮 Example Earnings &nbsp;<small
+            style="font-weight: 400; font-size: 0.88rem; color: #5a7a9a"
+            >· Part 1 of 2</small
+        >
     </div>
 
     <div class="outer-card">
@@ -257,29 +288,41 @@
         </div>
 
         <div class="card-inner">
-
             <!-- Intro -->
             <div class="intro-box">
-                <p>Please work through the following examples to familiarise yourself with the decisions
-                    you will face in this study.
-                    <strong>You can only proceed if you answer all questions correctly.</strong></p>
-                <p style="margin-bottom:0;">All questions refer to the lottery ticket you will evaluate:</p>
+                <p>
+                    Please work through the following examples to familiarise
+                    yourself with the decisions you will face in this study.
+                    <strong
+                        >You can only proceed if you answer all questions
+                        correctly.</strong
+                    >
+                </p>
+                <p style="margin-bottom: 0">
+                    All questions refer to the lottery ticket you will evaluate:
+                </p>
             </div>
 
             <!-- Lottery reference -->
             <div class="lottery-ref">
                 <div class="l-item">
                     <span class="lottery-pill">Lottery 1</span>
-                    <span>Pays <strong>£{{ session.config.A_BAR }}</strong> if the first coin flip is
-                        <em>heads</em>, and <strong>£{{ participant.x_draw }}</strong> if <em>tails</em>.</span>
+                    <span
+                        >Pays <strong>£{{ session.config.A_BAR }}</strong> if
+                        the first coin flip is <em>heads</em>, and
+                        <strong>£{{ participant.x_draw }}</strong> if
+                        <em>tails</em>.</span
+                    >
                 </div>
                 <div class="l-item">
                     <span class="lottery-pill">Lottery 2</span>
-                    <span>Pays <strong>£{{ session.config.A_BAR }}</strong> if the second coin flip is
-                        <em>heads</em>, and <strong>£0</strong> if <em>tails</em>.</span>
+                    <span
+                        >Pays <strong>£{{ session.config.A_BAR }}</strong> if
+                        the second coin flip is <em>heads</em>, and
+                        <strong>£0</strong> if <em>tails</em>.</span
+                    >
                 </div>
             </div>
-
 
             <!-- ════════════════════════════
                  TREATMENT 0
@@ -289,18 +332,27 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">1</span>
-                    <p>Imagine that in the decision that is selected to be paid out, today, you decide <em>not</em> to purchase the lottery ticket at a price of
-                        <strong>£6</strong>.
-                        Further, imagine that in Part 2, the coin flip for Lottery 1 results in
-                        <strong>heads</strong> and the coin flip for Lottery 2 results in
-                        <strong>heads</strong>. What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Imagine that in the decision that is selected to be paid
+                        out, today, you decide <em>not</em> to purchase the
+                        lottery ticket at a price of <strong>£6</strong>.
+                        Further, imagine that in Part 2, the coin flip for
+                        Lottery 1 results in <strong>heads</strong> and the coin
+                        flip for Lottery 2 results in <strong>heads</strong>.
+                        What would be your bonus payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e1" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e1"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -310,17 +362,27 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">2</span>
-                    <p>Now imagine that in the decision that is selected to be paid out, you decide <em>to purchase</em> the lottery ticket at a price of
-                        <strong>£10</strong> today. As above, the coin flip for Lottery 1 results in
-                        <strong>heads</strong> and the coin flip for Lottery 2 results in
-                        <strong>heads</strong>. What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Now imagine that in the decision that is selected to be
+                        paid out, you decide <em>to purchase</em> the lottery
+                        ticket at a price of <strong>£10</strong> today. As
+                        above, the coin flip for Lottery 1 results in
+                        <strong>heads</strong> and the coin flip for Lottery 2
+                        results in <strong>heads</strong>. What would be your
+                        bonus payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e2" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e2"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -330,17 +392,27 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">3</span>
-                    <p>Now imagine that in the decision that is paid out, you decide <em>to purchase</em> the lottery ticket at a price of
-                        <strong>£10</strong> today. Now, the coin flip for Lottery 1 results in
-                        <strong>heads</strong> and the coin flip for Lottery 2 results in
-                        <strong>tails</strong>. What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Now imagine that in the decision that is paid out, you
+                        decide <em>to purchase</em> the lottery ticket at a
+                        price of <strong>£10</strong> today. Now, the coin flip
+                        for Lottery 1 results in <strong>heads</strong> and the
+                        coin flip for Lottery 2 results in
+                        <strong>tails</strong>. What would be your bonus payment
+                        at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e3" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e3"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -348,7 +420,6 @@
             </div>
 
             {% endif %}
-
 
             <!-- ════════════════════════════
                  TREATMENT 1
@@ -358,16 +429,27 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">1</span>
-                    <p>Imagine that, when you return to Part 2 and learn that Lottery 1 results in <strong>heads</strong>, in the decision that is selected to be paid out,  
-                        you decide <em>not</em> to purchase the lottery ticket at a price of <strong>£6</strong>. Also imagine that Lottery 2 results in
-                        <strong>heads</strong>. What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Imagine that, when you return to Part 2 and learn that
+                        Lottery 1 results in <strong>heads</strong>, in the
+                        decision that is selected to be paid out, you decide
+                        <em>not</em> to purchase the lottery ticket at a price
+                        of <strong>£6</strong>. Also imagine that Lottery 2
+                        results in <strong>heads</strong>. What would be your
+                        bonus payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e1" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e1"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -377,15 +459,26 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">2</span>
-                    <p>Now imagine you return to Part 2 and learn that Lottery 1 results in <strong>heads</strong>. In the decision that is paid out, you decide <em>to purchase</em> the lottery ticket at a price of <strong>£10</strong>. Finally, Lottery 2 results in
-                        <strong>heads</strong>. What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Now imagine you return to Part 2 and learn that Lottery
+                        1 results in <strong>heads</strong>. In the decision
+                        that is paid out, you decide <em>to purchase</em> the
+                        lottery ticket at a price of <strong>£10</strong>.
+                        Finally, Lottery 2 results in <strong>heads</strong>.
+                        What would be your bonus payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e2" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e2"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -395,16 +488,26 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">3</span>
-                    <p>Now imagine you return to Part 2 and learn that Lottery 1 results in <strong>heads</strong>. In the decision that is paid out,
-                        you decide <em>to purchase</em> the lottery ticket at a price of <strong>£10</strong>. Finally, Lottery 2 results in
-                        <strong>tails</strong>. What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Now imagine you return to Part 2 and learn that Lottery
+                        1 results in <strong>heads</strong>. In the decision
+                        that is paid out, you decide <em>to purchase</em> the
+                        lottery ticket at a price of <strong>£10</strong>.
+                        Finally, Lottery 2 results in <strong>tails</strong>.
+                        What would be your bonus payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e3" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e3"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -412,7 +515,6 @@
             </div>
 
             {% endif %}
-
 
             <!-- ════════════════════════════
                  TREATMENT 2
@@ -422,18 +524,28 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">1</span>
-                    <p>Imagine that in the decision that is selected to be paid out, you decide <em>not</em> to buy the option at a price of <strong>£1</strong>
-                        today. When you return to Part 2, you learn that
-                        Lottery 1 results in <strong>heads</strong>. As you did not buy the option, you
-                        cannot purchase the lottery ticket. Finally, Lottery 2 results in <strong>heads</strong>.
-                        What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Imagine that in the decision that is selected to be paid
+                        out, you decide <em>not</em> to buy the option at a
+                        price of <strong>£1</strong> today. When you return to
+                        Part 2, you learn that Lottery 1 results in
+                        <strong>heads</strong>. As you did not buy the option,
+                        you cannot purchase the lottery ticket. Finally, Lottery
+                        2 results in <strong>heads</strong>. What would be your
+                        bonus payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e1" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e1"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -443,18 +555,29 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">2</span>
-                    <p>Imagine that in the decision that is selected to be paid out, you decide <em>to buy</em> the option at a price of <strong>£2</strong>
-                        today (purchase price: <strong>£8</strong>), and that decision is randomly
-                        selected. When you return to Part 2, you learn that Lottery 1 results in <strong>heads</strong>.
-                        Then, you decide to purchase the lottery ticket. Finally, Lottery 2 results in <strong>heads</strong>.
-                        What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Imagine that in the decision that is selected to be paid
+                        out, you decide <em>to buy</em> the option at a price of
+                        <strong>£2</strong> today (purchase price:
+                        <strong>£8</strong>), and that decision is randomly
+                        selected. When you return to Part 2, you learn that
+                        Lottery 1 results in <strong>heads</strong>. Then, you
+                        decide to purchase the lottery ticket. Finally, Lottery
+                        2 results in <strong>heads</strong>. What would be your
+                        bonus payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e2" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e2"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -464,18 +587,30 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">3</span>
-                    <p>Imagine that in the decision that is paid out, you decide <em>to buy</em> the option at a price of <strong>£2</strong>
-                        today (purchase price: <strong>£6</strong>), and that decision is randomly
-                        selected. When you return to Part 2, you learn that Lottery 1 results in <strong>tails</strong>.
-                        Then, you decide <em>not</em> to use the option and therefore <em>not</em> to purchase the lottery ticket. Finally, Lottery 2 results in <strong>heads</strong>.
-                        What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Imagine that in the decision that is paid out, you
+                        decide <em>to buy</em> the option at a price of
+                        <strong>£2</strong> today (purchase price:
+                        <strong>£6</strong>), and that decision is randomly
+                        selected. When you return to Part 2, you learn that
+                        Lottery 1 results in <strong>tails</strong>. Then, you
+                        decide <em>not</em> to use the option and therefore
+                        <em>not</em> to purchase the lottery ticket. Finally,
+                        Lottery 2 results in <strong>heads</strong>. What would
+                        be your bonus payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e3" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e3"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -483,7 +618,6 @@
             </div>
 
             {% endif %}
-
 
             <!-- ════════════════════════════
                  TREATMENT 3
@@ -493,17 +627,27 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">1</span>
-                    <p>Imagine that in the decision that is selected to be paid out, today, you decide <em>not</em> to purchase the lottery ticket at a price of
-                        <strong>£6</strong> (refund amount: <strong>£2</strong>). In Part 2, Lottery 1 results in <strong>heads</strong> and
-                        Lottery 2 results in <strong>heads</strong>. What would be your bonus payment at
-                        the end of Part 2?</p>
+                    <p>
+                        Imagine that in the decision that is selected to be paid
+                        out, today, you decide <em>not</em> to purchase the
+                        lottery ticket at a price of <strong>£6</strong> (refund
+                        amount: <strong>£2</strong>). In Part 2, Lottery 1
+                        results in <strong>heads</strong> and Lottery 2 results
+                        in <strong>heads</strong>. What would be your bonus
+                        payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e1" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e1"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -513,17 +657,28 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">2</span>
-                    <p>Imagine that in the decision that is selected to be paid out, today, you decide <em>to purchase</em> the lottery ticket at a price of
-                        <strong>£10</strong> (refund amount: <strong>£6</strong>). In Part 2, you learn Lottery 1 results in <strong>heads</strong>
-                        and you decide <em>not</em> to use the refund — so you keep the ticket. Lottery 2 results
-                        in <strong>heads</strong>. What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Imagine that in the decision that is selected to be paid
+                        out, today, you decide <em>to purchase</em> the lottery
+                        ticket at a price of <strong>£10</strong> (refund
+                        amount: <strong>£6</strong>). In Part 2, you learn
+                        Lottery 1 results in <strong>heads</strong> and you
+                        decide <em>not</em> to use the refund — so you keep the
+                        ticket. Lottery 2 results in <strong>heads</strong>.
+                        What would be your bonus payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e2" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e2"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -533,17 +688,28 @@
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">3</span>
-                    <p>Imagine that in the decision that is paid out, today, you decide <em>to purchase</em> the lottery ticket at a price of
-                        <strong>£10</strong> (refund amount: <strong>£8</strong>). In Part 2, you learn Lottery 1 results in <strong>tails</strong>
-                        and you decide <em>to use the refund</em> — so you return the ticket. Lottery 2 results in
-                        <strong>heads</strong>. What would be your bonus payment at the end of Part 2?</p>
+                    <p>
+                        Imagine that in the decision that is paid out, today,
+                        you decide <em>to purchase</em> the lottery ticket at a
+                        price of <strong>£10</strong> (refund amount:
+                        <strong>£8</strong>). In Part 2, you learn Lottery 1
+                        results in <strong>tails</strong> and you decide
+                        <em>to use the refund</em> — so you return the ticket.
+                        Lottery 2 results in <strong>heads</strong>. What would
+                        be your bonus payment at the end of Part 2?
+                    </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
                         <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
-                            <input class="answer-input" type="number" name="e3" placeholder="0">
+                            <input
+                                class="answer-input"
+                                type="number"
+                                name="e3"
+                                placeholder="0"
+                            />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
@@ -552,29 +718,34 @@
 
             {% endif %}
 
-
             <!-- Buttons -->
             <div class="action-row">
-                <button class="otree-btn-next btn-next">Submit Answers &nbsp;→</button>
-                <button type="button" class="btn-reveal" id="instructions_button"
-                        onclick="open_instructions()">
+                <button class="otree-btn-next btn-next">
+                    Submit Answers &nbsp;→
+                </button>
+                <button
+                    type="button"
+                    class="btn-reveal"
+                    id="instructions_button"
+                    onclick="open_instructions()"
+                >
                     📖 &nbsp;Reveal Instructions
                 </button>
             </div>
-
         </div>
     </div>
 
     <!-- Instructions reveal panel -->
-    <div style="display:none;" id="instructions">
+    <div style="display: none" id="instructions">
         <div class="outer-card">
-            <div class="instructions-top-bar">📋 &nbsp;Study Instructions — Reference</div>
+            <div class="instructions-top-bar">
+                📋 &nbsp;Study Instructions — Reference
+            </div>
             <div class="card-inner">
                 {{ include "SBC_consent_form/instr.html" }}
             </div>
         </div>
     </div>
-
 </div>
 
 {{ endblock }}

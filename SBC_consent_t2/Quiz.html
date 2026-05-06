@@ -230,6 +230,15 @@
     .instructions-panel-body {
         padding: 20px 28px;
     }
+
+    /* ── Lottery reference card ── */
+    .lottery-ref {
+        background: #f7faff;
+        border: 1px solid #d5e6f5;
+        border-radius: 8px;
+        padding: 12px 16px;
+        margin: 12px 0 20px 0;
+    }
 </style>
 
 <div class="quiz-wrapper">
@@ -252,6 +261,27 @@
                     attempts, you will not be able to continue with the
                     study.</strong
                 >
+            </div>
+
+            <!-- Lottery reference -->
+            <div class="lottery-ref">
+                <div class="l-item">
+                    <span class="lottery-pill">Lottery 1</span>
+                    <span
+                        >Pays <strong>£{{ session.config.A_BAR }}</strong> if
+                        the first coin flip is <em>heads</em>, and
+                        <strong>£{{ participant.x_draw }}</strong> if
+                        <em>tails</em>.</span
+                    >
+                </div>
+                <div class="l-item">
+                    <span class="lottery-pill">Lottery 2</span>
+                    <span
+                        >Pays <strong>£{{ session.config.A_BAR }}</strong> if
+                        the second coin flip is <em>heads</em>, and
+                        <strong>£0</strong> if <em>tails</em>.</span
+                    >
+                </div>
             </div>
 
             <!-- Question 1 -->
@@ -368,8 +398,8 @@
                 </label>
                 {% endif %} {% if participant.treatment == 2 %}
                 <div class="question-text">
-                    What happens if you decide to purchase the lottery ticket
-                    today?
+                    What happens if purchased option in Part 1 and you decide to
+                    purchase the lottery ticket today?
                 </div>
                 <label class="radio-option">
                     <input type="radio" name="q3" value="0" />
