@@ -1,4 +1,3 @@
-
 {{ block scripts }}
 <script>
     function open_instructions() {
@@ -14,26 +13,25 @@
     }
 
     function validateForm() {
-        const required = ['q1', 'q2', 'q3'];
+        const required = ["q1", "q2", "q3"];
         for (let q of required) {
             if (!document.querySelector('input[name="' + q + '"]:checked')) {
-                alert('Please answer all questions before continuing.');
+                alert("Please answer all questions before continuing.");
                 return false;
             }
         }
         return true;
     }
 </script>
-{{ endblock }}
-
-
-{{ block content }}
+{{ endblock }} {{ block content }}
 
 <style>
-    body { background: #eef3fa; }
+    body {
+        background: #eef3fa;
+    }
 
     .quiz-wrapper {
-        font-family: 'Segoe UI', Arial, sans-serif;
+        font-family: "Segoe UI", Arial, sans-serif;
         max-width: 860px;
         margin: 24px auto;
     }
@@ -48,13 +46,13 @@
     .outer-card {
         background: white;
         border-radius: 14px;
-        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        box-shadow: 0 6px 28px rgba(30, 60, 110, 0.1);
         overflow: hidden;
         margin-bottom: 18px;
     }
 
     .card-top-bar {
-        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
         padding: 16px 28px;
         color: white;
         font-size: 1.05rem;
@@ -65,18 +63,20 @@
     }
 
     .part-badge {
-        background: rgba(255,255,255,0.22);
+        background: rgba(255, 255, 255, 0.22);
         border-radius: 20px;
         padding: 3px 14px;
         font-size: 0.8rem;
         font-weight: 500;
     }
 
-    .card-inner { padding: 26px 30px 30px 30px; }
+    .card-inner {
+        padding: 26px 30px 30px 30px;
+    }
 
     .intro-box {
         background: #f0f6ff;
-        border-left: 5px solid #4A90D9;
+        border-left: 5px solid #4a90d9;
         border-radius: 0 8px 8px 0;
         padding: 14px 18px;
         margin-bottom: 24px;
@@ -85,7 +85,9 @@
         color: #223;
     }
 
-    .intro-box strong { color: #b00; }
+    .intro-box strong {
+        color: #b00;
+    }
 
     .question-block {
         background: #f7faff;
@@ -93,18 +95,20 @@
         border-radius: 10px;
         padding: 18px 22px;
         margin-bottom: 16px;
-        transition: border-color 0.2s, box-shadow 0.2s;
+        transition:
+            border-color 0.2s,
+            box-shadow 0.2s;
     }
 
     .question-block:focus-within {
-        border-color: #4A90D9;
-        box-shadow: 0 4px 16px rgba(74,144,217,0.15);
+        border-color: #4a90d9;
+        box-shadow: 0 4px 16px rgba(74, 144, 217, 0.15);
     }
 
     .question-label {
         font-size: 0.75rem;
         font-weight: 700;
-        color: #4A90D9;
+        color: #4a90d9;
         text-transform: uppercase;
         letter-spacing: 0.08em;
         margin-bottom: 8px;
@@ -131,7 +135,9 @@
         line-height: 1.55;
     }
 
-    .radio-option:hover { background: #e8f2ff; }
+    .radio-option:hover {
+        background: #e8f2ff;
+    }
 
     .radio-option input[type="radio"] {
         accent-color: #2563b0;
@@ -145,7 +151,7 @@
 
     .radio-option:has(input:checked) {
         background: #dceeff;
-        border: 1.5px solid #4A90D9;
+        border: 1.5px solid #4a90d9;
         font-weight: 600;
         color: #1a3a5c;
     }
@@ -159,7 +165,7 @@
     }
 
     .btn-next {
-        background: linear-gradient(90deg, #2563b0, #4A90D9);
+        background: linear-gradient(90deg, #2563b0, #4a90d9);
         color: white;
         border: none;
         border-radius: 8px;
@@ -170,13 +176,15 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        transition: transform 0.15s, box-shadow 0.15s;
-        box-shadow: 0 3px 10px rgba(74,144,217,0.28);
+        transition:
+            transform 0.15s,
+            box-shadow 0.15s;
+        box-shadow: 0 3px 10px rgba(74, 144, 217, 0.28);
     }
 
     .btn-next:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(74,144,217,0.38);
+        box-shadow: 0 6px 18px rgba(74, 144, 217, 0.38);
     }
 
     .btn-reveal {
@@ -191,20 +199,22 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        transition: transform 0.15s, box-shadow 0.15s;
-        box-shadow: 0 2px 8px rgba(224,200,74,0.2);
+        transition:
+            transform 0.15s,
+            box-shadow 0.15s;
+        box-shadow: 0 2px 8px rgba(224, 200, 74, 0.2);
     }
 
     .btn-reveal:hover {
         transform: translateY(-2px);
         background: #fff3cd;
-        box-shadow: 0 4px 14px rgba(224,200,74,0.35);
+        box-shadow: 0 4px 14px rgba(224, 200, 74, 0.35);
     }
 
     .instructions-panel {
         background: white;
         border-radius: 14px;
-        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        box-shadow: 0 6px 28px rgba(30, 60, 110, 0.1);
         overflow: hidden;
         margin-top: 18px;
     }
@@ -217,11 +227,12 @@
         font-size: 0.95rem;
     }
 
-    .instructions-panel-body { padding: 20px 28px; }
+    .instructions-panel-body {
+        padding: 20px 28px;
+    }
 </style>
 
 <div class="quiz-wrapper">
-
     <div class="page-title">📝 Comprehension Quiz</div>
 
     <div class="outer-card">
@@ -231,40 +242,42 @@
         </div>
 
         <div class="card-inner">
-
             <div class="intro-box">
-                Please answer the following questions to the best of your knowledge.
-                If you answer any questions incorrectly, you will see an error message
-                and will need to try again. You have up to <strong>three attempts</strong>.
-                <strong style="color:#b00;">If you fail to answer all questions correctly
-                within three attempts, you will not be able to continue with the study.</strong>
+                Please answer the following questions to the best of your
+                knowledge. If you answer any questions incorrectly, you will see
+                an error message and will need to try again. You have up to
+                <strong>three attempts</strong>.
+                <strong style="color: #b00"
+                    >If you fail to answer all questions correctly within three
+                    attempts, you will not be able to continue with the
+                    study.</strong
+                >
             </div>
 
             <!-- Question 1 -->
             <div class="question-block">
                 <div class="question-label">Question 1</div>
                 <div class="question-text">
-                    What lottery ticket earnings can you receive if you purchase the lottery ticket
-                    {% if participant.treatment == 3 %}
-                        (and you do not use the refund option today)
-                    {% endif %}
-                    and the first lottery results in heads and the second lottery also results
-                    in heads?
+                    What lottery ticket earnings can you receive if you purchase
+                    the lottery ticket {% if participant.treatment == 3 %} (and
+                    you do not use the refund option today) {% endif %} and the
+                    first lottery results in heads and the second lottery also
+                    results in heads?
                 </div>
                 <label class="radio-option">
-                    <input type="radio" name="q1" value="0">
+                    <input type="radio" name="q1" value="0" />
                     &pound;{{ session.config.A_BAR }}
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q1" value="1">
+                    <input type="radio" name="q1" value="1" />
                     &pound;{{ two_heads_sum }}
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q1" value="2">
+                    <input type="radio" name="q1" value="2" />
                     &pound;{{ heads_tails_sum }}
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q1" value="3">
+                    <input type="radio" name="q1" value="3" />
                     &pound;{{ participant.x_draw }}
                 </label>
             </div>
@@ -273,23 +286,25 @@
             <div class="question-block">
                 <div class="question-label">Question 2</div>
                 <div class="question-text">
-                    Will you receive lottery ticket earnings of up to &pound;{{ two_heads_sum }} if
-                    you complete today's study and are randomly selected for payment?
+                    Will you receive lottery ticket earnings of up to &pound;{{
+                    two_heads_sum }} if you complete today's study and are
+                    randomly selected for payment?
                 </div>
                 <label class="radio-option">
-                    <input type="radio" name="q2" value="0">
+                    <input type="radio" name="q2" value="0" />
                     Yes.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q2" value="1">
-                    If I do not purchase the lottery ticket today, I will always get paid.
+                    <input type="radio" name="q2" value="1" />
+                    If I do not purchase the lottery ticket today, I will always
+                    get paid.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q2" value="2">
+                    <input type="radio" name="q2" value="2" />
                     It depends on the outcomes of the lotteries.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q2" value="3">
+                    <input type="radio" name="q2" value="3" />
                     No.
                 </label>
             </div>
@@ -300,125 +315,140 @@
 
                 {% if participant.treatment == 0 %}
                 <div class="question-text">
-                    What happens if you have decided to purchase the lottery ticket in Part 1?
+                    What happens if you have decided to purchase the lottery
+                    ticket in Part 1?
                 </div>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="0">
-                    Because you have returned to Part 2, your payment does not depend on your decisions anymore.
+                    <input type="radio" name="q3" value="0" />
+                    Because you have returned to Part 2, your payment does not
+                    depend on your decisions anymore.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="1">
-                    You can only earn a fixed payment of {{ session.config.participation_fee }}.
+                    <input type="radio" name="q3" value="1" />
+                    You can only earn a fixed payment of {{
+                    session.config.participation_fee }}.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="2">
-                    You can only earn a bonus payment if both lotteries result in heads.
+                    <input type="radio" name="q3" value="2" />
+                    You can only earn a bonus payment if both lotteries result
+                    in heads.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="3">
-                    Today, you will learn the outcome of Lottery 1 and Lottery 2 and you can
-                    receive the corresponding lottery ticket earnings.
+                    <input type="radio" name="q3" value="3" />
+                    Today, you will learn the outcome of Lottery 1 and Lottery 2
+                    and you can receive the corresponding lottery ticket
+                    earnings.
                 </label>
-                {% endif %}
-
-                {% if participant.treatment == 1 %}
+                {% endif %} {% if participant.treatment == 1 %}
                 <div class="question-text">
-                    What happens if you decide to purchase the lottery ticket in Part 2 of
-                    this study?
+                    What happens if you decide to purchase the lottery ticket
+                    today?
                 </div>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="0">
-                    Because you have returned to Part 2, your payment does not depend on your decisions anymore.
+                    <input type="radio" name="q3" value="0" />
+                    Because you have returned to Part 2, your payment does not
+                    depend on your decisions anymore.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="1">
-                    You can only earn a fixed payment of {{ session.config.participation_fee }}.
+                    <input type="radio" name="q3" value="1" />
+                    You can only earn a fixed payment of {{
+                    session.config.participation_fee }}.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="2">
-                    You can only earn a bonus payment if both lotteries result in heads.
+                    <input type="radio" name="q3" value="2" />
+                    You can only earn a bonus payment if both lotteries result
+                    in heads.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="3">
-                    Today, you will first learn the outcome of Lottery 1. You can then decide
-                    to purchase the lottery ticket and will receive a corresponding bonus payment
-                    depending on your decision and the outcome of the lottery ticket.
+                    <input type="radio" name="q3" value="3" />
+                    Today, you will first learn the outcome of Lottery 1. You
+                    can then decide to purchase the lottery ticket and will
+                    receive a corresponding bonus payment depending on your
+                    decision and the outcome of the lottery ticket.
                 </label>
-                {% endif %}
-
-                {% if participant.treatment == 2 %}
+                {% endif %} {% if participant.treatment == 2 %}
                 <div class="question-text">
-                    What happens if you decide to buy the option to purchase the lottery
-                    ticket today?
+                    What happens if you decide to purchase the lottery ticket
+                    today?
                 </div>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="0">
-                    Because you have returned to Part 2, your payment does not depend on your decisions anymore.
+                    <input type="radio" name="q3" value="0" />
+                    Because you have returned to Part 2, your payment does not
+                    depend on your decisions anymore.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="1">
-                    You can only earn a fixed payment of {{ session.config.participation_fee }}.
+                    <input type="radio" name="q3" value="1" />
+                    You can only earn a fixed payment of {{
+                    session.config.participation_fee }}.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="2">
-                    You can only earn a bonus payment if both lotteries result in heads.
+                    <input type="radio" name="q3" value="2" />
+                    You can only earn a bonus payment if both lotteries result
+                    in heads.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="3">
-                    Today, you will first learn the outcome of Lottery 1. If you bought the
-                    option in Part 1, you can then purchase the lottery ticket and receive
-                    lottery ticket earnings. If you did not buy the option, you cannot
-                    purchase the lottery ticket today and will not receive lottery ticket earnings.
+                    <input type="radio" name="q3" value="3" />
+                    Today, you will first learn the outcome of Lottery 1. If you
+                    bought the option in Part 1, you can then purchase the
+                    lottery ticket and receive lottery ticket earnings. If you
+                    did not buy the option, you cannot purchase the lottery
+                    ticket today and will not receive lottery ticket earnings.
                 </label>
-                {% endif %}
-
-                {% if participant.treatment == 3 %}
+                {% endif %} {% if participant.treatment == 3 %}
                 <div class="question-text">
-                    What happens if you decide to purchase the lottery ticket today?
+                    What happens if have purchased the lottery ticket in Part 1
+                    and you decide not to refund the lottery ticket today?
                 </div>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="0">
-                    Because you have returned to Part 2, your payment does not depend on your decisions anymore.
+                    <input type="radio" name="q3" value="0" />
+                    Because you have returned to Part 2, your payment does not
+                    depend on your decisions anymore.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="1">
-                    You can only earn a fixed payment of &pound;{{ session.config.participation_fee }}.
+                    <input type="radio" name="q3" value="1" />
+                    You can only earn a fixed payment of &pound;{{
+                    session.config.participation_fee }}.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="2">
-                    You can only earn a bonus payment if both lotteries result in heads.
+                    <input type="radio" name="q3" value="2" />
+                    You can only earn a bonus payment if both lotteries result
+                    in heads.
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="q3" value="3">
-                    Today, you will first learn the outcome of Lottery 1. You can then decide
-                    to return the lottery ticket for a pre-specified refund amount. If you decide
-                    <em>not</em> to return it, you will keep the ticket and receive lottery
-                    ticket earnings depending on the lottery outcome.
+                    <input type="radio" name="q3" value="3" />
+                    Today, you will first learn the outcome of Lottery 1. You
+                    can then decide to return the lottery ticket for a
+                    pre-specified refund amount. If you decide
+                    <em>not</em> to return it, you will keep the ticket and
+                    receive lottery ticket earnings depending on the lottery
+                    outcome.
                 </label>
                 {% endif %}
-
-            </div><!-- /question-block -->
+            </div>
+            <!-- /question-block -->
 
             <div class="btn-row">
-
-<button class="otree-btn-next btn-next">
-    Submit Answers &nbsp;&#10003;
-</button>
-
-           </div>
-           <div class="btn-row">
-
-                <button type="button" class="btn-reveal" onclick="open_instructions()"
-                        id="instructions_button">
+                <button class="otree-btn-next btn-next">
+                    Submit Answers &nbsp;&#10003;
+                </button>
+            </div>
+            <div class="btn-row">
+                <button
+                    type="button"
+                    class="btn-reveal"
+                    onclick="open_instructions()"
+                    id="instructions_button"
+                >
                     📖 &nbsp;Reveal Instructions
                 </button>
             </div>
-
-        </div><!-- /card-inner -->
-    </div><!-- /outer-card -->
+        </div>
+        <!-- /card-inner -->
+    </div>
+    <!-- /outer-card -->
 
     <!-- Collapsible instructions panel -->
-    <div style="display:none;" id="instructions">
+    <div style="display: none" id="instructions">
         <div class="instructions-panel">
             <div class="instructions-panel-bar">📋 Instructions Reference</div>
             <div class="instructions-panel-body">
@@ -426,7 +456,7 @@
             </div>
         </div>
     </div>
-
-</div><!-- /quiz-wrapper -->
+</div>
+<!-- /quiz-wrapper -->
 
 {{ endblock }}

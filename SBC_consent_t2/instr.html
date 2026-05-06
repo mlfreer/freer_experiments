@@ -1126,18 +1126,7 @@
                                     of Lottery 2.
                                 </p>
                                 {% endif %} {% if participant.treatment != 0 %}
-                                <p>
-                                    An example decision screen is shown below:
-                                </p>
-
-                                <div class="screenshot-placeholder">
-                                    &#128247; &nbsp;<em
-                                        >Insert screenshot of example decision
-                                        screen here</em
-                                    >
-                                </div>
-
-                                {% endif %}
+                                {% include_sibling 'dcsn.html'%} {% endif %}
 
                                 <div class="continue-btn-wrap">
                                     <button
@@ -1236,6 +1225,7 @@
                                 </p>
 
                                 <div class="continue-btn-wrap">
+                                    <!-- HIDING THE BUTTON
                                     <button
                                         type="button"
                                         class="btn-continue btn-finish"
@@ -1243,6 +1233,7 @@
                                     >
                                         &#10003; &nbsp;I've read all sections
                                     </button>
+                                    -->
                                 </div>
                             </div>
                         </div>
