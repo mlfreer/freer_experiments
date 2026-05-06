@@ -1,860 +1,1291 @@
-<div class="card-body" style="padding:0;">
+<div class="card-body" style="padding: 0">
+    <style>
+        body {
+            background: #eef3fa;
+        }
 
-<style>
-    body { background: #eef3fa; }
+        .study-wrapper {
+            font-family: "Segoe UI", Arial, sans-serif;
+            max-width: 860px;
+            margin: 24px auto;
+        }
 
-    .study-wrapper {
-        font-family: 'Segoe UI', Arial, sans-serif;
-        max-width: 860px;
-        margin: 24px auto;
-    }
+        .page-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a3a5c;
+            margin-bottom: 14px;
+        }
 
-    .page-title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #1a3a5c;
-        margin-bottom: 14px;
-    }
+        .outer-card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 6px 28px rgba(30, 60, 110, 0.1);
+            overflow: hidden;
+        }
 
-    .outer-card {
-        background: white;
-        border-radius: 14px;
-        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
-        overflow: hidden;
-    }
+        .card-top-bar {
+            background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
+            padding: 16px 28px;
+            color: white;
+            font-size: 1.05rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .card-top-bar {
-        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
-        padding: 16px 28px;
-        color: white;
-        font-size: 1.05rem;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+        .part-badge {
+            background: rgba(255, 255, 255, 0.22);
+            border-radius: 20px;
+            padding: 3px 14px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
 
-    .part-badge {
-        background: rgba(255,255,255,0.22);
-        border-radius: 20px;
-        padding: 3px 14px;
-        font-size: 0.8rem;
-        font-weight: 500;
-    }
+        .card-inner {
+            padding: 26px 30px 34px 30px;
+        }
 
-    .card-inner { padding: 26px 30px 34px 30px; }
+        .intro-box {
+            background: #f0f6ff;
+            border-left: 5px solid #4a90d9;
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+            margin-bottom: 22px;
+            font-size: 15px;
+            line-height: 1.75;
+            color: #223;
+        }
 
-    .intro-box {
-        background: #f0f6ff;
-        border-left: 5px solid #4A90D9;
-        border-radius: 0 8px 8px 0;
-        padding: 16px 20px;
-        margin-bottom: 22px;
-        font-size: 15px;
-        line-height: 1.75;
-        color: #223;
-    }
+        .intro-box p {
+            margin-bottom: 8px;
+        }
+        .intro-box p:last-child {
+            margin-bottom: 0;
+        }
 
-    .intro-box p { margin-bottom: 8px; }
-    .intro-box p:last-child { margin-bottom: 0; }
+        .highlight-note {
+            background: #fff3cd;
+            border-left: 4px solid #f0ad00;
+            border-radius: 0 6px 6px 0;
+            padding: 9px 14px;
+            margin-top: 10px;
+            font-size: 0.93rem;
+            color: #664d00;
+        }
 
-    .highlight-note {
-        background: #fff3cd;
-        border-left: 4px solid #f0ad00;
-        border-radius: 0 6px 6px 0;
-        padding: 9px 14px;
-        margin-top: 10px;
-        font-size: 0.93rem;
-        color: #664d00;
-    }
+        .progress-wrap {
+            margin-bottom: 16px;
+        }
 
-    .progress-wrap { margin-bottom: 16px; }
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #5a7a9a;
+            margin-bottom: 5px;
+        }
 
-    .progress-label {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.8rem;
-        color: #5a7a9a;
-        margin-bottom: 5px;
-    }
+        .progress {
+            height: 6px;
+            border-radius: 10px;
+            background: #d5e6f5;
+        }
 
-    .progress { height: 6px; border-radius: 10px; background: #d5e6f5; }
+        .progress-bar {
+            background: linear-gradient(90deg, #2563b0, #4a90d9);
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
 
-    .progress-bar {
-        background: linear-gradient(90deg, #2563b0, #4A90D9);
-        border-radius: 10px;
-        transition: width 0.4s ease;
-    }
+        .steps-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: #4a90d9;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
 
-    .steps-label {
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: #4A90D9;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 10px;
-    }
+        .accordion-item {
+            border: 1.5px solid #d5e6f5 !important;
+            border-radius: 10px !important;
+            margin-bottom: 10px;
+            overflow: hidden;
+            transition:
+                box-shadow 0.2s,
+                border-color 0.2s;
+        }
 
-    .accordion-item {
-        border: 1.5px solid #d5e6f5 !important;
-        border-radius: 10px !important;
-        margin-bottom: 10px;
-        overflow: hidden;
-        transition: box-shadow 0.2s, border-color 0.2s;
-    }
+        .accordion-item.active-section {
+            box-shadow: 0 4px 18px rgba(74, 144, 217, 0.18) !important;
+            border-color: #4a90d9 !important;
+        }
 
-    .accordion-item.active-section {
-        box-shadow: 0 4px 18px rgba(74,144,217,0.18) !important;
-        border-color: #4A90D9 !important;
-    }
+        .accordion-button {
+            font-size: 0.98rem;
+            font-weight: 600;
+            color: #1a3a5c;
+            background: #eef4fb;
+            border: none;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .accordion-button {
-        font-size: 0.98rem;
-        font-weight: 600;
-        color: #1a3a5c;
-        background: #eef4fb;
-        border: none;
-        padding: 14px 18px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+        .accordion-button:not(.collapsed) {
+            background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
+            color: white;
+            box-shadow: none;
+        }
 
-    .accordion-button:not(.collapsed) {
-        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
-        color: white;
-        box-shadow: none;
-    }
+        .accordion-button:not(.collapsed)::after {
+            filter: brightness(0) invert(1);
+        }
+        .accordion-button:focus {
+            box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.25);
+        }
 
-    .accordion-button:not(.collapsed)::after { filter: brightness(0) invert(1); }
-    .accordion-button:focus { box-shadow: 0 0 0 3px rgba(74,144,217,0.25); }
+        .section-icon {
+            font-size: 1.1rem;
+            min-width: 24px;
+        }
 
-    .section-icon { font-size: 1.1rem; min-width: 24px; }
+        .section-num {
+            background: #c5daf5;
+            color: #1a3a5c;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
 
-    .section-num {
-        background: #c5daf5;
-        color: #1a3a5c;
-        border-radius: 50%;
-        width: 22px; height: 22px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
-        font-weight: 700;
-        flex-shrink: 0;
-    }
+        .accordion-button:not(.collapsed) .section-num {
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+        }
 
-    .accordion-button:not(.collapsed) .section-num {
-        background: rgba(255,255,255,0.25);
-        color: white;
-    }
+        .accordion-body {
+            background: #ffffff;
+            font-size: 15px;
+            line-height: 1.75;
+            color: #2c3e50;
+            padding: 20px 24px 16px 24px;
+        }
 
-    .accordion-body {
-        background: #ffffff;
-        font-size: 15px;
-        line-height: 1.75;
-        color: #2c3e50;
-        padding: 20px 24px 16px 24px;
-    }
+        .info-card {
+            background: #f7faff;
+            border: 1px solid #d5e6f5;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 12px 0;
+        }
 
-    .info-card {
-        background: #f7faff;
-        border: 1px solid #d5e6f5;
-        border-radius: 8px;
-        padding: 14px 16px;
-        margin: 12px 0;
-    }
+        .lottery-pill {
+            display: inline-block;
+            background: #2563b0;
+            color: white;
+            border-radius: 20px;
+            padding: 2px 11px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 6px;
+        }
 
-    .lottery-pill {
-        display: inline-block;
-        background: #2563b0;
-        color: white;
-        border-radius: 20px;
-        padding: 2px 11px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        margin-right: 6px;
-    }
+        .timeline-item {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
 
-    .timeline-item {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 10px;
-        align-items: flex-start;
-    }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
 
-    .timeline-item:last-child { margin-bottom: 0; }
+        .t-dot {
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-top: 2px;
+            color: white;
+        }
 
-    .t-dot {
-        border-radius: 50%;
-        width: 24px; height: 24px;
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.75rem;
-        font-weight: 700;
-        margin-top: 2px;
-        color: white;
-    }
+        .t-dot.blue {
+            background: #4a90d9;
+        }
+        .t-dot.amber {
+            background: #f0a500;
+        }
+        .t-dot.green {
+            background: #1a7a1a;
+        }
 
-    .t-dot.blue  { background: #4A90D9; }
-    .t-dot.amber { background: #f0a500; }
-    .t-dot.green { background: #1a7a1a; }
+        .formula-box {
+            background: linear-gradient(135deg, #fffbe6 0%, #fff8d6 100%);
+            border: 1.5px solid #f0c040;
+            border-radius: 10px;
+            padding: 13px 18px;
+            text-align: center;
+            margin: 14px 0;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1a3a5c;
+        }
 
-    .formula-box {
-        background: linear-gradient(135deg, #fffbe6 0%, #fff8d6 100%);
-        border: 1.5px solid #f0c040;
-        border-radius: 10px;
-        padding: 13px 18px;
-        text-align: center;
-        margin: 14px 0;
-        font-size: 1.05rem;
-        font-weight: 700;
-        color: #1a3a5c;
-    }
+        .formula-box .result {
+            color: #1a7a1a;
+        }
 
-    .formula-box .result { color: #1a7a1a; }
+        .formula-box.example {
+            background: #fcf9ea;
+            border: 1px dashed #e0c878;
+        }
 
-    .formula-box.example {
-        background: #fcf9ea;
-        border: 1px dashed #e0c878;
-    }
+        .stat-row {
+            display: flex;
+            gap: 10px;
+            margin: 14px 0;
+            flex-wrap: wrap;
+        }
 
-    .stat-row {
-        display: flex;
-        gap: 10px;
-        margin: 14px 0;
-        flex-wrap: wrap;
-    }
+        .stat-chip {
+            background: #eef4fb;
+            border: 1px solid #c5daf5;
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #1a3a5c;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+        }
 
-    .stat-chip {
-        background: #eef4fb;
-        border: 1px solid #c5daf5;
-        border-radius: 8px;
-        padding: 8px 14px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: #1a3a5c;
-        flex: 1;
-        min-width: 120px;
-        text-align: center;
-    }
+        .stat-chip .stat-num {
+            display: block;
+            font-size: 1.25rem;
+            color: #2563b0;
+        }
 
-    .stat-chip .stat-num {
-        display: block;
-        font-size: 1.25rem;
-        color: #2563b0;
-    }
+        .note-box {
+            background: #fff8e1;
+            border-left: 4px solid #f0ad00;
+            border-radius: 0 8px 8px 0;
+            padding: 10px 15px;
+            margin-top: 14px;
+            font-size: 0.92rem;
+            color: #555;
+        }
 
-    .note-box {
-        background: #fff8e1;
-        border-left: 4px solid #f0ad00;
-        border-radius: 0 8px 8px 0;
-        padding: 10px 15px;
-        margin-top: 14px;
-        font-size: 0.92rem;
-        color: #555;
-    }
+        .treatment-block {
+            background: #f7faff;
+            border: 1.5px solid #d5e6f5;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 12px 0;
+            font-size: 15px;
+            line-height: 1.75;
+        }
 
-    .treatment-block {
-        background: #f7faff;
-        border: 1.5px solid #d5e6f5;
-        border-radius: 8px;
-        padding: 14px 18px;
-        margin: 12px 0;
-        font-size: 15px;
-        line-height: 1.75;
-    }
+        .price-amount {
+            display: inline-block;
+            background: #fff3cd;
+            color: #92400e;
+            font-size: 1em;
+            font-weight: 800;
+            border-radius: 6px;
+            padding: 1px 8px;
+            border: 1.5px solid #f0c040;
+        }
 
-    .price-amount {
-        display: inline-block;
-        background: #fff3cd;
-        color: #92400e;
-        font-size: 1em;
-        font-weight: 800;
-        border-radius: 6px;
-        padding: 1px 8px;
-        border: 1.5px solid #f0c040;
-    }
+        .screenshot-placeholder {
+            background: #f5f5f5;
+            border: 2px dashed #bbb;
+            border-radius: 10px;
+            padding: 30px 20px;
+            text-align: center;
+            color: #999;
+            font-style: italic;
+            margin-top: 12px;
+        }
 
-    .screenshot-placeholder {
-        background: #f5f5f5;
-        border: 2px dashed #bbb;
-        border-radius: 10px;
-        padding: 30px 20px;
-        text-align: center;
-        color: #999;
-        font-style: italic;
-        margin-top: 12px;
-    }
+        .continue-btn-wrap {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e8f0fa;
+            display: flex;
+            justify-content: flex-end;
+        }
 
-    .continue-btn-wrap {
-        margin-top: 20px;
-        padding-top: 15px;
-        border-top: 1px solid #e8f0fa;
-        display: flex;
-        justify-content: flex-end;
-    }
+        .btn-continue {
+            background: linear-gradient(90deg, #2563b0, #4a90d9);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 9px 22px;
+            font-size: 0.93rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition:
+                transform 0.15s,
+                box-shadow 0.15s;
+            box-shadow: 0 3px 10px rgba(74, 144, 217, 0.25);
+        }
 
-    .btn-continue {
-        background: linear-gradient(90deg, #2563b0, #4A90D9);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 9px 22px;
-        font-size: 0.93rem;
-        font-weight: 600;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        transition: transform 0.15s, box-shadow 0.15s;
-        box-shadow: 0 3px 10px rgba(74,144,217,0.25);
-    }
+        .btn-continue:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 16px rgba(74, 144, 217, 0.35);
+        }
 
-    .btn-continue:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 16px rgba(74,144,217,0.35);
-    }
+        .btn-continue.btn-finish {
+            background: linear-gradient(90deg, #1a7a1a, #28a745);
+            box-shadow: 0 3px 10px rgba(40, 167, 69, 0.25);
+        }
 
-    .btn-continue.btn-finish {
-        background: linear-gradient(90deg, #1a7a1a, #28a745);
-        box-shadow: 0 3px 10px rgba(40,167,69,0.25);
-    }
+        .btn-continue.btn-finish:hover {
+            box-shadow: 0 5px 16px rgba(40, 167, 69, 0.35);
+        }
+    </style>
 
-    .btn-continue.btn-finish:hover {
-        box-shadow: 0 5px 16px rgba(40,167,69,0.35);
-    }
-</style>
-
-
-<div class="study-wrapper">
-
-    <div class="page-title">
-        📋 Study Instructions &nbsp;<small>· Part 2</small>
-    </div>
-
-    <div class="outer-card">
-
-        <div class="card-top-bar">
-            <span>Decision-Making Study</span>
-            <span class="part-badge">Part 2 · Today</span>
+    <div class="study-wrapper">
+        <div class="page-title">
+            📋 Study Instructions &nbsp;<small>· Part 2</small>
         </div>
 
-        <div class="card-inner">
-
-            <div class="intro-box">
-                <p>Welcome to Part 2 of this study. You have completed Part 1 successfully and will
-                   complete this study if you complete today's Part 2.</p>
-                <p>
-                    For Part 1, you receive a payment of
-                    <strong>{{ session.config.participation_fee }}</strong>.
-                    For today's Part 2, you receive an additional payment of
-                    <strong>{{ session.config.participation_fee }}</strong>.
-                    In addition, you can earn a <em>substantial <strong>bonus payment</strong></em> that can be as
-                    high as <strong>&pound;{{ session.config.max_pay }}</strong>.
-                    This bonus payment depends on your choices and chance.
-                </p>
+        <div class="outer-card">
+            <div class="card-top-bar">
+                <span>Decision-Making Study</span>
+                <span class="part-badge">Part 2 · Today</span>
             </div>
 
-            <div class="progress-wrap">
-                <div class="progress-label">
-                    <span>Reading instructions…</span>
-                    <span id="prog-label">Section 1 of 5</span>
+            <div class="card-inner">
+                <div class="intro-box">
+                    <p>
+                        Welcome to Part 2 of this study. You have completed Part
+                        1 successfully and will complete this study if you
+                        complete today's Part 2.
+                    </p>
+                    <p>
+                        For Part 1, you receive a payment of
+                        <strong>{{ session.config.participation_fee }}</strong>.
+                        For today's Part 2, you receive an additional payment of
+                        <strong>{{ session.config.participation_fee }}</strong>.
+                        In addition, you can earn a
+                        <em>substantial <strong>bonus payment</strong></em> that
+                        can be as high as
+                        <strong>&pound;{{ session.config.max_pay }}</strong>.
+                        This bonus payment depends on your choices and chance.
+                    </p>
                 </div>
-                <div class="progress">
-                    <div class="progress-bar" id="progress-bar" style="width:20%;"></div>
-                </div>
-            </div>
 
-            <div class="steps-label">📖 Sections — click any header to expand</div>
-
-            <div class="accordion" id="mainAccordion">
-
-                <!-- ① THE LOTTERY TICKET -->
-                <div class="accordion-item active-section" id="item-0">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#sec-0"
-                                aria-expanded="true" aria-controls="sec-0">
-                            <span class="section-icon">🎟️</span>
-                            <span class="section-num">1</span>
-                            Lottery Ticket
-                        </button>
-                    </h2>
-                    <div id="sec-0" class="accordion-collapse collapse show"
-                         data-bs-parent="#mainAccordion">
-                        <div class="accordion-body">
-
-                            <p>In this study, you evaluate a <strong>lottery ticket</strong> consisting
-                               of two lotteries. Each has two equally likely outcomes,
-                               determined by two independent virtual coin flips.</p>
-
-                            <div class="info-card">
-                                <div class="timeline-item">
-                                    <div class="t-dot blue">1</div>
-                                    <div>
-                                        <span class="lottery-pill">Lottery 1</span>
-                                        Pays <strong>&pound;{{ session.config.A_BAR }}</strong> if the
-                                        first coin is <em>heads</em>, and
-                                        <strong>&pound;{{ participant.x_draw }}</strong> if <em>tails</em>.
-                                    </div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="t-dot blue">2</div>
-                                    <div>
-                                        <span class="lottery-pill">Lottery 2</span>
-                                        Pays <strong>&pound;{{ session.config.A_BAR }}</strong> if the
-                                        second coin is <em>heads</em>, and
-                                        <strong>&pound;0</strong> if <em>tails</em>.
-                                    </div>
-                                </div>
-                            </div>
-
-                            <p>Your <strong>lottery ticket earnings</strong> equal the <strong>sum</strong> of both lottery outcomes.
-                                For example:</p>
-                            <ul>
-                                <li>First coin <em>tails</em>, second coin <em>tails</em> &rarr;
-                                    &pound;{{ participant.x_draw }} + &pound;0 = <strong>&pound;{{ participant.x_draw }}</strong></li>
-                                <li>First coin <em>heads</em>, second coin <em>tails</em> &rarr;
-                                    &pound;{{ session.config.A_BAR }} + &pound;0 =
-                                    <strong>&pound;{{ session.config.A_BAR }}</strong></li>
-                            </ul>
-
-                            <p class="mt-3 mb-2"><strong>&#9200; When do you learn the outcomes?</strong></p>
-                            <div class="info-card">
-                                <div class="timeline-item">
-                                    <div class="t-dot amber">&rarr;</div>
-                                    <div><strong>Now:</strong> You learn <strong>Lottery 1</strong>'s result &mdash;
-                                        whether it pays &pound;{{ session.config.A_BAR }} or &pound;{{ participant.x_draw }}.
-                                        You will <em>not</em> yet know Lottery 2's result.</div>
-                                </div>
-                                {% if participant.treatment != 0 %}<div class="timeline-item">
-                                    <div class="t-dot amber">&rarr;</div>
-                                    <div>You then make additional decisions.</div>
-                                </div>
-                                {% endif %}
-                                <div class="timeline-item">
-                                    <div class="t-dot green">&check;</div>
-                                    <div><strong>At the end:</strong> You learn <strong>Lottery 2</strong>'s result
-                                        and your final bonus payment.</div>
-                                </div>
-                            </div>
-
-                            <div class="continue-btn-wrap">
-                                <button class="btn-continue" type="button" onclick="goToSection(1)">
-                                    Next section &nbsp;&#8594;
-                                </button>
-                            </div>
-                        </div>
+                <div class="progress-wrap">
+                    <div class="progress-label">
+                        <span>Reading instructions…</span>
+                        <span id="prog-label">Section 1 of 5</span>
+                    </div>
+                    <div class="progress">
+                        <div
+                            class="progress-bar"
+                            id="progress-bar"
+                            style="width: 20%"
+                        ></div>
                     </div>
                 </div>
 
-                <!-- ② YOUR DECISION -->
-                <div class="accordion-item" id="item-1">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#sec-1"
-                                aria-expanded="false" aria-controls="sec-1">
-                            <span class="section-icon">&#129300;</span>
-                            <span class="section-num">2</span>
-                            Your Decision
-                        </button>
-                    </h2>
-                    <div id="sec-1" class="accordion-collapse collapse"
-                         data-bs-parent="#mainAccordion">
-                        <div class="accordion-body">
+                <div class="steps-label">
+                    📖 Sections — click any header to expand
+                </div>
 
-                            {% if participant.treatment == 0 %}
-                            <p>In Part 1, you decided whether to <strong>purchase the lottery ticket</strong>.</p>
-                            <div class="note-box">
-                                &#128204; <strong>Note:</strong> You cannot purchase the lottery ticket today.
-                                Your <em>only</em> opportunity was in Part 1. Your payment depends on
-                                the decisions you made in Part 1 &mdash; you do not make decisions today.
-                            </div>
-                            {% endif %}
+                <div class="accordion" id="mainAccordion">
+                    <!-- ① THE LOTTERY TICKET -->
+                    <div class="accordion-item active-section" id="item-0">
+                        <h2 class="accordion-header">
+                            <button
+                                class="accordion-button"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#sec-0"
+                                aria-expanded="true"
+                                aria-controls="sec-0"
+                            >
+                                <span class="section-icon">🎟️</span>
+                                <span class="section-num">1</span>
+                                Lottery Ticket
+                            </button>
+                        </h2>
+                        <div
+                            id="sec-0"
+                            class="accordion-collapse collapse show"
+                            data-bs-parent="#mainAccordion"
+                        >
+                            <div class="accordion-body">
+                                <p>
+                                    In this study, you evaluate a
+                                    <strong>lottery ticket</strong> consisting
+                                    of two lotteries. Each has two equally
+                                    likely outcomes, determined by two
+                                    independent virtual coin flips.
+                                </p>
 
-                            {% if participant.treatment == 1 %}
-                            <p><strong>Today</strong>, you can purchase the lottery ticket.
-                                You will decide <em>after</em> learning the outcome of Lottery 1 &mdash; whether
-                                it pays &pound;{{ session.config.A_BAR }} or &pound;{{ participant.x_draw }}.
-                                However, you will decide <em>before</em> learning Lottery 2's outcome.</p>
-                            <div class="note-box">
-                                &#128204; <strong>Note:</strong> Your payment depends on decisions you make
-                                today. You did not make any decisions in Part 1.
-                            </div>
-                            {% endif %}
-
-                            {% if participant.treatment == 2 %}
-                            <p>In Part 1, you decided whether to buy the <strong>right</strong> to purchase the lottery ticket
-                                today at a fixed <strong>purchase price</strong>. This right is called an <strong><em>option</em></strong>.
-                                The option has no benefit other than giving you the right to purchase the lottery ticket today.</p>
-
-                            <p>In Part 1, you saw various combinations of <strong>option prices</strong> and purchase prices. For each combination, you make <strong>two decisions</strong> across the two parts:</p>
-                            <div class="info-card">
-                                <div class="timeline-item">
-                                    <div class="t-dot blue">1</div>
-                                    <div><strong>Part 1:</strong> You decided whether to buy or decline the option.</div>
+                                <div class="info-card">
+                                    <div class="timeline-item">
+                                        <div class="t-dot blue">1</div>
+                                        <div>
+                                            <span class="lottery-pill"
+                                                >Lottery 1</span
+                                            >
+                                            Pays
+                                            <strong
+                                                >&pound;{{ session.config.A_BAR
+                                                }}</strong
+                                            >
+                                            if the first coin is <em>heads</em>,
+                                            and
+                                            <strong
+                                                >&pound;{{ participant.x_draw
+                                                }}</strong
+                                            >
+                                            if <em>tails</em>.
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="t-dot blue">2</div>
+                                        <div>
+                                            <span class="lottery-pill"
+                                                >Lottery 2</span
+                                            >
+                                            Pays
+                                            <strong
+                                                >&pound;{{ session.config.A_BAR
+                                                }}</strong
+                                            >
+                                            if the second coin is
+                                            <em>heads</em>, and
+                                            <strong>&pound;0</strong> if
+                                            <em>tails</em>.
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="timeline-item">
-                                    <div class="t-dot blue">2</div>
-                                    <div><strong>Part 2 (today):</strong> <em>Only if you bought the option</em>,
-                                        you decide whether to purchase the lottery ticket at the pre-specified
-                                        purchase price. If you <em>did not buy the option in Part 1</em>, you cannot purchase the corresponding lottery ticket today.</div>
-                                </div>
-                            </div>
 
-                            <p>Today you will <em>first</em> learn Lottery 1's outcome
-                                (&pound;{{ session.config.A_BAR }} or &pound;{{ participant.x_draw }}), then decide
-                                on the ticket &mdash; but before learning Lottery 2's outcome.</p>
+                                <p>
+                                    Your
+                                    <strong>lottery ticket earnings</strong>
+                                    equal the <strong>sum</strong> of both
+                                    lottery outcomes. For example:
+                                </p>
+                                <ul>
+                                    <li>
+                                        First coin <em>tails</em>, second coin
+                                        <em>tails</em> &rarr; &pound;{{
+                                        participant.x_draw }} + &pound;0 =
+                                        <strong
+                                            >&pound;{{ participant.x_draw
+                                            }}</strong
+                                        >
+                                    </li>
+                                    <li>
+                                        First coin <em>heads</em>, second coin
+                                        <em>tails</em> &rarr; &pound;{{
+                                        session.config.A_BAR }} + &pound;0 =
+                                        <strong
+                                            >&pound;{{ session.config.A_BAR
+                                            }}</strong
+                                        >
+                                    </li>
+                                </ul>
 
-                            <div class="note-box">
-                                &#128204; <strong>Note:</strong> If you did not buy the option in Part 1, you cannot
-                                purchase the lottery ticket today. Your total payment covers both
-                                Part 1's and today's decisions.
-                            </div>
-                            {% endif %}
-
-                            {% if participant.treatment == 3 %}
-                            <p>In Part 1, you decided whether to purchase the lottery ticket.</p>
-                            <p>Your ticket includes a
-                                <strong>refund option</strong> that you can use today. In Part 1, you saw various combinations of <strong>purchase prices</strong> for the lottery ticket and possible <strong>refund amounts</strong>.</p>
-                            <p>Today you will <em>first</em> learn Lottery 1's outcome
-                                (&pound;{{ session.config.A_BAR }} or &pound;{{ participant.x_draw }}). For each combination of lottery price and refund amount, you can then either <strong>keep</strong> your lottery ticket or <strong>return it</strong>
-                                for a pre-specified refund. You will make that decision after learning Lottery 1's outcome but before learning Lottery 2's outcome.</p>
+                                <p class="mt-3 mb-2">
+                                    <strong
+                                        >&#9200; When do you learn the
+                                        outcomes?</strong
+                                    >
+                                </p>
                                 <div class="info-card">
                                     <div class="timeline-item">
                                         <div class="t-dot amber">&rarr;</div>
                                         <div>
-                                            <em>If you keep the lottery ticket (so reject the refund),</em> you receive the lottery ticket earnings. However, you have then already paid the lottery ticket purchase price.
+                                            <strong>Now:</strong> You learn
+                                            <strong>Lottery 1</strong>'s result
+                                            &mdash; whether it pays &pound;{{
+                                            session.config.A_BAR }} or &pound;{{
+                                            participant.x_draw }}. You will
+                                            <em>not</em> yet know Lottery 2's
+                                            result.
+                                        </div>
+                                    </div>
+                                    {% if participant.treatment != 0 %}
+                                    <div class="timeline-item">
+                                        <div class="t-dot amber">&rarr;</div>
+                                        <div>
+                                            You then make additional decisions.
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                    <div class="timeline-item">
+                                        <div class="t-dot green">&check;</div>
+                                        <div>
+                                            <strong>At the end:</strong> You
+                                            learn <strong>Lottery 2</strong>'s
+                                            result and your final bonus payment.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="continue-btn-wrap">
+                                    <button
+                                        class="btn-continue"
+                                        type="button"
+                                        onclick="goToSection(1)"
+                                    >
+                                        Next section &nbsp;&#8594;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ② YOUR DECISION -->
+                    <div class="accordion-item" id="item-1">
+                        <h2 class="accordion-header">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#sec-1"
+                                aria-expanded="false"
+                                aria-controls="sec-1"
+                            >
+                                <span class="section-icon">&#129300;</span>
+                                <span class="section-num">2</span>
+                                Your Decision
+                            </button>
+                        </h2>
+                        <div
+                            id="sec-1"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#mainAccordion"
+                        >
+                            <div class="accordion-body">
+                                {% if participant.treatment == 0 %}
+                                <p>
+                                    In Part 1, you decided whether to
+                                    <strong>purchase the lottery ticket</strong
+                                    >.
+                                </p>
+                                <div class="note-box">
+                                    &#128204; <strong>Note:</strong> You cannot
+                                    purchase the lottery ticket today. Your
+                                    <em>only</em> opportunity was in Part 1.
+                                    Your payment depends on the decisions you
+                                    made in Part 1 &mdash; you do not make
+                                    decisions today.
+                                </div>
+                                {% endif %} {% if participant.treatment == 1 %}
+                                <p>
+                                    <strong>Today</strong>, you can purchase the
+                                    lottery ticket. You will decide
+                                    <em>after</em> learning the outcome of
+                                    Lottery 1 &mdash; whether it pays &pound;{{
+                                    session.config.A_BAR }} or &pound;{{
+                                    participant.x_draw }}. However, you will
+                                    decide <em>before</em> learning Lottery 2's
+                                    outcome.
+                                </p>
+                                <div class="note-box">
+                                    &#128204; <strong>Note:</strong> Your
+                                    payment depends on decisions you make today.
+                                    You did not make any decisions in Part 1.
+                                </div>
+                                {% endif %} {% if participant.treatment == 2 %}
+                                <p>
+                                    In Part 1, you decided whether to buy the
+                                    <strong>right</strong> to purchase the
+                                    lottery ticket today at a fixed
+                                    <strong>purchase price</strong>. This right
+                                    is called an <strong><em>option</em></strong
+                                    >. The option has no benefit other than
+                                    giving you the right to purchase the lottery
+                                    ticket today.
+                                </p>
+
+                                <p>
+                                    In Part 1, you saw various combinations of
+                                    <strong>option prices</strong> and purchase
+                                    prices. For each combination, you make
+                                    <strong>two decisions</strong> across the
+                                    two parts:
+                                </p>
+                                <div class="info-card">
+                                    <div class="timeline-item">
+                                        <div class="t-dot blue">1</div>
+                                        <div>
+                                            <strong>Part 1:</strong> You decided
+                                            whether to buy or decline the
+                                            option.
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="t-dot blue">2</div>
+                                        <div>
+                                            <strong>Part 2 (today):</strong>
+                                            <em
+                                                >Only if you bought the
+                                                option</em
+                                            >, you decide whether to purchase
+                                            the lottery ticket at the
+                                            pre-specified purchase price. If you
+                                            <em
+                                                >did not buy the option in Part
+                                                1</em
+                                            >, you cannot purchase the
+                                            corresponding lottery ticket today.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p>
+                                    Today you will <em>first</em> learn Lottery
+                                    1's outcome (&pound;{{ session.config.A_BAR
+                                    }} or &pound;{{ participant.x_draw }}), then
+                                    decide on the ticket &mdash; but before
+                                    learning Lottery 2's outcome.
+                                </p>
+
+                                <div class="note-box">
+                                    &#128204; <strong>Note:</strong> If you did
+                                    not buy the option in Part 1, you cannot
+                                    purchase the lottery ticket today. Your
+                                    total payment covers both Part 1's and
+                                    today's decisions.
+                                </div>
+                                {% endif %} {% if participant.treatment == 3 %}
+                                <p>
+                                    In Part 1, you decided whether to purchase
+                                    the lottery ticket.
+                                </p>
+                                <p>
+                                    Your ticket includes a
+                                    <strong>refund option</strong> that you can
+                                    use today. In Part 1, you saw various
+                                    combinations of
+                                    <strong>purchase prices</strong> for the
+                                    lottery ticket and possible
+                                    <strong>refund amounts</strong>.
+                                </p>
+                                <p>
+                                    Today you will <em>first</em> learn Lottery
+                                    1's outcome (&pound;{{ session.config.A_BAR
+                                    }} or &pound;{{ participant.x_draw }}). For
+                                    each combination of lottery price and refund
+                                    amount, you can then either
+                                    <strong>keep</strong> your lottery ticket or
+                                    <strong>return it</strong> for a
+                                    pre-specified refund. You will make that
+                                    decision after learning Lottery 1's outcome
+                                    but before learning Lottery 2's outcome.
+                                </p>
+                                <div class="info-card">
+                                    <div class="timeline-item">
+                                        <div class="t-dot amber">&rarr;</div>
+                                        <div>
+                                            <em
+                                                >If you keep the lottery ticket
+                                                (so reject the refund),</em
+                                            >
+                                            you receive the lottery ticket
+                                            earnings. However, you have then
+                                            already paid the lottery ticket
+                                            purchase price.
                                         </div>
                                     </div>
                                     <div class="timeline-item">
                                         <div class="t-dot amber">&rarr;</div>
                                         <div>
-                                            <em>If you use the refund (so return the lottery ticket),</em> you receive the refund amount back, but you do <i>not</i> receive any lottery ticket earnings. However, you have then already paid the lottery ticket purchase price.
+                                            <em
+                                                >If you use the refund (so
+                                                return the lottery ticket),</em
+                                            >
+                                            you receive the refund amount back,
+                                            but you do <i>not</i> receive any
+                                            lottery ticket earnings. However,
+                                            you have then already paid the
+                                            lottery ticket purchase price.
                                         </div>
                                     </div>
                                 </div>
-                            <div class="note-box">
-                                &#128204; <strong>Note:</strong> If you did not purchase the lottery ticket in Part 1, you cannot purchase the lottery ticket today and you cannot use the refund option for that lottery ticket.
-                            </div>
-                            {% endif %}
-
-                            <div class="continue-btn-wrap">
-                                <button class="btn-continue" type="button" onclick="goToSection(2)">
-                                    Next section &nbsp;&#8594;
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ③ YOUR BONUS PAYMENT -->
-                <div class="accordion-item" id="item-2">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#sec-2"
-                                aria-expanded="false" aria-controls="sec-2">
-                            <span class="section-icon">&#128183;</span>
-                            <span class="section-num">3</span>
-                            Your Bonus Payment
-                        </button>
-                    </h2>
-                    <div id="sec-2" class="accordion-collapse collapse"
-                         data-bs-parent="#mainAccordion">
-                        <div class="accordion-body">
-
-                            <p>To purchase the lottery ticket, you receive a starting
-                                <strong>budget</strong> of <strong>{{ C.ENDOWMENT }}</strong>.
-                                At the end of Part 2, any <strong>purchase price</strong> for the lottery ticket {% if participant.treatment == 2 %} and <strong>option price</strong>
-                                {% endif %} is subtracted from this budget.
-                                The remainder contributes towards your bonus payment.</p>
-
-                            {% if participant.treatment == 0 %}
-                            <p>If you purchased the lottery ticket in Part 1, your bonus payment is calculated as follows:</p>
-                            {% endif %}
-                            {% if participant.treatment == 1 %}
-                            <p>If you purchase the lottery ticket today, your bonus payment is calculated as follows:</p>
-                            {% endif %}
-                            {% if participant.treatment == 2 %}
-                            <p>If you bought the option in Part 1 and purchase the lottery ticket today, your bonus payment is calculated as follows:</p>
-                            {% endif %}
-                            {% if participant.treatment == 3 %}
-                            <p>If you purchased the lottery ticket in Part 1 and do not return it today, your bonus payment is calculated as follows:</p>
-                            {% endif %}
-
-                            <div class="formula-box">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp; <em>Budget</em>
-                                {% if participant.treatment == 2 %}
-                                &nbsp;&minus;&nbsp; <em>Option&nbsp;price</em>
+                                <div class="note-box">
+                                    &#128204; <strong>Note:</strong> If you did
+                                    not purchase the lottery ticket in Part 1,
+                                    you cannot purchase the lottery ticket today
+                                    and you cannot use the refund option for
+                                    that lottery ticket.
+                                </div>
                                 {% endif %}
-                                &nbsp;&minus;&nbsp; <em>Purchase&nbsp;price</em>
-                                &nbsp;+&nbsp; <em>Lottery&nbsp;ticket&nbsp;earnings</em>
-                            </div>
 
-                            {% if participant.treatment == 0 %}
-                            <p>For example, if you purchased the lottery ticket for <strong>&pound;6</strong>
-                                and your lottery ticket earnings are
-                                <strong>&pound;{{ session.config.A_BAR }}</strong>:</p>
-
-                            <div class="formula-box example">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; &pound;6 + &pound;{{ session.config.A_BAR }}
-                                = <span class="result">&pound;16</span>
-                            </div>
-                            {% endif %}
-                            {% if participant.treatment == 1 %}
-                            <p>For example, if you purchase the lottery ticket for <strong>&pound;6</strong>
-                                and your lottery ticket earnings are
-                                <strong>&pound;{{ session.config.A_BAR }}</strong>:</p>
-
-                            <div class="formula-box example">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; &pound;6 + &pound;{{ session.config.A_BAR }}
-                                = <span class="result">&pound;16</span>
-                            </div>
-                            {% endif %}
-                            {% if participant.treatment == 2 %}
-                            <p>For example, if you bought the option for <strong>&pound;2</strong> and purchase the lottery ticket for <strong>&pound;4</strong>
-                                and your lottery ticket earnings are
-                                <strong>&pound;{{ session.config.A_BAR }}</strong>:</p>
-
-                            <div class="formula-box example">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; &pound;2 &minus; &pound;4 + &pound;{{ session.config.A_BAR }}
-                                = <span class="result">&pound;16</span>
-                            </div>
-                            {% endif %}
-                            {% if participant.treatment == 3 %}
-                            <p>For example, if you purchased the lottery ticket for <strong>&pound;6</strong>, do not return it today, and your lottery ticket earnings are
-                                <strong>&pound;{{ session.config.A_BAR }}</strong>:</p>
-
-                            <div class="formula-box example">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp; {{ C.ENDOWMENT }} &minus; &pound;6 + &pound;{{ session.config.A_BAR }}
-                                = <span class="result">&pound;16</span>
-                            </div>
-                            {% endif %}
-
-                            {% if participant.treatment == 0 %}
-                            <p>If you <strong>did not purchase</strong> the lottery ticket in Part 1, you keep your full budget:</p>
-
-                            <div class="formula-box">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp;<em>Budget</em> &nbsp;=&nbsp; <span class="result">{{ C.ENDOWMENT }}</span>
-                            </div>
-                            {% endif %}
-                            {% if participant.treatment == 1 %}
-                            <p>If you <strong>do not purchase</strong> the lottery ticket today, you keep your full budget:</p>
-
-                            <div class="formula-box">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp;<em>Budget</em> &nbsp;=&nbsp; <span class="result">{{ C.ENDOWMENT }}</span>
-                            </div>
-                            {% endif %}
-                            {% if participant.treatment == 2 %}
-                            <p>If you bought the option in Part 1 but <strong>do not purchase</strong> the lottery ticket today:</p>
-
-                            <div class="formula-box">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp; <em>Budget</em> &nbsp;&minus;&nbsp; <em>Option&nbsp;price</em>
-                            </div>
-                            <p>For example, if you bought the option for <strong>&pound;4</strong> and do not buy the lottery ticket today:</p>
-
-                            <div class="formula-box example">
-                                  Bonus&nbsp;Payment &nbsp;=&nbsp;{{ C.ENDOWMENT }} &minus; &pound;4
-                                = <span class="result">&pound;10</span>
-                            </div>
-
-                            <p>If you <strong>did not buy</strong> the option in Part 1, you keep your full budget:</p>
-
-                            <div class="formula-box">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp;<em>Budget</em> &nbsp;=&nbsp; <span class="result">{{ C.ENDOWMENT }}</span>
-                            </div>
-                            {% endif %}
-
-                            {% if participant.treatment == 3 %}
-                            <p>If you purchased the lottery ticket in Part 1, but you then <strong>use the refund option</strong> and return the lottery ticket today to receive the refund amount:</p>
-
-                            <div class="formula-box">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp; <em>Budget</em> &nbsp;&minus;&nbsp; <em>Purchase&nbsp;price</em> &nbsp;+&nbsp; <em>Refund&nbsp;amount</em>
-                            </div>
-                            <p>For example, if you purchased the lottery ticket for <strong>&pound;8</strong> and, today, return it to receive a refund amount of <strong>&pound;4</strong>:</p>
-
-                            <div class="formula-box example">
-                                  Bonus&nbsp;Payment &nbsp;=&nbsp;{{ C.ENDOWMENT }} &minus; &pound;8 + &pound;4
-                                = <span class="result">&pound;10</span>
-                            </div>
-
-                            <p>If you <strong>did not purchase</strong> the lottery ticket in Part 1, you keep your full budget:</p>
-
-                            <div class="formula-box">
-                                Bonus&nbsp;Payment &nbsp;=&nbsp;<em>Budget</em> &nbsp;=&nbsp; <span class="result">{{ C.ENDOWMENT }}</span>
-                            </div>
-                            {% endif %}
-
-                            <div class="stat-row">
-                                <div class="stat-chip">
-                                    <span class="stat-num">{{ C.ENDOWMENT }}</span>
-                                    Budget
+                                <div class="continue-btn-wrap">
+                                    <button
+                                        class="btn-continue"
+                                        type="button"
+                                        onclick="goToSection(2)"
+                                    >
+                                        Next section &nbsp;&#8594;
+                                    </button>
                                 </div>
-                                <div class="stat-chip">
-                                    <span class="stat-num">&pound;0 &ndash; &pound;{{ session.config.max_pay }}</span>
-                                    Range of bonus payment
-                                </div>
-                                <div class="stat-chip">
-                                    <span class="stat-num">&pound;{{ two_heads_sum }}</span>
-                                    Max lottery ticket earnings
-                                </div>
-                            </div>
-
-                            <div class="continue-btn-wrap">
-                                <button class="btn-continue" type="button" onclick="goToSection(3)">
-                                    Next section &nbsp;&#8594;
-                                </button>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- ④ TODAY'S DECISION -->
-                <div class="accordion-item" id="item-3">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#sec-3"
-                                aria-expanded="false" aria-controls="sec-3">
-                            <span class="section-icon">&#128221;</span>
-                            <span class="section-num">4</span>
-                            Today's Decision
-                        </button>
-                    </h2>
-                    <div id="sec-3" class="accordion-collapse collapse"
-                         data-bs-parent="#mainAccordion">
-                        <div class="accordion-body">
+                    <!-- ③ YOUR BONUS PAYMENT -->
+                    <div class="accordion-item" id="item-2">
+                        <h2 class="accordion-header">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#sec-2"
+                                aria-expanded="false"
+                                aria-controls="sec-2"
+                            >
+                                <span class="section-icon">&#128183;</span>
+                                <span class="section-num">3</span>
+                                Your Bonus Payment
+                            </button>
+                        </h2>
+                        <div
+                            id="sec-2"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#mainAccordion"
+                        >
+                            <div class="accordion-body">
+                                <p>
+                                    To purchase the lottery ticket, you receive
+                                    a starting <strong>budget</strong> of
+                                    <strong>{{ C.ENDOWMENT }}</strong>. At the
+                                    end of Part 2, any
+                                    <strong>purchase price</strong> for the
+                                    lottery ticket {% if participant.treatment
+                                    == 2 %} and <strong>option price</strong> {%
+                                    endif %} is subtracted from this budget. The
+                                    remainder contributes towards your bonus
+                                    payment.
+                                </p>
 
-                            {% if participant.treatment == 0 %}
-                            <p>Today, you will <strong>not make any decisions</strong>. In Part 1, you were
-                                asked a series of questions about your <strong>valuation of the lottery ticket</strong>
-                                and chose whether to purchase the lottery ticket at various purchase prices.</p>
-                            {% endif %}
-
-                            {% if participant.treatment == 1 %}
-                            <p>Today, you will be asked a series of questions about your
-                                <strong>valuation of the lottery ticket</strong>. For different purchase prices,
-                                you choose whether to purchase the lottery ticket at that price. You make these
-                                decisions <strong>after learning the outcome of Lottery 1</strong>, but
-                                <em>before</em> learning the outcome of Lottery 2.</p>
-                            {% endif %}
-
-                            {% if participant.treatment == 2 %}
-                            <p>Today, you will be asked a series of questions about your
-                                <strong>valuation of the lottery ticket</strong>. For each combination of option
-                                prices and purchase prices you saw in Part 1, you choose whether to purchase
-                                the lottery ticket at the corresponding purchase price. You make these decisions
-                                <strong>after learning the outcome of Lottery 1</strong>, but <em>before</em>
-                                learning the outcome of Lottery 2.</p>
-                            {% endif %}
-
-                            {% if participant.treatment == 3 %}
-                            <p>Today, you will be asked a series of questions about your
-                                <strong>valuation of the lottery ticket</strong>. For each combination of
-                                purchase prices and refund amounts you saw in Part 1, you choose whether to
-                                <strong>keep</strong> or <strong>return</strong> the lottery ticket. You make
-                                these decisions <strong>after learning the outcome of Lottery 1</strong>, but
-                                <em>before</em> learning the outcome of Lottery 2.</p>
-                            {% endif %}
-
-                            {% if participant.treatment != 0 %}
-                            <p>An example decision screen is shown below:</p>
-
-                            <div class="screenshot-placeholder">
-                                &#128247; &nbsp;<em>Insert screenshot of example decision screen here</em>
-                            </div>
-                            {% endif %}
-
-                            <div class="continue-btn-wrap">
-                                <button type="button" class="btn-continue" onclick="goToSection(4)">
-                                    Next section &nbsp;&#8594;
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- ⑤ RANDOM SELECTION -->
-                <div class="accordion-item" id="item-4">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#sec-4"
-                                aria-expanded="false" aria-controls="sec-4">
-                            <span class="section-icon">&#127922;</span>
-                            <span class="section-num">5</span>
-                            Random Selection
-                        </button>
-                    </h2>
-                    <div id="sec-4" class="accordion-collapse collapse"
-                         data-bs-parent="#mainAccordion">
-                        <div class="accordion-body">
-
-                            <p>At the end of Part 2 of the study, the computer <strong>randomly selects 20%</strong> of participants that will receive their bonus payments. If you are selected, you will receive your bonus payment within two weeks of the completion of the study. To calculate your bonus payment, the computer
                                 {% if participant.treatment == 0 %}
-                                    <strong>randomly selects one purchase price </strong>
+                                <p>
+                                    If you purchased the lottery ticket in Part
+                                    1, your bonus payment is calculated as
+                                    follows:
+                                </p>
+                                {% endif %} {% if participant.treatment == 1 %}
+                                <p>
+                                    If you purchase the lottery ticket today,
+                                    your bonus payment is calculated as follows:
+                                </p>
+                                {% endif %} {% if participant.treatment == 2 %}
+                                <p>
+                                    If you bought the option in Part 1 and
+                                    purchase the lottery ticket today, your
+                                    bonus payment is calculated as follows:
+                                </p>
+                                {% endif %} {% if participant.treatment == 3 %}
+                                <p>
+                                    If you purchased the lottery ticket in Part
+                                    1 and do not return it today, your bonus
+                                    payment is calculated as follows:
+                                </p>
                                 {% endif %}
-                                {% if participant.treatment == 1 %}
-                                    <strong>randomly selects one purchase price </strong>
-                                {% endif %}
-                                {% if participant.treatment == 2 %}
-                                    <strong>randomly selects one combination of option price and purchase price </strong>
-                                {% endif %}
-                                {% if participant.treatment == 3 %}
-                                    <strong>randomly selects one combination of purchase price and refund amount</strong>
-                                {% endif %}
-                                (each equally likely) at the end of Part 2. You will then receive your bonus payment depending on your decision and based on the payment rule described above.</p>
-                            <p>For 98% of the selected participants, their decisions will be implemented exactly as they decided. For the remaining 2%, their decisions will be treated as if they had purchased the lottery ticket.
-                                {% if participant.treatment == 2 or participant.treatment == 3 %}Because it may be that the computer selects you for a purchase,
-                                <strong>all participants will make decisions today</strong> and
-                                everyone's choices may potentially involve receiving a lottery ticket.
-                            {% endif %}</p>
-                            <p>Your decisions will not affect whether you are selected for the bonus payment, which decision is implemented for payment, or whether you are treated as having purchased the lottery ticket.</p>
 
-                            <div class="continue-btn-wrap">
-                                <button type="button" class="btn-continue btn-finish"
-                                        onclick="onFinish()">
-                                    &#10003; &nbsp;I've read all sections
-                                </button>
+                                <div class="formula-box">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp;
+                                    <em>Budget</em> {% if participant.treatment
+                                    == 2 %} &nbsp;&minus;&nbsp;
+                                    <em>Option&nbsp;price</em> {% endif %}
+                                    &nbsp;&minus;&nbsp;
+                                    <em>Purchase&nbsp;price</em> &nbsp;+&nbsp;
+                                    <em>Lottery&nbsp;ticket&nbsp;earnings</em>
+                                </div>
+
+                                {% if participant.treatment == 0 %}
+                                <p>
+                                    For example, if you purchased the lottery
+                                    ticket for <strong>&pound;6</strong>
+                                    and your lottery ticket earnings are
+                                    <strong
+                                        >&pound;{{ session.config.A_BAR
+                                        }}</strong
+                                    >:
+                                </p>
+
+                                <div class="formula-box example">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp; {{
+                                    C.ENDOWMENT }} &minus; &pound;6 + &pound;{{
+                                    session.config.A_BAR }} =
+                                    <span class="result">&pound;16</span>
+                                </div>
+                                {% endif %} {% if participant.treatment == 1 %}
+                                <p>
+                                    For example, if you purchase the lottery
+                                    ticket for <strong>&pound;6</strong>
+                                    and your lottery ticket earnings are
+                                    <strong
+                                        >&pound;{{ session.config.A_BAR
+                                        }}</strong
+                                    >:
+                                </p>
+
+                                <div class="formula-box example">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp; {{
+                                    C.ENDOWMENT }} &minus; &pound;6 + &pound;{{
+                                    session.config.A_BAR }} =
+                                    <span class="result">&pound;16</span>
+                                </div>
+                                {% endif %} {% if participant.treatment == 2 %}
+                                <p>
+                                    For example, if you bought the option for
+                                    <strong>&pound;2</strong> and purchase the
+                                    lottery ticket for <strong>&pound;4</strong>
+                                    and your lottery ticket earnings are
+                                    <strong
+                                        >&pound;{{ session.config.A_BAR
+                                        }}</strong
+                                    >:
+                                </p>
+
+                                <div class="formula-box example">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp; {{
+                                    C.ENDOWMENT }} &minus; &pound;2 &minus;
+                                    &pound;4 + &pound;{{ session.config.A_BAR }}
+                                    = <span class="result">&pound;16</span>
+                                </div>
+                                {% endif %} {% if participant.treatment == 3 %}
+                                <p>
+                                    For example, if you purchased the lottery
+                                    ticket for <strong>&pound;6</strong>, do not
+                                    return it today, and your lottery ticket
+                                    earnings are
+                                    <strong
+                                        >&pound;{{ session.config.A_BAR
+                                        }}</strong
+                                    >:
+                                </p>
+
+                                <div class="formula-box example">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp; {{
+                                    C.ENDOWMENT }} &minus; &pound;6 + &pound;{{
+                                    session.config.A_BAR }} =
+                                    <span class="result">&pound;16</span>
+                                </div>
+                                {% endif %} {% if participant.treatment == 0 %}
+                                <p>
+                                    If you <strong>did not purchase</strong> the
+                                    lottery ticket in Part 1, you keep your full
+                                    budget:
+                                </p>
+
+                                <div class="formula-box">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp;<em
+                                        >Budget</em
+                                    >
+                                    &nbsp;=&nbsp;
+                                    <span class="result"
+                                        >{{ C.ENDOWMENT }}</span
+                                    >
+                                </div>
+                                {% endif %} {% if participant.treatment == 1 %}
+                                <p>
+                                    If you <strong>do not purchase</strong> the
+                                    lottery ticket today, you keep your full
+                                    budget:
+                                </p>
+
+                                <div class="formula-box">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp;<em
+                                        >Budget</em
+                                    >
+                                    &nbsp;=&nbsp;
+                                    <span class="result"
+                                        >{{ C.ENDOWMENT }}</span
+                                    >
+                                </div>
+                                {% endif %} {% if participant.treatment == 2 %}
+                                <p>
+                                    If you bought the option in Part 1 but
+                                    <strong>do not purchase</strong> the lottery
+                                    ticket today:
+                                </p>
+
+                                <div class="formula-box">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp;
+                                    <em>Budget</em> &nbsp;&minus;&nbsp;
+                                    <em>Option&nbsp;price</em>
+                                </div>
+                                <p>
+                                    For example, if you bought the option for
+                                    <strong>&pound;4</strong> and do not buy the
+                                    lottery ticket today:
+                                </p>
+
+                                <div class="formula-box example">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp;{{
+                                    C.ENDOWMENT }} &minus; &pound;4 =
+                                    <span class="result">&pound;10</span>
+                                </div>
+
+                                <p>
+                                    If you <strong>did not buy</strong> the
+                                    option in Part 1, you keep your full budget:
+                                </p>
+
+                                <div class="formula-box">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp;<em
+                                        >Budget</em
+                                    >
+                                    &nbsp;=&nbsp;
+                                    <span class="result"
+                                        >{{ C.ENDOWMENT }}</span
+                                    >
+                                </div>
+                                {% endif %} {% if participant.treatment == 3 %}
+                                <p>
+                                    If you purchased the lottery ticket in Part
+                                    1, but you then
+                                    <strong>use the refund option</strong> and
+                                    return the lottery ticket today to receive
+                                    the refund amount:
+                                </p>
+
+                                <div class="formula-box">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp;
+                                    <em>Budget</em> &nbsp;&minus;&nbsp;
+                                    <em>Purchase&nbsp;price</em> &nbsp;+&nbsp;
+                                    <em>Refund&nbsp;amount</em>
+                                </div>
+                                <p>
+                                    For example, if you purchased the lottery
+                                    ticket for <strong>&pound;8</strong> and,
+                                    today, return it to receive a refund amount
+                                    of <strong>&pound;4</strong>:
+                                </p>
+
+                                <div class="formula-box example">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp;{{
+                                    C.ENDOWMENT }} &minus; &pound;8 + &pound;4 =
+                                    <span class="result">&pound;10</span>
+                                </div>
+
+                                <p>
+                                    If you <strong>did not purchase</strong> the
+                                    lottery ticket in Part 1, you keep your full
+                                    budget:
+                                </p>
+
+                                <div class="formula-box">
+                                    Bonus&nbsp;Payment &nbsp;=&nbsp;<em
+                                        >Budget</em
+                                    >
+                                    &nbsp;=&nbsp;
+                                    <span class="result"
+                                        >{{ C.ENDOWMENT }}</span
+                                    >
+                                </div>
+                                {% endif %}
+
+                                <div class="stat-row">
+                                    <div class="stat-chip">
+                                        <span class="stat-num"
+                                            >{{ C.ENDOWMENT }}</span
+                                        >
+                                        Budget
+                                    </div>
+                                    <div class="stat-chip">
+                                        <span class="stat-num"
+                                            >&pound;0 &ndash; &pound;{{
+                                            session.config.max_pay }}</span
+                                        >
+                                        Range of bonus payment
+                                    </div>
+                                    <div class="stat-chip">
+                                        <span class="stat-num"
+                                            >&pound;{{ two_heads_sum }}</span
+                                        >
+                                        Max lottery ticket earnings
+                                    </div>
+                                </div>
+
+                                <div class="continue-btn-wrap">
+                                    <button
+                                        class="btn-continue"
+                                        type="button"
+                                        onclick="goToSection(3)"
+                                    >
+                                        Next section &nbsp;&#8594;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ④ TODAY'S DECISION -->
+                    <div class="accordion-item" id="item-3">
+                        <h2 class="accordion-header">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#sec-3"
+                                aria-expanded="false"
+                                aria-controls="sec-3"
+                            >
+                                <span class="section-icon">&#128221;</span>
+                                <span class="section-num">4</span>
+                                Today's Decision
+                            </button>
+                        </h2>
+                        <div
+                            id="sec-3"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#mainAccordion"
+                        >
+                            <div class="accordion-body">
+                                {% if participant.treatment == 0 %}
+                                <p>
+                                    Today, you will
+                                    <strong>not make any decisions</strong>. In
+                                    Part 1, you were asked a series of questions
+                                    about your
+                                    <strong
+                                        >valuation of the lottery ticket</strong
+                                    >
+                                    and chose whether to purchase the lottery
+                                    ticket at various purchase prices.
+                                </p>
+                                {% endif %} {% if participant.treatment == 1 %}
+                                <p>
+                                    Today, you will be asked a series of
+                                    questions about your
+                                    <strong
+                                        >valuation of the lottery ticket</strong
+                                    >. For different purchase prices, you choose
+                                    whether to purchase the lottery ticket at
+                                    that price. You make these decisions
+                                    <strong
+                                        >after learning the outcome of Lottery
+                                        1</strong
+                                    >, but <em>before</em> learning the outcome
+                                    of Lottery 2.
+                                </p>
+                                {% endif %} {% if participant.treatment == 2 %}
+                                <p>
+                                    Today, you will be asked a series of
+                                    questions about your
+                                    <strong
+                                        >valuation of the lottery ticket</strong
+                                    >. For each combination of option prices and
+                                    purchase prices you saw in Part 1, you
+                                    choose whether to purchase the lottery
+                                    ticket at the corresponding purchase price.
+                                    You make these decisions
+                                    <strong
+                                        >after learning the outcome of Lottery
+                                        1</strong
+                                    >, but <em>before</em> learning the outcome
+                                    of Lottery 2.
+                                </p>
+                                {% endif %} {% if participant.treatment == 3 %}
+                                <p>
+                                    Today, you will be asked a series of
+                                    questions about your
+                                    <strong
+                                        >valuation of the lottery ticket</strong
+                                    >. For each combination of purchase prices
+                                    and refund amounts you saw in Part 1, you
+                                    choose whether to <strong>keep</strong> or
+                                    <strong>return</strong> the lottery ticket.
+                                    You make these decisions
+                                    <strong
+                                        >after learning the outcome of Lottery
+                                        1</strong
+                                    >, but <em>before</em> learning the outcome
+                                    of Lottery 2.
+                                </p>
+                                {% endif %} {% if participant.treatment != 0 %}
+                                <p>
+                                    An example decision screen is shown below:
+                                </p>
+
+                                <div class="screenshot-placeholder">
+                                    &#128247; &nbsp;<em
+                                        >Insert screenshot of example decision
+                                        screen here</em
+                                    >
+                                </div>
+
+                                {% endif %}
+
+                                <div class="continue-btn-wrap">
+                                    <button
+                                        type="button"
+                                        class="btn-continue"
+                                        onclick="goToSection(4)"
+                                    >
+                                        Next section &nbsp;&#8594;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ⑤ RANDOM SELECTION -->
+                    <div class="accordion-item" id="item-4">
+                        <h2 class="accordion-header">
+                            <button
+                                class="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#sec-4"
+                                aria-expanded="false"
+                                aria-controls="sec-4"
+                            >
+                                <span class="section-icon">&#127922;</span>
+                                <span class="section-num">5</span>
+                                Random Selection
+                            </button>
+                        </h2>
+                        <div
+                            id="sec-4"
+                            class="accordion-collapse collapse"
+                            data-bs-parent="#mainAccordion"
+                        >
+                            <div class="accordion-body">
+                                <p>
+                                    At the end of Part 2 of the study, the
+                                    computer
+                                    <strong>randomly selects 20%</strong> of
+                                    participants that will receive their bonus
+                                    payments. If you are selected, you will
+                                    receive your bonus payment within two weeks
+                                    of the completion of the study. To calculate
+                                    your bonus payment, the computer {% if
+                                    participant.treatment == 0 %}
+                                    <strong
+                                        >randomly selects one purchase price
+                                    </strong>
+                                    {% endif %} {% if participant.treatment == 1
+                                    %}
+                                    <strong
+                                        >randomly selects one purchase price
+                                    </strong>
+                                    {% endif %} {% if participant.treatment == 2
+                                    %}
+                                    <strong
+                                        >randomly selects one combination of
+                                        option price and purchase price
+                                    </strong>
+                                    {% endif %} {% if participant.treatment == 3
+                                    %}
+                                    <strong
+                                        >randomly selects one combination of
+                                        purchase price and refund amount</strong
+                                    >
+                                    {% endif %} (each equally likely) at the end
+                                    of Part 2. You will then receive your bonus
+                                    payment depending on your decision and based
+                                    on the payment rule described above.
+                                </p>
+                                <p>
+                                    For 98% of the selected participants, their
+                                    decisions will be implemented exactly as
+                                    they decided. For the remaining 2%, their
+                                    decisions will be treated as if they had
+                                    purchased the lottery ticket. {% if
+                                    participant.treatment == 2 or
+                                    participant.treatment == 3 %}Because it may
+                                    be that the computer selects you for a
+                                    purchase,
+                                    <strong
+                                        >all participants will make decisions
+                                        today</strong
+                                    >
+                                    and everyone's choices may potentially
+                                    involve receiving a lottery ticket. {% endif
+                                    %}
+                                </p>
+                                <p>
+                                    Your decisions will not affect whether you
+                                    are selected for the bonus payment, which
+                                    decision is implemented for payment, or
+                                    whether you are treated as having purchased
+                                    the lottery ticket.
+                                </p>
+
+                                <div class="continue-btn-wrap">
+                                    <button
+                                        type="button"
+                                        class="btn-continue btn-finish"
+                                        onclick="onFinish()"
+                                    >
+                                        &#10003; &nbsp;I've read all sections
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-            </div><!-- /accordion -->
-        </div><!-- /card-inner -->
-    </div><!-- /outer-card -->
-</div><!-- /study-wrapper -->
-</div><!-- /card-body -->
-
+                <!-- /accordion -->
+            </div>
+            <!-- /card-inner -->
+        </div>
+        <!-- /outer-card -->
+    </div>
+    <!-- /study-wrapper -->
+</div>
+<!-- /card-body -->
 
 <script>
     const TOTAL_SECTIONS = 5;
 
     function goToSection(nextIndex) {
         for (let i = 0; i < TOTAL_SECTIONS; i++) {
-            const collapseEl = document.getElementById('sec-' + i);
-            const itemEl     = document.getElementById('item-' + i);
-            const btnEl      = itemEl.querySelector('.accordion-button');
+            const collapseEl = document.getElementById("sec-" + i);
+            const itemEl = document.getElementById("item-" + i);
+            const btnEl = itemEl.querySelector(".accordion-button");
 
             if (i === nextIndex) {
                 // Open target section
-                collapseEl.classList.add('show');
-                btnEl.classList.remove('collapsed');
-                btnEl.setAttribute('aria-expanded', 'true');
-                itemEl.classList.add('active-section');
+                collapseEl.classList.add("show");
+                btnEl.classList.remove("collapsed");
+                btnEl.setAttribute("aria-expanded", "true");
+                itemEl.classList.add("active-section");
                 // Scroll after CSS has a moment to open
                 setTimeout(() => {
-                    itemEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    itemEl.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
                 }, 80);
             } else {
                 // Close all others
-                collapseEl.classList.remove('show');
-                btnEl.classList.add('collapsed');
-                btnEl.setAttribute('aria-expanded', 'false');
-                itemEl.classList.remove('active-section');
+                collapseEl.classList.remove("show");
+                btnEl.classList.add("collapsed");
+                btnEl.setAttribute("aria-expanded", "false");
+                itemEl.classList.remove("active-section");
             }
         }
         updateProgress(nextIndex + 1);
@@ -862,31 +1293,35 @@
 
     function updateProgress(current) {
         const pct = Math.round((current / TOTAL_SECTIONS) * 100);
-        document.getElementById('progress-bar').style.width = pct + '%';
-        document.getElementById('prog-label').textContent =
-            'Section ' + current + ' of ' + TOTAL_SECTIONS;
+        document.getElementById("progress-bar").style.width = pct + "%";
+        document.getElementById("prog-label").textContent =
+            "Section " + current + " of " + TOTAL_SECTIONS;
     }
 
-function onFinish() {
-    // Visual feedback
-    document.getElementById('prog-label').textContent = '✅ All sections read';
-    const bar = document.getElementById('progress-bar');
-    bar.style.width = '100%';
-    bar.style.background = 'linear-gradient(90deg, #1a7a1a, #28a745)';
+    function onFinish() {
+        // Visual feedback
+        document.getElementById("prog-label").textContent =
+            "✅ All sections read";
+        const bar = document.getElementById("progress-bar");
+        bar.style.width = "100%";
+        bar.style.background = "linear-gradient(90deg, #1a7a1a, #28a745)";
 
-    // Brief pause so participant sees the green bar, then submit the oTree form
-    setTimeout(() => {
-        document.querySelector('form').submit();
-    }, 500);
-}
+        // Brief pause so participant sees the green bar, then submit the oTree form
+        setTimeout(() => {
+            document.querySelector("form").submit();
+        }, 500);
+    }
 
     // Keep progress bar in sync when user manually clicks a header
-    document.getElementById('mainAccordion').addEventListener('shown.bs.collapse', function (e) {
-        const idx = parseInt(e.target.id.split('-')[1]);
-        for (let i = 0; i < TOTAL_SECTIONS; i++) {
-            document.getElementById('item-' + i)
-                    .classList.toggle('active-section', i === idx);
-        }
-        updateProgress(idx + 1);
-    });
+    document
+        .getElementById("mainAccordion")
+        .addEventListener("shown.bs.collapse", function (e) {
+            const idx = parseInt(e.target.id.split("-")[1]);
+            for (let i = 0; i < TOTAL_SECTIONS; i++) {
+                document
+                    .getElementById("item-" + i)
+                    .classList.toggle("active-section", i === idx);
+            }
+            updateProgress(idx + 1);
+        });
 </script>

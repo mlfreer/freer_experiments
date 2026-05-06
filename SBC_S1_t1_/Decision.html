@@ -1,27 +1,26 @@
-{{ extends 'global/Page.html' }}
-
-{{ block scripts }}
+{{ extends 'global/Page.html' }} {{ block scripts }}
 <script>
     function open_instructions() {
         const panel = document.getElementById("instructions");
-        const btn   = document.getElementById("instructions_button");
+        const btn = document.getElementById("instructions_button");
         const isOpen = panel.style.display !== "none";
         panel.style.display = isOpen ? "none" : "block";
         btn.innerHTML = isOpen
             ? "📖 &nbsp;Reveal Instructions"
             : "✕ &nbsp;Close Instructions";
-        if (!isOpen) panel.scrollIntoView({ behavior: "smooth", block: "start" });
+        if (!isOpen)
+            panel.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 </script>
-{{ endblock }}
-
-{{ block content }}
+{{ endblock }} {{ block content }}
 
 <style>
-    body { background: #eef3fa; }
+    body {
+        background: #eef3fa;
+    }
 
     .page-wrapper {
-        font-family: 'Segoe UI', Arial, sans-serif;
+        font-family: "Segoe UI", Arial, sans-serif;
         max-width: 860px;
         margin: 24px auto;
     }
@@ -29,13 +28,13 @@
     .outer-card {
         background: white;
         border-radius: 14px;
-        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        box-shadow: 0 6px 28px rgba(30, 60, 110, 0.1);
         overflow: hidden;
         margin-bottom: 18px;
     }
 
     .card-top-bar {
-        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
         padding: 16px 28px;
         color: white;
         font-size: 1.05rem;
@@ -46,14 +45,16 @@
     }
 
     .part-badge {
-        background: rgba(255,255,255,0.22);
+        background: rgba(255, 255, 255, 0.22);
         border-radius: 20px;
         padding: 3px 14px;
         font-size: 0.8rem;
         font-weight: 500;
     }
 
-    .card-inner { padding: 26px 30px 30px 30px; }
+    .card-inner {
+        padding: 26px 30px 30px 30px;
+    }
 
     /* ── Price info box ── */
     .price-box {
@@ -68,17 +69,17 @@
         line-height: 1.7;
     }
 
-.price-amount {
-    display: inline-block;
-    background: #fff3cd;      /* warm amber fill */
-    color: #92400e;           /* dark amber text — high contrast */
-    font-size: 1.15em;
-    font-weight: 800;
-    border-radius: 6px;
-    padding: 1px 8px;
-    border: 1.5px solid #f0c040;  /* amber border */
-    letter-spacing: 0.01em;
-}
+    .price-amount {
+        display: inline-block;
+        background: #fff3cd; /* warm amber fill */
+        color: #92400e; /* dark amber text — high contrast */
+        font-size: 1.15em;
+        font-weight: 800;
+        border-radius: 6px;
+        padding: 1px 8px;
+        border: 1.5px solid #f0c040; /* amber border */
+        letter-spacing: 0.01em;
+    }
 
     /* ── Decision card ── */
     .decision-card {
@@ -111,13 +112,16 @@
         display: flex;
         align-items: center;
         gap: 12px;
-        padding: 11px 28px;   /* proportionally tighter */
+        padding: 11px 28px; /* proportionally tighter */
         border-radius: 10px;
         border: 2px solid transparent;
         cursor: pointer;
-        font-size: 1.05rem;   /* matches body text scale */
+        font-size: 1.05rem; /* matches body text scale */
         font-weight: 700;
-        transition: background 0.15s, border-color 0.15s, transform 0.15s;
+        transition:
+            background 0.15s,
+            border-color 0.15s,
+            transform 0.15s;
         user-select: none;
     }
 
@@ -148,7 +152,8 @@
     .choice-label input[type="radio"] {
         appearance: none;
         -webkit-appearance: none;
-        width: 20px; height: 20px;
+        width: 20px;
+        height: 20px;
         border: 2px solid currentColor;
         border-radius: 50%;
         cursor: pointer;
@@ -162,7 +167,7 @@
     }
 
     .choice-label:has(input:checked) {
-        box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
         transform: translateY(-2px);
     }
 
@@ -193,7 +198,9 @@
         color: #2c3e50;
     }
 
-    .l-item:last-child { margin-bottom: 0; }
+    .l-item:last-child {
+        margin-bottom: 0;
+    }
 
     .lottery-pill {
         display: inline-block;
@@ -208,7 +215,10 @@
         flex-shrink: 0;
     }
 
-    .lottery-amount { color: #2563b0; font-weight: 700; }
+    .lottery-amount {
+        color: #2563b0;
+        font-weight: 700;
+    }
 
     /* ── Buttons ── */
     .action-row {
@@ -220,7 +230,7 @@
     }
 
     .btn-next {
-        background: linear-gradient(90deg, #2563b0, #4A90D9);
+        background: linear-gradient(90deg, #2563b0, #4a90d9);
         color: white !important;
         border: none;
         border-radius: 8px;
@@ -228,11 +238,16 @@
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
-        box-shadow: 0 3px 10px rgba(74,144,217,0.28);
-        transition: transform 0.15s, box-shadow 0.15s;
+        box-shadow: 0 3px 10px rgba(74, 144, 217, 0.28);
+        transition:
+            transform 0.15s,
+            box-shadow 0.15s;
     }
 
-    .btn-next:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(74,144,217,0.38); }
+    .btn-next:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 16px rgba(74, 144, 217, 0.38);
+    }
 
     .btn-reveal {
         background: #fffbe6;
@@ -246,7 +261,9 @@
         transition: background 0.15s;
     }
 
-    .btn-reveal:hover { background: #fff3cd; }
+    .btn-reveal:hover {
+        background: #fff3cd;
+    }
 
     /* ── Instructions panel ── */
     .instructions-top-bar {
@@ -258,58 +275,69 @@
     }
 </style>
 
-
 <div class="page-wrapper">
-
     <div class="outer-card">
         <div class="card-top-bar">
-            <span>Decision-Making Study (<b>Round <span style="color:red;">{{ subsession.round_number }}</span> of {{ C.NUM_ROUNDS }}</b>)</span>
+            <span
+                >Decision-Making Study (<b
+                    >Round
+                    <span style="color: red"
+                        >{{ subsession.round_number }}</span
+                    >
+                    of {{ C.NUM_ROUNDS }}</b
+                >)</span
+            >
             <span class="part-badge">Part 1 &middot; Make your choice</span>
         </div>
 
         <div class="card-inner">
-
             <!-- ── Price info box ── -->
             <div class="price-box">
-                {%if participant.treatment == 0 %}
-                    This round, the price is
-                    <span class="price-amount">&pound;{{ player.price_t1 }}</span>.
-                {% elif participant.treatment == 2 %}
-                    This round, the option price is
-                    <span class="price-amount">&pound;{{ player.price_t1 }}</span>.<br>
-                    In Part 2, if you buy this option, you can decide to purchase the lottery ticket for a price of
-                    <span class="price-amount">&pound;{{ player.price_t2 }}</span>
-                    <br> (after learning the outcome of Lottery 1).
-                {% elif participant.treatment == 3 %}
-                    This round, the price is
-                    <span class="price-amount">&pound;{{ player.price_t1 }}</span>.<br>
-                    In Part 2, you can return the lottery ticket and receive a refund amount of
-                    <span class="price-amount">&pound;{{ player.price_t2 }}</span>
-                    <br> (after learning the outcome of Lottery 1).
-                {% endif %}
+                {%if participant.treatment == 0 %} This round, the price is
+                <span class="price-amount">&pound;{{ player.price_t1 }}</span>.
+                {% elif participant.treatment == 2 %} This round, the option
+                price is
+                <span class="price-amount">&pound;{{ player.price_t1 }}</span
+                >.<br />
+                In Part 2, if you buy this option, you can decide to purchase
+                the lottery ticket for a price of
+                <span class="price-amount">&pound;{{ player.price_t2 }}</span>
+                <br />
+                (after learning the outcome of Lottery 1). {% elif
+                participant.treatment == 3 %} This round, the price is
+                <span class="price-amount">&pound;{{ player.price_t1 }}</span
+                >.<br />
+                In Part 2, you can return the lottery ticket and receive a
+                refund amount of
+                <span class="price-amount">&pound;{{ player.price_t2 }}</span>
+                <br />
+                (after learning the outcome of Lottery 1). {% endif %}
             </div>
 
             <!-- ── Decision card ── -->
             <div class="decision-card">
                 <div class="decision-header">
-                    {%if participant.treatment == 0 %}
-                        Do you want to purchase the lottery ticket for
-                        <span class="price-amount">&pound;{{ player.price_t1 }}</span>?
-                    {% elif participant.treatment == 2 %}
-                        Do you want to buy the option for
-                        <span class="price-amount">&pound;{{ player.price_t1 }}</span>?
-                    {% elif participant.treatment == 3 %}
-                        Do you want to purchase the lottery ticket for
-                        <span class="price-amount">&pound;{{ player.price_t1 }}</span>?
-                    {% endif %}
+                    {%if participant.treatment == 0 %} Do you want to purchase
+                    the lottery ticket for
+                    <span class="price-amount"
+                        >&pound;{{ player.price_t1 }}</span
+                    >? {% elif participant.treatment == 2 %} Do you want to buy
+                    the option for
+                    <span class="price-amount"
+                        >&pound;{{ player.price_t1 }}</span
+                    >? {% elif participant.treatment == 3 %} Do you want to
+                    purchase the lottery ticket for
+                    <span class="price-amount"
+                        >&pound;{{ player.price_t1 }}</span
+                    >? {% endif %}
                 </div>
                 <div class="decision-body">
                     <label class="choice-label yes">
-                        <input type="radio" name="purchase" value="True">
+                        <input type="radio" name="purchase" value="True" />
                         YES
                     </label>
                     <label class="choice-label no">
-                        <input type="radio" name="purchase" value="False">
+                        <input type="radio" name="purchase" value="False" />
                         NO
                     </label>
                 </div>
@@ -317,45 +345,66 @@
 
             <!-- ── Lottery reminder ── -->
             <div class="lottery-ref">
-                <div class="lottery-ref-title">📋 Reminder: The lottery ticket consists of the following two lotteries</div>
+                <div class="lottery-ref-title">
+                    📋 Reminder: The lottery ticket consists of the following
+                    two lotteries
+                </div>
                 <div class="l-item">
                     <span class="lottery-pill">Lottery 1</span>
-                    <span>Pays <span class="lottery-amount">&pound;{{ session.config.A_BAR }}</span> if the
-                        coin flip results in <strong>heads</strong>, and
-                        <span class="lottery-amount">&pound;{{ player.x }}</span> if it results in
-                        <strong>tails</strong>.</span>
+                    <span
+                        >Pays
+                        <span class="lottery-amount"
+                            >&pound;{{ session.config.A_BAR }}</span
+                        >
+                        if the coin flip results in <strong>heads</strong>, and
+                        <span class="lottery-amount"
+                            >&pound;{{ player.x }}</span
+                        >
+                        if it results in <strong>tails</strong>.</span
+                    >
                 </div>
                 <div class="l-item">
                     <span class="lottery-pill">Lottery 2</span>
-                    <span>Pays <span class="lottery-amount">&pound;{{ session.config.A_BAR }}</span> if the
-                        coin flip results in <strong>heads</strong>, and
-                        <span class="lottery-amount">&pound;0</span> if it results in
-                        <strong>tails</strong>.</span>
+                    <span
+                        >Pays
+                        <span class="lottery-amount"
+                            >&pound;{{ session.config.A_BAR }}</span
+                        >
+                        if the coin flip results in <strong>heads</strong>, and
+                        <span class="lottery-amount">&pound;0</span> if it
+                        results in <strong>tails</strong>.</span
+                    >
                 </div>
             </div>
 
             <!-- ── Buttons ── -->
             <div class="action-row">
-                <button class="otree-btn-next btn-next">Next &nbsp;&rarr;</button>
-                <button type="button" class="btn-reveal" id="instructions_button"
-                        onclick="open_instructions()">
+                <button class="otree-btn-next btn-next">
+                    Next &nbsp;&rarr;
+                </button>
+                <button
+                    type="button"
+                    class="btn-reveal"
+                    id="instructions_button"
+                    onclick="open_instructions()"
+                >
                     📖 &nbsp;Reveal Instructions
                 </button>
             </div>
-
         </div>
     </div>
 
     <!-- ── Instructions reveal panel ── -->
-    <div style="display:none;" id="instructions">
+    <div style="display: none" id="instructions">
         <div class="outer-card">
-            <div class="instructions-top-bar">📋 &nbsp;Study Instructions — Reference</div>
+            <div class="instructions-top-bar">
+                📋 &nbsp;Study Instructions — Reference
+            </div>
             <div class="card-inner">
                 {{ include "SBC_consent_form/instr.html" }}
             </div>
         </div>
     </div>
-
 </div>
 
 {{ endblock }}
