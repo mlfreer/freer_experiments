@@ -1,0 +1,249 @@
+{# Static example fragment — self-contained styles, all variables hardcoded #}
+
+<style>
+    .ex-price-box {
+        background: #f0f6ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 16px 22px;
+        margin-bottom: 18px;
+        text-align: center;
+        font-size: 15px;
+        color: #1a3a5c;
+        line-height: 1.7;
+    }
+    .ex-price-amount {
+        display: inline-block;
+        background: #fff3cd;
+        color: #92400e;
+        font-size: 1.15em;
+        font-weight: 800;
+        border-radius: 6px;
+        padding: 1px 8px;
+        border: 1.5px solid #f0c040;
+        letter-spacing: 0.01em;
+    }
+    .ex-decision-card {
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 18px;
+    }
+    .ex-decision-header {
+        background: #eef4fb;
+        padding: 14px 22px;
+        border-bottom: 1.5px solid #d5e6f5;
+        font-size: 15px;
+        font-weight: 600;
+        color: #1a3a5c;
+        text-align: center;
+    }
+    .ex-decision-body {
+        padding: 22px;
+        background: white;
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        flex-wrap: wrap;
+    }
+    .ex-choice-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 11px 28px;
+        border-radius: 10px;
+        border: 2px solid transparent;
+        font-size: 1.05rem;
+        font-weight: 700;
+        user-select: none;
+        cursor: default;
+    }
+    .ex-choice-label.yes {
+        background: #e8f5e9;
+        border-color: #81c784;
+        color: #1b5e20;
+    }
+    .ex-choice-label.no {
+        background: #fce4ec;
+        border-color: #f48fb1;
+        color: #880e4f;
+    }
+    .ex-choice-label input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid currentColor;
+        border-radius: 50%;
+        flex-shrink: 0;
+        pointer-events: none;
+        opacity: 0.6;
+    }
+    .ex-lottery-ref {
+        background: #f7faff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin-bottom: 0;
+    }
+    .ex-lottery-ref-title {
+        font-size: 0.97rem;
+        font-weight: 600;
+        color: #1a3a5c;
+        font-style: italic;
+        margin-bottom: 12px;
+    }
+    .ex-l-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 10px;
+        font-size: 14.5px;
+        line-height: 1.65;
+        color: #2c3e50;
+    }
+    .ex-l-item:last-child {
+        margin-bottom: 0;
+    }
+    .ex-lottery-pill {
+        display: inline-block;
+        background: #2563b0;
+        color: white;
+        border-radius: 20px;
+        padding: 2px 11px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        white-space: nowrap;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+    .ex-lottery-amount {
+        color: #2563b0;
+        font-weight: 700;
+    }
+    .ex-card-top-bar {
+        background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
+        padding: 16px 28px;
+        color: white;
+        font-size: 1.05rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 10px 10px 0 0;
+    }
+    .ex-part-badge {
+        background: rgba(255, 255, 255, 0.22);
+        border-radius: 20px;
+        padding: 3px 14px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+    .ex-card-inner {
+        padding: 22px 26px 24px 26px;
+        background: white;
+        border-radius: 0 0 10px 10px;
+    }
+    .ex-outer-card {
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 12px;
+        box-shadow: 0 4px 18px rgba(30, 60, 110, 0.09);
+        pointer-events: none;
+    }
+</style>
+
+<div class="ex-outer-card">
+    <!-- top bar -->
+
+    <div class="ex-card-inner">
+        <!-- price box -->
+        <div class="ex-price-box">
+            {% if participant.treatment == 0 %} This round, the price is
+            <span class="ex-price-amount">&pound;6</span>. {% elif
+            participant.treatment == 2 %} This round, the option price is
+            <span class="ex-price-amount">&pound;2</span>.<br />
+            In Part 2, if you buy this option, you can decide to purchase the
+            lottery ticket for a price of
+            <span class="ex-price-amount">&pound;4</span><br />
+            (after learning the outcome of Lottery 1). {% elif
+            participant.treatment == 3 %} This round, the price is
+            <span class="ex-price-amount">&pound;6</span>.<br />
+            In Part 2, you can return the lottery ticket and receive a refund
+            amount of
+            <span class="ex-price-amount">&pound;4</span><br />
+            (after learning the outcome of Lottery 1). {% endif %}
+        </div>
+
+        <!-- decision card -->
+        <div class="ex-decision-card">
+            <div class="ex-decision-header">
+                {% if participant.treatment == 0 %} Do you want to purchase the
+                lottery ticket for
+                <span class="ex-price-amount">&pound;6</span>? {% elif
+                participant.treatment == 2 %} Do you want to buy the option for
+                <span class="ex-price-amount">&pound;2</span>? {% elif
+                participant.treatment == 3 %} Do you want to purchase the
+                lottery ticket for
+                <span class="ex-price-amount">&pound;6</span>? {% endif %}
+            </div>
+            <div class="ex-decision-body">
+                <label class="ex-choice-label yes">
+                    <input
+                        type="radio"
+                        name="purchase_ex"
+                        value="True"
+                        disabled
+                        tabindex="-1"
+                    />
+                    YES
+                </label>
+                <label class="ex-choice-label no">
+                    <input
+                        type="radio"
+                        name="purchase_ex"
+                        value="False"
+                        disabled
+                        tabindex="-1"
+                    />
+                    NO
+                </label>
+            </div>
+        </div>
+
+        <!-- lottery reminder -->
+        <div class="ex-lottery-ref">
+            <div class="ex-lottery-ref-title">
+                📋 Reminder: The lottery ticket consists of the following two
+                lotteries
+            </div>
+            <div class="ex-l-item">
+                <span class="ex-lottery-pill">Lottery 1</span>
+                <span
+                    >Pays
+                    <span class="ex-lottery-amount"
+                        >&pound;{{ session.config.A_BAR }}
+                    </span>
+                    if the coin flip results in <strong>heads</strong>, and
+                    <span class="ex-lottery-amount"
+                        >&pound;{{participant.x_draw}}</span
+                    >
+                    if it results in <strong>tails</strong>.</span
+                >
+            </div>
+            <div class="ex-l-item">
+                <span class="ex-lottery-pill">Lottery 2</span>
+                <span
+                    >Pays
+                    <span class="ex-lottery-amount"
+                        >&pound;{{ session.config.A_BAR }}</span
+                    >
+                    if the coin flip results in <strong>heads</strong>, and
+                    <span class="ex-lottery-amount">&pound;0</span>
+                    if it results in <strong>tails</strong>.</span
+                >
+            </div>
+        </div>
+    </div>
+</div>
