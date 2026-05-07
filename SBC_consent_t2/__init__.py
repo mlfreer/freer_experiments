@@ -29,7 +29,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    consent = models.BooleanField()
+    # consent = models.BooleanField()
 
     # variables for the quiz answers:
     q1 = models.IntegerField()
@@ -93,7 +93,7 @@ class ReturnStudy(Page):
 
     @staticmethod
     def is_displayed(player: Player):
-        return (player.consent == False) or (player.return_study == True)
+        return player.return_study == True
 
 
 class Instructions(Page):
@@ -101,6 +101,15 @@ class Instructions(Page):
     def vars_for_template(player: Player):
         session = player.session
         participant = player.participant
+
+        # Only load from CSV once, the first time we hit this page
+        # Safely check whether x_draw is already set
+        try:
+            _ = participant.x_draw
+        except KeyError:
+            # First time we are here for this participant: load from CSV
+            retrieve_data(player)
+
         return dict(
             # Used in instr.html to avoid unsupported '+' expressions in templates
             example_sum=session.config["A_BAR"] + participant.x_draw,
@@ -157,9 +166,9 @@ class Quiz(Page):
 
 
 page_sequence = [
-    ConsentForm,
+    #    ConsentForm,
     ReturnStudy,
-    #                Example,
+    #     Example,
     Instructions,
     Quiz,
     ReturnStudy,

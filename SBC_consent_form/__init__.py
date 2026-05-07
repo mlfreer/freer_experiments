@@ -31,7 +31,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    consent = models.BooleanField()
+    # consent = models.BooleanField()
 
     # variables for the quiz answers:
     q1 = models.IntegerField()
@@ -167,7 +167,7 @@ class Quiz(Page):
 # -----------------------------------------------------------------------------
 
 page_sequence = [
-    ConsentForm,
+    #    ConsentForm,
     ReturnStudy,
     Instructions,
     Example,
