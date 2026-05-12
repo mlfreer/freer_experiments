@@ -114,6 +114,9 @@ class Instructions(Page):
             # Used in instr.html to avoid unsupported '+' expressions in templates
             example_sum=session.config["A_BAR"] + participant.x_draw,
             two_heads_sum=2 * session.config["A_BAR"],
+            payment_prob=session.config["selected_for_payment"],
+            overwrite_decision=session.config["overwrite_decision"],
+            implement_decision=100 - session.config["overwrite_decision"],
         )
 
 
@@ -162,6 +165,9 @@ class Quiz(Page):
             two_heads_sum=2 * session.config["A_BAR"],
             heads_tails_sum=session.config["A_BAR"] + 14,
             example_sum=session.config["A_BAR"] + participant.x_draw,
+            payment_prob=session.config["selected_for_payment"],
+            overwrite_decision=session.config["overwrite_decision"],
+            implement_decision=100 - session.config["overwrite_decision"],
         )
 
 

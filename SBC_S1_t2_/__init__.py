@@ -1,3 +1,5 @@
+import random
+
 from otree.api import *
 
 doc = """
@@ -71,6 +73,10 @@ class Player(BasePlayer):
 
     payoff_calculated = models.BooleanField(default=False)
     random_draws_generated = models.BooleanField(default=False)
+
+    # selected for payment:
+    selected_for_payment = models.BooleanField(default=True)
+    decision_overwritten = models.BooleanField(default=False)
 
 
 # --------------------------------------------------------
@@ -181,6 +187,9 @@ def compute_payoff(player: Player):
     if player.field_maybe_none("payoff_calculated"):
         return
 
+    payment_prob = player.session.config["selected_for_payment"]
+    overwrite_decision = player.session.config["overwrite_decision"]
+
     participant = player.participant
     subsession = player.subsession
     session = player.session
@@ -206,8 +215,15 @@ def compute_payoff(player: Player):
             won_t1 = p.random_draw_1 == 1
             won_t2 = p.random_draw_2 == 1
 
+            # checking whether the decision is overridden:
+            purchased_t1 = p.purchase_t1
+            random_draw = random.randint(0, 100)
+            if random_draw < overwrite_decision:
+                purchased_t1 = True
+                player.decision_overwritten = True
+
             if participant.treatment == 0:  # static, buy at t=1
-                if p.purchase_t1:
+                if purchased_t1:
                     player.earnings = int(
                         endowment
                         - price_t1
@@ -233,7 +249,7 @@ def compute_payoff(player: Player):
                 else:
                     player.earnings = int(endowment)
             elif participant.treatment == 2:  # dynamic, option
-                if p.purchase_t1:
+                if purchased_t1:
                     if p.revised_purchase_t2:
                         player.earnings = int(
                             endowment
@@ -248,7 +264,7 @@ def compute_payoff(player: Player):
                 else:
                     player.earnings = int(endowment)
             elif participant.treatment == 3:  # dynamic, refund
-                if p.purchase_t1:
+                if purchased_t1:
                     if p.revised_purchase_t2 == 0:
                         player.earnings = int(
                             endowment
@@ -261,6 +277,14 @@ def compute_payoff(player: Player):
                         player.earnings = int(endowment - price_t1 + price_t2)
                 else:
                     player.earnings = int(endowment)
+
+            # checking whether the player is to get paid:
+            random_draw = random.randint(0, 100)
+            if (
+                random_draw >= payment_prob
+            ):  # if the prob is above the threshold we nulify it
+                player.earnings = 0
+                player.selected_for_payment = False
 
             print(f"Final earnings set to: {player.earnings}")
             player.payoff_calculated = (
@@ -311,6 +335,9 @@ class ExperimentStarts(Page):
             example_sum=example_sum,
             two_heads_sum=2 * a_bar,
             coin_result=result,
+            payment_prob=session.config["selected_for_payment"],
+            overwrite_decision=session.config["overwrite_decision"],
+            implement_decision=100 - session.config["overwrite_decision"],
         )
 
 
@@ -348,6 +375,9 @@ class Decision(Page):
             x_draw=x_draw,
             example_sum=example_sum,
             two_heads_sum=2 * a_bar,
+            payment_prob=session.config["selected_for_payment"],
+            overwrite_decision=session.config["overwrite_decision"],
+            implement_decision=100 - session.config["overwrite_decision"],
         )
 
     @staticmethod
@@ -392,6 +422,9 @@ class RevisionPage(Page):
                     price_t2=p.price_t2,
                     purchase_t2=p.purchase_t2,
                     revised_purchase_t2=p.revised_purchase_t2,
+                    payment_prob=session.config["selected_for_payment"],
+                    overwrite_decision=session.config["overwrite_decision"],
+                    implement_decision=100 - session.config["overwrite_decision"],
                 )
             )
         return dict(past_decisions=past)
@@ -432,7 +465,10 @@ class Results(Page):
             x_draw=participant.x_draw,
             a_bar=session.config["A_BAR"],
             treatment=participant.treatment,
-            # completion_url=session.config['completion_url'],
+            payment_prob=session.config["selected_for_payment"],
+            overwrite_decision=session.config["overwrite_decision"],
+            implement_decision=100 - session.config["overwrite_decision"],
+            completion_url=session.config["completion_url"],
         )
 
 

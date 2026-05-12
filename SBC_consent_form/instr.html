@@ -1048,13 +1048,16 @@
                                 <p>
                                     At the end of Part 2 of the study, the
                                     computer
-                                    <strong>randomly selects 20%</strong> of
-                                    participants that will receive their bonus
-                                    payments. If you are selected, you will
-                                    receive your bonus payment within two weeks
-                                    of the completion of the study. To calculate
-                                    your bonus payment, the computer {% if
-                                    participant.treatment == 0 %}
+                                    <strong
+                                        >randomly selects {{ payment_prob
+                                        }}%</strong
+                                    >
+                                    of participants that will receive their
+                                    bonus payments. If you are selected, you
+                                    will receive your bonus payment within two
+                                    weeks of the completion of the study. To
+                                    calculate your bonus payment, the computer
+                                    {% if participant.treatment == 0 %}
                                     <strong
                                         >randomly selects one purchase price
                                     </strong>
@@ -1081,9 +1084,10 @@
                                     on the payment rule described above.
                                 </p>
                                 <p>
-                                    For 98% of the selected participants, their
-                                    decisions will be implemented exactly as
-                                    they decided. For the remaining 2%, their
+                                    For {{implement_decision}}% of the selected
+                                    participants, their decisions will be
+                                    implemented exactly as they decided. For the
+                                    remaining {{overwrite_decision}}%, their
                                     decisions will be treated as if they had
                                     purchased the lottery ticket. {% if
                                     participant.treatment == 2 or

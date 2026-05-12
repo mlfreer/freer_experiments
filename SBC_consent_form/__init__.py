@@ -100,6 +100,9 @@ class Instructions(Page):
             # Used in instr.html to avoid unsupported '+' expressions in templates
             two_heads_sum=session.config["A_BAR"] + session.config["A_BAR"],
             example_sum=session.config["A_BAR"] + participant.x_draw,
+            payment_prob=session.config["selected_for_payment"],
+            overwrite_decision=session.config["overwrite_decision"],
+            implement_decision=100 - session.config["overwrite_decision"],
         )
 
 
@@ -119,6 +122,9 @@ class Example(Page):
             # Used in Example.html to avoid unsupported '+' expressions in templates
             two_heads_sum=session.config["A_BAR"] + session.config["A_BAR"],
             example_sum=session.config["A_BAR"] + participant.x_draw,
+            payment_prob=session.config["selected_for_payment"],
+            overwrite_decision=session.config["overwrite_decision"],
+            implement_decision=100 - session.config["overwrite_decision"],
         )
 
     def error_message(player, value):
@@ -161,6 +167,9 @@ class Quiz(Page):
             two_heads_sum=a_bar + a_bar,
             heads_tails_sum=a_bar + 14,
             example_sum=session.config["A_BAR"] + participant.x_draw,
+            payment_prob=session.config["selected_for_payment"],
+            overwrite_decision=session.config["overwrite_decision"],
+            implement_decision=100 - session.config["overwrite_decision"],
         )
 
 

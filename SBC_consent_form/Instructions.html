@@ -1181,7 +1181,8 @@
                                             At the end of Part 2 of the study,
                                             the computer
                                             <strong
-                                                >randomly selects 20%</strong
+                                                >randomly selects {{
+                                                payment_prob }}%</strong
                                             >
                                             of participants that will receive
                                             their bonus payments. If you are
@@ -1222,16 +1223,17 @@
                                             payment rule described above.
                                         </p>
                                         <p>
-                                            For 98% of the selected
-                                            participants, their decisions will
-                                            be implemented exactly as they
-                                            decided. For the remaining 2%, their
-                                            decisions will be treated as if they
-                                            had purchased the lottery ticket. {%
-                                            if participant.treatment == 2 or
-                                            participant.treatment == 3 %}Because
-                                            it may be that the computer selects
-                                            you for a purchase,
+                                            For {{implement_decision}}% of the
+                                            selected participants, their
+                                            decisions will be implemented
+                                            exactly as they decided. For the
+                                            remaining {{overwrite_decision}}%,
+                                            their decisions will be treated as
+                                            if they had purchased the lottery
+                                            ticket. {% if participant.treatment
+                                            == 2 or participant.treatment == 3
+                                            %}Because it may be that the
+                                            computer selects you for a purchase,
                                             <strong
                                                 >all participants will make
                                                 decisions in Part 2</strong
