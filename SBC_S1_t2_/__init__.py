@@ -218,7 +218,7 @@ def compute_payoff(player: Player):
             # checking whether the decision is overridden:
             purchased_t1 = p.purchase_t1
             random_draw = random.randint(0, 100)
-            if random_draw < overwrite_decision:
+            if (random_draw < overwrite_decision) and (participant.treatment > 1):
                 purchased_t1 = True
                 player.decision_overwritten = True
 
@@ -422,9 +422,9 @@ class RevisionPage(Page):
                     price_t2=p.price_t2,
                     purchase_t2=p.purchase_t2,
                     revised_purchase_t2=p.revised_purchase_t2,
-                    payment_prob=session.config["selected_for_payment"],
-                    overwrite_decision=session.config["overwrite_decision"],
-                    implement_decision=100 - session.config["overwrite_decision"],
+                    payment_prob=p.session.config["selected_for_payment"],
+                    overwrite_decision=p.session.config["overwrite_decision"],
+                    implement_decision=100 - p.session.config["overwrite_decision"],
                 )
             )
         return dict(past_decisions=past)

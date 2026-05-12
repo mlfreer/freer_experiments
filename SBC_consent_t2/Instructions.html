@@ -1365,6 +1365,7 @@
                                             on your decision and based on the
                                             payment rule described above.
                                         </p>
+                                        {% if participant.treatment > 1 %}
                                         <p>
                                             For {{implement_decision}}% of the
                                             selected participants, their
@@ -1385,6 +1386,7 @@
                                             potentially involve receiving a
                                             lottery ticket. {% endif %}
                                         </p>
+                                        {% endif %}
                                         <p>
                                             Your decisions will not affect
                                             whether you are selected for the

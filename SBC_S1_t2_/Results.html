@@ -395,6 +395,7 @@
                 {% endif %} {% endif %}
             </div>
 
+            {% if participant.treatment > 1 %}
             <div class="decision-block">
                 {% if player.decision_overwritten %}
                 <div class="decision-row">
@@ -413,6 +414,7 @@
                 </div>
                 {% endif %}
             </div>
+            {% endif %}
 
             <!-- ── Bonus payment ── -->
             {% if player.selected_for_payment == True %}
