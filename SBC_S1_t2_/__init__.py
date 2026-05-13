@@ -124,7 +124,7 @@ def retrieve_data(player):
     csv_path = os.path.join(root_dir, "output.csv")
     df = pd.read_csv(csv_path)
     # df = pd.read_csv("output.csv")
-    print(df)
+    #    print(df)
 
     if participant.treatment != 1:
         # assigning the prices:
@@ -145,14 +145,15 @@ def retrieve_data(player):
             & (df["player.price_t2"] == player.price_t2)
             & (idx_series == index)
         ]
-        print(rows, "\n", player.price_t1, "\n", participant.label, "\n", index)
+        #
+        # print(rows, "\n", player.price_t1, "\n", participant.label, "\n", index)
 
         # check for the mistakes in the data set
         if rows.empty:
             print("Could not find matching row in output.csv for participant:", label)
             return  # nothing recorded for this label
 
-        print(rows["player.random_draw_1"].squeeze().astype(int))
+        # print(rows["player.random_draw_1"].squeeze().astype(int))
 
         # recording random_draw_1
         temp = float(rows["player.random_draw_1"].squeeze())
@@ -198,7 +199,7 @@ def compute_payoff(player: Player):
     endowment = int(C.ENDOWMENT)
     player.earnings = endowment
 
-    print(f"Computing payoff for player, selected_round: {player.selected_round}")
+    # print(f"Computing payoff for player, selected_round: {player.selected_round}")
 
     for p in player.in_all_rounds():
         retrieve_data(p)
@@ -280,13 +281,14 @@ def compute_payoff(player: Player):
 
             # checking whether the player is to get paid:
             random_draw = random.randint(0, 100)
+            print(random_draw, payment_prob)
             if (
                 random_draw >= payment_prob
             ):  # if the prob is above the threshold we nulify it
                 player.earnings = 0
                 player.selected_for_payment = False
 
-            print(f"Final earnings set to: {player.earnings}")
+            # print(f"Final earnings set to: {player.earnings}")
             player.payoff_calculated = (
                 True  # marking the fact that payoff is calculated
             )
