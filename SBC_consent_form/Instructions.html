@@ -1230,7 +1230,9 @@
                                             exactly as they decided. For the
                                             remaining {{overwrite_decision}}%,
                                             their decisions will be treated as
-                                            if they had purchased the lottery
+                                            if they had bought {% if participant.treatment
+                                            == 2 or participant.treatment == 3
+                                            %} the option to purchase {% endif %} the lottery
                                             ticket. {% if participant.treatment
                                             == 2 or participant.treatment == 3
                                             %}Because it may be that the
