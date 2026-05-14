@@ -1,24 +1,22 @@
-{{ extends 'global/Page.html' }}
-
-{{ block scripts }}
+{{ extends 'global/Page.html' }} {{ block scripts }}
 <script>
     /* Sends live update to server whenever a revised decision radio is changed */
     function sendRevision(el) {
         liveSend({
             round: parseInt(el.dataset.round),
-            revised_purchase: el.value === 'True'
+            revised_purchase: el.value === "True",
         });
     }
 </script>
-{{ endblock }}
-
-{{ block content }}
+{{ endblock }} {{ block content }}
 
 <style>
-    body { background: #eef3fa; }
+    body {
+        background: #eef3fa;
+    }
 
     .page-wrapper {
-        font-family: 'Segoe UI', Arial, sans-serif;
+        font-family: "Segoe UI", Arial, sans-serif;
         max-width: 860px;
         margin: 24px auto;
     }
@@ -27,14 +25,14 @@
     .outer-card {
         background: white;
         border-radius: 14px;
-        box-shadow: 0 6px 28px rgba(30,60,110,0.10);
+        box-shadow: 0 6px 28px rgba(30, 60, 110, 0.1);
         overflow: hidden;
         margin-bottom: 18px;
     }
 
     /* ── Blue gradient top bar ── */
     .card-top-bar {
-        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
         padding: 16px 28px;
         color: white;
         font-size: 1.05rem;
@@ -45,14 +43,16 @@
     }
 
     .part-badge {
-        background: rgba(255,255,255,0.22);
+        background: rgba(255, 255, 255, 0.22);
         border-radius: 20px;
         padding: 3px 14px;
         font-size: 0.8rem;
         font-weight: 500;
     }
 
-    .card-inner { padding: 26px 30px 30px 30px; }
+    .card-inner {
+        padding: 26px 30px 30px 30px;
+    }
 
     /* ── Intro note ── */
     .intro-note {
@@ -77,7 +77,7 @@
 
     /* Blue gradient header row matching top bar */
     .decisions-table thead tr {
-        background: linear-gradient(90deg, #2563b0 0%, #4A90D9 100%);
+        background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
         color: white;
     }
 
@@ -95,8 +95,12 @@
         transition: background 0.12s;
     }
 
-    .decisions-table tbody tr:hover { background: #f5f9ff; }
-    .decisions-table tbody tr:last-child { border-bottom: none; }
+    .decisions-table tbody tr:hover {
+        background: #f5f9ff;
+    }
+    .decisions-table tbody tr:last-child {
+        border-bottom: none;
+    }
 
     .decisions-table td {
         padding: 10px 14px;
@@ -156,7 +160,9 @@
         cursor: pointer;
         font-weight: 700;
         font-size: 0.88rem;
-        transition: background 0.15s, border-color 0.15s;
+        transition:
+            background 0.15s,
+            border-color 0.15s;
         margin: 0 4px;
         user-select: none;
     }
@@ -167,7 +173,10 @@
         color: #1b5e20;
     }
 
-    .rev-label.yes:hover { background: #d0efd2; border-color: #4caf50; }
+    .rev-label.yes:hover {
+        background: #d0efd2;
+        border-color: #4caf50;
+    }
 
     .rev-label.no {
         background: #fce4ec;
@@ -175,13 +184,17 @@
         color: #880e4f;
     }
 
-    .rev-label.no:hover { background: #f8bbd0; border-color: #e91e63; }
+    .rev-label.no:hover {
+        background: #f8bbd0;
+        border-color: #e91e63;
+    }
 
     /* Custom radio circle inheriting label colour */
     .rev-label input[type="radio"] {
         appearance: none;
         -webkit-appearance: none;
-        width: 15px; height: 15px;
+        width: 15px;
+        height: 15px;
         border: 2px solid currentColor;
         border-radius: 50%;
         cursor: pointer;
@@ -204,7 +217,7 @@
     }
 
     .btn-next {
-        background: linear-gradient(90deg, #2563b0, #4A90D9);
+        background: linear-gradient(90deg, #2563b0, #4a90d9);
         color: white !important;
         border: none;
         border-radius: 8px;
@@ -212,32 +225,36 @@
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
-        box-shadow: 0 3px 10px rgba(74,144,217,0.28);
-        transition: transform 0.15s, box-shadow 0.15s;
+        box-shadow: 0 3px 10px rgba(74, 144, 217, 0.28);
+        transition:
+            transform 0.15s,
+            box-shadow 0.15s;
     }
 
     .btn-next:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 16px rgba(74,144,217,0.38);
+        box-shadow: 0 5px 16px rgba(74, 144, 217, 0.38);
     }
 </style>
 
-
 <div class="page-wrapper">
-
     <div class="outer-card">
-
         <!-- ── Blue top bar ── -->
         <div class="card-top-bar">
             <span>Decision-Making Study</span>
-            <span class="part-badge">Part 2 &middot; Review &amp; revise your decisions</span>
+            <span class="part-badge"
+                >Part 2 &middot; Review &amp; revise your decisions</span
+            >
         </div>
 
         <div class="card-inner">
-
             <!-- ── Intro note ── -->
             <div class="intro-note">
-                Below are all your decisions. You may revise any of them before submitting.
+                Below are all your decisions{% if participant.treatment == 2 %}
+                on whether to purchase or not the lottery ticket <br />
+                {% elif participant.treatment == 3 %} on whether to return or to
+                keep the lottery <br />{% endif %}. You may revise any of them
+                before submitting.
             </div>
 
             <!-- ── Decisions table ── -->
@@ -248,20 +265,18 @@
 
                         <!-- Treatment 2 labels option price; others label it price -->
                         {% if participant.treatment == 2 %}
-                            <th>Option Price</th>
+                        <th>Option Price</th>
                         {% else %}
-                            <th>Price</th>
+                        <th>Price</th>
                         {% endif %}
 
                         <!-- Treatment 2 and 3 have a second price column -->
-                        {% if participant.treatment == 2 or participant.treatment == 3 %}
-                            <th>
-                                {% if participant.treatment == 2 %}
-                                    Exercise Price
-                                {% else %}
-                                    Refund
-                                {% endif %}
-                            </th>
+                        {% if participant.treatment == 2 or
+                        participant.treatment == 3 %}
+                        <th>
+                            {% if participant.treatment == 2 %} Exercise Price
+                            {% else %} Refund {% endif %}
+                        </th>
                         {% endif %}
 
                         <th>Original Decision</th>
@@ -276,43 +291,71 @@
 
                         <!-- First price column -->
                         {% if participant.treatment == 1 %}
-                            <td><span class="price-amount">&pound;{{ d.price_t2 }}</span></td>
+                        <td>
+                            <span class="price-amount"
+                                >&pound;{{ d.price_t2 }}</span
+                            >
+                        </td>
                         {% else %}
-                            <td><span class="price-amount">&pound;{{ d.price_t1 }}</span></td>
+                        <td>
+                            <span class="price-amount"
+                                >&pound;{{ d.price_t1 }}</span
+                            >
+                        </td>
                         {% endif %}
 
                         <!-- Second price column for treatments 2 and 3 -->
-                        {% if participant.treatment == 2 or participant.treatment == 3 %}
-                            <td><span class="price-amount">&pound;{{ d.price_t2 }}</span></td>
+                        {% if participant.treatment == 2 or
+                        participant.treatment == 3 %}
+                        <td>
+                            <span class="price-amount"
+                                >&pound;{{ d.price_t2 }}</span
+                            >
+                        </td>
                         {% endif %}
 
                         <!-- Original decision badge (read-only) -->
                         <td>
                             {% if d.purchase_t2 %}
-                                <span class="badge-yes">YES</span>
+                            <span class="badge-yes">YES</span>
                             {% else %}
-                                <span class="badge-no">NO</span>
+                            <span class="badge-no">NO</span>
                             {% endif %}
                         </td>
 
                         <!-- Revised decision — radio buttons send live update on change -->
                         <td>
                             <label class="rev-label yes">
-                                <input type="radio"
-                                       name="revised_{{ d.round }}"
-                                       value="True"
-                                       {% if d.revised_purchase_t2 %}checked{% endif %}
-                                       data-round="{{ d.round }}"
-                                       onchange="sendRevision(this)">
+                                <input
+                                    type="radio"
+                                    name="revised_{{ d.round }}"
+                                    value="True"
+                                    {%
+                                    if
+                                    d.revised_purchase_t2
+                                    %}checked{%
+                                    endif
+                                    %}
+                                    data-round="{{ d.round }}"
+                                    onchange="sendRevision(this)"
+                                />
                                 YES
                             </label>
                             <label class="rev-label no">
-                                <input type="radio"
-                                       name="revised_{{ d.round }}"
-                                       value="False"
-                                       {% if not d.revised_purchase_t2 %}checked{% endif %}
-                                       data-round="{{ d.round }}"
-                                       onchange="sendRevision(this)">
+                                <input
+                                    type="radio"
+                                    name="revised_{{ d.round }}"
+                                    value="False"
+                                    {%
+                                    if
+                                    not
+                                    d.revised_purchase_t2
+                                    %}checked{%
+                                    endif
+                                    %}
+                                    data-round="{{ d.round }}"
+                                    onchange="sendRevision(this)"
+                                />
                                 NO
                             </label>
                         </td>
@@ -327,10 +370,11 @@
                     Submit &nbsp;&rarr;
                 </button>
             </div>
-
-        </div><!-- /card-inner -->
-    </div><!-- /outer-card -->
-
-</div><!-- /page-wrapper -->
+        </div>
+        <!-- /card-inner -->
+    </div>
+    <!-- /outer-card -->
+</div>
+<!-- /page-wrapper -->
 
 {{ endblock }}
