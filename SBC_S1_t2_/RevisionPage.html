@@ -251,9 +251,8 @@
             <!-- ── Intro note ── -->
             <div class="intro-note">
                 Below are all your decisions{% if participant.treatment == 2 %}
-                on whether to purchase or not the lottery ticket <br />
-                {% elif participant.treatment == 3 %} on whether to return or to
-                keep the lottery <br />{% endif %}. You may revise any of them
+                on whether to purchase the lottery ticket. <br />
+                {% elif participant.treatment == 3 %} on whether to return the lottery ticket. <br />{% endif %} You may revise any of them
                 before submitting.
             </div>
 
@@ -274,7 +273,7 @@
                         {% if participant.treatment == 2 or
                         participant.treatment == 3 %}
                         <th>
-                            {% if participant.treatment == 2 %} Exercise Price
+                            {% if participant.treatment == 2 %} Purchase Price
                             {% else %} Refund {% endif %}
                         </th>
                         {% endif %}
