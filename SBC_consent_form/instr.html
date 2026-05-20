@@ -793,7 +793,7 @@
                                     payment is calculated as follows:
                                 </p>
                                 <div class="formula-box">
-                                    Bonus&nbsp;Payment &nbsp;=&nbsp;
+                                    Bonus&nbsp;payment &nbsp;=&nbsp;
                                     <em>Budget</em> {% if participant.treatment
                                     == 2 %} &nbsp;&minus;&nbsp;
                                     <em>Option&nbsp;price</em> {% endif %}
@@ -811,7 +811,7 @@
                                 </p>
 
                                 <div class="formula-box example">
-                                    Bonus&nbsp;Payment &nbsp;=&nbsp; {{
+                                    Bonus&nbsp;payment &nbsp;=&nbsp; {{
                                     C.ENDOWMENT }} &minus; £6 + £{{
                                     session.config.A_BAR }} =
                                     <span class="result">£16</span>
@@ -827,7 +827,7 @@
                                 </p>
 
                                 <div class="formula-box example">
-                                    Bonus&nbsp;Payment &nbsp;=&nbsp; {{
+                                    Bonus&nbsp;payment &nbsp;=&nbsp; {{
                                     C.ENDOWMENT }} &minus; £2 &minus; £4 + £{{
                                     session.config.A_BAR }} =
                                     <span class="result">£16</span>
@@ -839,7 +839,7 @@
                                 </p>
 
                                 <div class="formula-box">
-                                    Bonus&nbsp;Payment &nbsp;=&nbsp;<em
+                                    Bonus&nbsp;payment &nbsp;=&nbsp;<em
                                         >Budget</em
                                     >
                                     &nbsp;=&nbsp;
@@ -856,7 +856,7 @@
                                 </p>
 
                                 <div class="formula-box">
-                                    Bonus&nbsp;Payment &nbsp;=&nbsp;
+                                    Bonus&nbsp;payment &nbsp;=&nbsp;
                                     <em>Budget</em> &nbsp;&minus;&nbsp;
                                     <em>Option&nbsp;price</em>
                                 </div>
@@ -867,7 +867,7 @@
                                 </p>
 
                                 <div class="formula-box example">
-                                    Bonus&nbsp;Payment &nbsp;=&nbsp;{{
+                                    Bonus&nbsp;payment &nbsp;=&nbsp;{{
                                     C.ENDOWMENT }} &minus; £4 =
                                     <span class="result">£10</span>
                                 </div>
@@ -878,7 +878,7 @@
                                 </p>
 
                                 <div class="formula-box">
-                                    Bonus&nbsp;Payment &nbsp;=&nbsp;<em
+                                    Bonus&nbsp;payment &nbsp;=&nbsp;<em
                                         >Budget</em
                                     >
                                     &nbsp;=&nbsp;
@@ -897,7 +897,7 @@
                                 </p>
 
                                 <div class="formula-box">
-                                    Bonus&nbsp;Payment &nbsp;=&nbsp;
+                                    Bonus&nbsp;payment &nbsp;=&nbsp;
                                     <em>Budget</em> &nbsp;&minus;&nbsp;
                                     <em>Purchase&nbsp;price</em> &nbsp;+&nbsp;
                                     <em>Refund&nbsp;amount</em>
@@ -910,7 +910,7 @@
                                 </p>
 
                                 <div class="formula-box example">
-                                    Bonus&nbsp;Payment &nbsp;=&nbsp;{{
+                                    Bonus&nbsp;payment &nbsp;=&nbsp;{{
                                     C.ENDOWMENT }} &minus; £8 + £4 =
                                     <span class="result">£10</span>
                                 </div>
@@ -1046,18 +1046,17 @@
                         <div id="sec-4" class="accordion-collapse collapse">
                             <div class="accordion-body">
                                 <p>
-                                    At the end of Part 2 of the study, the
-                                    computer
+                                    At the end of Part 2 of the study, computer
                                     <strong
                                         >randomly selects {{ payment_prob
                                         }}%</strong
                                     >
-                                    of participants that will receive their
-                                    bonus payments. If you are selected, you
-                                    will receive your bonus payment within two
-                                    weeks of the completion of the study. To
-                                    calculate your bonus payment, the computer
-                                    {% if participant.treatment == 0 %}
+                                    of participants to receive their bonus
+                                    payments. If you are selected, you will
+                                    receive your bonus payment within two weeks
+                                    of the completion of the study. To calculate
+                                    your bonus payment, the computer {% if
+                                    participant.treatment == 0 %}
                                     <strong
                                         >randomly selects one purchase price
                                     </strong>
