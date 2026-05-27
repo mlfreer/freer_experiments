@@ -238,13 +238,14 @@ DEBUG = True
 
 SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00,
-    participation_fee=3.00,
+    participation_fee=2.00,
     min_pay=1,
     max_pay=28,
     A_BAR=8,
     treatment=0,  # treatment enumeration starts with 0 and goes to 3 so we can simplify the presentation of the constants.
     doc="",
-    completion_url="https://app.prolific.co",
+    completion_url="https://app.prolific.com/submissions/complete?cc=C13H5EHD",
+    completion_url1="https://app.prolific.com/submissions/complete?cc=C13H5EHD",
     selected_for_payment=10,  # the probability that subject is selected for payment
     overwrite_decision=2,  # decision in t=1 is over-written
 )

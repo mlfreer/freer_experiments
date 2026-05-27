@@ -306,12 +306,21 @@ class RevisionPage(Page):
 # -----------------------------------------------------------------------------
 # Final completion page
 class CompletionPage(Page):
-    timeout_seconds = 60  # 1 minute to read the message
+    #    timeout_seconds = 60  # 1 minute to read the message
 
     @staticmethod
     def is_displayed(player: Player):
         subsession = player.subsession
         return subsession.round_number == C.NUM_ROUNDS
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        participant = player.participant
+        session = player.session
+
+        return dict(
+            completion_url=session.config["completion_url"],
+        )
 
 
 # -----------------------------------------------------------------------------
