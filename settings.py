@@ -245,7 +245,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     treatment=0,  # treatment enumeration starts with 0 and goes to 3 so we can simplify the presentation of the constants.
     doc="",
     completion_url="https://app.prolific.co",
-    selected_for_payment=20,  # the probability that subject is selected for payment
+    selected_for_payment=10,  # the probability that subject is selected for payment
     overwrite_decision=2,  # decision in t=1 is over-written
 )
 

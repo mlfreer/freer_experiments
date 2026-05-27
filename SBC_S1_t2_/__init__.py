@@ -78,6 +78,20 @@ class Player(BasePlayer):
     selected_for_payment = models.BooleanField(default=True)
     decision_overwritten = models.BooleanField(default=False)
 
+    # survey questions:
+    pilot_comments = models.StringField()
+    strategy = models.StringField()
+    others_strategy = models.StringField()
+
+    # preference parameters:
+    risk = models.IntegerField()
+    time = models.IntegerField()
+    endowment = models.CurrencyField()
+    complexity = models.IntegerField()
+
+    numeracy1 = models.IntegerField()
+    numeracy2 = models.IntegerField()
+
 
 # --------------------------------------------------------
 # FUNCTIONS:
@@ -474,4 +488,29 @@ class Results(Page):
         )
 
 
-page_sequence = [ExperimentStarts, Decision, RevisionPage, Results]
+# ---------------------------------------------------------------------
+# SURVEY
+class Survey(Page):
+    form_model = "player"
+    form_fields = [
+        "pilot_comments",
+        "strategy",
+        "others_strategy",
+        "risk",
+        "time",
+        "complexity",
+        "endowment",
+        "numeracy1",
+        "numeracy2",
+    ]
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.subsession.round_number == C.NUM_ROUNDS
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return dict(likert_range=range(11))
+
+
+page_sequence = [ExperimentStarts, Decision, RevisionPage, Survey, Results]

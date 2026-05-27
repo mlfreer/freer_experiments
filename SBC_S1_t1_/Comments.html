@@ -1,0 +1,213 @@
+{{ extends 'global/Page.html' }} {{ block content }}
+
+<style>
+    body {
+        background: #eef3fa;
+    }
+
+    .page-wrapper {
+        font-family: "Segoe UI", Arial, sans-serif;
+        max-width: 860px;
+        margin: 24px auto;
+    }
+
+    .outer-card {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 6px 28px rgba(30, 60, 110, 0.1);
+        overflow: hidden;
+        margin-bottom: 18px;
+    }
+
+    .card-top-bar {
+        background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
+        padding: 16px 28px;
+        color: white;
+        font-size: 1.05rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .part-badge {
+        background: rgba(255, 255, 255, 0.22);
+        border-radius: 20px;
+        padding: 3px 14px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .card-inner {
+        padding: 26px 30px 30px 30px;
+    }
+
+    /* ── Intro note ── */
+    .intro-note {
+        background: #f0f6ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 14px 20px;
+        margin-bottom: 28px;
+        font-size: 15px;
+        color: #1a3a5c;
+        line-height: 1.7;
+        text-align: center;
+    }
+
+    /* ── Survey questions ── */
+    .survey-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 28px;
+    }
+
+    .survey-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .survey-field label {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1a3a5c;
+        line-height: 1.5;
+    }
+
+    .survey-field textarea {
+        width: 100%;
+        min-height: 90px;
+        padding: 10px 14px;
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 14.5px;
+        color: #2c3e50;
+        background: #f5f9ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 8px;
+        resize: vertical;
+        line-height: 1.6;
+        transition:
+            border-color 0.15s,
+            box-shadow 0.15s;
+    }
+
+    .survey-field textarea:focus {
+        outline: none;
+        border-color: #4a90d9;
+        box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
+        background: #fff;
+    }
+
+    .survey-field textarea::placeholder {
+        color: #a0aab8;
+    }
+
+    .field-divider {
+        border: none;
+        border-top: 1px solid #e5edf7;
+        margin: 0;
+    }
+
+    /* ── Submit button ── */
+    .action-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-top: 6px;
+    }
+
+    .btn-next {
+        background: linear-gradient(90deg, #2563b0, #4a90d9);
+        color: white !important;
+        border: none;
+        border-radius: 8px;
+        padding: 11px 60px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 3px 10px rgba(74, 144, 217, 0.28);
+        transition:
+            transform 0.15s,
+            box-shadow 0.15s;
+    }
+
+    .btn-next:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 16px rgba(74, 144, 217, 0.38);
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="outer-card">
+        <div class="card-top-bar">
+            <span>Decision-Making Study</span>
+            <span class="part-badge">Post-Experiment Survey</span>
+        </div>
+
+        <div class="card-inner">
+            <div class="intro-note">
+                Please answer the questions below. All responses are open-ended
+                — there are no right or wrong answers.
+            </div>
+
+            <form method="post">
+                <div class="survey-fields">
+                    <div class="survey-field">
+                        <label for="id_pilot_comments">
+                            This is a pilot session for this study. Do you have
+                            any comments about the study (such as any technical
+                            issues, confusing instructions, or general
+                            feedback)?
+                        </label>
+                        <textarea
+                            name="pilot_comments"
+                            id="id_pilot_comments"
+                            rows="4"
+                        ></textarea>
+                        <i
+                            >If you mention an issue of particular interest to
+                            us you will receive an additional £1 bonus
+                            payment.</i
+                        >
+                    </div>
+
+                    <hr class="field-divider" />
+
+                    <div class="survey-field">
+                        <label for="id_strategy">
+                            How did you make decisions in this study? What
+                            elements did you take into account?
+                        </label>
+                        <textarea name="strategy" id="id_strategy" rows="4">
+                        </textarea>
+                    </div>
+
+                    <hr class="field-divider" />
+
+                    <div class="survey-field">
+                        <label for="id_others_strategy">
+                            How do you think <i>other participants</i> make
+                            decisions in this study?
+                        </label>
+                        <textarea
+                            name="others_strategy"
+                            id="id_others_strategy"
+                            rows="4"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <div class="action-row">
+                    <button type="submit" class="otree-btn-next btn-next">
+                        Submit &nbsp;&rarr;
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{ endblock }}

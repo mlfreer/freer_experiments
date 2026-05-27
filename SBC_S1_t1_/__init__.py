@@ -78,6 +78,11 @@ class Player(BasePlayer):
     random_draw_2 = models.IntegerField()
     treatment = models.IntegerField()
 
+    # survey questions:
+    pilot_comments = models.StringField()
+    strategy = models.StringField()
+    others_strategy = models.StringField()
+
 
 # -----------------------------------------------------------------------------
 
@@ -309,6 +314,24 @@ class CompletionPage(Page):
         return subsession.round_number == C.NUM_ROUNDS
 
 
+# -----------------------------------------------------------------------------
+class Comments(Page):
+    form_model = "player"
+    form_fields = ["pilot_comments", "strategy", "others_strategy"]
+
+    @staticmethod
+    def is_displayed(player: Player):
+        subsession = player.subsession
+        return subsession.round_number == C.NUM_ROUNDS
+
+
 # ORDER
-page_sequence = [ExperimentStarts, Decision, RevisionPage, Results, CompletionPage]
+page_sequence = [
+    ExperimentStarts,
+    Decision,
+    RevisionPage,
+    Comments,
+    Results,
+    CompletionPage,
+]
 # -----------------------------------------------------------------------------

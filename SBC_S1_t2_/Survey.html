@@ -1,0 +1,565 @@
+{{ extends 'global/Page.html' }} {{ block content }}
+
+<style>
+    body {
+        background: #eef3fa;
+    }
+
+    .page-wrapper {
+        font-family: "Segoe UI", Arial, sans-serif;
+        max-width: 860px;
+        margin: 24px auto;
+    }
+
+    .outer-card {
+        background: white;
+        border-radius: 14px;
+        box-shadow: 0 6px 28px rgba(30, 60, 110, 0.1);
+        overflow: hidden;
+        margin-bottom: 18px;
+    }
+
+    .card-top-bar {
+        background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
+        padding: 16px 28px;
+        color: white;
+        font-size: 1.05rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .part-badge {
+        background: rgba(255, 255, 255, 0.22);
+        border-radius: 20px;
+        padding: 3px 14px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .card-inner {
+        padding: 26px 30px 30px 30px;
+    }
+
+    .intro-note {
+        background: #f0f6ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 14px 20px;
+        margin-bottom: 28px;
+        font-size: 15px;
+        color: #1a3a5c;
+        line-height: 1.7;
+        text-align: center;
+    }
+
+    .section-heading {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: #4a90d9;
+        margin-bottom: 16px;
+        margin-top: 4px;
+    }
+
+    .survey-fields {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 28px;
+    }
+
+    .survey-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .survey-field label,
+    .likert-field label {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1a3a5c;
+        line-height: 1.5;
+    }
+
+    .survey-field textarea {
+        width: 100%;
+        min-height: 90px;
+        padding: 10px 14px;
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 14.5px;
+        color: #2c3e50;
+        background: #f5f9ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 8px;
+        resize: vertical;
+        line-height: 1.6;
+        transition:
+            border-color 0.15s,
+            box-shadow 0.15s;
+    }
+
+    .survey-field textarea:focus {
+        outline: none;
+        border-color: #4a90d9;
+        box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
+        background: #fff;
+    }
+
+    .survey-field textarea::placeholder {
+        color: #a0aab8;
+    }
+
+    .field-hint {
+        font-size: 0.85rem;
+        color: #5a7a9a;
+        font-style: italic;
+        margin-top: 2px;
+    }
+
+    .field-divider {
+        border: none;
+        border-top: 1px solid #e5edf7;
+        margin: 4px 0;
+    }
+
+    /* ── Likert scale ── */
+    .likert-field {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 4px;
+    }
+
+    .likert-scale {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: 100%;
+        margin-top: 4px;
+    }
+
+    .likert-options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .likert-option {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        flex: 1;
+    }
+
+    .likert-option span {
+        font-size: 0.75rem;
+        color: #7a8fa6;
+        font-weight: 500;
+    }
+
+    .likert-option input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 22px;
+        height: 22px;
+        border: 2px solid #b0c8e8;
+        border-radius: 50%;
+        cursor: pointer;
+        background: #f5f9ff;
+        transition:
+            background 0.15s,
+            border-color 0.15s;
+        flex-shrink: 0;
+    }
+
+    .likert-option input[type="radio"]:checked {
+        background: #2563b0;
+        border-color: #2563b0;
+        box-shadow: inset 0 0 0 4px white;
+    }
+
+    .likert-option input[type="radio"]:hover {
+        border-color: #4a90d9;
+    }
+
+    .likert-endpoints {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 4px;
+    }
+
+    .likert-endpoint {
+        font-size: 0.78rem;
+        color: #5a7a9a;
+        font-weight: 500;
+        max-width: 140px;
+        line-height: 1.3;
+    }
+
+    .likert-endpoint.right {
+        text-align: right;
+    }
+
+    /* ── Numeric questions ── */
+    .numeracy-payment-note {
+        background: #f0f6ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 12px 18px;
+        margin-bottom: 24px;
+        font-size: 14px;
+        color: #1a3a5c;
+        line-height: 1.6;
+        text-align: center;
+    }
+
+    .numbered-questions {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    /* Each numeric question styled like a table row */
+    .numeric-row-block {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 20px;
+        padding: 18px 0;
+        border-bottom: 1px solid #e5edf7;
+    }
+
+    .numeric-row-block:last-child {
+        border-bottom: none;
+    }
+
+    .numeric-question-text {
+        font-size: 14.5px;
+        color: #2c3e50;
+        line-height: 1.6;
+    }
+
+    .numeric-question-text strong {
+        color: #1a3a5c;
+        font-weight: 600;
+    }
+
+    .numeric-input-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+        white-space: nowrap;
+    }
+
+    .numeric-input-group input[type="number"] {
+        width: 110px;
+        padding: 8px 12px;
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 14.5px;
+        color: #2c3e50;
+        background: #f5f9ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 8px;
+        transition:
+            border-color 0.15s,
+            box-shadow 0.15s;
+        -moz-appearance: textfield;
+        text-align: center;
+    }
+
+    .numeric-input-group input[type="number"]::-webkit-outer-spin-button,
+    .numeric-input-group input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    .numeric-input-group input[type="number"]:focus {
+        outline: none;
+        border-color: #4a90d9;
+        box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
+        background: #fff;
+    }
+
+    .input-unit {
+        font-size: 0.88rem;
+        color: #5a7a9a;
+        font-weight: 500;
+    }
+
+    /* ── Submit ── */
+    .action-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-top: 6px;
+    }
+
+    .btn-next {
+        background: linear-gradient(90deg, #2563b0, #4a90d9);
+        color: white !important;
+        border: none;
+        border-radius: 8px;
+        padding: 11px 60px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 3px 10px rgba(74, 144, 217, 0.28);
+        transition:
+            transform 0.15s,
+            box-shadow 0.15s;
+    }
+
+    .btn-next:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 16px rgba(74, 144, 217, 0.38);
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="outer-card">
+        <div class="card-top-bar">
+            <span>Decision-Making Study</span>
+            <span class="part-badge">Post-Experiment Survey</span>
+        </div>
+
+        <div class="card-inner">
+            <div class="intro-note">
+                Please answer the questions below. All responses are open-ended
+                — there are no right or wrong answers.
+            </div>
+
+            <form method="post">
+                <!-- ══ SECTION 1: Open text ══ -->
+                <div class="survey-fields">
+                    <div class="survey-field">
+                        <label for="id_pilot_comments">
+                            This is a pilot session for this study. Do you have
+                            any comments about the study (such as any technical
+                            issues, confusing instructions, or general
+                            feedback)?
+                        </label>
+                        <textarea
+                            name="pilot_comments"
+                            id="id_pilot_comments"
+                            rows="4"
+                        ></textarea>
+                        <i class="field-hint">
+                            If you mention an issue of particular interest to us
+                            you will receive an additional £1 bonus payment.
+                        </i>
+                    </div>
+
+                    <hr class="field-divider" />
+
+                    <div class="survey-field">
+                        <label for="id_strategy">
+                            How did you make decisions in this study? What
+                            elements did you take into account?
+                        </label>
+                        <textarea
+                            name="strategy"
+                            id="id_strategy"
+                            rows="4"
+                        ></textarea>
+                    </div>
+
+                    <hr class="field-divider" />
+
+                    <div class="survey-field">
+                        <label for="id_others_strategy">
+                            How do you think <i>other participants</i> make
+                            decisions in this study?
+                        </label>
+                        <textarea
+                            name="others_strategy"
+                            id="id_others_strategy"
+                            rows="4"
+                        ></textarea>
+                    </div>
+                </div>
+
+                <hr class="field-divider" style="margin-bottom: 24px" />
+
+                <!-- ══ SECTION 2: Likert scales ══ -->
+                <div class="likert-field">
+                    <label>
+                        Are you a person who is generally willing to take risks,
+                        or do you try to avoid taking risks?
+                    </label>
+                    <div class="likert-scale">
+                        <div class="likert-options">
+                            {% for val in likert_range %}
+                            <div class="likert-option">
+                                <span>{{ val }}</span>
+                                <input
+                                    type="radio"
+                                    name="risk"
+                                    value="{{ val }}"
+                                />
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="likert-endpoints">
+                            <span class="likert-endpoint"
+                                >Not at all willing to take risks</span
+                            >
+                            <span class="likert-endpoint right"
+                                >Very willing to take risks</span
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="field-divider" style="margin-bottom: 12px" />
+
+                <div class="likert-field">
+                    <label>
+                        In comparison with others, are you a person who is
+                        generally willing to give up something today in order to
+                        benefit from that in the future?
+                    </label>
+                    <div class="likert-scale">
+                        <div class="likert-options">
+                            {% for val in likert_range %}
+                            <div class="likert-option">
+                                <span>{{ val }}</span>
+                                <input
+                                    type="radio"
+                                    name="time"
+                                    value="{{ val }}"
+                                />
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="likert-endpoints">
+                            <span class="likert-endpoint"
+                                >Not at all willing to give up today</span
+                            >
+                            <span class="likert-endpoint right"
+                                >Very willing to give up today</span
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="likert-field">
+                    <label>
+                        How difficult did you find making decisions in this
+                        study?
+                    </label>
+                    <div class="likert-scale">
+                        <div class="likert-options">
+                            {% for val in likert_range %}
+                            <div class="likert-option">
+                                <span>{{ val }}</span>
+                                <input
+                                    type="radio"
+                                    name="complexity"
+                                    value="{{ val }}"
+                                />
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="likert-endpoints">
+                            <span class="likert-endpoint"
+                                >Not difficult at all</span
+                            >
+                            <span class="likert-endpoint right"
+                                >Very difficult</span
+                            >
+                        </div>
+                    </div>
+                </div>
+                <hr class="field-divider" style="margin-bottom: 24px" />
+
+                <!-- ══ SECTION 3: Numeric questions ══ -->
+                <div class="numbered-questions">
+                    <div class="numeric-row-block">
+                        <div class="numeric-question-text">
+                            <strong>1.</strong> Imagine that last week, you have
+                            bought a ticket for this Saturday's National Lottery
+                            draw. The ticket cost £2.50 and the typical top
+                            prize is £100,000. Now, a colleague at work offers
+                            to buy your ticket. What is the lowest price you
+                            would be willing to accept to sell it to them?
+                        </div>
+                        <div class="numeric-input-group">
+                            <span class="input-unit">£</span>
+                            <input
+                                type="number"
+                                name="endowment"
+                                id="id_endowment"
+                                min="0"
+                                step="0.01"
+                                placeholder="0.00"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="numeric-row-block">
+                        <div class="numeric-question-text">
+                            <strong>2.</strong> Out of 1,000 people in a small
+                            town 500 are members of a choir. Out of these 500
+                            members in the choir 100 are men. Out of the 500
+                            inhabitants that are not in the choir 300 are men.
+                            What is the probability that a randomly drawn man is
+                            a member of the choir? (please indicate the
+                            probability in percent).
+                        </div>
+                        <div class="numeric-input-group">
+                            <input
+                                type="number"
+                                name="numeracy1"
+                                id="id_numeracy1"
+                                min="0"
+                                max="100"
+                                step="1"
+                                placeholder="0"
+                            />
+                            <span class="input-unit">%</span>
+                        </div>
+                    </div>
+
+                    <div class="numeric-row-block">
+                        <div class="numeric-question-text">
+                            <strong>3.</strong> Imagine we are throwing a loaded
+                            die (6 sides). The probability that the die shows a
+                            6 is twice as high as the probability of each of the
+                            other numbers. On average, out of these 70 throws,
+                            how many times would the die show the number 6?
+                        </div>
+                        <div class="numeric-input-group">
+                            <input
+                                type="number"
+                                name="numeracy2"
+                                id="id_numeracy2"
+                                min="0"
+                                max="70"
+                                step="1"
+                                placeholder="0"
+                            />
+                            <span class="input-unit">out of 70 throws</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="action-row" style="margin-top: 28px">
+                    <button type="submit" class="otree-btn-next btn-next">
+                        Submit &nbsp;&rarr;
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{ endblock }}
