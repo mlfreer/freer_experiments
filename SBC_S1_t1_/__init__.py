@@ -112,15 +112,15 @@ def draw_order(player: Player):
         participant.random_draw_2 = random_draw_2
 
 
-def save_to_csv(data_dict, filename="output.csv"):
-    # Convert dict to DataFrame (1 row)
-    df_new = pd.DataFrame([data_dict])
-
-    # If file exists, append without header
-    if os.path.exists(filename):
-        df_new.to_csv(filename, mode="a", index=False, header=False)
-    else:
-        df_new.to_csv(filename, mode="w", index=False, header=True)
+# def save_to_csv(data_dict, filename="output.csv"):
+# Convert dict to DataFrame (1 row)
+#    df_new = pd.DataFrame([data_dict])
+#
+#    # If file exists, append without header
+#    if os.path.exists(filename):
+#        df_new.to_csv(filename, mode="a", index=False, header=False)
+#    else:
+#        df_new.to_csv(filename, mode="w", index=False, header=True)
 
 
 # -----------------------------------------------------------------------------
@@ -227,20 +227,22 @@ class Results(Page):
         if player.participant.treatment == 1:
             for r in range(1, C.NUM_ROUNDS + 1):
                 p = player.in_round(r)
-                save_to_csv(
-                    {
-                        "participant.label": player.participant.label,
-                        "participant.x_draw": player.participant.x_draw,
-                        "participant.treatment": player.participant.treatment,
-                        "player.price_t1": (p.price_t1),
-                        "player.price_t2": (p.price_t2),
-                        "participant.indexes": player.participant.indexes[r - 1],
-                        "player.random_draw_1": player.participant.random_draw_1,
-                        "player.random_draw_2": player.participant.random_draw_2,
-                        "player.purchase": p.purchase,
-                        "player.revised_purchase": p.revised_purchase,
-                    }
-                )
+
+
+#                save_to_csv(
+#                    {
+#                        "participant.label": player.participant.label,
+#                        "participant.x_draw": player.participant.x_draw,
+#                        "participant.treatment": player.participant.treatment,
+#                        "player.price_t1": (p.price_t1),
+#                        "player.price_t2": (p.price_t2),
+#                        "participant.indexes": player.participant.indexes[r - 1],
+#                        "player.random_draw_1": player.participant.random_draw_1,
+#                        "player.random_draw_2": player.participant.random_draw_2,
+#                        "player.purchase": p.purchase,
+#                        "player.revised_purchase": p.revised_purchase,
+#                    }
+#                )
 
 
 # -----------------------------------------------------------------------------
@@ -287,20 +289,22 @@ class RevisionPage(Page):
     def before_next_page(player, timeout_happened):
         for r in range(1, C.NUM_ROUNDS + 1):
             p = player.in_round(r)
-            save_to_csv(
-                {
-                    "participant.label": player.participant.label,
-                    "participant.x_draw": player.participant.x_draw,
-                    "participant.treatment": player.participant.treatment,
-                    "player.price_t1": (p.price_t1),
-                    "player.price_t2": (p.price_t2),
-                    "participant.indexes": player.participant.indexes[r - 1],
-                    "player.random_draw_1": player.participant.random_draw_1,
-                    "player.random_draw_2": player.participant.random_draw_2,
-                    "player.purchase": p.purchase,
-                    "player.revised_purchase": p.revised_purchase,
-                }
-            )
+
+
+#            save_to_csv(
+#                {
+#                    "participant.label": player.participant.label,
+#                    "participant.x_draw": player.participant.x_draw,
+#                    "participant.treatment": player.participant.treatment,
+#                    "player.price_t1": (p.price_t1),
+#                    "player.price_t2": (p.price_t2),
+#                    "participant.indexes": player.participant.indexes[r - 1],
+#                    "player.random_draw_1": player.participant.random_draw_1,
+#                    "player.random_draw_2": player.participant.random_draw_2,
+#                    "player.purchase": p.purchase,
+#                    "player.revised_purchase": p.revised_purchase,
+#                }
+#            )
 
 
 # -----------------------------------------------------------------------------
