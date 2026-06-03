@@ -52,30 +52,100 @@ class Player(BasePlayer):
 # FUNCTIONS:
 
 
-def retrieve_data(player):
-    import os
+# def retrieve_data(player):
+#    import os
 
-    import pandas as pd
+#    import pandas as pd
 
-    # Use absolute path to find output.csv in project root
-    # root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    # csv_path = os.path.join(root_dir, 'output.csv')
+# Use absolute path to find output.csv in project root
+# root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# csv_path = os.path.join(root_dir, 'output.csv')
 
+#    try:
+#        df = pd.read_csv("./output.csv", on_bad_lines="skip")
+#    except TypeError:
+#        # For older pandas versions that don't support on_bad_lines
+#        df = pd.read_csv("./output.csv", error_bad_lines=False, warn_bad_lines=True)
+
+# Find the matching row for this participant
+#    print(df)
+#    row = df.loc[df["participant.label"] == (player.participant.label)].iloc[0]
+
+# Set participant variables from the data
+#    player.participant.x_draw = int(row["participant.x_draw"])
+##    player.participant.treatment = int(row["participant.treatment"])
+#    player.participant.random_draw_1 = int(row["player.random_draw_1"])
+#    player.participant.random_draw_2 = int(row["player.random_draw_2"])
+
+
+STAGE_1_ROOMS = {
+    "Prolific_Study_S1",
+    "Prolific_Study_S2",
+    "Prolific_Study_D1",
+    "Prolific_Study_D2",
+}
+
+
+def get_room_name(session):
+    """Safely retrieve room name via oTree's internal RoomToSession relation."""
     try:
-        df = pd.read_csv("./output.csv", on_bad_lines="skip")
-    except TypeError:
-        # For older pandas versions that don't support on_bad_lines
-        df = pd.read_csv("./output.csv", error_bad_lines=False, warn_bad_lines=True)
+        links = session.otree_RoomToSession
+        if links:
+            return links[0].room_name
+    except Exception:
+        pass
+    return None
 
-    # Find the matching row for this participant
-    print(df)
-    row = df.loc[df["participant.label"] == (player.participant.label)].iloc[0]
 
-    # Set participant variables from the data
-    player.participant.x_draw = int(row["participant.x_draw"])
-    player.participant.treatment = int(row["participant.treatment"])
-    player.participant.random_draw_1 = int(row["player.random_draw_1"])
-    player.participant.random_draw_2 = int(row["player.random_draw_2"])
+STAGE_1_ROOMS = {"Prolific_Study_S1", "Prolific_Study_D1"}
+
+
+def get_room_name(session):
+    """Safely retrieve room name via oTree's internal RoomToSession relation."""
+    try:
+        links = session.otree_RoomToSession
+        if links:
+            return links[0].room_name
+    except Exception:
+        pass
+    return None
+
+
+def retrieve_data(player):
+    label = player.participant.label
+    if not label:
+        print(f"retrieve_data: no label, skipping")
+        return
+
+    Participant = player.participant.__class__
+
+    past = [
+        pp
+        for pp in Participant.objects_filter(label=label)
+        if pp.session.id != player.participant.session.id
+    ]
+
+    if not past:
+        print(f"retrieve_data: no past sessions found for label={label}")
+        return
+
+    source = max(past, key=lambda pp: pp.session.id)
+    source_vars = source.vars
+
+    print(
+        f"retrieve_data: label={label}, source session={source.session.id}, keys={list(source_vars.keys())}"
+    )
+
+    # Write directly to the declared participant fields, NOT vars
+    player.participant.x_draw = source_vars.get("x_draw")
+    player.participant.treatment = source_vars.get("treatment")
+    player.participant.random_draw_1 = source_vars.get("random_draw_1")
+    player.participant.random_draw_2 = source_vars.get("random_draw_2")
+
+    if source_vars.get("x_draw") is None:
+        print(
+            f"retrieve_data: WARNING x_draw is None. All keys: {list(source_vars.keys())}"
+        )
 
 
 # PAGES
@@ -104,10 +174,8 @@ class Instructions(Page):
 
         # Only load from CSV once, the first time we hit this page
         # Safely check whether x_draw is already set
-        try:
-            _ = participant.x_draw
-        except KeyError:
-            # First time we are here for this participant: load from CSV
+        # Always attempt to retrieve — idempotent if already set
+        if participant.vars.get("x_draw") is None:
             retrieve_data(player)
 
         return dict(
