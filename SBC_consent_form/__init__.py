@@ -141,7 +141,9 @@ class Example(Page):
             e1_error=e1_error,
             e2_error=e2_error,
             e3_error=e3_error,
-            e1_last=player.e1_last,
+            e1_last=player.field_maybe_none("e1_last"),
+            e2_last=player.field_maybe_none("e2_last"),
+            e3_last=player.field_maybe_none("e3_last"),
         )
 
     @staticmethod
