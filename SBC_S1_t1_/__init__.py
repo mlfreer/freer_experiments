@@ -123,6 +123,51 @@ def draw_order(player: Player):
 #        df_new.to_csv(filename, mode="w", index=False, header=True)
 
 
+# CREATING CUSTOM EXPORT:
+def custom_export(players):
+    # Header row
+    yield [
+        "participant.label",
+        "participant.treatment",
+        "participant.x_draw",
+        "round_number",
+        "price_t1",
+        "price_t2",
+        "random_draw_1",
+        "random_draw_2",
+        "revised_purchase",
+        "purchase",
+        "index",
+    ]
+
+    # One row per round per participant
+    seen = set()  # avoid duplicate participants (since players has one per round)
+    for player in players:
+        participant = player.participant
+        label = participant.label
+
+        # Only process each participant once (last round player is fine)
+        if label in seen:
+            continue
+        seen.add(label)
+
+        rounds = participant.vars.get("rounds", [])
+        for r in rounds:
+            yield [
+                label,
+                participant.treatment,
+                participant.x_draw,
+                r.get("round_number", ""),
+                r.get("price_t1", ""),
+                r.get("price_t2", ""),
+                r.get("random_draw_1", ""),
+                r.get("random_draw_2", ""),
+                r.get("revised_purchase", ""),  # blank for treatment 1
+                r.get("purchase", ""),
+                r.get("index", ""),
+            ]
+
+
 # -----------------------------------------------------------------------------
 # PAGES
 class ExperimentStarts(Page):
@@ -223,26 +268,42 @@ class Results(Page):
         return subsession.round_number == C.NUM_ROUNDS
 
     @staticmethod
+    @staticmethod
     def before_next_page(player, timeout_happened):
         if player.participant.treatment == 1:
+            rounds = []
             for r in range(1, C.NUM_ROUNDS + 1):
                 p = player.in_round(r)
+                rounds.append(
+                    {
+                        "round_number": r,
+                        "price_t1": p.price_t1,
+                        "price_t2": p.price_t2,
+                        "random_draw_1": int(player.participant.random_draw_1),
+                        "random_draw_2": int(player.participant.random_draw_2),
+                        #                    'revised_purchase': p.revised_purchase,
+                        "index": player.participant.indexes[r - 1],
+                    }
+                )
+        else:
+            rounds = []
+            for r in range(1, C.NUM_ROUNDS + 1):
+                p = player.in_round(r)
+                rounds.append(
+                    {
+                        "round_number": r,
+                        "price_t1": p.price_t1,
+                        "price_t2": p.price_t2,
+                        "random_draw_1": int(player.participant.random_draw_1),
+                        "random_draw_2": int(player.participant.random_draw_2),
+                        "revised_purchase": p.revised_purchase,
+                        "purchase": p.purchase,
+                        "index": player.participant.indexes[r - 1],
+                    }
+                )
 
-
-#                save_to_csv(
-#                    {
-#                        "participant.label": player.participant.label,
-#                        "participant.x_draw": player.participant.x_draw,
-#                        "participant.treatment": player.participant.treatment,
-#                        "player.price_t1": (p.price_t1),
-#                        "player.price_t2": (p.price_t2),
-#                        "participant.indexes": player.participant.indexes[r - 1],
-#                        "player.random_draw_1": player.participant.random_draw_1,
-#                        "player.random_draw_2": player.participant.random_draw_2,
-#                        "player.purchase": p.purchase,
-#                        "player.revised_purchase": p.revised_purchase,
-#                    }
-#                )
+        player.participant.vars["rounds"] = rounds
+        print(f"rounds saved (t=1): label={player.participant.label}, n={len(rounds)}")
 
 
 # -----------------------------------------------------------------------------
@@ -284,27 +345,6 @@ class RevisionPage(Page):
                 )
             )
         return dict(past_decisions=past)
-
-    @staticmethod
-    def before_next_page(player, timeout_happened):
-        for r in range(1, C.NUM_ROUNDS + 1):
-            p = player.in_round(r)
-
-
-#            save_to_csv(
-#                {
-#                    "participant.label": player.participant.label,
-#                    "participant.x_draw": player.participant.x_draw,
-#                    "participant.treatment": player.participant.treatment,
-#                    "player.price_t1": (p.price_t1),
-#                    "player.price_t2": (p.price_t2),
-#                    "participant.indexes": player.participant.indexes[r - 1],
-#                    "player.random_draw_1": player.participant.random_draw_1,
-#                    "player.random_draw_2": player.participant.random_draw_2,
-#                    "player.purchase": p.purchase,
-#                    "player.revised_purchase": p.revised_purchase,
-#                }
-#            )
 
 
 # -----------------------------------------------------------------------------

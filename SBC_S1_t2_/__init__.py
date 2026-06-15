@@ -112,83 +112,7 @@ def draw_order(player: Player):
         participant.indexes = indexes
 
 
-# def retrieve_data(player):
-#    """Load only the single 'appropriate' row for this participant from output.csv.
-
-#    Assumptions:
-#      - output.csv exists in project root (one level up from this app folder)
-#      - One row was written per round in stage t1 for each participant
-#      - Columns present (no missing values):
-#              participant.label, participant.x_draw, participant.treatment, round_number (optional)
-#    Selection rule:
-#      - If round_number column exists: take the row with the largest round_number (latest round)
-#      - Otherwise: take the last matching row as it appears in the file
-#    """
-#    import os
-#    import random
-#
-#    import pandas as pd
-#
-#    participant = player.participant
-#    label = participant.label
-#    if not label:
-#        return
-#
-#    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-#    csv_path = os.path.join(root_dir, "output.csv")
-#    df = pd.read_csv(csv_path)
-#    # df = pd.read_csv("output.csv")
-#    print(df)
-
-#    if participant.treatment != 1:
-#        # assigning the prices:
-#        participant = player.participant
-#        subsession = player.subsession
-
-# retrieving prices:
-#        player.price_t1 = participant.price_order_t1[subsession.round_number - 1]
-#        player.price_t2 = participant.price_order_t2[subsession.round_number - 1]
-#        # retrieiving index:
-#        index = participant.indexes[subsession.round_number - 1]
-
-# Coerce potentially malformed index values to numeric safely
-#        idx_series = pd.to_numeric(df["participant.indexes"], errors="coerce")
-#        rows = df[
-#            (df["participant.label"] == label)
-#            & (df["player.price_t1"] == player.price_t1)
-#            & (df["player.price_t2"] == player.price_t2)
-#            & (idx_series == index)
-#        ]
-#
-# print(rows, "\n", player.price_t1, "\n", participant.label, "\n", index)
-
-# check for the mistakes in the data set
-#        if rows.empty:
-#            print("Could not find matching row in output.csv for participant:", label)
-#            return  # nothing recorded for this label
-
-# print(rows["player.random_draw_1"].squeeze().astype(int))
-
-# recording random_draw_1
-#        temp = float(rows["player.random_draw_1"].squeeze())
-#        temp = int(temp)
-#        player.random_draw_1 = temp
-
-# recording random draw 2
-#        temp = float(rows["player.random_draw_2"].squeeze())
-#        temp = int(temp)
-#        player.random_draw_2 = temp
-
-# recording the t=1 decision:
-#        player.purchase_t1 = bool(int(rows["player.revised_purchase"].squeeze()))
-#    else:
-#        player.random_draw_1 = int(participant.random_draw_1)
-#        player.random_draw_2 = int(participant.random_draw_2)
-
-
 def retrieve_data(player):
-    import importlib
-
     participant = player.participant
     label = participant.label
     if not label:
@@ -202,9 +126,11 @@ def retrieve_data(player):
         player.price_t2 = participant.price_order_t2[subsession.round_number - 1]
         index = participant.indexes[subsession.round_number - 1]
 
-        S1Player = importlib.import_module("SBC_S1_t1_").Player
-        Participant = participant.__class__
+        # Skip if already retrieved for this round
+        if player.field_maybe_none("random_draw_1") is not None:
+            return
 
+        Participant = participant.__class__
         past = [
             pp
             for pp in Participant.objects_filter(label=label)
@@ -212,41 +138,44 @@ def retrieve_data(player):
         ]
 
         if not past:
-            print(f"retrieve_data: no past session found for label={label}")
+            print(f"retrieve_data: no past session for label={label}")
             return
 
         source = max(past, key=lambda pp: pp.session.id)
+        rounds = source.vars.get("rounds", [])
 
-        # indexes is on participant, look it up per round_number
+        print(
+            f"retrieve_data: label={label}, round={subsession.round_number}, "
+            f"source session={source.session.id}, rounds={len(rounds)}"
+        )
+
         matched = next(
             (
-                p
-                for p in S1Player.objects_filter(participant=source)
-                if p.price_t1 == player.price_t1
-                and p.price_t2 == player.price_t2
-                and source.indexes[p.round_number - 1] == index
+                r
+                for r in rounds
+                if r["price_t1"] == player.price_t1
+                and r["price_t2"] == player.price_t2
+                and r["index"] == index
             ),
             None,
         )
 
         if matched is None:
-            all_s1 = list(S1Player.objects_filter(participant=source))
             print(
                 f"retrieve_data: no match for label={label}, "
                 f"price_t1={player.price_t1}, price_t2={player.price_t2}, index={index}"
             )
-            print(
-                f"retrieve_data: available rounds: "
-                f"{[(p.round_number, p.price_t1, p.price_t2, source.indexes[p.round_number - 1]) for p in all_s1]}"
-            )
+            print(f"retrieve_data: available rounds={rounds}")
             return
 
-        player.random_draw_1 = int(matched.random_draw_1)
-        player.random_draw_2 = int(matched.random_draw_2)
-        player.purchase_t1 = bool(matched.revised_purchase)
+        player.random_draw_1 = int(matched["random_draw_1"])
+        player.random_draw_2 = int(matched["random_draw_2"])
+        player.purchase_t1 = bool(matched["revised_purchase"])
 
     else:
-        # treatment == 1: draws already on current participant from Stage 1
+        # treatment 1: no t=1 decision, draws carried on participant directly
+        if player.field_maybe_none("random_draw_1") is not None:
+            return
         player.random_draw_1 = int(participant.random_draw_1)
         player.random_draw_2 = int(participant.random_draw_2)
 
@@ -372,6 +301,58 @@ def compute_payoff(player: Player):
                 True  # marking the fact that payoff is calculated
             )
             break  # Found the selected round, no need to continue
+
+
+def custom_export(players):
+    yield [
+        "participant.label",
+        "participant.treatment",
+        "participant.x_draw",
+        "round_number",
+        "price_t1",
+        "price_t2",
+        "random_draw_1",
+        "random_draw_2",
+        "purchase_t1",
+        "purchase_t2",
+        "revised_purchase_t2",
+        "earnings",
+        "selected_round",
+        "selected_for_payment",
+        "decision_overwritten",
+        "payoff_calculated",
+    ]
+
+    seen = set()
+    for player in players:
+        participant = player.participant
+        label = participant.label
+
+        # Only process each participant once using the last round player
+        if label in seen or player.round_number != C.NUM_ROUNDS:
+            continue
+        seen.add(label)
+
+        for r in range(1, C.NUM_ROUNDS + 1):
+            p = player.in_round(r)
+            yield [
+                label,
+                participant.treatment,
+                participant.x_draw,
+                r,
+                p.field_maybe_none("price_t1"),
+                p.field_maybe_none("price_t2"),
+                p.field_maybe_none("random_draw_1"),
+                p.field_maybe_none("random_draw_2"),
+                p.field_maybe_none("purchase_t1"),
+                p.field_maybe_none("purchase_t2"),
+                p.field_maybe_none("revised_purchase_t2"),
+                p.field_maybe_none("earnings"),
+                p.field_maybe_none("selected_round"),
+                p.field_maybe_none("selected_for_payment"),
+                p.field_maybe_none("decision_overwritten"),
+                p.field_maybe_none("payoff_calculated"),
+            ]
 
 
 # --------------------------------------------------------

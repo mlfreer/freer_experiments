@@ -13,21 +13,25 @@
     }
 </script>
 {{ endblock }} {{ block content }}
+
 <style>
     body {
         background: #eef3fa;
     }
+
     .quiz-wrapper {
         font-family: "Segoe UI", Arial, sans-serif;
         max-width: 860px;
         margin: 24px auto;
     }
+
     .page-title {
         font-size: 1.25rem;
         font-weight: 700;
         color: #1a3a5c;
         margin-bottom: 14px;
     }
+
     .outer-card {
         background: white;
         border-radius: 14px;
@@ -35,6 +39,7 @@
         overflow: hidden;
         margin-bottom: 18px;
     }
+
     .card-top-bar {
         background: linear-gradient(90deg, #2563b0 0%, #4a90d9 100%);
         padding: 16px 28px;
@@ -45,6 +50,7 @@
         align-items: center;
         justify-content: space-between;
     }
+
     .part-badge {
         background: rgba(255, 255, 255, 0.22);
         border-radius: 20px;
@@ -52,9 +58,12 @@
         font-size: 0.8rem;
         font-weight: 500;
     }
+
     .card-inner {
         padding: 24px 30px 28px 30px;
     }
+
+    /* ── Intro box ── */
     .intro-box {
         background: #f0f6ff;
         border-left: 5px solid #4a90d9;
@@ -65,12 +74,15 @@
         line-height: 1.75;
         color: #223;
     }
+
     .intro-box p {
         margin-bottom: 8px;
     }
     .intro-box p:last-child {
         margin-bottom: 0;
     }
+
+    /* ── Lottery reference card ── */
     .lottery-ref {
         background: #f7faff;
         border: 1px solid #d5e6f5;
@@ -78,6 +90,7 @@
         padding: 12px 16px;
         margin: 12px 0 20px 0;
     }
+
     .l-item {
         display: flex;
         align-items: flex-start;
@@ -85,9 +98,11 @@
         margin-bottom: 8px;
         font-size: 14.5px;
     }
+
     .l-item:last-child {
         margin-bottom: 0;
     }
+
     .lottery-pill {
         display: inline-block;
         background: #2563b0;
@@ -99,12 +114,15 @@
         white-space: nowrap;
         margin-top: 2px;
     }
+
+    /* ── Question card ── */
     .question-card {
         border: 1.5px solid #d5e6f5;
         border-radius: 10px;
         overflow: hidden;
         margin-bottom: 16px;
     }
+
     .question-header {
         background: #eef4fb;
         padding: 11px 18px;
@@ -113,6 +131,7 @@
         gap: 12px;
         border-bottom: 1.5px solid #d5e6f5;
     }
+
     .q-num {
         background: #2563b0;
         color: white;
@@ -127,6 +146,7 @@
         font-weight: 700;
         margin-top: 1px;
     }
+
     .question-header p {
         margin: 0;
         font-size: 14.5px;
@@ -134,82 +154,71 @@
         color: #1a3a5c;
         line-height: 1.6;
     }
+
     .question-body {
         padding: 16px 20px;
         background: white;
     }
+
+    /* ── Answer input ── */
     .answer-row {
         display: flex;
         align-items: center;
         gap: 12px;
         flex-wrap: wrap;
     }
+
     .answer-label {
         font-size: 0.95rem;
         font-weight: 600;
         color: #1a3a5c;
         white-space: nowrap;
     }
+
     .answer-input-wrap {
-        display: inline-flex;
-        align-items: stretch;
-        border: 1.5px solid #c5daf5;
-        border-radius: 8px;
-        overflow: hidden;
-        background: #f7faff;
-        transition:
-            border-color 0.15s,
-            box-shadow 0.15s;
-    }
-    .answer-input-wrap:focus-within {
-        border-color: #4a90d9;
-        box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.18);
-    }
-    .answer-input-wrap.has-error {
-        border-color: #e74c3c;
-        background: #fff5f5;
-    }
-    .pound-prefix {
-        background: #eef4fb;
-        color: #2563b0;
-        font-weight: 700;
-        font-size: 1rem;
-        padding: 0 10px;
-        border-right: 1.5px solid #c5daf5;
+        position: relative;
         display: flex;
         align-items: center;
-        user-select: none;
     }
-    .answer-input-wrap.has-error .pound-prefix {
-        border-right-color: #e74c3c;
-        background: #ffeaea;
+
+    .pound-prefix {
+        position: absolute;
+        left: 12px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #2563b0;
+        pointer-events: none;
+        z-index: 1;
     }
+
     .answer-input {
-        border: none !important;
-        outline: none !important;
-        box-shadow: none !important;
-        background: transparent !important;
-        padding: 9px 12px;
+        border: 1.5px solid #c5daf5;
+        border-radius: 8px;
+        padding: 9px 14px 9px 28px;
         font-size: 1rem;
         font-weight: 600;
         color: #1a3a5c;
-        width: 110px;
-        margin: 0;
+        width: 140px;
+        outline: none;
+        transition:
+            border-color 0.15s,
+            box-shadow 0.15s;
+        background: #f7faff;
     }
+
+    .answer-input:focus {
+        border-color: #4a90d9;
+        box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.18);
+        background: white;
+    }
+
     .answer-hint {
         font-size: 0.82rem;
         color: #8a9ab5;
         font-style: italic;
     }
-    .field-error {
-        color: #c0392b;
-        font-size: 0.88rem;
-        font-weight: 600;
-        margin-top: 8px;
-    }
-    .alert-danger {
-        display: none !important;
-    }
+
+    /* ── Buttons ── */
     .action-row {
         display: flex;
         flex-direction: column;
@@ -217,6 +226,7 @@
         gap: 12px;
         margin-top: 6px;
     }
+
     .btn-next {
         background: linear-gradient(90deg, #2563b0, #4a90d9);
         color: white;
@@ -231,10 +241,12 @@
             transform 0.15s,
             box-shadow 0.15s;
     }
+
     .btn-next:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 16px rgba(74, 144, 217, 0.38);
     }
+
     .btn-reveal {
         background: #fffbe6;
         color: #7a5800;
@@ -246,9 +258,12 @@
         cursor: pointer;
         transition: background 0.15s;
     }
+
     .btn-reveal:hover {
         background: #fff3cd;
     }
+
+    /* ── Instructions panel ── */
     .instructions-top-bar {
         background: linear-gradient(90deg, #1a3a5c 0%, #2563b0 100%);
         padding: 13px 24px;
@@ -273,28 +288,22 @@
         </div>
 
         <div class="card-inner">
+            <!-- Intro -->
             <div class="intro-box">
-                <p><strong>Example.</strong></p>
                 <p>
-                    In this example, you will work through an example
-                    calculation of your possible bonus payments.
-                </p>
-                <p>
-                    For this example, imagine that in Part 2, the coin flip for
-                    <strong>Lottery 1 results in heads</strong> and the coin
-                    flip for <strong>Lottery 2 results in tails</strong>.
-                </p>
-                <p style="margin-bottom: 0">
-                    In each example, please calculate the bonus payment you
-                    would receive if that decision would be randomly selected
-                    for your bonus payment.
+                    Please work through the following examples to familiarise
+                    yourself with the decisions you will face in this study.
                     <strong
                         >You can only proceed if you answer all questions
                         correctly.</strong
                     >
                 </p>
+                <p style="margin-bottom: 0">
+                    All questions refer to the lottery ticket you will evaluate:
+                </p>
             </div>
 
+            <!-- Lottery reference -->
             <div class="lottery-ref">
                 <div class="l-item">
                     <span class="lottery-pill">Lottery 1</span>
@@ -315,49 +324,38 @@
                 </div>
             </div>
 
-            <!-- ── TREATMENT 0 ── -->
+            <!-- ════════════════════════════
+                 TREATMENT 0
+            ════════════════════════════ -->
             {% if participant.treatment == 0 %}
 
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">1</span>
                     <p>
-                        Imagine that you decided
-                        <em>not to purchase the lottery ticket</em> at a price
-                        of <strong>£4</strong>. This means that your bonus
-                        payment consists only of your Budget. What would be your
-                        bonus payment?
+                        Imagine that in the decision that is selected to be paid
+                        out, today, you decide <em>not</em> to purchase the
+                        lottery ticket at a price of <strong>£6</strong>.
+                        Further, imagine that in Part 2, the coin flip for
+                        Lottery 1 results in <strong>heads</strong> and the coin
+                        flip for Lottery 2 results in <strong>heads</strong>.
+                        What would be your bonus payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e1_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
                                 type="number"
                                 name="e1"
                                 placeholder="0"
-                                {%
-                                if
-                                e1_last
-                                is
-                                not
-                                none
-                                %}value="{{ e1_last }}"
-                                {%
-                                endif
-                                %}
                             />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e1_error %}
-                    <div class="field-error">{{ e1_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
@@ -365,43 +363,29 @@
                 <div class="question-header">
                     <span class="q-num">2</span>
                     <p>
-                        Imagine that you decide
-                        <em>to purchase the lottery ticket</em> at a price of
-                        <strong>£4</strong>. This means that your bonus payment
-                        consists of your Budget, the Lottery ticket earnings,
-                        but you have to pay the Purchase price. What would be
-                        your bonus payment?
+                        Now imagine that in the decision that is selected to be
+                        paid out, you decide <em>to purchase</em> the lottery
+                        ticket at a price of <strong>£10</strong> today. As
+                        above, the coin flip for Lottery 1 results in
+                        <strong>heads</strong> and the coin flip for Lottery 2
+                        results in <strong>heads</strong>. What would be your
+                        bonus payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e2_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
                                 type="number"
                                 name="e2"
                                 placeholder="0"
-                                {%
-                                if
-                                e2_last
-                                is
-                                not
-                                none
-                                %}value="{{ e2_last }}"
-                                {%
-                                endif
-                                %}
                             />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e2_error %}
-                    <div class="field-error">{{ e2_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
@@ -409,68 +393,56 @@
                 <div class="question-header">
                     <span class="q-num">3</span>
                     <p>
-                        Imagine that you decide
-                        <em>to purchase the lottery ticket</em> at a price of
-                        <strong>£10</strong>. This means that your bonus payment
-                        consists of your Budget, the Lottery ticket earnings,
-                        but you have to pay the Purchase price. What would be
-                        your bonus payment?
+                        Now imagine that in the decision that is paid out, you
+                        decide <em>to purchase</em> the lottery ticket at a
+                        price of <strong>£10</strong> today. Now, the coin flip
+                        for Lottery 1 results in <strong>heads</strong> and the
+                        coin flip for Lottery 2 results in
+                        <strong>tails</strong>. What would be your bonus payment
+                        at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e3_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
                                 type="number"
                                 name="e3"
                                 placeholder="0"
-                                {%
-                                if
-                                e3_last
-                                is
-                                not
-                                none
-                                %}value="{{ e3_last }}"
-                                {%
-                                endif
-                                %}
                             />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e3_error %}
-                    <div class="field-error">{{ e3_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
             {% endif %}
 
-            <!-- ── TREATMENT 1 ── -->
+            <!-- ════════════════════════════
+                 TREATMENT 1
+            ════════════════════════════ -->
             {% if participant.treatment == 1 %}
 
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">1</span>
                     <p>
-                        Imagine that you decided
-                        <em>not to purchase the lottery ticket</em> at a price
-                        of <strong>£4</strong>. This means that your bonus
-                        payment consists only of your Budget. What would be your
-                        bonus payment?
+                        Imagine that, when you return to Part 2 and learn that
+                        Lottery 1 results in <strong>heads</strong>, in the
+                        decision that is selected to be paid out, you decide
+                        <em>not</em> to purchase the lottery ticket at a price
+                        of <strong>£6</strong>. Also imagine that Lottery 2
+                        results in <strong>heads</strong>. What would be your
+                        bonus payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e1_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
@@ -481,9 +453,6 @@
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e1_error %}
-                    <div class="field-error">{{ e1_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
@@ -491,20 +460,18 @@
                 <div class="question-header">
                     <span class="q-num">2</span>
                     <p>
-                        Imagine that you decide
-                        <em>to purchase the lottery ticket</em> at a price of
-                        <strong>£4</strong>. This means that your bonus payment
-                        consists of your Budget, the Lottery ticket earnings,
-                        but you have to pay the Purchase price. What would be
-                        your bonus payment?
+                        Now imagine you return to Part 2 and learn that Lottery
+                        1 results in <strong>heads</strong>. In the decision
+                        that is paid out, you decide <em>to purchase</em> the
+                        lottery ticket at a price of <strong>£10</strong>.
+                        Finally, Lottery 2 results in <strong>heads</strong>.
+                        What would be your bonus payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e2_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
@@ -515,9 +482,6 @@
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e2_error %}
-                    <div class="field-error">{{ e2_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
@@ -525,20 +489,18 @@
                 <div class="question-header">
                     <span class="q-num">3</span>
                     <p>
-                        Imagine that you decide
-                        <em>to purchase the lottery ticket</em> at a price of
-                        <strong>£10</strong>. This means that your bonus payment
-                        consists of your Budget, the Lottery ticket earnings,
-                        but you have to pay the Purchase price. What would be
-                        your bonus payment?
+                        Now imagine you return to Part 2 and learn that Lottery
+                        1 results in <strong>heads</strong>. In the decision
+                        that is paid out, you decide <em>to purchase</em> the
+                        lottery ticket at a price of <strong>£10</strong>.
+                        Finally, Lottery 2 results in <strong>tails</strong>.
+                        What would be your bonus payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e3_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
@@ -549,59 +511,44 @@
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e3_error %}
-                    <div class="field-error">{{ e3_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
             {% endif %}
 
-            <!-- ── TREATMENT 2 ── -->
+            <!-- ════════════════════════════
+                 TREATMENT 2
+            ════════════════════════════ -->
             {% if participant.treatment == 2 %}
 
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">1</span>
                     <p>
-                        Imagine that you decided
-                        <em>not to purchase the option</em>, for a combination
-                        of option price of <strong>£1</strong> and a purchase
-                        price of <strong>£3</strong>. Therefore, you
-                        <strong>cannot purchase the lottery ticket</strong> in
-                        Part 2. This means that your bonus payment consists only
-                        of your Budget. What would be your bonus payment?
+                        Imagine that in the decision that is selected to be paid
+                        out, you decide <em>not</em> to buy the option at a
+                        price of <strong>£1</strong> today. When you return to
+                        Part 2, you learn that Lottery 1 results in
+                        <strong>heads</strong>. As you did not buy the option,
+                        you cannot purchase the lottery ticket. Finally, Lottery
+                        2 results in <strong>heads</strong>. What would be your
+                        bonus payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e1_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
                                 type="number"
                                 name="e1"
                                 placeholder="0"
-                                {%
-                                if
-                                e1_last
-                                is
-                                not
-                                none
-                                %}value="{{ e1_last }}"
-                                {%
-                                endif
-                                %}
                             />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e1_error %}
-                    <div class="field-error">{{ e1_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
@@ -609,47 +556,31 @@
                 <div class="question-header">
                     <span class="q-num">2</span>
                     <p>
-                        Imagine that you decide <em>to purchase the option</em>,
-                        for a combination of option price of
-                        <strong>£1</strong> and a purchase price of
-                        <strong>£3</strong>. In Part 2, after learning the
-                        realization of Lottery 1 (<strong>heads</strong>), you
-                        decide <em>to purchase the lottery ticket</em>. This
-                        means that your bonus payment consists of your Budget,
-                        the Lottery ticket earnings, but you have to pay the
-                        Option price and the Purchase price. What would be your
-                        bonus payment?
+                        Imagine that in the decision that is selected to be paid
+                        out, you decide <em>to buy</em> the option at a price of
+                        <strong>£2</strong> today (purchase price:
+                        <strong>£8</strong>), and that decision is randomly
+                        selected. When you return to Part 2, you learn that
+                        Lottery 1 results in <strong>heads</strong>. Then, you
+                        decide to purchase the lottery ticket. Finally, Lottery
+                        2 results in <strong>heads</strong>. What would be your
+                        bonus payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e2_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
                                 type="number"
                                 name="e2"
                                 placeholder="0"
-                                {%
-                                if
-                                e2_last
-                                is
-                                not
-                                none
-                                %}value="{{ e2_last }}"
-                                {%
-                                endif
-                                %}
                             />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e2_error %}
-                    <div class="field-error">{{ e2_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
@@ -657,96 +588,69 @@
                 <div class="question-header">
                     <span class="q-num">3</span>
                     <p>
-                        Imagine that you decide <em>to purchase the option</em>,
-                        for a combination of option price of
-                        <strong>£2</strong> and a purchase price of
-                        <strong>£4</strong>. In Part 2, after learning the
-                        realization of Lottery 1 (<strong>heads</strong>), you
-                        decide <em>not to purchase the lottery ticket</em>. This
-                        means that your bonus payment consists of your Budget,
-                        but you have to pay the Option price. What would be your
-                        bonus payment?
+                        Imagine that in the decision that is paid out, you
+                        decide <em>to buy</em> the option at a price of
+                        <strong>£2</strong> today (purchase price:
+                        <strong>£6</strong>), and that decision is randomly
+                        selected. When you return to Part 2, you learn that
+                        Lottery 1 results in <strong>tails</strong>. Then, you
+                        decide <em>not</em> to use the option and therefore
+                        <em>not</em> to purchase the lottery ticket. Finally,
+                        Lottery 2 results in <strong>heads</strong>. What would
+                        be your bonus payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e3_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
                                 type="number"
                                 name="e3"
                                 placeholder="0"
-                                {%
-                                if
-                                e3_last
-                                is
-                                not
-                                none
-                                %}value="{{ e3_last }}"
-                                {%
-                                endif
-                                %}
                             />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e3_error %}
-                    <div class="field-error">{{ e3_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
             {% endif %}
 
-            <!-- ── TREATMENT 3 ── -->
+            <!-- ════════════════════════════
+                 TREATMENT 3
+            ════════════════════════════ -->
             {% if participant.treatment == 3 %}
 
             <div class="question-card">
                 <div class="question-header">
                     <span class="q-num">1</span>
                     <p>
-                        Imagine that you decided
-                        <em>not to purchase the lottery ticket</em> for a
-                        combination of a lottery price of
-                        <strong>£4</strong> and a refund amount of
-                        <strong>£4</strong>. This means that your bonus payment
-                        consists only of your Budget. What would be your bonus
-                        payment?
+                        Imagine that in the decision that is selected to be paid
+                        out, today, you decide <em>not</em> to purchase the
+                        lottery ticket at a price of <strong>£6</strong> (refund
+                        amount: <strong>£2</strong>). In Part 2, Lottery 1
+                        results in <strong>heads</strong> and Lottery 2 results
+                        in <strong>heads</strong>. What would be your bonus
+                        payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e1_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
                                 type="number"
                                 name="e1"
                                 placeholder="0"
-                                {%
-                                if
-                                e1_last
-                                is
-                                not
-                                none
-                                %}value="{{ e1_last }}"
-                                {%
-                                endif
-                                %}
                             />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e1_error %}
-                    <div class="field-error">{{ e1_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
@@ -754,47 +658,30 @@
                 <div class="question-header">
                     <span class="q-num">2</span>
                     <p>
-                        Imagine that you decide
-                        <em>to purchase the lottery ticket</em> for a
-                        combination of a lottery price of
-                        <strong>£4</strong> and a refund amount of
-                        <strong>£4</strong>. In Part 2, after learning the
-                        realization of Lottery 1 (<strong>heads</strong>), you
-                        decide <em>not to return the lottery ticket</em>. This
-                        means that your bonus payment consists of your Budget,
-                        the Lottery ticket earnings, but you have to pay the
-                        Purchase price. What would be your bonus payment?
+                        Imagine that in the decision that is selected to be paid
+                        out, today, you decide <em>to purchase</em> the lottery
+                        ticket at a price of <strong>£10</strong> (refund
+                        amount: <strong>£6</strong>). In Part 2, you learn
+                        Lottery 1 results in <strong>heads</strong> and you
+                        decide <em>not</em> to use the refund — so you keep the
+                        ticket. Lottery 2 results in <strong>heads</strong>.
+                        What would be your bonus payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e2_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
                                 type="number"
                                 name="e2"
                                 placeholder="0"
-                                {%
-                                if
-                                e2_last
-                                is
-                                not
-                                none
-                                %}value="{{ e2_last }}"
-                                {%
-                                endif
-                                %}
                             />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e2_error %}
-                    <div class="field-error">{{ e2_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
@@ -802,53 +689,36 @@
                 <div class="question-header">
                     <span class="q-num">3</span>
                     <p>
-                        Imagine that you decide
-                        <em>to purchase the lottery ticket</em> for a
-                        combination of a lottery price of
-                        <strong>£10</strong> and a refund amount of
-                        <strong>£8</strong>. In Part 2, after learning the
-                        realization of Lottery 1 (<strong>heads</strong>), you
-                        decide <em>to return the lottery ticket</em>. This means
-                        that your bonus payment consists of your Budget, the
-                        Lottery ticket earnings, the refund amount, but you have
-                        to pay the Purchase price. What would be your bonus
-                        payment?
+                        Imagine that in the decision that is paid out, today,
+                        you decide <em>to purchase</em> the lottery ticket at a
+                        price of <strong>£10</strong> (refund amount:
+                        <strong>£8</strong>). In Part 2, you learn Lottery 1
+                        results in <strong>tails</strong> and you decide
+                        <em>to use the refund</em> — so you return the ticket.
+                        Lottery 2 results in <strong>heads</strong>. What would
+                        be your bonus payment at the end of Part 2?
                     </p>
                 </div>
                 <div class="question-body">
                     <div class="answer-row">
                         <span class="answer-label">Your bonus payment:</span>
-                        <div
-                            class="answer-input-wrap {% if e3_error %}has-error{% endif %}"
-                        >
+                        <div class="answer-input-wrap">
                             <span class="pound-prefix">£</span>
                             <input
                                 class="answer-input"
                                 type="number"
                                 name="e3"
                                 placeholder="0"
-                                {%
-                                if
-                                e3_last
-                                is
-                                not
-                                none
-                                %}value="{{ e3_last }}"
-                                {%
-                                endif
-                                %}
                             />
                         </div>
                         <span class="answer-hint">Enter amount in pounds</span>
                     </div>
-                    {% if e3_error %}
-                    <div class="field-error">{{ e3_error }}</div>
-                    {% endif %}
                 </div>
             </div>
 
             {% endif %}
 
+            <!-- Buttons -->
             <div class="action-row">
                 <button class="otree-btn-next btn-next">
                     Submit Answers &nbsp;→
@@ -865,6 +735,7 @@
         </div>
     </div>
 
+    <!-- Instructions reveal panel -->
     <div style="display: none" id="instructions">
         <div class="outer-card">
             <div class="instructions-top-bar">

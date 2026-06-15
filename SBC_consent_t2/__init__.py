@@ -111,10 +111,16 @@ def get_room_name(session):
     return None
 
 
+# ----------------------------------------------------------------------------------------------
 def retrieve_data(player):
     label = player.participant.label
     if not label:
         print(f"retrieve_data: no label, skipping")
+        return
+
+    # Already retrieved — skip
+    if player.participant.vars.get("x_draw") is not None:
+        print(f"retrieve_data: already set for label={label}, skipping")
         return
 
     Participant = player.participant.__class__
@@ -133,19 +139,22 @@ def retrieve_data(player):
     source_vars = source.vars
 
     print(
-        f"retrieve_data: label={label}, source session={source.session.id}, keys={list(source_vars.keys())}"
+        f"retrieve_data: label={label}, source session={source.session.id}, "
+        f"keys={list(source_vars.keys())}"
     )
 
-    # Write directly to the declared participant fields, NOT vars
     player.participant.x_draw = source_vars.get("x_draw")
     player.participant.treatment = source_vars.get("treatment")
     player.participant.random_draw_1 = source_vars.get("random_draw_1")
     player.participant.random_draw_2 = source_vars.get("random_draw_2")
 
-    if source_vars.get("x_draw") is None:
+    if player.participant.x_draw is None:
         print(
-            f"retrieve_data: WARNING x_draw is None. All keys: {list(source_vars.keys())}"
+            f"retrieve_data: WARNING x_draw missing. Keys: {list(source_vars.keys())}"
         )
+
+
+# ----------------------------------------------------------------------------------------------
 
 
 # PAGES

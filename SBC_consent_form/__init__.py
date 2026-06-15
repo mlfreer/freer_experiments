@@ -19,7 +19,7 @@ class C(BaseConstants):
     QUIZ_ANSWERS = [1, 3, 3]
 
     # INTEGERS TO INPUT IN THE EXAMPLE PAGE:
-    EXAMPLE_ANSWERS = [ENDOWMENT, 20, 12]
+    EXAMPLE_ANSWERS = [ENDOWMENT, 18, 12]
 
 
 class Subsession(BaseSubsession):
@@ -42,6 +42,15 @@ class Player(BasePlayer):
     e1 = models.IntegerField()
     e2 = models.IntegerField()
     e3 = models.IntegerField()
+
+    # errors for example
+    e1_error = models.StringField(initial="", blank=True)
+    e2_error = models.StringField(initial="", blank=True)
+    e3_error = models.StringField(initial="", blank=True)
+
+    e1_last = models.IntegerField(initial=None, blank=True)
+    e2_last = models.IntegerField(initial=None, blank=True)
+    e3_last = models.IntegerField(initial=None, blank=True)
 
     # model to count the quiz attempts
     quiz_attempts = models.IntegerField(initial=0)
@@ -115,26 +124,64 @@ class Example(Page):
         return (player.round_number == 1) and (player.return_study == False)
 
     @staticmethod
-    def vars_for_template(player: Player):
+    def vars_for_template(player):
         session = player.session
         participant = player.participant
+
+        e1_error = player.e1_error
+        e2_error = player.e2_error
+        e3_error = player.e3_error
+
         return dict(
-            # Used in Example.html to avoid unsupported '+' expressions in templates
             two_heads_sum=session.config["A_BAR"] + session.config["A_BAR"],
             example_sum=session.config["A_BAR"] + participant.x_draw,
             payment_prob=session.config["selected_for_payment"],
             overwrite_decision=session.config["overwrite_decision"],
             implement_decision=100 - session.config["overwrite_decision"],
+            e1_error=e1_error,
+            e2_error=e2_error,
+            e3_error=e3_error,
+            e1_last=player.e1_last,
         )
 
-    def error_message(player, value):
-        if (
-            (value["e1"] != C.EXAMPLE_ANSWERS[0])
-            or (value["e2"] != C.EXAMPLE_ANSWERS[1])
-            or (value["e3"] != C.EXAMPLE_ANSWERS[2])
-        ):
+    @staticmethod
+    def error_message(player, values):
+        errors = {}
+        player.e1_last = values["e1"]
+        player.e2_last = values["e2"]
+        player.e3_last = values["e3"]
+
+        # Force int comparison to be safe
+        try:
+            v1 = int(values["e1"])
+        except (TypeError, ValueError):
+            v1 = None
+        try:
+            v2 = int(values["e2"])
+        except (TypeError, ValueError):
+            v2 = None
+        try:
+            v3 = int(values["e3"])
+        except (TypeError, ValueError):
+            v3 = None
+
+        if v1 != int(C.EXAMPLE_ANSWERS[0]):
+            errors["e1"] = "Incorrect. Please check your calculation for Question 1."
+        if v2 != int(C.EXAMPLE_ANSWERS[1]):
+            errors["e2"] = "Incorrect. Please check your calculation for Question 2."
+        if v3 != int(C.EXAMPLE_ANSWERS[2]):
+            errors["e3"] = "Incorrect. Please check your calculation for Question 3."
+
+        if errors:
             player.example_attempts += 1
-            return "Wrong answer! Please try again!"
+            player.e1_error = errors.get("e1", "")
+            player.e2_error = errors.get("e2", "")
+            player.e3_error = errors.get("e3", "")
+            return "error"
+        else:
+            player.e1_error = ""
+            player.e2_error = ""
+            player.e3_error = ""
 
 
 class Quiz(Page):

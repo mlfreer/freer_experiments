@@ -227,7 +227,7 @@ SESSION_CONFIGS = [
 
 # ------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = False
+DEBUG = True
 # ------------------------------------------------------------------------------------
 
 
@@ -304,9 +304,10 @@ PARTICIPANT_FIELDS = [
     "x_draw",
     "treatment",
     "indexes",
+    "rounds",  # to record per round outcomes
 ]
 SESSION_FIELDS = []
-participation_fee = 3
+participation_fee = 2
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
