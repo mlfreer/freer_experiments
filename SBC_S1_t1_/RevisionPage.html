@@ -227,7 +227,24 @@
         <div class="card-inner">
 
             <div class="intro-note">
-                Below are all your decisions. You may revise any of them before submitting.
+                {{ if participant.treatment == 0 }}
+                Below are your decisions for each purchase price.
+                <strong>YES = buy the lottery ticket</strong> at that price;
+                <strong>NO = do not buy the lottery ticket.</strong>
+                You can change any decision before submitting.
+                {{ endif }}
+                {{ if participant.treatment == 2 }}
+                Below are your decisions for each option price.
+                <strong>YES = buy the option</strong> (the right to purchase the lottery ticket in Part 2);
+                <strong>NO = do not buy the option.</strong>
+                You can change any decision before submitting.
+                {{ endif }}
+                {{ if participant.treatment == 3 }}
+                Below are your decisions for each purchase price.
+                <strong>YES = buy the lottery ticket</strong> at that price (you can request the refund in Part 2);
+                <strong>NO = do not buy the lottery ticket.</strong>
+                You can change any decision before submitting.
+                {{ endif }}
             </div>
 
             <table class="decisions-table">

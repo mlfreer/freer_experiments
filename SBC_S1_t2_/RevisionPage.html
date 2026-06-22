@@ -250,10 +250,24 @@
         <div class="card-inner">
             <!-- ── Intro note ── -->
             <div class="intro-note">
-                Below are all your decisions{% if participant.treatment == 2 %}
-                on whether to purchase the lottery ticket. <br />
-                {% elif participant.treatment == 3 %} on whether to return the lottery ticket. <br />{% endif %} You may revise any of them
-                before submitting.
+                {% if participant.treatment == 1 %}
+                Below are your decisions for each price.
+                <strong>YES = buy the lottery ticket</strong> at that price;
+                <strong>NO = do not buy the lottery ticket.</strong>
+                You can change any decision before submitting.
+                {% endif %}
+                {% if participant.treatment == 2 %}
+                Below are your decisions for each purchase price.
+                <strong>YES = purchase the lottery ticket</strong> (exercise your option) at that price;
+                <strong>NO = do not purchase the lottery ticket.</strong>
+                You can change any decision before submitting.
+                {% endif %}
+                {% if participant.treatment == 3 %}
+                Below are your decisions for each refund amount.
+                <strong>YES = return the lottery ticket</strong> for that refund;
+                <strong>NO = do not return the lottery ticket (keep it).</strong>
+                You can change any decision before submitting.
+                {% endif %}
             </div>
 
             <!-- ── Decisions table ── -->
