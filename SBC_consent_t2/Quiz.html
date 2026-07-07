@@ -325,11 +325,13 @@
                     Yes, if I {% if participant.treatment == 0 %} decided to
                     purchase the lottery ticket in Part 1. {% endif %} {% if
                     participant.treatment == 1 %} decide to purchase the lottery
-                    ticket today. {% endif %} {% if participant.treatment == 2 %}
-                    decided to purchase the option in Part 1 and purchase the
-                    lottery ticket today. {% endif %} {% if participant.treatment == 3
-                    %} decided to purchase the lottery ticket in Part 1 and I decide not to use the refund option today, and therefore decide to
-                    keep the lottery ticket. {% endif %}
+                    ticket today. {% endif %} {% if participant.treatment == 2
+                    %} decided to purchase the option in Part 1 and purchase the
+                    lottery ticket today. {% endif %} {% if
+                    participant.treatment == 3 %} decided to purchase the
+                    lottery ticket in Part 1 and I decide not to use the refund
+                    option today, and therefore decide to keep the lottery
+                    ticket. {% endif %}
                 </label>
                 <label class="radio-option">
                     <input type="radio" name="q2" value="1" />
@@ -397,10 +399,8 @@
                 </label>
                 <label class="radio-option">
                     <input type="radio" name="q3" value="3" />
-                    Today, you will first learn the outcome of Lottery 1. You
-                    can then decide to purchase the lottery ticket and will
-                    receive a corresponding bonus payment depending on your
-                    decision and the outcome of the lottery ticket.
+                    You will learn the outcome of Lottery 1 and Lottery 2 and
+                    will receive the corresponding lottery ticket earnings.
                 </label>
                 {% endif %} {% if participant.treatment == 2 %}
                 <div class="question-text">
@@ -432,8 +432,7 @@
                 </label>
                 {% endif %} {% if participant.treatment == 3 %}
                 <div class="question-text">
-                    What happens if you purchased the lottery ticket in Part 1
-                    and you decide not to refund the lottery ticket today?
+                    What happens if you purchased the lottery ticket in Part 1?
                 </div>
                 <label class="radio-option">
                     <input type="radio" name="q3" value="0" />
@@ -442,7 +441,7 @@
                 </label>
                 <label class="radio-option">
                     <input type="radio" name="q3" value="1" />
-                    You can only earn a fixed payment of &pound;{{
+                    You can only earn a fixed payment of {{
                     session.config.participation_fee }}.
                 </label>
                 <label class="radio-option">
