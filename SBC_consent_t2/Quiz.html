@@ -239,6 +239,19 @@
         padding: 12px 16px;
         margin: 12px 0 20px 0;
     }
+    .field-error {
+        color: #c0392b;
+        font-size: 0.88rem;
+        font-weight: 600;
+        margin-top: 8px;
+    }
+    .answer-input-wrap.has-error {
+        border-color: #e74c3c;
+        background: #fff5f5;
+    }
+    .alert-danger {
+        display: none !important;
+    }
 </style>
 
 <div class="quiz-wrapper">
@@ -310,6 +323,9 @@
                     <input type="radio" name="q1" value="3" />
                     &pound;{{ participant.x_draw }}
                 </label>
+                {% if q1_error %}
+                <div class="field-error">&nbsp {{ q1_error }}</div>
+                {% endif %}
             </div>
 
             <!-- Question 2 -->
@@ -346,6 +362,9 @@
                     <input type="radio" name="q2" value="3" />
                     No.
                 </label>
+                {% if q2_error %}
+                <div class="field-error">&nbsp {{ q2_error }}</div>
+                {% endif %}
             </div>
 
             <!-- Question 3 — treatment-conditional -->
@@ -458,6 +477,8 @@
                     receive lottery ticket earnings depending on the lottery
                     outcome.
                 </label>
+                {% endif %} {% if q3_error %}
+                <div class="field-error">&nbsp {{ q3_error }}</div>
                 {% endif %}
             </div>
             <!-- /question-block -->
@@ -487,7 +508,7 @@
         <div class="instructions-panel">
             <div class="instructions-panel-bar">📋 Instructions Reference</div>
             <div class="instructions-panel-body">
-                {{ include "SBC_consent_form/instr.html" }}
+                {{ include "SBC_consent_t2/instr.html" }}
             </div>
         </div>
     </div>

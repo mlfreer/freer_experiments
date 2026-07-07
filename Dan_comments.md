@@ -15,6 +15,8 @@ S1 Part 1. (But repeated throughout.)  I find the initial discussion of when the
 
 S1: Part 1. (But repeated.)  Should it show which answers the subject gets wrong and allow them to correct?  It seems this is done for one page of questions (from recollection, the multichoice) but not the other.
 
+-> yes now the subject is shown which of the questions they answered incorrectly in both quiz and example.
+**
 
 
 S2:  Part 1.  (But similar issue repeats.) The final multichoice question says "What happens if you decide to purchase the lottery ticket in Part 2 of this study next week?"  But the correct answer says "you can then decide to purchase the lottery ticket..." [but how can that be as you have already decided!!]
@@ -84,3 +86,6 @@ I don't have a good sense of how the critical open answer question has changed. 
 **
 
 Dan
+
+
+-> instructions under the button seem to still be from Part 1 even if we in Part 2.

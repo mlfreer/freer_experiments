@@ -38,6 +38,16 @@ class Player(BasePlayer):
     q2 = models.IntegerField()
     q3 = models.IntegerField()
 
+    # errors for the quiz
+    q1_error = models.StringField(initial="", blank=True)
+    q2_error = models.StringField(initial="", blank=True)
+    q3_error = models.StringField(initial="", blank=True)
+
+    # recording the lagged values
+    q1_last = models.IntegerField(initial=None, blank=True)
+    q2_last = models.IntegerField(initial=None, blank=True)
+    q3_last = models.IntegerField(initial=None, blank=True)
+
     # variables for the example page:
     e1 = models.IntegerField()
     e2 = models.IntegerField()
@@ -194,18 +204,6 @@ class Quiz(Page):
     def is_displayed(player):
         return (player.round_number == 1) and (player.return_study == False)
 
-    def error_message(player, value):
-        if (
-            (value["q1"] != C.QUIZ_ANSWERS[0])
-            or (value["q2"] != C.QUIZ_ANSWERS[1])
-            or (value["q3"] != C.QUIZ_ANSWERS[2])
-        ) and (player.return_study == 0):
-            result = "Wrong answer! Try again!"
-            player.quiz_attempts = player.quiz_attempts + 1
-            if player.quiz_attempts >= 2:
-                player.return_study = 1
-            return result
-
     @staticmethod
     def vars_for_template(player: Player):
         session = player.session
@@ -219,7 +217,54 @@ class Quiz(Page):
             payment_prob=session.config["selected_for_payment"],
             overwrite_decision=session.config["overwrite_decision"],
             implement_decision=100 - session.config["overwrite_decision"],
+            q1_error=player.q1_error,
+            q2_error=player.q2_error,
+            q3_error=player.q3_error,
+            q1_last=player.field_maybe_none("q1_last"),
+            q2_last=player.field_maybe_none("q2_last"),
+            q3_last=player.field_maybe_none("q3_last"),
         )
+
+    @staticmethod
+    def error_message(player, values):
+        errors = {}
+        player.q1_last = values["q1"]
+        player.q2_last = values["q2"]
+        player.q3_last = values["q3"]
+
+        # Force int comparison to be safe
+        try:
+            v1 = int(values["q1"])
+        except (TypeError, ValueError):
+            v1 = None
+        try:
+            v2 = int(values["q2"])
+        except (TypeError, ValueError):
+            v2 = None
+        try:
+            v3 = int(values["q3"])
+        except (TypeError, ValueError):
+            v3 = None
+
+        if v1 != int(C.QUIZ_ANSWERS[0]):
+            errors["q1"] = "Incorrect. Please check your calculation for Question 1."
+        if v2 != int(C.QUIZ_ANSWERS[1]):
+            errors["q2"] = "Incorrect. Please check your calculation for Question 2."
+        if v3 != int(C.QUIZ_ANSWERS[2]):
+            errors["q3"] = "Incorrect. Please check your calculation for Question 3."
+
+        if errors:
+            player.quiz_attempts = player.quiz_attempts + 1
+            if player.quiz_attempts > 2:
+                player.return_study = 1
+            player.q1_error = errors.get("q1", "")
+            player.q2_error = errors.get("q2", "")
+            player.q3_error = errors.get("q3", "")
+            return "Please correct the aswers"
+        else:
+            player.q1_error = ""
+            player.q2_error = ""
+            player.q3_error = ""
 
 
 # -----------------------------------------------------------------------------

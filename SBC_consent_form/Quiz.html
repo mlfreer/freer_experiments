@@ -19,7 +19,9 @@
     body {
         background: #eef3fa;
     }
-
+    .alert-danger {
+        display: none !important;
+    }
     .quiz-wrapper {
         font-family: "Segoe UI", Arial, sans-serif;
         max-width: 860px;
@@ -249,6 +251,16 @@
         font-size: 0.97rem;
         font-weight: 600;
     }
+    .field-error {
+        color: #c0392b;
+        font-size: 0.88rem;
+        font-weight: 600;
+        margin-top: 8px;
+    }
+    .answer-input-wrap.has-error {
+        border-color: #e74c3c;
+        background: #fff5f5;
+    }
 </style>
 
 <div class="quiz-wrapper">
@@ -332,6 +344,9 @@
                         £{{ participant.x_draw }}
                     </label>
                 </div>
+                {% if q1_error %}
+                <div class="field-error">&nbsp {{ q1_error }}</div>
+                {% endif %}
             </div>
 
             <!-- ── Q2 ── -->
@@ -362,6 +377,9 @@
                         No.
                     </label>
                 </div>
+                {% if q2_error %}
+                <div class="field-error">&nbsp {{ q2_error }}</div>
+                {% endif %}
             </div>
 
             <!-- ── Q3 (treatment-conditional) ── -->
@@ -506,6 +524,9 @@
                     </label>
                     {% endif %}
                 </div>
+                {% if q3_error %}
+                <div class="field-error">&nbsp {{ q3_error }}</div>
+                {% endif %}
             </div>
 
             <!-- ── Action buttons ── -->
