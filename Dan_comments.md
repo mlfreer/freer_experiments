@@ -89,3 +89,6 @@ Dan
 
 
 -> instructions under the button seem to still be from Part 1 even if we in Part 2.
+
+-> convert the price lists into float or currency field 
+[a lot of functions will have to be updated because they are defined having IntegerField in mind.]

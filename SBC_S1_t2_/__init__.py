@@ -24,7 +24,7 @@ class C(BaseConstants):
         [0 for i in range(16)] for j in range(4)
     ]  # changing the parameters to the 11 period setup
     # outside is for treatment: 0 to 3
-    PRICES_T1[0] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 4, 6, 7, 8, 9]
+    PRICES_T1[0] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 4.5, 6.5, 7.5, 8.5, 9.5]
     PRICES_T1[2] = [8, 0, 0, 10, 2, 2, 4, 1, 1, 2, 3, 10, 6, 10, 4, 4]
     PRICES_T1[3] = [8, 12, 10, 10, 12, 10, 10, 9, 10, 9, 10, 12, 12, 14, 14, 6]
     # PRICES_T1[0] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 11, 12]
@@ -33,7 +33,7 @@ class C(BaseConstants):
 
     # PRICES_T2 = [[0 for i in range(15) ] for j in range(4)]
     PRICES_T2 = [[0 for i in range(16)] for j in range(4)]
-    PRICES_T2[1] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 4, 6, 7, 8, 9]
+    PRICES_T2[1] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 4.5, 6.5, 7.5, 8.5, 9.5]
     PRICES_T2[2] = [0, 12, 10, 0, 10, 8, 6, 8, 9, 7, 7, 2, 6, 4, 10, 2]
     PRICES_T2[3] = [0, 12, 10, 0, 10, 8, 6, 8, 9, 7, 7, 2, 6, 4, 10, 2]
     # PRICES_T1[1] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 11, 12]
@@ -61,10 +61,10 @@ class Player(BasePlayer):
 
     revised_purchase_t2 = models.BooleanField(default=False)
 
-    price_t1 = models.IntegerField()
-    price_t2 = models.IntegerField()
-
-    earnings = models.IntegerField()
+    # to be converted to floats:
+    price_t1 = models.FloatField()
+    price_t2 = models.FloatField()
+    earnings = models.FloatField()
 
     selected_round = models.IntegerField()
     random_draw_1 = models.IntegerField()
@@ -233,7 +233,7 @@ def compute_payoff(player: Player):
 
             if participant.treatment == 0:  # static, buy at t=1
                 if purchased_t1:
-                    player.earnings = int(
+                    player.earnings = (
                         endowment
                         - price_t1
                         + a_bar * won_t1
@@ -241,14 +241,14 @@ def compute_payoff(player: Player):
                         + a_bar * won_t2
                     )
                 else:
-                    player.earnings = int(endowment)
+                    player.earnings = endowment
                 print(
                     f"Treatment 0 - purchase_t1: {p.purchase_t1}, earnings: {player.earnings}"
                 )
 
             elif participant.treatment == 1:  # static, buy at t=2
                 if p.revised_purchase_t2:
-                    player.earnings = int(
+                    player.earnings = (
                         endowment
                         - price_t2
                         + a_bar * won_t1
@@ -256,11 +256,11 @@ def compute_payoff(player: Player):
                         + a_bar * won_t2
                     )
                 else:
-                    player.earnings = int(endowment)
+                    player.earnings = endowment
             elif participant.treatment == 2:  # dynamic, option
                 if purchased_t1:
                     if p.revised_purchase_t2:
-                        player.earnings = int(
+                        player.earnings = (
                             endowment
                             - price_t1
                             - price_t2
@@ -269,13 +269,13 @@ def compute_payoff(player: Player):
                             + a_bar * won_t2
                         )
                     else:
-                        player.earnings = int(endowment - price_t1)
+                        player.earnings = endowment - price_t1
                 else:
-                    player.earnings = int(endowment)
+                    player.earnings = endowment
             elif participant.treatment == 3:  # dynamic, refund
                 if purchased_t1:
                     if p.revised_purchase_t2 == 0:
-                        player.earnings = int(
+                        player.earnings = (
                             endowment
                             - price_t1
                             + a_bar * won_t1
@@ -283,9 +283,9 @@ def compute_payoff(player: Player):
                             + a_bar * won_t2
                         )
                     else:
-                        player.earnings = int(endowment - price_t1 + price_t2)
+                        player.earnings = endowment - price_t1 + price_t2
                 else:
-                    player.earnings = int(endowment)
+                    player.earnings = endowment
 
             # checking whether the player is to get paid:
             random_draw = random.randint(0, 100)
