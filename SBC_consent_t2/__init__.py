@@ -238,9 +238,9 @@ class Quiz(Page):
     @staticmethod
     def error_message(player, values):
         errors = {}
-        player.q1_last = values["q1"]
-        player.q2_last = values["q2"]
-        player.q3_last = values["q3"]
+        player.q1_last = int(values["q1"])
+        player.q2_last = int(values["q2"])
+        player.q3_last = int(values["q3"])
 
         # Force int comparison to be safe
         try:
@@ -257,11 +257,11 @@ class Quiz(Page):
             v3 = None
 
         if v1 != int(C.QUIZ_ANSWERS[0]):
-            errors["q1"] = "Incorrect. Please check your calculation for Question 1."
+            errors["q1"] = "Incorrect. Please check your answer for Question 1."
         if v2 != int(C.QUIZ_ANSWERS[1]):
-            errors["q2"] = "Incorrect. Please check your calculation for Question 2."
+            errors["q2"] = "Incorrect. Please check your answer for Question 2."
         if v3 != int(C.QUIZ_ANSWERS[2]):
-            errors["q3"] = "Incorrect. Please check your calculation for Question 3."
+            errors["q3"] = "Incorrect. Please check your answer for Question 3."
 
         if errors:
             player.quiz_attempts = player.quiz_attempts + 1

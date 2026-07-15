@@ -328,19 +328,19 @@
                 </div>
                 <div class="question-body">
                     <label class="radio-option">
-                        <input type="radio" name="q1" value="0" />
+                        <input type="radio" name="q1" value="0"  {% if q1_last == 0 %} checked {% endif %} />
                         £{{ session.config.A_BAR }}
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q1" value="1" />
+                        <input type="radio" name="q1" value="1" {% if q1_last == 1 %} checked {% endif %} />
                         £{{ two_heads_sum }}
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q1" value="2" />
+                        <input type="radio" name="q1" value="2" {% if  q1_last == 2 %} checked {% endif %} />
                         £{{ heads_tails_sum }}
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q1" value="3" />
+                        <input type="radio" name="q1" value="3" {% if q1_last == 3 %} checked {% endif %} />
                         £{{ participant.x_draw }}
                     </label>
                 </div>
@@ -360,20 +360,20 @@
                 </div>
                 <div class="question-body">
                     <label class="radio-option">
-                        <input type="radio" name="q2" value="0" />
+                        <input type="radio" name="q2" value="0" {% if q2_last == 0 %} checked {% endif %} />
                         Yes.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q2" value="1" />
+                        <input type="radio" name="q2" value="1" {% if q2_last == 1 %} checked {% endif %} />
                         If I do not purchase the lottery ticket today, I will
                         always get paid.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q2" value="2" />
+                        <input type="radio" name="q2" value="2" {% if q2_last == 2 %} checked {% endif %} />
                         Only if both Lottery 1 and Lottery 2 result in heads.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q2" value="3" />
+                        <input type="radio" name="q2" value="3" {% if q2_last == 3 %} checked {% endif %} />
                         No.
                     </label>
                 </div>
@@ -413,39 +413,39 @@
                 <div class="question-body">
                     {% if participant.treatment == 0 %}
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="0" />
+                        <input type="radio" name="q3" value="0" {% if q3_last == 0 %} checked {% endif %} />
                         If you do not return to Part 2 next week, you will earn
                         the participation fee of {{
                         session.config.participation_fee }}.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="1" />
+                        <input type="radio" name="q3" value="1" {% if q3_last == 1 %} checked {% endif %} />
                         When you return to Part 2 next week, your earnings do
                         not depend on your decision today, so you will receive a
                         fixed bonus payment of {{
                         session.config.participation_fee }}.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="2" />
+                        <input type="radio" name="q3" value="2" {% if q3_last == 2 %} checked {% endif %} />
                         When you return to Part 2 next week, you can only earn a
                         bonus payment if
                         <em>both</em> lotteries result in heads.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="3" />
+                        <input type="radio" name="q3" value="3" {% if q3_last == 3 %} checked {% endif %} />
                         When you return to Part 2 next week, you will learn the
                         outcome of Lottery 1 and Lottery 2 and can receive the
                         corresponding lottery ticket earnings.
                     </label>
                     {% endif %} {% if participant.treatment == 1 %}
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="0" />
+                        <input type="radio" name="q3" value="0" {% if q3_last == 0 %} checked {% endif %} />
                         If you do not return to Part 2 next week, you will earn
                         the participation fee of {{
                         session.config.participation_fee }}.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="1" />
+                        <input type="radio" name="q3" value="1" {% if q3_last == 1 %} checked {% endif %} />
                         When you return to Part 2 next week, you will receive a
                         fixed bonus payment of {{
                         session.config.participation_fee }} and there are no
@@ -453,39 +453,39 @@
                         ticket.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="2" />
+                        <input type="radio" name="q3" value="2" {% if q3_last == 2 %} checked {% endif %} />
                         When you return to Part 2 next week, you can only earn a
                         bonus payment if <em>both</em> lotteries result in
                         heads.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="3" />
+                        <input type="radio" name="q3" value="3" {% if q3_last == 3 %} checked {% endif %} />
                         You will learn the outcome of Lottery 1 and Lottery 2
                         and will receive the corresponding lottery ticket
                         earnings.
                     </label>
                     {% endif %} {% if participant.treatment == 2 %}
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="0" />
+                        <input type="radio" name="q3" value="0" {% if q3_last == 0 %} checked {% endif %} />
                         If you do not return to Part 2 next week, you will earn
                         the participation fee of {{
                         session.config.participation_fee }}.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="1" />
+                        <input type="radio" name="q3" value="1" {% if q3_last == 1 %} checked {% endif %} />
                         When you return to Part 2 next week, you will receive a
                         fixed bonus payment of {{
                         session.config.participation_fee }} and there are no
                         additional bonus payments if you buy the option today.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="2" />
+                        <input type="radio" name="q3" value="2" {% if q3_last == 2 %} checked {% endif %} />
                         When you return to Part 2 next week, you can only earn a
                         bonus payment if
                         <em>both</em> lotteries result in heads.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="3" />
+                        <input type="radio" name="q3" value="3" {% if q3_last == 3 %} checked {% endif %} />
                         When you return to Part 2 next week, you will first
                         learn the outcome of Lottery 1. If you bought the option
                         today, you can then purchase the lottery ticket and
@@ -495,13 +495,13 @@
                     </label>
                     {% endif %} {% if participant.treatment == 3 %}
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="0" />
+                        <input type="radio" name="q3" value="0" {% if q3_last == 0 %} checked {% endif %} />
                         If you do not return to Part 2 next week, you will earn
                         the participation fee of {{
                         session.config.participation_fee }}.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="1" />
+                        <input type="radio" name="q3" value="1" {% if q3_last == 1 %} checked {% endif %} />
                         When you return to Part 2 next week, you will receive a
                         fixed bonus payment of {{
                         session.config.participation_fee }} and there are no
@@ -509,13 +509,13 @@
                         ticket today.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="2" />
+                        <input type="radio" name="q3" value="2" {% if q3_last == 2 %} checked {% endif %} />
                         When you return to Part 2 next week, you can only earn a
                         bonus payment if <em>both</em> lotteries result in
                         heads.
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="q3" value="3" />
+                        <input type="radio" name="q3" value="3" {% if q3_last == 3 %} checked {% endif %} />
                         When you return to Part 2 next week, you will first
                         learn the outcome of Lottery 1. You can then decide to
                         return the lottery ticket for a pre-specified refund
