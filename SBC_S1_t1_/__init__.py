@@ -1,5 +1,6 @@
 import os
 import random
+import time
 
 import pandas as pd
 from otree.api import *
@@ -84,6 +85,15 @@ class Player(BasePlayer):
     strategy = models.StringField()
     others_strategy = models.StringField()
 
+    # time variables:
+    decision_start = models.FloatField(blank=True)
+    decision_rt = models.FloatField(blank=True)
+
+    revision_start = models.FloatField(blank=True)
+    revision_rt = models.FloatField(blank=True)
+
+    comments_start = models.FloatField(blank=True)
+    comments_rt = models.FloatField(blank=True)
 
 # -----------------------------------------------------------------------------
 
@@ -222,6 +232,8 @@ class Decision(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
+        if player.decision_start:
+            player.decision_rt = time.time() - player.decision_start
 
         # generate the random draws in the first stage of the experiment:
         player.random_draw_1 = int(player.participant.random_draw_1)
@@ -247,6 +259,9 @@ class Decision(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        if player.field_maybe_none("decision_start") is None:
+            player.decision_start = time.time()
+
         session = player.session
         participant = player.participant
         return dict(
@@ -330,6 +345,9 @@ class RevisionPage(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        if player.field_maybe_none("revision_start") is None:
+            player.revision_start = time.time()
+
         past = []
         for r in range(1, C.NUM_ROUNDS + 1):
             p = player.in_round(r)
@@ -347,6 +365,12 @@ class RevisionPage(Page):
             )
         return dict(past_decisions=past)
 
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        if player.revision_start:
+            player.revision_rt = time.time() - player.revision_start
+
+
 
 # -----------------------------------------------------------------------------
 # Final completion page
@@ -360,6 +384,7 @@ class CompletionPage(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+
         participant = player.participant
         session = player.session
 
@@ -377,6 +402,16 @@ class Comments(Page):
     def is_displayed(player: Player):
         subsession = player.subsession
         return subsession.round_number == C.NUM_ROUNDS
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        if player.field_maybe_none("comments_start") is None:
+            player.comments_start = time.time()
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        if player.comments_start:
+            player.comments_rt = time.time() - player.comments_start
 
 
 # ORDER

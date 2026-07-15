@@ -1,4 +1,5 @@
 import random
+import time
 
 from otree.api import *
 
@@ -70,6 +71,16 @@ class Player(BasePlayer):
     # counting the number of mistakes in the example:
     example_attempts = models.IntegerField(initial=0)
 
+    # time variables:
+    instructions_start = models.FloatField(blank=True)
+    instructions_rt = models.FloatField(blank=True)
+
+    example_start = models.FloatField(blank=True)
+    example_rt = models.FloatField(blank=True)
+
+    quiz_start = models.FloatField(blank=True)
+    quiz_rt = models.FloatField(blank=True)
+
 
 # -----------------------------------------------------------------------------
 
@@ -113,6 +124,9 @@ class ReturnStudy(Page):
 class Instructions(Page):
     @staticmethod
     def vars_for_template(player: Player):
+        if player.field_maybe_none("instructions_start") is None:
+            player.instructions_start = time.time()
+
         session = player.session
         participant = player.participant
         return dict(
@@ -124,6 +138,10 @@ class Instructions(Page):
             implement_decision=100 - session.config["overwrite_decision"],
         )
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        if player.instructions_start:
+            player.instructions_rt = time.time() - player.instructions_start
 
 class Example(Page):
     form_model = "player"
@@ -135,6 +153,11 @@ class Example(Page):
 
     @staticmethod
     def vars_for_template(player):
+
+        if player.field_maybe_none("example_start") is None:
+            player.example_start = time.time()
+
+
         session = player.session
         participant = player.participant
 
@@ -195,6 +218,12 @@ class Example(Page):
             player.e2_error = ""
             player.e3_error = ""
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        if player.example_start:
+            player.example_rt = time.time() - player.example_start
+
+
 
 class Quiz(Page):
     form_model = "player"
@@ -206,6 +235,10 @@ class Quiz(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+
+        if player.field_maybe_none("quiz_start") is None:
+            player.quiz_start = time.time()
+
         session = player.session
         participant = player.participant
         a_bar = session.config["A_BAR"]
@@ -266,6 +299,11 @@ class Quiz(Page):
             player.q1_error = ""
             player.q2_error = ""
             player.q3_error = ""
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        if player.quiz_start:
+            player.quiz_rt = time.time() - player.quiz_start
 
 
 # -----------------------------------------------------------------------------

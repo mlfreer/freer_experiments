@@ -1,4 +1,5 @@
 from otree.api import *
+import time
 
 doc = """
 Your app description
