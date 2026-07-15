@@ -60,6 +60,14 @@ class Player(BasePlayer):
     e2 = models.IntegerField()
     e3 = models.IntegerField()
 
+    # time variables:
+    instructions_start = models.FloatField(blank=True)
+    instructions_rt = models.FloatField(blank=True)
+
+    quiz_start = models.FloatField(blank=True)
+    quiz_rt = models.FloatField(blank=True)
+
+
 
 # FUNCTIONS:
 
@@ -190,6 +198,9 @@ class ReturnStudy(Page):
 class Instructions(Page):
     @staticmethod
     def vars_for_template(player: Player):
+        if player.field_maybe_none("instructions_start") is None:
+            player.instructions_start = time.time()
+
         session = player.session
         participant = player.participant
 
@@ -208,6 +219,11 @@ class Instructions(Page):
             implement_decision=100 - session.config["overwrite_decision"],
         )
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        if player.instructions_start:
+            player.instructions_rt = time.time() - player.instructions_start
+
 
 class Quiz(Page):
     form_model = "player"
@@ -219,6 +235,9 @@ class Quiz(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        if player.field_maybe_none("quiz_start") is None:
+            player.quiz_start = time.time()
+
         session = player.session
         participant = player.participant
         return dict(
@@ -276,6 +295,11 @@ class Quiz(Page):
             player.q1_error = ""
             player.q2_error = ""
             player.q3_error = ""
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        if player.quiz_start:
+            player.quiz_rt = time.time() - player.quiz_start
 
 
 page_sequence = [

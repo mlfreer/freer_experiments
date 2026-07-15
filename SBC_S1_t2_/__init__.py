@@ -1,5 +1,5 @@
 import random
-
+import time
 from otree.api import *
 
 doc = """
@@ -91,6 +91,16 @@ class Player(BasePlayer):
 
     numeracy1 = models.IntegerField()
     numeracy2 = models.IntegerField()
+
+    # time variables:
+    decision_start = models.FloatField(blank=True)
+    decision_rt = models.FloatField(blank=True)
+
+    revision_start = models.FloatField(blank=True)
+    revision_rt = models.FloatField(blank=True)
+
+    comments_start = models.FloatField(blank=True)
+    comments_rt = models.FloatField(blank=True)
 
 
 # --------------------------------------------------------
@@ -421,6 +431,9 @@ class Decision(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        if player.field_maybe_none("decision_start") is None:
+            player.decision_start = time.time()
+
         # recovering the data:
         retrieve_data(player)
 
@@ -445,6 +458,8 @@ class Decision(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.revised_purchase_t2 = player.purchase_t2
+        if player.decision_start:
+            player.decision_rt = time.time() - player.decision_start
 
         # temporary removing to compute the payoffs after the revision page
 
@@ -474,6 +489,9 @@ class RevisionPage(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        if player.field_maybe_none("revision_start") is None:
+            player.revision_start = time.time()
+
         past = []
         for r in range(1, C.NUM_ROUNDS + 1):
             p = player.in_round(r)
@@ -493,6 +511,8 @@ class RevisionPage(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
+        if player.revision_start:
+            player.revision_rt = time.time() - player.revision_start
         if player.subsession.round_number == C.NUM_ROUNDS:
             select_random_round(player)
             compute_payoff(player)
@@ -556,7 +576,13 @@ class Survey(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        if player.field_maybe_none("comments_start") is None:
+            player.comments_start = time.time()
         return dict(likert_range=range(11))
 
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+        if player.comments_start:
+            player.comments_rt = time.time() - player.comments_start
 
 page_sequence = [ExperimentStarts, Decision, RevisionPage, Survey, Results]
