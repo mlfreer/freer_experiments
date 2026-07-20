@@ -550,7 +550,7 @@ class Results(Page):
             payment_prob=session.config["selected_for_payment"],
             overwrite_decision=session.config["overwrite_decision"],
             implement_decision=100 - session.config["overwrite_decision"],
-            completion_url=session.config["completion_url"],
+            completion_url=session.config["completion_url1"],
         )
 
 
