@@ -1,7 +1,7 @@
 from os import environ
 
 SESSION_CONFIGS = [
-     
+
 #     dict(
 #        name="AA_control",
 #        display_name="Competition Control Treatment",
@@ -141,7 +141,7 @@ DEBUG = True
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, 
+    real_world_currency_per_point=1.00,
     participation_fee=3.00,
     min_pay = 1.00,
     max_pay = 15.00,
@@ -200,7 +200,7 @@ participation_fee = 5
 LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'GBP'
+REAL_WORLD_CURRENCY_CODE = 'EUR'
 USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'
