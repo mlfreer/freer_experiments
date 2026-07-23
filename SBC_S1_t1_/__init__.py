@@ -264,6 +264,7 @@ class Decision(Page):
 
         session = player.session
         participant = player.participant
+        player.treatment = participant.treatment
         return dict(
             two_heads_sum=2 * session.config["A_BAR"],
             heads_tails_sum=session.config["A_BAR"] + 14,
@@ -284,9 +285,11 @@ class Results(Page):
         return subsession.round_number == C.NUM_ROUNDS
 
     @staticmethod
-    @staticmethod
     def before_next_page(player, timeout_happened):
         if player.participant.treatment == 1:
+            # recording the treatment:
+            for p in player.in_all_rounds():
+                p.treatment = player.participant.treatment
             rounds = []
             for r in range(1, C.NUM_ROUNDS + 1):
                 p = player.in_round(r)

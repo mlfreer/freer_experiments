@@ -69,7 +69,9 @@ class Player(BasePlayer):
     selected_round = models.IntegerField()
     random_draw_1 = models.IntegerField()
     random_draw_2 = models.IntegerField()
+
     treatment = models.StringField()
+    x = models.InegerField()
 
     payoff_calculated = models.BooleanField(default=False)
     random_draws_generated = models.BooleanField(default=False)
@@ -442,6 +444,10 @@ class Decision(Page):
         session = player.session
         a_bar = session.config["A_BAR"]
         x_draw = participant.x_draw
+
+        player.x = x_draw
+        player.treatment = participant.treatment
+
         example_sum = x_draw + a_bar
 
         return dict(
@@ -531,6 +537,12 @@ class Results(Page):
         selected_player = player.in_round(player.selected_round)
         retrieve_data(selected_player)
         compute_payoff(player)
+
+        if participant.treatment == 0:
+            for p in player.in_all_rounds():
+                p.treatment = player.participant.treatment
+                p.x = player.participant.x_draw
+
 
         # recording the payoff in the end:
         player.payoff = player.earnings
