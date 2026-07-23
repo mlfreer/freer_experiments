@@ -26,7 +26,7 @@ class Player(BasePlayer):
 
 # PAGES
 class WelcomeScreen(Page):
-    template_name = './WelcomeScreen/WelcomeScreen.html'
+    template_name = './WelcomeScreen/WelcomeScreen_GER.html'
 
 
 page_sequence = [WelcomeScreen]
