@@ -128,7 +128,7 @@ SESSION_CONFIGS = [
 
 #------------------------------------------------------------------------------------
 # SWITCHING THE DEBUG MODE ON AND OFF
-DEBUG = True
+DEBUG = False
 #------------------------------------------------------------------------------------
 
 
@@ -159,7 +159,6 @@ ROOMS = [
         'name': 'live_demo',
         'display_name': 'Room for live demo (no participant labels)',
     },
-
 ]
 
 PARTICIPANT_FIELDS = []
