@@ -159,36 +159,7 @@ ROOMS = [
         'name': 'live_demo',
         'display_name': 'Room for live demo (no participant labels)',
     },
-    dict(
-        name='Prolific_Study_A',
-        display_name='Prolific_Study_A',
-        # participant_label_file='_rooms/your_study.txt',
-        # use_secure_urls=True,
-    ),
-    dict(
-        name='Prolific_Study_B',
-        display_name='Prolific_Study_B',
-        # participant_label_file='_rooms/your_study.txt',
-        # use_secure_urls=True,
-    ),
-    dict(
-        name='Prolific_Study_C',
-        display_name='Prolific_Study_C',
-        # participant_label_file='_rooms/your_study.txt',
-        # use_secure_urls=True,
-    ),
-    dict(
-        name='Prolific_Study_D',
-        display_name='Prolific_Study_D',
-        # participant_label_file='_rooms/your_study.txt',
-        # use_secure_urls=True,
-    ),
-    dict(
-        name = 'Prolific_Study_E',
-        display_name = 'Prolific_Study_E',
-        # participant_label_file='_rooms/your_study.txt',
-        # use_secure_urls=True,
-    ),
+
 ]
 
 PARTICIPANT_FIELDS = []
