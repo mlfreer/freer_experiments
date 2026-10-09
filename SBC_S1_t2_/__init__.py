@@ -70,8 +70,8 @@ class Player(BasePlayer):
     random_draw_1 = models.IntegerField()
     random_draw_2 = models.IntegerField()
 
-    treatment = models.StringField()
-    x = models.InegerField()
+    treatment = models.IntegerField()
+    x = models.IntegerField()
 
     payoff_calculated = models.BooleanField(default=False)
     random_draws_generated = models.BooleanField(default=False)
@@ -111,6 +111,7 @@ def draw_order(player: Player):
     session = player.session
     subsession = player.subsession
     participant = player.participant
+
     if (subsession.round_number == 1) or (participant.treatment == 0):
         import random
 
@@ -127,6 +128,10 @@ def draw_order(player: Player):
 def retrieve_data(player):
     participant = player.participant
     label = participant.label
+
+    # recording the x
+    player.x = participant.x_draw
+
     if not label:
         print(f"retrieve_data: no label, skipping")
         return
@@ -384,7 +389,8 @@ class ExperimentStarts(Page):
     def before_next_page(player, timeout_happened):
         # comptuing payoff at the start of the experiment if the treatment is static, buy at t=1
         if player.participant.treatment == 0:
-            retrieve_data(player)
+            for p in player.in_all_rounds():
+                retrieve_data(p)
             select_random_round(player)
             compute_payoff(player)
 
