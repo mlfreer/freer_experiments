@@ -1,5 +1,7 @@
 import random
 import time
+from .x_pool import X_POOL
+
 
 from otree.api import *
 
@@ -92,7 +94,8 @@ class Player(BasePlayer):
 def draw_x(player: Player):
     session = player.session
     participant = player.participant
-    participant.x_draw = round(random.randint(0, session.config["A_BAR"]), 0)
+    #participant.x_draw = round(random.randint(0, session.config["A_BAR"]), 0)
+    participant.x_draw = X_POOL[participant.id_in_session - 1]
     participant.treatment = session.config["treatment"]
 
 
