@@ -28,12 +28,12 @@ class C(BaseConstants):
     PRICES_T1[2] = [
         8, 0, 4, 10, 2, 3, 4, 2, 2, 1,
         1, 1, 3, 4, 2, 6, 6, 6, 8, 10,
-        0
+        4
     ]
     PRICES_T1[3] = [
         8, 12, 14, 14, 10, 11, 12, 9, 11, 9,
         10, 11, 9, 8, 6, 8, 10, 12, 10, 12,
-        0
+        10
     ]
     # PRICES_T1[0] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 11, 12]
     # PRICES_T1[2] = [8, 0, 0, 10, 1, 2, 1, 2, 3, 2, 3, 4, 7, 8, 9]
@@ -45,12 +45,12 @@ class C(BaseConstants):
     PRICES_T2[2] = [
         0, 12, 10, 4, 8, 8, 8, 7, 9, 8,
         9, 10, 6, 4, 4, 2, 4, 6, 2, 2,
-        0
+        6
     ]
     PRICES_T2[3] = [
         0, 12, 10, 4, 8, 8, 8, 7, 9, 8,
         9, 10, 6, 4, 4, 2, 4, 6, 2, 2,
-        0
+        6
     ]
 
 
@@ -116,6 +116,8 @@ class Player(BasePlayer):
 
     comments_start = models.FloatField(blank=True)
     comments_rt = models.FloatField(blank=True)
+
+    contract_confidence = models.IntegerField(min=0, max=100)
 
 
 # --------------------------------------------------------
@@ -599,6 +601,7 @@ class Survey(Page):
         "endowment",
         "numeracy1",
         "numeracy2",
+        "contract_confidence"
     ]
 
     @staticmethod
@@ -607,10 +610,207 @@ class Survey(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+
         if player.field_maybe_none("comments_start") is None:
             player.comments_start = time.time()
-        return dict(likert_range=range(11))
 
+        # --------------------------------------------------------
+        # 1. Retrieve historical decisions for all rounds
+        # --------------------------------------------------------
+        for p in player.in_all_rounds():
+            retrieve_data(p)
+
+        # --------------------------------------------------------
+        # 2. Identify the relevant contract based on treatment
+        # --------------------------------------------------------
+        treatment = player.participant.treatment
+
+        contract_specs = {
+            0: {
+                "name": "S1",
+                "description": "Buy at the price of £8 in t=1.",
+                "price_t1": 8,
+                "price_t2": None,
+            },
+            1: {
+                "name": "S2",
+                "description": "Buy at the price of £12 in t=2.",
+                "price_t1": None,
+                "price_t2": 12,
+            },
+            2: {
+                "name": "D1",
+                "description": "Buy the option at the price of £2 in t=1 with the price to excercise the otion in t=2 being £8.",
+                "price_t1": 2,
+                "price_t2": 8,
+            },
+            3: {
+                "name": "D2",
+                "description": "Buy the at the price of £10 in t=1 with the potential refund of £8.",
+                "price_t1": 10,
+                "price_t2": 8,
+            },
+        }
+
+        spec = contract_specs.get(treatment)
+
+        if spec is None:
+            raise ValueError(f"Unknown treatment value: {treatment}")
+
+        # --------------------------------------------------------
+        # 3. Find the matching round
+        # --------------------------------------------------------
+        def price_matches(observed, target):
+            if target is None:
+                return True
+            if observed is None:
+                return False
+
+            return abs(float(observed) - float(target)) < 1e-9
+
+        matching_rounds = []
+
+        for p in player.in_all_rounds():
+
+            price_t1 = p.field_maybe_none("price_t1")
+            price_t2 = p.field_maybe_none("price_t2")
+
+            if price_matches(price_t1, spec["price_t1"]) and price_matches(
+                price_t2, spec["price_t2"]
+            ):
+                matching_rounds.append(p)
+
+        contract_found = len(matching_rounds) == 1
+        contract_choices = []
+        contract_round = None
+
+        # --------------------------------------------------------
+        # 4. Retrieve the corresponding decisions
+        # --------------------------------------------------------
+        if contract_found:
+
+            contract_player = matching_rounds[0]
+            contract_round = contract_player.round_number
+
+            def purchase_choice(value):
+                if value is None:
+                    return "Not recorded"
+
+                return "Bought" if bool(value) else "Did not buy"
+
+            # Treatment 0: S1
+            if treatment == 0:
+
+                purchase_t1 = (
+                    contract_player.field_maybe_none("purchase_t1")
+                    if contract_player.field_maybe_none("random_draw_1") is not None
+                    else None
+                )
+
+                contract_choices.append(
+                    {
+                        "label": "Purchase decision at t=1",
+                        "value": purchase_choice(purchase_t1),
+                    }
+                )
+
+            # Treatment 1: S2
+            elif treatment == 1:
+
+                purchase_t2 = contract_player.field_maybe_none(
+                    "revised_purchase_t2"
+                )
+
+                contract_choices.append(
+                    {
+                        "label": "Decision at t=2",
+                        "value": purchase_choice(purchase_t2),
+                    }
+                )
+
+            # Treatment 2: D1
+            elif treatment == 2:
+
+                purchase_t1 = (
+                    contract_player.field_maybe_none("purchase_t1")
+                    if contract_player.field_maybe_none("random_draw_1") is not None
+                    else None
+                )
+
+                purchase_t2 = contract_player.field_maybe_none(
+                    "revised_purchase_t2"
+                )
+
+                contract_choices.extend(
+                    [
+                        {
+                            "label": "Initial purchase decision at t=1",
+                            "value": purchase_choice(purchase_t1),
+                        },
+                        {
+                            "label": "Decision at t=2",
+                            "value": (
+                                "Not recorded"
+                                if purchase_t2 is None
+                                else "Exercised the option"
+                                if bool(purchase_t2)
+                                else "Did not exercise the option"
+                            ),
+                        },
+                    ]
+                )
+
+            # Treatment 3: D2
+            elif treatment == 3:
+
+                purchase_t1 = (
+                    contract_player.field_maybe_none("purchase_t1")
+                    if contract_player.field_maybe_none("random_draw_1") is not None
+                    else None
+                )
+
+                refund_t2 = contract_player.field_maybe_none(
+                    "revised_purchase_t2"
+                )
+
+                contract_choices.extend(
+                    [
+                        {
+                            "label": "Initial purchase decision at t=1",
+                            "value": purchase_choice(purchase_t1),
+                        },
+                        {
+                            "label": "Refund decision at t=2",
+                            "value": (
+                                "Not recorded"
+                                if refund_t2 is None
+                                else "Requested a refund"
+                                if bool(refund_t2)
+                                else "Kept the contract"
+                            ),
+                        },
+                    ]
+                )
+
+        else:
+            print(
+                "Survey contract lookup did not return exactly one round: "
+                f"treatment={treatment}, "
+                f"matches={[p.round_number for p in matching_rounds]}"
+            )
+
+        # --------------------------------------------------------
+        # 5. Pass information to the HTML template
+        # --------------------------------------------------------
+        return dict(
+            likert_range=range(11),
+            contract_name=spec["name"],
+            contract_description=spec["description"],
+            contract_found=contract_found,
+            contract_round=contract_round,
+            contract_choices=contract_choices,
+            treatment = treatment,
+        )
     @staticmethod
     def before_next_page(player, timeout_happened):
         if player.comments_start:

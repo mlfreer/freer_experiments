@@ -322,6 +322,80 @@
         transform: translateY(-2px);
         box-shadow: 0 5px 16px rgba(74, 144, 217, 0.38);
     }
+
+    /* ── Contract confidence question ── */
+
+    .contract-panel {
+        background: #f0f6ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 20px 24px;
+        margin-bottom: 28px;
+    }
+
+    .contract-panel h3 {
+        color: #1a3a5c;
+        font-size: 1rem;
+        margin-top: 0;
+        margin-bottom: 12px;
+    }
+
+    .contract-description {
+        color: #2c3e50;
+        font-size: 14.5px;
+        line-height: 1.6;
+        margin-bottom: 14px;
+    }
+
+    .contract-choice {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 10px 0;
+        border-top: 1px solid #d5e6f5;
+        font-size: 14px;
+        color: #1a3a5c;
+    }
+
+    .contract-choice strong {
+        color: #2563b0;
+        text-align: right;
+    }
+
+    .confidence-field {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 28px;
+    }
+
+    .confidence-field label {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1a3a5c;
+        line-height: 1.6;
+    }
+
+    .confidence-slider {
+        width: 100%;
+        accent-color: #2563b0;
+        cursor: pointer;
+    }
+
+    .confidence-endpoints {
+        display: flex;
+        justify-content: space-between;
+        color: #5a7a9a;
+        font-size: 0.82rem;
+    }
+
+    .confidence-value {
+        text-align: center;
+        color: #2563b0;
+        font-size: 1.15rem;
+        font-weight: 700;
+    }
 </style>
 
 <div class="page-wrapper">
@@ -551,14 +625,103 @@
                     </div>
                 </div>
 
-                <div class="action-row" style="margin-top: 28px">
-                    <button type="submit" class="otree-btn-next btn-next">
-                        Submit &nbsp;&rarr;
-                    </button>
+
+                <!-- ═══════════════════════════════════════════
+                     SECTION: CONTRACT CONFIDENCE
+                ═══════════════════════════════════════════ -->
+                <div class="numeric-row-block">
+                    <div class="numeric-question-text">
+                    <strong>4.</strong> Recall the decision you made in round {{ contract_round }}
+                    </div>
                 </div>
+                <div class="contract-panel">
+
+                    {% if contract_found %}
+
+                        <div class="contract-description">
+                            <strong>Contract</strong>
+                            <br>
+                            {{ contract_description }}
+                        </div>
+
+
+
+                        {% for choice in contract_choices %}
+
+                            <div class="contract-choice">
+                                <span>{{ choice.label }}</span>
+                                <strong>{{ choice.value }}</strong>
+                            </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <p style="color: #a94442;">
+                            Your corresponding contract decision could not be retrieved.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- ═══════════════════════════════════════════
+                     CONFIDENCE SLIDER
+                ═══════════════════════════════════════════ -->
+
+                <div class="confidence-field">
+
+                    <label for="id_contract_confidence">
+
+                        How certain are you that making your choice about
+                        the {{ contract_name }} contract was actually your
+                        best decision, given your preferences and the
+                        information available to you?
+
+                    </label>
+
+                    <div class="confidence-value">
+                        <span id="confidence_display">50</span> / 100
+                    </div>
+
+                    <input
+                        type="range"
+                        name="contract_confidence"
+                        id="id_contract_confidence"
+                        class="confidence-slider"
+                        min="0"
+                        max="100"
+                        step="1"
+                        value="50"
+                        required
+                        oninput="
+                            document.getElementById('confidence_display').textContent = this.value;
+                        "
+                    >
+
+                    <div class="confidence-endpoints">
+                        <span>0 – Not at all certain</span>
+                        <span>100 – Completely certain</span>
+                    </div>
+
+                </div>
+
+                <hr class="field-divider" style="margin-bottom: 24px;" />
+
+
+                <!-- ══ SECTION 1: Open text ══ -->
+                <div class="survey-fields">
             </form>
         </div>
     </div>
+
+</div>
+
+<div class="action-row" style="margin-top: 28px">
+    <button type="submit" class="otree-btn-next btn-next">
+        Submit &nbsp;&rarr;
+    </button>
 </div>
 
 {{ endblock }}
