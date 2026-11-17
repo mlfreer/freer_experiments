@@ -11,7 +11,7 @@ t=2 interface
 class C(BaseConstants):
     NAME_IN_URL = "SBC_S1_t2_"
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 16
+    NUM_ROUNDS = 21
 
     ENDOWMENT = cu(14)
     # TREATMENT ORDER:
@@ -21,10 +21,10 @@ class C(BaseConstants):
     # 3 = dynamic, refund
     #    PRICES_T1  = [[ 0 for i in range(15) ] for j in range(4)]
     PRICES_T1 = [
-        [0 for i in range(16)] for j in range(4)
+        [0 for i in range(21)] for j in range(4)
     ]  # changing the parameters to the 11 period setup
     # outside is for treatment: 0 to 3
-    PRICES_T1[0] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 4.5, 7.5, 8.5, 9.5, 13.5]
+    PRICES_T1[0] = [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14]
     PRICES_T1[2] = [8, 0, 0, 10, 2, 2, 4, 1, 1, 2, 3, 10, 6, 10, 4, 4]
     PRICES_T1[3] = [8, 12, 10, 10, 12, 10, 10, 9, 10, 9, 10, 12, 12, 14, 14, 6]
     # PRICES_T1[0] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 11, 12]
@@ -33,7 +33,7 @@ class C(BaseConstants):
 
     # PRICES_T2 = [[0 for i in range(15) ] for j in range(4)]
     PRICES_T2 = [[0 for i in range(16)] for j in range(4)]
-    PRICES_T2[1] = [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 4.5, 7.5, 8.5, 9.5, 13.5]
+    PRICES_T2[1] = [4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14]
     PRICES_T2[2] = [0, 12, 10, 0, 10, 8, 6, 8, 9, 7, 7, 2, 6, 4, 10, 2]
     PRICES_T2[3] = [0, 12, 10, 0, 10, 8, 6, 8, 9, 7, 7, 2, 6, 4, 10, 2]
     # PRICES_T1[1] = [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 8, 9, 11, 12]
