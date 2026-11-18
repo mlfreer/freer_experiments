@@ -107,6 +107,22 @@ class Player(BasePlayer):
     numeracy1 = models.IntegerField()
     numeracy2 = models.IntegerField()
 
+    # additional survey vignettes:
+    # Lottery 2: certainty equivalent
+    risk_lottery2 = models.FloatField(min=0, max=8)
+
+    # Birthday present vignette
+    present_choice = models.StringField(
+        choices=[
+            ["now", "Buy today for £30"],
+            ["later", "Wait and pay £60"],
+            ["option", "Reserve for £10, then pay £40"],
+            ["refund", "Buy for £50, with a £40 refund"],
+        ]
+    )
+
+    present_reason = models.LongStringField()
+
     # time variables:
     decision_start = models.FloatField(blank=True)
     decision_rt = models.FloatField(blank=True)
@@ -598,7 +614,10 @@ class Survey(Page):
         "endowment",
         "numeracy1",
         "numeracy2",
-        "contract_confidence"
+        "contract_confidence",
+        "risk_lottery2",
+        "present_choice",
+        "present_reason",
     ]
 
     @staticmethod
@@ -607,6 +626,24 @@ class Survey(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
+        if player.field_maybe_none("survey_start") is None:
+            player.survey_start = time.time()
+
+        # Define the four present offers
+        offer_text = {
+            "now": "Buy it today for £30. No returns.",
+            "later": "Wait until you know. The price will then be £60.",
+            "option": "Reserve it today for £10, which you do not get back. Once you know, pay a further £40 if you want it.",
+            "refund": "Buy it today for £50. Once you know, you can return it and get £40 back.",
+        }
+
+        # Randomise display order only
+        present_offers = [
+            {"value": code, "text": text}
+            for code, text in offer_text.items()
+        ]
+
+        random.shuffle(present_offers)
 
         if player.field_maybe_none("comments_start") is None:
             player.comments_start = time.time()
@@ -796,6 +833,7 @@ class Survey(Page):
                 f"matches={[p.round_number for p in matching_rounds]}"
             )
 
+        risk_lottery2_options = [i / 2 for i in range(17)]
         # --------------------------------------------------------
         # 5. Pass information to the HTML template
         # --------------------------------------------------------
@@ -807,11 +845,13 @@ class Survey(Page):
             contract_round=contract_round,
             contract_choices=contract_choices,
             treatment = treatment,
+            present_offers=present_offers,
+            risk_lottery2_options=risk_lottery2_options,
         )
     @staticmethod
     def before_next_page(player, timeout_happened):
         if player.survey_start:
-            player.survey = time.time() - player.survey_start
+            player.survey_rt = time.time() - player.survey_start
 
 class SurveyReflection(Page):
     form_model = "player"

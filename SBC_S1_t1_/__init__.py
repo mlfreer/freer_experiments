@@ -342,9 +342,9 @@ class Results(Page):
 
 
 # -----------------------------------------------------------------------------
-
-
 # REVISION PAGE
+# -----------------------------------------------------------------------------
+
 class RevisionPage(Page):
     form_model = "player"
 
@@ -389,6 +389,7 @@ class RevisionPage(Page):
         if player.revision_start:
             player.revision_rt = time.time() - player.revision_start
 
+# -----------------------------------------------------------------------------
 
 
 # -----------------------------------------------------------------------------
@@ -412,7 +413,10 @@ class CompletionPage(Page):
         )
 
 
+# ----------------------------------------------------------------------------
+# SURVEY
 # -----------------------------------------------------------------------------
+
 class Comments(Page):
     form_model = "player"
     form_fields = ["pilot_comments", "strategy", "others_strategy"]
@@ -470,8 +474,11 @@ class Comments(Page):
         if player.comments_start:
             player.comments_rt = time.time() - player.comments_start
 
+# -----------------------------------------------------------------------------
 
+# -----------------------------------------------------------------------------
 # ORDER
+# -----------------------------------------------------------------------------
 page_sequence = [
     ExperimentStarts,
     Decision,
