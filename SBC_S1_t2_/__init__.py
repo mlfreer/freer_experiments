@@ -816,4 +816,9 @@ class Survey(Page):
         if player.comments_start:
             player.comments_rt = time.time() - player.comments_start
 
-page_sequence = [ExperimentStarts, Decision, RevisionPage, Survey, Results]
+page_sequence = [
+    ExperimentStarts,
+    Decision,
+    RevisionPage,
+    Survey,
+    Results]

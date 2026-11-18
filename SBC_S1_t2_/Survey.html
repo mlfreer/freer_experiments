@@ -424,6 +424,7 @@
                             name="pilot_comments"
                             id="id_pilot_comments"
                             rows="4"
+                            required
                         ></textarea>
                         <i class="field-hint">
                             If you mention an issue of particular interest to us
@@ -442,6 +443,7 @@
                             name="strategy"
                             id="id_strategy"
                             rows="4"
+                            required
                         ></textarea>
                     </div>
 
@@ -456,6 +458,7 @@
                             name="others_strategy"
                             id="id_others_strategy"
                             rows="4"
+                            required
                         ></textarea>
                     </div>
                 </div>
@@ -477,6 +480,7 @@
                                     type="radio"
                                     name="risk"
                                     value="{{ val }}"
+                                    required
                                 />
                             </div>
                             {% endfor %}
@@ -509,6 +513,7 @@
                                     type="radio"
                                     name="time"
                                     value="{{ val }}"
+                                    required
                                 />
                             </div>
                             {% endfor %}
@@ -538,6 +543,7 @@
                                     type="radio"
                                     name="complexity"
                                     value="{{ val }}"
+                                    required
                                 />
                             </div>
                             {% endfor %}
@@ -574,6 +580,7 @@
                                 min="0"
                                 step="0.01"
                                 placeholder="0.00"
+                                required
                             />
                         </div>
                     </div>
@@ -597,6 +604,7 @@
                                 max="100"
                                 step="1"
                                 placeholder="0"
+                                required
                             />
                             <span class="input-unit">%</span>
                         </div>
@@ -619,6 +627,7 @@
                                 max="70"
                                 step="1"
                                 placeholder="0"
+                                required
                             />
                             <span class="input-unit">out of 70 throws</span>
                         </div>
@@ -698,6 +707,7 @@
                         oninput="
                             document.getElementById('confidence_display').textContent = this.value;
                         "
+                        required
                     >
 
                     <div class="confidence-endpoints">
@@ -712,16 +722,18 @@
 
                 <!-- ══ SECTION 1: Open text ══ -->
                 <div class="survey-fields">
+
+                <div class="action-row" style="margin-top: 28px">
+                    <button type="submit" class="otree-btn-next btn-next">
+                            Submit &nbsp;&rarr;
+                    </button>
+                </div>
+
             </form>
         </div>
     </div>
 
 </div>
 
-<div class="action-row" style="margin-top: 28px">
-    <button type="submit" class="otree-btn-next btn-next">
-        Submit &nbsp;&rarr;
-    </button>
-</div>
 
 {{ endblock }}

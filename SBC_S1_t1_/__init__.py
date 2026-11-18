@@ -429,6 +429,44 @@ class Comments(Page):
 
     @staticmethod
     def before_next_page(player, timeout_happened):
+        if player.participant.treatment == 1:
+            # recording the treatment:
+            for p in player.in_all_rounds():
+                p.treatment = player.participant.treatment
+            rounds = []
+            for r in range(1, C.NUM_ROUNDS + 1):
+                p = player.in_round(r)
+                rounds.append(
+                    {
+                        "round_number": r,
+                        "price_t1": p.price_t1,
+                        "price_t2": p.price_t2,
+                        "random_draw_1": int(player.participant.random_draw_1),
+                        "random_draw_2": int(player.participant.random_draw_2),
+                        #                    'revised_purchase': p.revised_purchase,
+                        "index": player.participant.indexes[r - 1],
+                    }
+                )
+        else:
+            rounds = []
+            for r in range(1, C.NUM_ROUNDS + 1):
+                p = player.in_round(r)
+                rounds.append(
+                    {
+                        "round_number": r,
+                        "price_t1": p.price_t1,
+                        "price_t2": p.price_t2,
+                        "random_draw_1": int(player.participant.random_draw_1),
+                        "random_draw_2": int(player.participant.random_draw_2),
+                        "revised_purchase": p.revised_purchase,
+                        "purchase": p.purchase,
+                        "index": player.participant.indexes[r - 1],
+                    }
+                )
+
+        player.participant.vars["rounds"] = rounds
+        print(f"rounds saved (t=1): label={player.participant.label}, n={len(rounds)}")
+
         if player.comments_start:
             player.comments_rt = time.time() - player.comments_start
 
@@ -439,7 +477,7 @@ page_sequence = [
     Decision,
     RevisionPage,
     Comments,
-    Results,
+#    Results,
     CompletionPage,
 ]
 # -----------------------------------------------------------------------------
