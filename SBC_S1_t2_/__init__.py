@@ -117,6 +117,9 @@ class Player(BasePlayer):
     comments_start = models.FloatField(blank=True)
     comments_rt = models.FloatField(blank=True)
 
+    survey_start = models.FloatField(blank=True)
+    survey_rt = models.FloatField(blank=True)
+
     contract_confidence = models.IntegerField(min=0, max=100)
 
 
@@ -592,12 +595,6 @@ class Results(Page):
 class Survey(Page):
     form_model = "player"
     form_fields = [
-        "pilot_comments",
-        "strategy",
-        "others_strategy",
-        "risk",
-        "time",
-        "complexity",
         "endowment",
         "numeracy1",
         "numeracy2",
@@ -813,6 +810,38 @@ class Survey(Page):
         )
     @staticmethod
     def before_next_page(player, timeout_happened):
+        if player.survey_start:
+            player.survey = time.time() - player.survey_start
+
+class SurveyReflection(Page):
+    form_model = "player"
+
+    form_fields = [
+        "pilot_comments",
+        "strategy",
+        "others_strategy",
+        "risk",
+        "time",
+        "complexity",
+    ]
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.subsession.round_number == C.NUM_ROUNDS
+
+    @staticmethod
+    def vars_for_template(player: Player):
+
+        if player.field_maybe_none("comments_start") is None:
+            player.survey_start = time.time()
+
+        return dict(
+            likert_range=range(11)
+        )
+
+    @staticmethod
+    def before_next_page(player, timeout_happened):
+
         if player.comments_start:
             player.comments_rt = time.time() - player.comments_start
 
@@ -821,4 +850,5 @@ page_sequence = [
     Decision,
     RevisionPage,
     Survey,
+    SurveyReflection,
     Results]
