@@ -428,6 +428,86 @@
         box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
         background: #fff;
     }
+
+    /* ── Recalled decision (matches results screen) ── */
+    .decision-block {
+        background: #f7faff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin-bottom: 28px;
+        font-size: 14.5px;
+        line-height: 1.75;
+        color: #2c3e50;
+    }
+
+    .decision-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        background: white;
+        border: 1px solid #d5e6f5;
+        margin-bottom: 10px;
+    }
+
+    .decision-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .decision-row-left {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .part-pill {
+        display: inline-block;
+        background: #eef4fb;
+        color: #1a3a5c;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 20px;
+        padding: 2px 11px;
+        font-size: 0.78rem;
+        font-weight: 700;
+        white-space: nowrap;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+
+    .price-amount {
+        display: inline-block;
+        background: #fff3cd;
+        color: #92400e;
+        font-size: 1em;
+        font-weight: 800;
+        border-radius: 6px;
+        padding: 1px 8px;
+        border: 1.5px solid #f0c040;
+        white-space: nowrap;
+    }
+
+    .section-title {
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #4a90d9;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 12px;
+    }
+
+    .field-divider {
+        border: none;
+        border-top: 1px solid #e5edf7;
+        margin: 24px 0;
+    }
+
+    .decision-text {
+        flex: 1;
+        text-align: left;
+    }
 </style>
 
 <div class="page-wrapper">
@@ -439,7 +519,7 @@
 
         <div class="card-inner">
             <div class="intro-note">
-                Please answer the questions below.
+                As the final part of this study, please answer the questions on this and the following page.
             </div>
 
             <form method="post">
@@ -518,46 +598,46 @@
                     </div>
                 </div>
 
+        <hr class="field-divider" />
 
-                <!-- ═══════════════════════════════════════════
-                     SECTION: CONTRACT CONFIDENCE
-                ═══════════════════════════════════════════ -->
-                <div class="numeric-row-block">
-                    <div class="numeric-question-text">
-                    <strong>4.</strong> Recall the decision you made in round {{ contract_round }}
-                    </div>
+
+                <!-- ═══ SECTION: CONTRACT CONFIDENCE ═══ -->
+                <div class="numeric-question-text" style="margin-bottom: 14px;">
+                    <strong>4.</strong> Recall the decision you made in round {{ contract_round }}.
                 </div>
-                <div class="contract-panel">
+
+                <div class="decision-block">
 
                     {% if contract_found %}
 
-                        <div class="contract-description">
-                            <strong>Contract</strong>
-                            <br>
-                            {{ contract_description }}
+                        <div class="decision-row">
+                            <div class="decision-row-left">
+                                <span class="part-pill">Round {{ contract_round }}</span>
+                                <span>
+                                    {{ contract_description }}
+                                </span>
+                            </div>
                         </div>
 
-
-
                         {% for choice in contract_choices %}
-
-                            <div class="contract-choice">
-                                <span>{{ choice.label }}</span>
-                                <strong>{{ choice.value }}</strong>
+                            <div class="decision-row">
+                                <span class="part-pill">{{ choice.label }}</span>
+                                <span class="decision-text">You decided to </span>
+                                {{ choice.value }}
                             </div>
-
                         {% endfor %}
 
                     {% else %}
 
-                        <p style="color: #a94442;">
-                            Your corresponding contract decision could not be retrieved.
-                        </p>
+                        <div class="decision-row">
+                            <span style="color: #a94442;">
+                                Your corresponding contract decision could not be retrieved.
+                            </span>
+                        </div>
 
                     {% endif %}
 
                 </div>
-
 
                 <!-- ═══════════════════════════════════════════
                      CONFIDENCE SLIDER
@@ -575,7 +655,7 @@
                     </label>
 
                     <div class="confidence-value">
-                        <span id="confidence_display">50</span> / 100
+                        <span id="confidence_display">50</span> / 100%
                     </div>
 
                     <input
@@ -595,13 +675,13 @@
                     >
 
                     <div class="confidence-endpoints">
-                        <span>0 – Not at all certain</span>
-                        <span>100 – Completely certain</span>
+                        <span>0% – Not at all certain</span>
+                        <span>100% – Completely certain</span>
                     </div>
 
                 </div>
 
-                <hr class="field-divider" style="margin-bottom: 24px;" />
+                <hr class="field-divider" />
 
                 <div class="survey-field">
 
@@ -660,34 +740,7 @@
 
                 </div>
 
-                <label class="numeric-row-block">
 
-                    <label>
-                        <strong>6.</strong>
-                        What sure amount would be worth the same to you as a
-                        50/50 chance of £8 or £0?
-                    </label>
-
-                    <div class="numeric-input-group">
-
-                        <span class="input-unit">£</span>
-
-                        <select
-                            name="risk_lottery2"
-                            id="id_risk_lottery2"
-                            required
-                        >
-                            <option value="" disabled selected>Select</option>
-
-                            {% for amount in risk_lottery2_options %}
-                                <option value="{{ amount }}">
-                                    {{ amount }}
-                                </option>
-                            {% endfor %}
-
-                        </select>
-
-                    </div>
 
                 </div>
 

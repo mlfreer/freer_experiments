@@ -615,7 +615,6 @@ class Survey(Page):
         "numeracy1",
         "numeracy2",
         "contract_confidence",
-        "risk_lottery2",
         "present_choice",
         "present_reason",
     ]
@@ -680,7 +679,7 @@ class Survey(Page):
             },
             3: {
                 "name": "D2",
-                "description": "Buy the at the price of £10 in t=1 with the potential refund of £8.",
+                "description": "Buy the lottery ticket at the  price of £10 in t=1 with the potential to return it for the refund of £8.",
                 "price_t1": 10,
                 "price_t2": 8,
             },
@@ -730,7 +729,7 @@ class Survey(Page):
                 if value is None:
                     return "Not recorded"
 
-                return "Bought" if bool(value) else "Did not buy"
+                return "purchase" if bool(value) else " not purchase"
 
             # Treatment 0: S1
             if treatment == 0:
@@ -743,7 +742,7 @@ class Survey(Page):
 
                 contract_choices.append(
                     {
-                        "label": "Purchase decision at t=1",
+                        "label": "Part 1",
                         "value": purchase_choice(purchase_t1),
                     }
                 )
@@ -757,7 +756,7 @@ class Survey(Page):
 
                 contract_choices.append(
                     {
-                        "label": "Decision at t=2",
+                        "label": "Part 2",
                         "value": purchase_choice(purchase_t2),
                     }
                 )
@@ -778,17 +777,17 @@ class Survey(Page):
                 contract_choices.extend(
                     [
                         {
-                            "label": "Initial purchase decision at t=1",
+                            "label": "Part 1",
                             "value": purchase_choice(purchase_t1),
                         },
                         {
-                            "label": "Decision at t=2",
+                            "label": "Part 2",
                             "value": (
                                 "Not recorded"
                                 if purchase_t2 is None
-                                else "Exercised the option"
+                                else "excercise the option"
                                 if bool(purchase_t2)
-                                else "Did not exercise the option"
+                                else " not exercise the option"
                             ),
                         },
                     ]
@@ -810,17 +809,17 @@ class Survey(Page):
                 contract_choices.extend(
                     [
                         {
-                            "label": "Initial purchase decision at t=1",
+                            "label": "Part 1",
                             "value": purchase_choice(purchase_t1),
                         },
                         {
-                            "label": "Refund decision at t=2",
+                            "label": "Part 2",
                             "value": (
                                 "Not recorded"
                                 if refund_t2 is None
-                                else "Requested a refund"
+                                else "<span class=\"price-amount\">refund</span>"
                                 if bool(refund_t2)
-                                else "Kept the contract"
+                                else "keep"
                             ),
                         },
                     ]
@@ -848,6 +847,7 @@ class Survey(Page):
             present_offers=present_offers,
             risk_lottery2_options=risk_lottery2_options,
         )
+
     @staticmethod
     def before_next_page(player, timeout_happened):
         if player.survey_start:
@@ -863,6 +863,7 @@ class SurveyReflection(Page):
         "risk",
         "time",
         "complexity",
+        "risk_lottery2",
     ]
 
     @staticmethod
@@ -872,11 +873,14 @@ class SurveyReflection(Page):
     @staticmethod
     def vars_for_template(player: Player):
 
+        risk_lottery2_options = [i / 2 for i in range(17)]
+
         if player.field_maybe_none("comments_start") is None:
             player.survey_start = time.time()
 
         return dict(
-            likert_range=range(11)
+            likert_range=range(11),
+            risk_lottery2_options=risk_lottery2_options,
         )
 
     @staticmethod

@@ -396,6 +396,38 @@
         font-size: 1.15rem;
         font-weight: 700;
     }
+
+    .numeric-input-group select {
+        width: 130px;
+        padding: 8px 12px;
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 14.5px;
+        color: #2c3e50;
+        background: #f5f9ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 8px;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .survey-field select {
+        width: 100%;
+        padding: 10px 14px;
+        font-family: "Segoe UI", Arial, sans-serif;
+        font-size: 14.5px;
+        color: #2c3e50;
+        background: #f5f9ff;
+        border: 1.5px solid #d5e6f5;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .survey-field select:focus {
+        outline: none;
+        border-color: #4a90d9;
+        box-shadow: 0 0 0 3px rgba(74, 144, 217, 0.15);
+        background: #fff;
+    }
 </style>
 
 <div class="page-wrapper">
@@ -559,6 +591,35 @@
                     </div>
                 </div>
                 <hr class="field-divider" style="margin-bottom: 24px" />
+
+                <label class="numeric-row-block">
+
+                    <label>
+                        <strong>6.</strong>
+                        What sure amount would be worth the same to you as a
+                        50/50 chance of £8 or £0?
+                    </label>
+
+                    <div class="numeric-input-group">
+
+                        <span class="input-unit">£</span>
+
+                        <select
+                            name="risk_lottery2"
+                            id="id_risk_lottery2"
+                            required
+                        >
+                            <option value="" disabled selected>Select</option>
+
+                            {% for amount in risk_lottery2_options %}
+                                <option value="{{ amount }}">
+                                    {{ amount }}
+                                </option>
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
 
                 <div class="action-row" style="margin-top: 28px">
                     <button type="submit" class="otree-btn-next btn-next">
