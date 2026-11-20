@@ -661,25 +661,25 @@ class Survey(Page):
         contract_specs = {
             0: {
                 "name": "S1",
-                "description": "Buy at the price of £8 in t=1.",
+                "description": "Buy at the price of £8 in part 1.",
                 "price_t1": 8,
                 "price_t2": None,
             },
             1: {
                 "name": "S2",
-                "description": "Buy at the price of £12 in t=2.",
+                "description": "Buy at the price of £12 in part 2.",
                 "price_t1": None,
                 "price_t2": 12,
             },
             2: {
                 "name": "D1",
-                "description": "Buy the option at the price of £2 in t=1 with the price to excercise the otion in t=2 being £8.",
+                "description": "Buy the option at the price of £2 in part 1 with the price to excercise the option in part 2 being £8.",
                 "price_t1": 2,
                 "price_t2": 8,
             },
             3: {
                 "name": "D2",
-                "description": "Buy the lottery ticket at the  price of £10 in t=1 with the potential to return it for the refund of £8.",
+                "description": "Buy the lottery ticket at the  price of £10 in part 1 with the potential to return it for the refund in part 2 of £8.",
                 "price_t1": 10,
                 "price_t2": 8,
             },
