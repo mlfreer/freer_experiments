@@ -819,7 +819,7 @@ class Survey(Page):
                                 if refund_t2 is None
                                 else "<span class=\"badge-no\">refund</span>"
                                 if bool(refund_t2)
-                                else "<span class=\"badge-no\">keep</span>"
+                                else "<span class=\"badge-yes\">keep</span>"
                             ),
                         },
                     ]
