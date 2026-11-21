@@ -661,25 +661,25 @@ class Survey(Page):
         contract_specs = {
             0: {
                 "name": "S1",
-                "description": "Buy at the price of £8 in part 1.",
+                "description": "Buy at the price of <span class=\"price-amount\">£8</span> in part 1.",
                 "price_t1": 8,
                 "price_t2": None,
             },
             1: {
                 "name": "S2",
-                "description": "Buy at the price of £12 in part 2.",
+                "description": "Buy at the price of <span class=\"price-amount\">£12</span> in part 2.",
                 "price_t1": None,
                 "price_t2": 12,
             },
             2: {
                 "name": "D1",
-                "description": "Buy the option at the price of £2 in part 1 with the price to excercise the option in part 2 being £8.",
+                "description": "Buy the option at the price of <span class=\"price-amount\">£2</span> in part 1 with the price to excercise the option in part 2 being <span class=\"price-amount\">£8</span>.",
                 "price_t1": 2,
                 "price_t2": 8,
             },
             3: {
                 "name": "D2",
-                "description": "Buy the lottery ticket at the  price of £10 in part 1 with the potential to return it for the refund in part 2 of £8.",
+                "description": "Buy the lottery ticket at the  price of <span class=\"price-amount\">£10</span> in part 1 with the potential to return it for the refund in part 2 of <span class=\"price-amount\">£8</span>.",
                 "price_t1": 10,
                 "price_t2": 8,
             },
@@ -729,7 +729,7 @@ class Survey(Page):
                 if value is None:
                     return "Not recorded"
 
-                return "purchase" if bool(value) else " not purchase"
+                return "<span class=\"badge-yes\">purchase</span>" if bool(value) else "<span class=\"badge-no\">not purchase</span>"
 
             # Treatment 0: S1
             if treatment == 0:
@@ -785,9 +785,9 @@ class Survey(Page):
                             "value": (
                                 "Not recorded"
                                 if purchase_t2 is None
-                                else "excercise the option"
+                                else "<span class=\"badge-yes\">excercise the option</span>"
                                 if bool(purchase_t2)
-                                else " not exercise the option"
+                                else "<span class=\"badge-no\">not exercise the option</span>"
                             ),
                         },
                     ]
@@ -817,9 +817,9 @@ class Survey(Page):
                             "value": (
                                 "Not recorded"
                                 if refund_t2 is None
-                                else "<span class=\"price-amount\">refund</span>"
+                                else "<span class=\"badge-no\">refund</span>"
                                 if bool(refund_t2)
-                                else "keep"
+                                else "<span class=\"badge-no\">keep</span>"
                             ),
                         },
                     ]
