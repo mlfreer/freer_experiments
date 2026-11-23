@@ -57,8 +57,8 @@ SESSION_CONFIG_DEFAULTS = dict(
     A_BAR=8,
     treatment=0,  # treatment enumeration starts with 0 and goes to 3 so we can simplify the presentation of the constants.
     doc="",
-    completion_url="https://app.prolific.com/submissions/complete?cc=CDT8MBD8",
-    completion_url1="https://app.prolific.com/submissions/complete?cc=C13H5EHD",
+    completion_url="https://app.prolific.com/submissions/complete?cc=C12WW8N0",
+    completion_url1="https://app.prolific.com/submissions/complete?cc=C1MTFOLG",
     selected_for_payment=10,  # the probability that subject is selected for payment
     overwrite_decision=2,  # decision in t=1 is over-written
 )
